@@ -1,0 +1,15 @@
+# Keep text files consistent across the team.
+* text=auto eol=lf
+
+# Common project text formats.
+*.md text eol=lf
+*.xsd text eol=lf
+*.xml text eol=lf
+*.json text eol=lf
+*.txt text eol=lf
+
+# Binary assets should never be line-normalized.
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.pdf binary
