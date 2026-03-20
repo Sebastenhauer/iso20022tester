@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="pain001-testgenerator" tests="10" failures="0">
+  <testcase name="TC-SEPA-001: SEPA Standardzahlung" classname="SEPA" />
+  <testcase name="TC-SEPA-002: SEPA falsche Waehrung" classname="SEPA" />
+  <testcase name="TC-SEPA-003: SEPA mit Creditor-Override" classname="SEPA" />
+  <testcase name="TC-QR-001: QR-Zahlung Standard CHF" classname="Domestic-QR" />
+  <testcase name="TC-QR-002: QR-Zahlung ohne Referenz" classname="Domestic-QR" />
+  <testcase name="TC-IBAN-001: Domestic IBAN Standard" classname="Domestic-IBAN" />
+  <testcase name="TC-IBAN-002: Domestic IBAN falsche Waehrung" classname="Domestic-IBAN" />
+  <testcase name="TC-CBPR-001: CBPR+ USD-Zahlung" classname="CBPR+" />
+  <testcase name="TC-CBPR-002: CBPR+ ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CBPR-003: CBPR+ JPY-Zahlung" classname="CBPR+" />
+</testsuite>

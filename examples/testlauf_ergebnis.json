@@ -1,0 +1,1113 @@
+{
+  "testlauf": {
+    "datum": "2026-03-20T16:00:02.489786",
+    "input_datei": "templates/testfaelle_vorlage.xlsx",
+    "anzahl_testfaelle": 10,
+    "anzahl_pass": 10,
+    "anzahl_fail": 0
+  },
+  "testfaelle": [
+    {
+      "testcase_id": "TC-SEPA-001",
+      "titel": "SEPA Standardzahlung",
+      "zahlungstyp": "SEPA",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-HDR-002",
+          "beschreibung": "NbOfTxs im GrpHdr = Summe aller Transaktionen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-003",
+          "beschreibung": "CtrlSum im GrpHdr = Summe aller Beträge",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-004",
+          "beschreibung": "InitgPty/Nm muss gesetzt sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-005",
+          "beschreibung": "ReqdExctnDt muss ein Bankarbeitstag sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für PmtInfId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für MsgId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für EndToEndId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-010",
+          "beschreibung": "Betrag muss > 0 sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-SEPA-001",
+          "beschreibung": "Währung muss EUR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-SEPA-006",
+          "beschreibung": "Betrag muss zwischen 0.01 und 999'999'999.99 liegen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-SEPA-004",
+          "beschreibung": "Creditor-Name max. 70 Zeichen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-SEPA-005",
+          "beschreibung": "Creditor muss eine gültige IBAN haben",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-03-20_160002/20260320_160002_TC-SEPA-001_c37459ee.xml",
+      "bemerkungen": ""
+    },
+    {
+      "testcase_id": "TC-SEPA-002",
+      "titel": "SEPA falsche Waehrung",
+      "zahlungstyp": "SEPA",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-HDR-002",
+          "beschreibung": "NbOfTxs im GrpHdr = Summe aller Transaktionen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-003",
+          "beschreibung": "CtrlSum im GrpHdr = Summe aller Beträge",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-004",
+          "beschreibung": "InitgPty/Nm muss gesetzt sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-005",
+          "beschreibung": "ReqdExctnDt muss ein Bankarbeitstag sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für PmtInfId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für MsgId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für EndToEndId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-010",
+          "beschreibung": "Betrag muss > 0 sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-SEPA-001",
+          "beschreibung": "Währung muss EUR sein",
+          "bestanden": false,
+          "details": "Währung ist 'CHF'"
+        },
+        {
+          "rule_id": "BR-SEPA-006",
+          "beschreibung": "Betrag muss zwischen 0.01 und 999'999'999.99 liegen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-SEPA-004",
+          "beschreibung": "Creditor-Name max. 70 Zeichen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-SEPA-005",
+          "beschreibung": "Creditor muss eine gültige IBAN haben",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-03-20_160002/20260320_160002_TC-SEPA-002_47294739.xml",
+      "bemerkungen": "Erwartet: BR-SEPA-001 verletzt (Waehrung != EUR)"
+    },
+    {
+      "testcase_id": "TC-SEPA-003",
+      "titel": "SEPA mit Creditor-Override",
+      "zahlungstyp": "SEPA",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-HDR-002",
+          "beschreibung": "NbOfTxs im GrpHdr = Summe aller Transaktionen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-003",
+          "beschreibung": "CtrlSum im GrpHdr = Summe aller Beträge",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-004",
+          "beschreibung": "InitgPty/Nm muss gesetzt sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-005",
+          "beschreibung": "ReqdExctnDt muss ein Bankarbeitstag sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für PmtInfId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für MsgId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für EndToEndId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-010",
+          "beschreibung": "Betrag muss > 0 sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-SEPA-001",
+          "beschreibung": "Währung muss EUR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-SEPA-006",
+          "beschreibung": "Betrag muss zwischen 0.01 und 999'999'999.99 liegen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-SEPA-004",
+          "beschreibung": "Creditor-Name max. 70 Zeichen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-SEPA-005",
+          "beschreibung": "Creditor muss eine gültige IBAN haben",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-03-20_160002/20260320_160002_TC-SEPA-003_757750a9.xml",
+      "bemerkungen": "Creditor wird explizit gesetzt statt generiert"
+    },
+    {
+      "testcase_id": "TC-QR-001",
+      "titel": "QR-Zahlung Standard CHF",
+      "zahlungstyp": "Domestic-QR",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-HDR-002",
+          "beschreibung": "NbOfTxs im GrpHdr = Summe aller Transaktionen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-003",
+          "beschreibung": "CtrlSum im GrpHdr = Summe aller Beträge",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-004",
+          "beschreibung": "InitgPty/Nm muss gesetzt sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-005",
+          "beschreibung": "ReqdExctnDt muss ein Bankarbeitstag sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für PmtInfId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für MsgId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für EndToEndId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-010",
+          "beschreibung": "Betrag muss > 0 sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-QR-004",
+          "beschreibung": "Währung muss CHF oder EUR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-QR-005",
+          "beschreibung": "SvcLvl darf nicht 'SEPA' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-QR-001",
+          "beschreibung": "Creditor muss eine QR-IBAN haben (IID 30000-31999)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-QR-002",
+          "beschreibung": "Bei QR-IBAN muss eine QR-Referenz (QRR) vorhanden sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-QR-006",
+          "beschreibung": "QRR: 27 Stellen numerisch, Mod-10-Prüfziffer",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-QR-003",
+          "beschreibung": "SCOR-Referenz ist bei QR-IBAN nicht zulässig",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-03-20_160002/20260320_160002_TC-QR-001_a013ac6e.xml",
+      "bemerkungen": ""
+    },
+    {
+      "testcase_id": "TC-QR-002",
+      "titel": "QR-Zahlung ohne Referenz",
+      "zahlungstyp": "Domestic-QR",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-HDR-002",
+          "beschreibung": "NbOfTxs im GrpHdr = Summe aller Transaktionen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-003",
+          "beschreibung": "CtrlSum im GrpHdr = Summe aller Beträge",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-004",
+          "beschreibung": "InitgPty/Nm muss gesetzt sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-005",
+          "beschreibung": "ReqdExctnDt muss ein Bankarbeitstag sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für PmtInfId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für MsgId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für EndToEndId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-010",
+          "beschreibung": "Betrag muss > 0 sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-QR-004",
+          "beschreibung": "Währung muss CHF oder EUR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-QR-005",
+          "beschreibung": "SvcLvl darf nicht 'SEPA' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-QR-001",
+          "beschreibung": "Creditor muss eine QR-IBAN haben (IID 30000-31999)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-QR-002",
+          "beschreibung": "Bei QR-IBAN muss eine QR-Referenz (QRR) vorhanden sein",
+          "bestanden": false,
+          "details": "Keine QRR-Referenz vorhanden"
+        },
+        {
+          "rule_id": "BR-QR-003",
+          "beschreibung": "SCOR-Referenz ist bei QR-IBAN nicht zulässig",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-03-20_160002/20260320_160002_TC-QR-002_8dcdcd03.xml",
+      "bemerkungen": "Erwartet: BR-QR-002 verletzt (keine QRR bei QR-IBAN)"
+    },
+    {
+      "testcase_id": "TC-IBAN-001",
+      "titel": "Domestic IBAN Standard",
+      "zahlungstyp": "Domestic-IBAN",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-HDR-002",
+          "beschreibung": "NbOfTxs im GrpHdr = Summe aller Transaktionen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-003",
+          "beschreibung": "CtrlSum im GrpHdr = Summe aller Beträge",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-004",
+          "beschreibung": "InitgPty/Nm muss gesetzt sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-005",
+          "beschreibung": "ReqdExctnDt muss ein Bankarbeitstag sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für PmtInfId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für MsgId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für EndToEndId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-010",
+          "beschreibung": "Betrag muss > 0 sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-004",
+          "beschreibung": "Währung muss CHF sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-005",
+          "beschreibung": "SvcLvl darf nicht 'SEPA' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-001",
+          "beschreibung": "Creditor darf keine QR-IBAN haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-002",
+          "beschreibung": "QR-Referenz ist bei regulärer IBAN nicht zulässig",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-003",
+          "beschreibung": "SCOR-Referenz muss formal valide sein (RF + Mod-97)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-03-20_160002/20260320_160002_TC-IBAN-001_ccf3a171.xml",
+      "bemerkungen": ""
+    },
+    {
+      "testcase_id": "TC-IBAN-002",
+      "titel": "Domestic IBAN falsche Waehrung",
+      "zahlungstyp": "Domestic-IBAN",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-HDR-002",
+          "beschreibung": "NbOfTxs im GrpHdr = Summe aller Transaktionen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-003",
+          "beschreibung": "CtrlSum im GrpHdr = Summe aller Beträge",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-004",
+          "beschreibung": "InitgPty/Nm muss gesetzt sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-005",
+          "beschreibung": "ReqdExctnDt muss ein Bankarbeitstag sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für PmtInfId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für MsgId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für EndToEndId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-010",
+          "beschreibung": "Betrag muss > 0 sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-004",
+          "beschreibung": "Währung muss CHF sein",
+          "bestanden": false,
+          "details": "Währung ist 'EUR'"
+        },
+        {
+          "rule_id": "BR-IBAN-005",
+          "beschreibung": "SvcLvl darf nicht 'SEPA' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-001",
+          "beschreibung": "Creditor darf keine QR-IBAN haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-002",
+          "beschreibung": "QR-Referenz ist bei regulärer IBAN nicht zulässig",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-003",
+          "beschreibung": "SCOR-Referenz muss formal valide sein (RF + Mod-97)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-03-20_160002/20260320_160002_TC-IBAN-002_0ef8c2d6.xml",
+      "bemerkungen": "Erwartet: BR-IBAN-004 verletzt (Waehrung != CHF)"
+    },
+    {
+      "testcase_id": "TC-CBPR-001",
+      "titel": "CBPR+ USD-Zahlung",
+      "zahlungstyp": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-HDR-002",
+          "beschreibung": "NbOfTxs im GrpHdr = Summe aller Transaktionen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-003",
+          "beschreibung": "CtrlSum im GrpHdr = Summe aller Beträge",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-004",
+          "beschreibung": "InitgPty/Nm muss gesetzt sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-005",
+          "beschreibung": "ReqdExctnDt muss ein Bankarbeitstag sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für PmtInfId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für MsgId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für EndToEndId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-010",
+          "beschreibung": "Betrag muss > 0 sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-002",
+          "beschreibung": "SvcLvl darf nicht 'SEPA' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-001",
+          "beschreibung": "Währung muss explizit angegeben sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-005",
+          "beschreibung": "Creditor-Agent (BIC) muss angegeben werden",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-03-20_160002/20260320_160002_TC-CBPR-001_956b8c0c.xml",
+      "bemerkungen": ""
+    },
+    {
+      "testcase_id": "TC-CBPR-002",
+      "titel": "CBPR+ ohne Agent",
+      "zahlungstyp": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-HDR-002",
+          "beschreibung": "NbOfTxs im GrpHdr = Summe aller Transaktionen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-003",
+          "beschreibung": "CtrlSum im GrpHdr = Summe aller Beträge",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-004",
+          "beschreibung": "InitgPty/Nm muss gesetzt sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-005",
+          "beschreibung": "ReqdExctnDt muss ein Bankarbeitstag sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für PmtInfId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für MsgId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für EndToEndId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-010",
+          "beschreibung": "Betrag muss > 0 sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-002",
+          "beschreibung": "SvcLvl darf nicht 'SEPA' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-001",
+          "beschreibung": "Währung muss explizit angegeben sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-005",
+          "beschreibung": "Creditor-Agent (BIC) muss angegeben werden",
+          "bestanden": false,
+          "details": "Creditor-Agent (BIC) fehlt. Bitte 'CdtrAgt.BICFI=<BIC>' in 'Weitere Testdaten' angeben."
+        }
+      ],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-03-20_160002/20260320_160002_TC-CBPR-002_702cdd20.xml",
+      "bemerkungen": "Erwartet: BR-CBPR-005 verletzt (kein Creditor-Agent)"
+    },
+    {
+      "testcase_id": "TC-CBPR-003",
+      "titel": "CBPR+ JPY-Zahlung",
+      "zahlungstyp": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-HDR-002",
+          "beschreibung": "NbOfTxs im GrpHdr = Summe aller Transaktionen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-003",
+          "beschreibung": "CtrlSum im GrpHdr = Summe aller Beträge",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-HDR-004",
+          "beschreibung": "InitgPty/Nm muss gesetzt sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-005",
+          "beschreibung": "ReqdExctnDt muss ein Bankarbeitstag sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für PmtInfId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für MsgId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-009",
+          "beschreibung": "Referenzfeld-Zeichensatz für EndToEndId",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-GEN-010",
+          "beschreibung": "Betrag muss > 0 sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Debtor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V01",
+          "beschreibung": "IBAN Mod-97 Prüfziffer für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-IBAN-V02",
+          "beschreibung": "IBAN-Länge für Creditor IBAN",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-002",
+          "beschreibung": "SvcLvl darf nicht 'SEPA' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-001",
+          "beschreibung": "Währung muss explizit angegeben sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-005",
+          "beschreibung": "Creditor-Agent (BIC) muss angegeben werden",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-03-20_160002/20260320_160002_TC-CBPR-003_6c6f7633.xml",
+      "bemerkungen": "Japanische Yen-Zahlung"
+    }
+  ]
+}

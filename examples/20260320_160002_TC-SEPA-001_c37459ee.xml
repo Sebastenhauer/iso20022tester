@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-28df6ec4ce4a</MsgId>
+      <CreDtTm>2026-03-20T16:00:02.421751</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>1500</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-47229389571a</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>1500</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-03-23</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+        <PstlAdr>
+          <StrtNm>Bahnhofstrasse</StrtNm>
+          <BldgNb>1</BldgNb>
+          <PstCd>8001</PstCd>
+          <TwnNm>Zuerich</TwnNm>
+          <Ctry>CH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>SLEV</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-de8a774bcf36</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">1500</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Bachmann GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Smith Causeway</StrtNm>
+            <BldgNb>115</BldgNb>
+            <PstCd>11315</PstCd>
+            <TwnNm>South Carolside</TwnNm>
+            <Ctry>PL</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>PL12104332181960013389083863</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>
