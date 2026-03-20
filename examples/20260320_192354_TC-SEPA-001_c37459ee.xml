@@ -2,19 +2,19 @@
 <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <MsgId>MSG-508ebad7b7c9</MsgId>
-      <CreDtTm>2026-03-20T16:00:02.480672</CreDtTm>
+      <MsgId>MSG-28df6ec4ce4a</MsgId>
+      <CreDtTm>2026-03-20T19:23:54.808535</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>4999.99</CtrlSum>
+      <CtrlSum>1500</CtrlSum>
       <InitgPty>
         <Nm>Muster AG</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>PMT-654821d07fcd</PmtInfId>
+      <PmtInfId>PMT-47229389571a</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>4999.99</CtrlSum>
+      <CtrlSum>1500</CtrlSum>
       <PmtTpInf>
         <SvcLvl>
           <Cd>SEPA</Cd>
@@ -46,29 +46,24 @@
       <ChrgBr>SLEV</ChrgBr>
       <CdtTrfTxInf>
         <PmtId>
-          <EndToEndId>E2E-f16287e4e9c3</EndToEndId>
+          <EndToEndId>E2E-de8a774bcf36</EndToEndId>
         </PmtId>
         <Amt>
-          <InstdAmt Ccy="EUR">4999.99</InstdAmt>
+          <InstdAmt Ccy="EUR">1500</InstdAmt>
         </Amt>
-        <CdtrAgt>
-          <FinInstnId>
-            <BICFI>COBADEFFXXX</BICFI>
-          </FinInstnId>
-        </CdtrAgt>
         <Cdtr>
-          <Nm>Beispiel GmbH</Nm>
+          <Nm>Bachmann GmbH</Nm>
           <PstlAdr>
-            <StrtNm>Keith Plain</StrtNm>
-            <BldgNb>69</BldgNb>
-            <PstCd>34416</PstCd>
-            <TwnNm>Port Frank</TwnNm>
-            <Ctry>IT</Ctry>
+            <StrtNm>Kaitlin Square</StrtNm>
+            <BldgNb>115</BldgNb>
+            <PstCd>95186</PstCd>
+            <TwnNm>Christinamouth</TwnNm>
+            <Ctry>PL</Ctry>
           </PstlAdr>
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <IBAN>IT7952553419283276483503056</IBAN>
+            <IBAN>PL12104332181960013389083863</IBAN>
           </Id>
         </CdtrAcct>
       </CdtTrfTxInf>

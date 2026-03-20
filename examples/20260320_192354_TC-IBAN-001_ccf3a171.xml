@@ -2,24 +2,19 @@
 <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <MsgId>MSG-4a15544dc5e7</MsgId>
-      <CreDtTm>2026-03-20T16:00:02.478275</CreDtTm>
+      <MsgId>MSG-a748dbcfac61</MsgId>
+      <CreDtTm>2026-03-20T19:23:54.858745</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>250.5</CtrlSum>
+      <CtrlSum>5000</CtrlSum>
       <InitgPty>
         <Nm>Muster AG</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>PMT-3b982ef8daf6</PmtInfId>
+      <PmtInfId>PMT-0f844fef1931</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>250.5</CtrlSum>
-      <PmtTpInf>
-        <SvcLvl>
-          <Cd>SEPA</Cd>
-        </SvcLvl>
-      </PmtTpInf>
+      <CtrlSum>5000</CtrlSum>
       <ReqdExctnDt>
         <Dt>2026-03-23</Dt>
       </ReqdExctnDt>
@@ -43,29 +38,40 @@
           <BICFI>CRESCHZZ80A</BICFI>
         </FinInstnId>
       </DbtrAgt>
-      <ChrgBr>SLEV</ChrgBr>
       <CdtTrfTxInf>
         <PmtId>
-          <EndToEndId>E2E-0bbb259911ce</EndToEndId>
+          <EndToEndId>E2E-dd2467ac778e</EndToEndId>
         </PmtId>
         <Amt>
-          <InstdAmt Ccy="CHF">250.5</InstdAmt>
+          <InstdAmt Ccy="CHF">5000</InstdAmt>
         </Amt>
         <Cdtr>
-          <Nm>Herzog AG</Nm>
+          <Nm>Naef Frick  Soehne</Nm>
           <PstlAdr>
-            <StrtNm>Hornigallee</StrtNm>
-            <BldgNb>148</BldgNb>
-            <PstCd>06163</PstCd>
-            <TwnNm>Saarbruecken</TwnNm>
-            <Ctry>DE</Ctry>
+            <StrtNm>Christenstrasse</StrtNm>
+            <BldgNb>72</BldgNb>
+            <PstCd>3375</PstCd>
+            <TwnNm>Suhr</TwnNm>
+            <Ctry>CH</Ctry>
           </PstlAdr>
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <IBAN>DE10116155940781618495</IBAN>
+            <IBAN>CH5332161930103105183</IBAN>
           </Id>
         </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <Tp>
+                <CdOrPrtry>
+                  <Cd>SCOR</Cd>
+                </CdOrPrtry>
+              </Tp>
+              <Ref>RF42Y8UFUQC66RM</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
       </CdtTrfTxInf>
     </PmtInf>
   </CstmrCdtTrfInitn>

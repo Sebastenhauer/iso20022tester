@@ -43,13 +43,13 @@ class CbprPlusHandler(PaymentTypeHandler):
             "SvcLvl ist 'SEPA'" if svc_lvl == "SEPA" else None,
         ))
 
-        # BR-CBPR-001: Währung muss angegeben sein
-        results.append(_check(
-            "BR-CBPR-001", bool(testcase.currency),
-            "Keine Währung angegeben" if not testcase.currency else None,
-        ))
-
         for tx in transactions:
+            # BR-CBPR-001: Währung muss angegeben sein (prüfe tatsächliche Transaktionsdaten)
+            results.append(_check(
+                "BR-CBPR-001", bool(tx.currency),
+                "Keine Währung angegeben" if not tx.currency else None,
+            ))
+
             # BR-CBPR-005: Creditor-Agent Pflicht
             has_bic = bool(tx.creditor_bic)
             results.append(_check(

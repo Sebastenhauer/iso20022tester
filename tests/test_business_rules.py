@@ -37,6 +37,7 @@ def _make_instruction(testcase, transactions):
         reqd_exctn_dt="2026-03-23",
         debtor=testcase.debtor,
         service_level="SEPA" if testcase.payment_type == PaymentType.SEPA else None,
+        charge_bearer="SLEV" if testcase.payment_type == PaymentType.SEPA else None,
         transactions=transactions,
     )
 

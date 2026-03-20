@@ -2,20 +2,24 @@
 <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <MsgId>MSG-f8cda88b436d</MsgId>
-      <CreDtTm>2026-03-20T16:00:02.481911</CreDtTm>
+      <MsgId>MSG-508ebad7b7c9</MsgId>
+      <CreDtTm>2026-03-20T19:23:54.855100</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>3200</CtrlSum>
+      <CtrlSum>4999.99</CtrlSum>
       <InitgPty>
         <Nm>Muster AG</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>PMT-81f76d1c2dbc</PmtInfId>
+      <PmtInfId>PMT-654821d07fcd</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>3200</CtrlSum>
-      <PmtTpInf/>
+      <CtrlSum>4999.99</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
       <ReqdExctnDt>
         <Dt>2026-03-23</Dt>
       </ReqdExctnDt>
@@ -39,40 +43,34 @@
           <BICFI>CRESCHZZ80A</BICFI>
         </FinInstnId>
       </DbtrAgt>
+      <ChrgBr>SLEV</ChrgBr>
       <CdtTrfTxInf>
         <PmtId>
-          <EndToEndId>E2E-b8db0672f42d</EndToEndId>
+          <EndToEndId>E2E-f16287e4e9c3</EndToEndId>
         </PmtId>
         <Amt>
-          <InstdAmt Ccy="CHF">3200</InstdAmt>
+          <InstdAmt Ccy="EUR">4999.99</InstdAmt>
         </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>COBADEFFXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
         <Cdtr>
-          <Nm>Luethi Stauffer  Soehne</Nm>
+          <Nm>Beispiel GmbH</Nm>
           <PstlAdr>
-            <StrtNm>Aebistrasse</StrtNm>
-            <BldgNb>36</BldgNb>
-            <PstCd>3247</PstCd>
-            <TwnNm>Wetzikon</TwnNm>
-            <Ctry>CH</Ctry>
+            <StrtNm>Russell Tunnel</StrtNm>
+            <BldgNb>69</BldgNb>
+            <PstCd>76395</PstCd>
+            <TwnNm>Port Stephaniechester</TwnNm>
+            <Ctry>IT</Ctry>
           </PstlAdr>
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <IBAN>CH3530292423884969653</IBAN>
+            <IBAN>IT7952553419283276483503056</IBAN>
           </Id>
         </CdtrAcct>
-        <RmtInf>
-          <Strd>
-            <CdtrRefInf>
-              <Tp>
-                <CdOrPrtry>
-                  <Prtry>QRR</Prtry>
-                </CdOrPrtry>
-              </Tp>
-              <Ref>871012269166978480184514629</Ref>
-            </CdtrRefInf>
-          </Strd>
-        </RmtInf>
       </CdtTrfTxInf>
     </PmtInf>
   </CstmrCdtTrfInitn>
