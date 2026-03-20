@@ -8,9 +8,20 @@ from src.data_factory.iban import is_qr_iban, validate_iban
 from src.data_factory.reference import validate_scor
 from src.models.testcase import PaymentType, TestCase, Transaction, ValidationResult
 from src.payment_types.base import PaymentTypeHandler
+from src.validation.rule_catalog import get_rule
 
 DOMESTIC_MAX_AMOUNT = Decimal("9999999999.99")
 DOMESTIC_MIN_AMOUNT = Decimal("0.01")
+
+
+def _check(rule_id: str, passed: bool, details: str = None) -> ValidationResult:
+    rule = get_rule(rule_id)
+    return ValidationResult(
+        rule_id=rule.rule_id,
+        rule_description=rule.description,
+        passed=passed,
+        details=details,
+    )
 
 
 class DomesticIbanHandler(PaymentTypeHandler):
@@ -29,51 +40,41 @@ class DomesticIbanHandler(PaymentTypeHandler):
     ) -> List[ValidationResult]:
         results = []
 
-        # BR-IBAN-004: Währung CHF (prüfe tatsächliche Transaktionswährung)
         for tx in transactions:
-            results.append(ValidationResult(
-                rule_id="BR-IBAN-004",
-                rule_description="Währung muss CHF sein",
-                passed=tx.currency == "CHF",
-                details=f"Währung ist '{tx.currency}'" if tx.currency != "CHF" else None,
+            # BR-IBAN-004: Währung CHF
+            results.append(_check(
+                "BR-IBAN-004", tx.currency == "CHF",
+                f"Währung ist '{tx.currency}'" if tx.currency != "CHF" else None,
             ))
 
         # BR-IBAN-005: SvcLvl ≠ SEPA
         svc_lvl = testcase.overrides.get("SvcLvl.Cd", "")
-        results.append(ValidationResult(
-            rule_id="BR-IBAN-005",
-            rule_description="SvcLvl darf nicht 'SEPA' sein",
-            passed=svc_lvl != "SEPA",
-            details="SvcLvl ist 'SEPA'" if svc_lvl == "SEPA" else None,
+        results.append(_check(
+            "BR-IBAN-005", svc_lvl != "SEPA",
+            "SvcLvl ist 'SEPA'" if svc_lvl == "SEPA" else None,
         ))
 
         for tx in transactions:
             # BR-IBAN-001: Reguläre CH-IBAN (nicht QR)
-            results.append(ValidationResult(
-                rule_id="BR-IBAN-001",
-                rule_description="Creditor darf keine QR-IBAN haben",
-                passed=not is_qr_iban(tx.creditor_iban),
-                details=f"IBAN '{tx.creditor_iban}' ist eine QR-IBAN" if is_qr_iban(tx.creditor_iban) else None,
+            results.append(_check(
+                "BR-IBAN-001", not is_qr_iban(tx.creditor_iban),
+                f"IBAN '{tx.creditor_iban}' ist eine QR-IBAN" if is_qr_iban(tx.creditor_iban) else None,
             ))
 
             # BR-IBAN-002: Keine QRR
             ref_info = tx.remittance_info or {}
             ref_type = ref_info.get("type", "")
-            results.append(ValidationResult(
-                rule_id="BR-IBAN-002",
-                rule_description="QR-Referenz ist bei regulärer IBAN nicht zulässig",
-                passed=ref_type != "QRR",
-                details="QRR-Referenz bei regulärer IBAN gefunden" if ref_type == "QRR" else None,
+            results.append(_check(
+                "BR-IBAN-002", ref_type != "QRR",
+                "QRR-Referenz bei regulärer IBAN gefunden" if ref_type == "QRR" else None,
             ))
 
             # BR-IBAN-003: SCOR validieren wenn vorhanden
             ref_value = ref_info.get("value", "")
             if ref_type == "SCOR":
-                results.append(ValidationResult(
-                    rule_id="BR-IBAN-003",
-                    rule_description="SCOR-Referenz muss formal valide sein (RF + Mod-97)",
-                    passed=validate_scor(ref_value),
-                    details=f"SCOR '{ref_value}' ist ungültig" if not validate_scor(ref_value) else None,
+                results.append(_check(
+                    "BR-IBAN-003", validate_scor(ref_value),
+                    f"SCOR '{ref_value}' ist ungültig" if not validate_scor(ref_value) else None,
                 ))
 
         return results

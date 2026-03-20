@@ -7,6 +7,17 @@ from src.data_factory.generator import DataFactory
 from src.data_factory.iban import validate_iban
 from src.models.testcase import PaymentType, TestCase, Transaction, ValidationResult
 from src.payment_types.base import PaymentTypeHandler
+from src.validation.rule_catalog import get_rule
+
+
+def _check(rule_id: str, passed: bool, details: str = None) -> ValidationResult:
+    rule = get_rule(rule_id)
+    return ValidationResult(
+        rule_id=rule.rule_id,
+        rule_description=rule.description,
+        passed=passed,
+        details=details,
+    )
 
 
 class CbprPlusHandler(PaymentTypeHandler):
@@ -27,29 +38,23 @@ class CbprPlusHandler(PaymentTypeHandler):
 
         # BR-CBPR-002: SvcLvl ≠ SEPA
         svc_lvl = testcase.overrides.get("SvcLvl.Cd", "")
-        results.append(ValidationResult(
-            rule_id="BR-CBPR-002",
-            rule_description="SvcLvl darf nicht 'SEPA' sein",
-            passed=svc_lvl != "SEPA",
-            details="SvcLvl ist 'SEPA'" if svc_lvl == "SEPA" else None,
+        results.append(_check(
+            "BR-CBPR-002", svc_lvl != "SEPA",
+            "SvcLvl ist 'SEPA'" if svc_lvl == "SEPA" else None,
         ))
 
-        # BR-CBPR-001: Währung vom User (muss explizit angegeben sein)
-        results.append(ValidationResult(
-            rule_id="BR-CBPR-001",
-            rule_description="Währung muss explizit angegeben sein",
-            passed=bool(testcase.currency),
-            details="Keine Währung angegeben" if not testcase.currency else None,
+        # BR-CBPR-001: Währung muss angegeben sein
+        results.append(_check(
+            "BR-CBPR-001", bool(testcase.currency),
+            "Keine Währung angegeben" if not testcase.currency else None,
         ))
 
         for tx in transactions:
-            # BR-CBPR-005: Creditor-Agent Pflicht (prüfe tatsächliche Transaktionsdaten)
+            # BR-CBPR-005: Creditor-Agent Pflicht
             has_bic = bool(tx.creditor_bic)
-            results.append(ValidationResult(
-                rule_id="BR-CBPR-005",
-                rule_description="Creditor-Agent (BIC) muss angegeben werden",
-                passed=has_bic,
-                details=(
+            results.append(_check(
+                "BR-CBPR-005", has_bic,
+                (
                     "Creditor-Agent (BIC) fehlt. Bitte 'CdtrAgt.BICFI=<BIC>' "
                     "in 'Weitere Testdaten' angeben."
                 ) if not has_bic else None,

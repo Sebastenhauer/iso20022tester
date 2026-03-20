@@ -7,9 +7,20 @@ from src.data_factory.generator import DataFactory
 from src.data_factory.iban import validate_iban
 from src.models.testcase import PaymentType, TestCase, Transaction, ValidationResult
 from src.payment_types.base import PaymentTypeHandler
+from src.validation.rule_catalog import get_rule
 
 SEPA_MAX_AMOUNT = Decimal("999999999.99")
 SEPA_MIN_AMOUNT = Decimal("0.01")
+
+
+def _check(rule_id: str, passed: bool, details: str = None) -> ValidationResult:
+    rule = get_rule(rule_id)
+    return ValidationResult(
+        rule_id=rule.rule_id,
+        rule_description=rule.description,
+        passed=passed,
+        details=details,
+    )
 
 
 class SepaHandler(PaymentTypeHandler):
@@ -34,39 +45,30 @@ class SepaHandler(PaymentTypeHandler):
     ) -> List[ValidationResult]:
         results = []
 
-        # BR-SEPA-001: Währung EUR (prüfe tatsächliche Transaktionswährung)
         for tx in transactions:
-            results.append(ValidationResult(
-                rule_id="BR-SEPA-001",
-                rule_description="Währung muss EUR sein",
-                passed=tx.currency == "EUR",
-                details=f"Währung ist '{tx.currency}'" if tx.currency != "EUR" else None,
+            # BR-SEPA-001: Währung EUR
+            results.append(_check(
+                "BR-SEPA-001", tx.currency == "EUR",
+                f"Währung ist '{tx.currency}'" if tx.currency != "EUR" else None,
             ))
 
-        # BR-SEPA-006: Betragsgrenzen
-        for tx in transactions:
-            results.append(ValidationResult(
-                rule_id="BR-SEPA-006",
-                rule_description="Betrag muss zwischen 0.01 und 999'999'999.99 liegen",
-                passed=SEPA_MIN_AMOUNT <= tx.amount <= SEPA_MAX_AMOUNT,
-                details=f"Betrag ist {tx.amount}" if not (SEPA_MIN_AMOUNT <= tx.amount <= SEPA_MAX_AMOUNT) else None,
+            # BR-SEPA-006: Betragsgrenzen
+            in_range = SEPA_MIN_AMOUNT <= tx.amount <= SEPA_MAX_AMOUNT
+            results.append(_check(
+                "BR-SEPA-006", in_range,
+                f"Betrag ist {tx.amount}" if not in_range else None,
             ))
 
-        for tx in transactions:
             # BR-SEPA-004: Creditor-Name max 70
-            results.append(ValidationResult(
-                rule_id="BR-SEPA-004",
-                rule_description="Creditor-Name max. 70 Zeichen",
-                passed=len(tx.creditor_name) <= 70,
-                details=f"Name hat {len(tx.creditor_name)} Zeichen" if len(tx.creditor_name) > 70 else None,
+            results.append(_check(
+                "BR-SEPA-004", len(tx.creditor_name) <= 70,
+                f"Name hat {len(tx.creditor_name)} Zeichen" if len(tx.creditor_name) > 70 else None,
             ))
 
             # BR-SEPA-005: Creditor IBAN
-            results.append(ValidationResult(
-                rule_id="BR-SEPA-005",
-                rule_description="Creditor muss eine gültige IBAN haben",
-                passed=validate_iban(tx.creditor_iban),
-                details=f"IBAN '{tx.creditor_iban}' ist ungültig" if not validate_iban(tx.creditor_iban) else None,
+            results.append(_check(
+                "BR-SEPA-005", validate_iban(tx.creditor_iban),
+                f"IBAN '{tx.creditor_iban}' ist ungültig" if not validate_iban(tx.creditor_iban) else None,
             ))
 
         return results

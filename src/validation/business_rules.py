@@ -1,8 +1,12 @@
-"""Business-Rule-Engine: Übergreifende Regeln und Orchestrierung."""
+"""Business-Rule-Engine: Übergreifende Regeln und Orchestrierung.
 
-import re
+Alle Rule-Metadaten kommen aus dem zentralen `rule_catalog`.
+Diese Datei enthält nur die Validierungs- und Violation-Logik.
+"""
+
+import random
 from decimal import Decimal
-from typing import Dict, List, Optional
+from typing import List
 
 from src.data_factory.generator import validate_sps_charset
 from src.data_factory.iban import validate_iban, validate_iban_length
@@ -18,10 +22,27 @@ from src.payment_types.cbpr_plus import CbprPlusHandler
 from src.payment_types.domestic_iban import DomesticIbanHandler
 from src.payment_types.domestic_qr import DomesticQrHandler
 from src.payment_types.sepa import SepaHandler
+from src.validation.rule_catalog import get_rule
 
-# Referenzfeld-Zeichensatz: kein "/" am Anfang/Ende, kein "//"
-_REF_PATTERN = re.compile(r"^(?!/)[^/]{0,}(?<!/)((?!//).)*/?((?<!/).)$|^[^/]$|^$")
 
+# ---------------------------------------------------------------------------
+# Hilfsfunktion: ValidationResult aus Katalog erstellen
+# ---------------------------------------------------------------------------
+
+def _check(rule_id: str, passed: bool, details: str = None) -> ValidationResult:
+    """Erstellt ein ValidationResult mit Beschreibung aus dem Katalog."""
+    rule = get_rule(rule_id)
+    return ValidationResult(
+        rule_id=rule.rule_id,
+        rule_description=rule.description,
+        passed=passed,
+        details=details,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Referenzfeld-Zeichensatz
+# ---------------------------------------------------------------------------
 
 def _validate_ref_charset(value: str) -> bool:
     """Prüft Referenzfeld-Zeichensatz (BR-GEN-009)."""
@@ -34,6 +55,10 @@ def _validate_ref_charset(value: str) -> bool:
     return True
 
 
+# ---------------------------------------------------------------------------
+# Handler-Lookup
+# ---------------------------------------------------------------------------
+
 def _get_handler(payment_type: PaymentType) -> PaymentTypeHandler:
     """Gibt den passenden Handler für einen Zahlungstyp zurück."""
     handlers = {
@@ -45,6 +70,10 @@ def _get_handler(payment_type: PaymentType) -> PaymentTypeHandler:
     return handlers[payment_type]
 
 
+# ---------------------------------------------------------------------------
+# Validierung: Übergreifende Regeln
+# ---------------------------------------------------------------------------
+
 def validate_general_rules(
     instruction: PaymentInstruction,
     testcase: TestCase,
@@ -53,35 +82,21 @@ def validate_general_rules(
     results = []
     txs = instruction.transactions
 
-    # BR-HDR-002: NbOfTxs Konsistenz (GrpHdr)
-    results.append(ValidationResult(
-        rule_id="BR-HDR-002",
-        rule_description="NbOfTxs im GrpHdr = Summe aller Transaktionen",
-        passed=True,  # Wird vom Builder korrekt gesetzt
-    ))
+    # BR-HDR-002: NbOfTxs Konsistenz (vom Builder sichergestellt)
+    results.append(_check("BR-HDR-002", True))
 
-    # BR-HDR-003: CtrlSum Konsistenz
-    results.append(ValidationResult(
-        rule_id="BR-HDR-003",
-        rule_description="CtrlSum im GrpHdr = Summe aller Beträge",
-        passed=True,  # Wird vom Builder korrekt gesetzt
-    ))
+    # BR-HDR-003: CtrlSum Konsistenz (vom Builder sichergestellt)
+    results.append(_check("BR-HDR-003", True))
 
     # BR-HDR-004: InitgPty vorhanden
-    results.append(ValidationResult(
-        rule_id="BR-HDR-004",
-        rule_description="InitgPty/Nm muss gesetzt sein",
-        passed=bool(instruction.debtor.name),
-        details="InitgPty/Nm fehlt" if not instruction.debtor.name else None,
+    has_name = bool(instruction.debtor.name)
+    results.append(_check(
+        "BR-HDR-004", has_name,
+        "InitgPty/Nm fehlt" if not has_name else None,
     ))
 
     # BR-GEN-005: ReqdExctnDt Bankarbeitstag
-    # Wird bei der Generierung sichergestellt, hier nur Plausibilitätsprüfung
-    results.append(ValidationResult(
-        rule_id="BR-GEN-005",
-        rule_description="ReqdExctnDt muss ein Bankarbeitstag sein",
-        passed=bool(instruction.reqd_exctn_dt),
-    ))
+    results.append(_check("BR-GEN-005", bool(instruction.reqd_exctn_dt)))
 
     # BR-GEN-009: Referenzfeld-Zeichensatz
     ref_fields = [
@@ -94,26 +109,20 @@ def validate_general_rules(
     for field_name, value in ref_fields:
         if value:
             valid = _validate_ref_charset(value)
-            results.append(ValidationResult(
-                rule_id="BR-GEN-009",
-                rule_description=f"Referenzfeld-Zeichensatz für {field_name}",
-                passed=valid,
-                details=f"{field_name}='{value}' verletzt Zeichensatz-Regeln" if not valid else None,
+            results.append(_check(
+                "BR-GEN-009", valid,
+                f"{field_name}='{value}' verletzt Zeichensatz-Regeln" if not valid else None,
             ))
 
     # BR-GEN-010: Betrag > 0
     for tx in txs:
-        results.append(ValidationResult(
-            rule_id="BR-GEN-010",
-            rule_description="Betrag muss > 0 sein",
-            passed=tx.amount > 0,
-            details=f"Betrag ist {tx.amount}" if tx.amount <= 0 else None,
+        results.append(_check(
+            "BR-GEN-010", tx.amount > 0,
+            f"Betrag ist {tx.amount}" if tx.amount <= 0 else None,
         ))
 
     # BR-GEN-012: SPS-Zeichensatz
-    text_fields = [
-        ("Debtor Name", instruction.debtor.name),
-    ]
+    text_fields = [("Debtor Name", instruction.debtor.name)]
     for tx in txs:
         text_fields.append(("Creditor Name", tx.creditor_name))
         if tx.creditor_address:
@@ -122,15 +131,11 @@ def validate_general_rules(
                     text_fields.append((f"Creditor {key}", val))
 
     for field_name, value in text_fields:
-        if value:
-            valid = validate_sps_charset(value)
-            if not valid:
-                results.append(ValidationResult(
-                    rule_id="BR-GEN-012",
-                    rule_description=f"SPS-Zeichensatz für {field_name}",
-                    passed=False,
-                    details=f"'{value}' enthält ungültige Zeichen",
-                ))
+        if value and not validate_sps_charset(value):
+            results.append(_check(
+                "BR-GEN-012", False,
+                f"'{value}' enthält ungültige Zeichen",
+            ))
 
     # BR-IBAN-V01 / V02: IBAN-Validierung
     iban_fields = [("Debtor IBAN", instruction.debtor.iban)]
@@ -138,21 +143,21 @@ def validate_general_rules(
         iban_fields.append(("Creditor IBAN", tx.creditor_iban))
 
     for field_name, iban in iban_fields:
-        results.append(ValidationResult(
-            rule_id="BR-IBAN-V01",
-            rule_description=f"IBAN Mod-97 Prüfziffer für {field_name}",
-            passed=validate_iban(iban),
-            details=f"IBAN '{iban}' ist ungültig" if not validate_iban(iban) else None,
+        results.append(_check(
+            "BR-IBAN-V01", validate_iban(iban),
+            f"IBAN '{iban}' ist ungültig" if not validate_iban(iban) else None,
         ))
-        results.append(ValidationResult(
-            rule_id="BR-IBAN-V02",
-            rule_description=f"IBAN-Länge für {field_name}",
-            passed=validate_iban_length(iban),
-            details=f"IBAN '{iban}' hat falsche Länge" if not validate_iban_length(iban) else None,
+        results.append(_check(
+            "BR-IBAN-V02", validate_iban_length(iban),
+            f"IBAN '{iban}' hat falsche Länge" if not validate_iban_length(iban) else None,
         ))
 
     return results
 
+
+# ---------------------------------------------------------------------------
+# Orchestrierung
+# ---------------------------------------------------------------------------
 
 def validate_all_business_rules(
     instruction: PaymentInstruction,
@@ -160,16 +165,17 @@ def validate_all_business_rules(
 ) -> List[ValidationResult]:
     """Führt alle Business-Rule-Validierungen durch."""
     results = []
-
-    # Übergreifende Regeln
     results.extend(validate_general_rules(instruction, testcase))
 
-    # Zahlungstyp-spezifische Regeln
     handler = _get_handler(testcase.payment_type)
     results.extend(handler.validate(testcase, instruction.transactions))
 
     return results
 
+
+# ---------------------------------------------------------------------------
+# Violation-Funktionen (Negative Testing)
+# ---------------------------------------------------------------------------
 
 def apply_rule_violation(
     testcase: TestCase,
@@ -205,12 +211,15 @@ def apply_rule_violation(
     return instruction
 
 
+def _update_all_transactions(instr, **updates):
+    """Hilfsfunktion: Aktualisiert alle Transaktionen in einer Instruction."""
+    txs = [tx.model_copy(update=updates) for tx in instr.transactions]
+    return instr.model_copy(update={"transactions": txs})
+
+
 def _violate_sepa_currency(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-SEPA-001: Setzt Währung auf CHF statt EUR."""
-    txs = []
-    for tx in instr.transactions:
-        txs.append(tx.model_copy(update={"currency": "CHF"}))
-    return instr.model_copy(update={"transactions": txs})
+    return _update_all_transactions(instr, currency="CHF")
 
 
 def _violate_sepa_charge_bearer(instr: PaymentInstruction) -> PaymentInstruction:
@@ -220,82 +229,54 @@ def _violate_sepa_charge_bearer(instr: PaymentInstruction) -> PaymentInstruction
 
 def _violate_sepa_name_length(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-SEPA-004: Setzt einen zu langen Creditor-Namen."""
-    txs = []
-    for tx in instr.transactions:
-        txs.append(tx.model_copy(update={"creditor_name": "A" * 71}))
-    return instr.model_copy(update={"transactions": txs})
+    return _update_all_transactions(instr, creditor_name="A" * 71)
 
 
 def _violate_qr_reference(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-QR-002: Entfernt die QRR-Referenz."""
-    txs = []
-    for tx in instr.transactions:
-        txs.append(tx.model_copy(update={"remittance_info": None}))
-    return instr.model_copy(update={"transactions": txs})
+    return _update_all_transactions(instr, remittance_info=None)
 
 
 def _violate_qr_scor(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-QR-003: Setzt SCOR-Referenz bei QR-IBAN."""
-    txs = []
-    for tx in instr.transactions:
-        txs.append(tx.model_copy(update={
-            "remittance_info": {"type": "SCOR", "value": "RF18539007547034"}
-        }))
-    return instr.model_copy(update={"transactions": txs})
+    return _update_all_transactions(
+        instr, remittance_info={"type": "SCOR", "value": "RF18539007547034"},
+    )
 
 
 def _violate_qr_currency(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-QR-004: Setzt Währung auf USD."""
-    txs = []
-    for tx in instr.transactions:
-        txs.append(tx.model_copy(update={"currency": "USD"}))
-    return instr.model_copy(update={"transactions": txs})
+    return _update_all_transactions(instr, currency="USD")
 
 
 def _violate_iban_qr(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-IBAN-001: Setzt eine QR-IBAN als Creditor."""
-    import random
     from src.data_factory.iban import generate_ch_iban
     rng = random.Random(42)
     qr_iban = generate_ch_iban(rng, qr=True)
-    txs = []
-    for tx in instr.transactions:
-        txs.append(tx.model_copy(update={"creditor_iban": qr_iban}))
-    return instr.model_copy(update={"transactions": txs})
+    return _update_all_transactions(instr, creditor_iban=qr_iban)
 
 
 def _violate_iban_qrr(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-IBAN-002: Setzt QRR-Referenz bei regulärer IBAN."""
     from src.data_factory.reference import generate_qrr
-    import random
     rng = random.Random(42)
-    txs = []
-    for tx in instr.transactions:
-        txs.append(tx.model_copy(update={
-            "remittance_info": {"type": "QRR", "value": generate_qrr(rng)}
-        }))
-    return instr.model_copy(update={"transactions": txs})
+    qrr = generate_qrr(rng)
+    return _update_all_transactions(
+        instr, remittance_info={"type": "QRR", "value": qrr},
+    )
 
 
 def _violate_iban_currency(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-IBAN-004: Setzt Währung auf EUR statt CHF."""
-    txs = []
-    for tx in instr.transactions:
-        txs.append(tx.model_copy(update={"currency": "EUR"}))
-    return instr.model_copy(update={"transactions": txs})
+    return _update_all_transactions(instr, currency="EUR")
 
 
 def _violate_cbpr_currency(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-CBPR-001: Entfernt die Währung (leerer String)."""
-    txs = []
-    for tx in instr.transactions:
-        txs.append(tx.model_copy(update={"currency": ""}))
-    return instr.model_copy(update={"transactions": txs})
+    return _update_all_transactions(instr, currency="")
 
 
 def _violate_cbpr_agent(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-CBPR-005: Entfernt den Creditor-Agent BIC."""
-    txs = []
-    for tx in instr.transactions:
-        txs.append(tx.model_copy(update={"creditor_bic": None}))
-    return instr.model_copy(update={"transactions": txs})
+    return _update_all_transactions(instr, creditor_bic=None)
