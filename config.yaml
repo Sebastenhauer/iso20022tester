@@ -1,0 +1,11 @@
+# Ausgabepfad für generierte XML-Dateien und Reports
+output_path: "./output"
+
+# Pfad zum XSD-Schema (relativ zum Projektroot)
+xsd_path: "schemas/pain.001.001.09.ch.03.xsd"
+
+# Seed für reproduzierbare Zufallsdaten (optional, null = zufällig)
+seed: null
+
+# Report-Format: "docx" oder "txt"
+report_format: "docx"

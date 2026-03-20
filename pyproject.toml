@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "iso20022tester"
+version = "0.1.0"
+description = "ISO 20022 pain.001.001.09 Test Generator based on Swiss Payment Standards 2025"
+authors = ["Sebastian Strub <sebastian@sebastianstrub.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+lxml = "^5.0"
+openpyxl = "^3.1"
+faker = "^37.0"
+python-docx = "^1.1"
+pyyaml = "^6.0"
+pydantic = "^2.0"
+workalendar = "^17.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+pytest-cov = "^6.0"
+
+[tool.poetry.scripts]
+pain001-generator = "src.main:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
