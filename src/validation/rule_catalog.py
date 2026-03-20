@@ -263,7 +263,7 @@ BR_CBPR_001 = _r(
     "Währung muss explizit angegeben sein",
     _CBPR,
     "Business Rules SPS 2025 Tabelle 3, Typ X",
-    violatable=True,
+    violatable=False,  # Input-Level-Prüfung, nicht via XML verletzbar (Ccy ist XSD-Pflichtattribut)
 )
 
 BR_CBPR_002 = _r(
