@@ -74,7 +74,7 @@ Das System ermöglicht das automatisierte Erstellen von ISO 20022 pain.001 XML-Z
 | FR-03 | MUSS | Zeilen ohne `TestcaseID` werden übersprungen (keine Fehlermeldung). |
 | FR-04 | MUSS | Die Excel-Datei enthält folgende Pflicht-Spalten (Reihenfolge fix): `TestcaseID`, `Titel`, `Ziel`, `Erwartetes Ergebnis`, `Zahlungstyp`, `Betrag`, `Währung`, `Debtor Infos`, `Weitere Testdaten`, `Erwartete API-Antwort`, `Ergebnis (OK/NOK)`, `Bemerkungen` |
 | FR-05 | MUSS | Das System validiert beim Start, ob alle Pflicht-Spalten vorhanden sind. Bei fehlenden Spalten wird ein Fehler ausgegeben und der Lauf abgebrochen. |
-| FR-06 | MUSS | `Debtor Infos` enthält strukturierten Freitext im Format `Key=Value; Key=Value`, z.B. `IBAN=CH5604835012345678009; Name=Muster AG; Strasse=Bahnhofstrasse 1; PLZ=8001; Ort=Zürich`. |
+| FR-06 | MUSS | `Debtor Infos` enthält strukturierten Freitext im Format `Key=Value; Key=Value`, z.B. `IBAN=CH5604835012345678009; Name=Muster AG; Strasse=Bahnhofstrasse 1; PLZ=8001; Ort=Zürich`. Pflicht-Keys: `IBAN`, `Name`. Optional: `BIC`, `Strasse`, `Hausnummer`, `PLZ`, `Ort`, `Land` (Default: CH). Es gibt keinen Default-Debtor — alle Debtor-Daten werden vollständig aus dem Excel eingelesen. |
 | FR-07 | MUSS | `Weitere Testdaten` enthält Key=Value-Paare als Freitext, z.B. `ChrgBr=OUR; Cdtr.Nm=Müller AG`. Diese Werte überschreiben Defaults und Zufallswerte. |
 | FR-08 | MUSS | `Zahlungstyp` enthält einen der Werte: `SEPA`, `Domestic-QR`, `Domestic-IBAN`, `CBPR+`. |
 | FR-09 | MUSS | `Erwartetes Ergebnis` enthält einen der Werte: `OK` oder `NOK`. |
@@ -102,6 +102,8 @@ Das System ermöglicht das automatisierte Erstellen von ISO 20022 pain.001 XML-Z
 | FR-28 | MUSS | Zufällig generierte IBANs sind prüfziffervalide (Mod-97-Algorithmus). |
 | FR-29 | MUSS | User-Overrides aus `Weitere Testdaten` überschreiben alle Defaults und Zufallswerte. |
 | FR-30 | MUSS | Bei negativen Testfällen (`Erwartetes Ergebnis = NOK`) darf das Schema (XSD) nicht verletzt werden. Business Rules können gezielt verletzt werden. |
+| FR-30a | MUSS | `PmtMtd` ist immer `TRF` (Transfer). Bank Checks (`CHK`) werden in Phase 1 nicht unterstützt. |
+| FR-30b | MUSS | Alle Textfelder werden gegen den SPS-Zeichensatz (Latin-1 Subset: `a-z A-Z 0-9 / - ? : ( ) . , ' +`) validiert. Ungültige Zeichen in User-Eingaben erzeugen eine Fehlermeldung. |
 | FR-31 | SOLL | Reproduzierbarkeit: Bei gleichem Excel-Input und gleichem Seed werden identische Zufallswerte generiert (konfigurierbar). Der Seed gilt global pro Testlauf und beeinflusst alle zufällig generierten Werte (Feldwerte wie Namen, Adressen, IBANs) sowie automatisch generierte IDs (`MsgId`, `PmtInfId`, `EndToEndId`). `CreDtTm` ist vom Seed ausgenommen und spiegelt immer den tatsächlichen Generierungszeitpunkt. |
 | FR-32 | KANN | Mehrere Transaktionen pro Datei: Standard ist 1 Transaktion. Mehrere Transaktionen via `TxCount=<n>` in `Weitere Testdaten` möglich (Phase 1, zweiter Schritt, siehe FR-13). |
 
@@ -123,7 +125,7 @@ Das System ermöglicht das automatisierte Erstellen von ISO 20022 pain.001 XML-Z
 | Req-ID | Priorität | Anforderung |
 |--------|-----------|-------------|
 | FR-50 | MUSS | Creditor: QR-IBAN (Pflicht). |
-| FR-51 | MUSS | Referenz: QRR oder SCOR (Pflicht, wird zufällig generiert falls nicht angegeben). |
+| FR-51 | MUSS | Referenz: QRR (Pflicht bei QR-IBAN, wird zufällig generiert falls nicht angegeben). SCOR ist bei QR-IBAN **nicht** zulässig. SCOR kann optional bei regulärer IBAN mitgegeben werden. |
 | FR-52 | MUSS | Währung: CHF oder EUR. |
 | FR-53 | MUSS | `SvcLvl/Cd`: wird gemäss SPS-Vorgaben gesetzt. |
 | FR-54 | MUSS | Creditor-Adresse: strukturiert oder unstrukturiert gemäss SPS. |
@@ -142,7 +144,7 @@ Das System ermöglicht das automatisierte Erstellen von ISO 20022 pain.001 XML-Z
 |--------|-----------|-------------|
 | FR-70 | MUSS | Zahlungstyp für alle Zahlungen ausserhalb SEPA-Raum und ausserhalb CHF-Inland. |
 | FR-71 | MUSS | Währung und Zielland werden vom User vorgegeben (kein Default). |
-| FR-72 | MUSS | Creditor-BIC oder Clearing-System-Identifikation: gemäss SPS/CBPR+-Vorgaben. |
+| FR-72 | MUSS | Creditor-BIC oder Clearing-System-Identifikation: gemäss SPS/CBPR+-Vorgaben. Muss vom User im Excel via `Weitere Testdaten` angegeben werden (z.B. `CdtrAgt.BICFI=BNPAFRPP`). Das System gibt eine verständliche Fehlermeldung aus, wenn der Creditor-Agent bei CBPR+ fehlt. |
 | FR-73 | MUSS | `SvcLvl` und `LclInstrm`: gemäss CBPR+-Regelwerk. |
 
 ---
@@ -222,7 +224,7 @@ Das System ermöglicht das automatisierte Erstellen von ISO 20022 pain.001 XML-Z
 | OP-03 | Laufumgebung | Entscheid: nur lokal oder auch containerisiert (Docker)? | Offen | Offen |
 | OP-04 | Phase 2 API | Spezifikation der Banking-API: Endpunkt, Authentifizierung, Response-Format. | Offen | Nach Phase-1-Abnahme |
 | OP-05 | Report-Format | ~~Entscheid: Zusammenfassung als `.txt` oder `.docx`?~~ **Entschieden: `.docx` bevorzugt, `.txt` als konfigurierbarer Fallback (FR-94).** | Geschlossen | — |
-| OP-06 | Business Rule Engine | Die SPS-Dokumente enthalten keine maschinenlesbaren Rule-IDs. Business Rules werden als Code-Module mit internen IDs implementiert. Vollständige Abdeckung aller relevanten Regeln aus `business-rules-sps-2025-de.md` und `ig-credit-transfer-sps-2025-de.md` muss vor Implementierungsstart definiert werden. | Offen | Vor Implementierungsstart |
+| OP-06 | Business Rule Engine | Die SPS-Dokumente enthalten keine maschinenlesbaren Rule-IDs. Business Rules werden als Code-Module mit internen IDs implementiert. **Entschieden:** Regeln werden direkt aus den SPS-Textdateien abgeleitet. Vollständiger Regelkatalog ist in SDD v2.1 §5.7 dokumentiert. | Geschlossen | — |
 
 ---
 
