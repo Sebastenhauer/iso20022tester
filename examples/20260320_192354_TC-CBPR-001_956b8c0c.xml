@@ -2,20 +2,19 @@
 <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <MsgId>MSG-7d106c608162</MsgId>
-      <CreDtTm>2026-03-20T16:00:02.489424</CreDtTm>
+      <MsgId>MSG-3f07f81491d6</MsgId>
+      <CreDtTm>2026-03-20T19:23:54.861195</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>500000</CtrlSum>
+      <CtrlSum>10000</CtrlSum>
       <InitgPty>
         <Nm>Muster AG</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>PMT-d89a40c0e87d</PmtInfId>
+      <PmtInfId>PMT-9e8fc9650a2c</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>500000</CtrlSum>
-      <PmtTpInf/>
+      <CtrlSum>10000</CtrlSum>
       <ReqdExctnDt>
         <Dt>2026-03-23</Dt>
       </ReqdExctnDt>
@@ -41,29 +40,29 @@
       </DbtrAgt>
       <CdtTrfTxInf>
         <PmtId>
-          <EndToEndId>E2E-a25d6b29afff</EndToEndId>
+          <EndToEndId>E2E-1eb0e38a675d</EndToEndId>
         </PmtId>
         <Amt>
-          <InstdAmt Ccy="JPY">500000</InstdAmt>
+          <InstdAmt Ccy="USD">10000</InstdAmt>
         </Amt>
         <CdtrAgt>
           <FinInstnId>
-            <BICFI>BOABORJ1</BICFI>
+            <BICFI>BNPAFRPP</BICFI>
           </FinInstnId>
         </CdtrAgt>
         <Cdtr>
-          <Nm>Ackermann Kaegi GmbH</Nm>
+          <Nm>Naef Frick  Soehne</Nm>
           <PstlAdr>
-            <StrtNm>Hernandez Hill</StrtNm>
-            <BldgNb>184</BldgNb>
-            <PstCd>56265</PstCd>
-            <TwnNm>Port Michelle</TwnNm>
+            <StrtNm>May Locks</StrtNm>
+            <BldgNb>173</BldgNb>
+            <PstCd>93439</PstCd>
+            <TwnNm>Lake Jeffreyshire</TwnNm>
             <Ctry>GB</Ctry>
           </PstlAdr>
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <IBAN>GB39849808412411824493</IBAN>
+            <IBAN>GB96980500978820812191</IBAN>
           </Id>
         </CdtrAcct>
       </CdtTrfTxInf>

@@ -2,20 +2,19 @@
 <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <MsgId>MSG-7394988f847f</MsgId>
-      <CreDtTm>2026-03-20T16:00:02.483115</CreDtTm>
+      <MsgId>MSG-5958a499eeea</MsgId>
+      <CreDtTm>2026-03-20T19:23:54.862371</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>890</CtrlSum>
+      <CtrlSum>2500</CtrlSum>
       <InitgPty>
         <Nm>Muster AG</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>PMT-1064005c3985</PmtInfId>
+      <PmtInfId>PMT-3e896c64e117</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>890</CtrlSum>
-      <PmtTpInf/>
+      <CtrlSum>2500</CtrlSum>
       <ReqdExctnDt>
         <Dt>2026-03-23</Dt>
       </ReqdExctnDt>
@@ -41,24 +40,24 @@
       </DbtrAgt>
       <CdtTrfTxInf>
         <PmtId>
-          <EndToEndId>E2E-5f987c71a65e</EndToEndId>
+          <EndToEndId>E2E-8181a8cc3691</EndToEndId>
         </PmtId>
         <Amt>
-          <InstdAmt Ccy="CHF">890</InstdAmt>
+          <InstdAmt Ccy="GBP">2500</InstdAmt>
         </Amt>
         <Cdtr>
-          <Nm>Roos Braun GmbH</Nm>
+          <Nm>Gerber Walter AG</Nm>
           <PstlAdr>
-            <StrtNm>Aebistrasse</StrtNm>
-            <BldgNb>5</BldgNb>
-            <PstCd>3247</PstCd>
-            <TwnNm>Wetzikon</TwnNm>
-            <Ctry>CH</Ctry>
+            <StrtNm>May Locks</StrtNm>
+            <BldgNb>26</BldgNb>
+            <PstCd>93439</PstCd>
+            <TwnNm>Lake Jeffreyshire</TwnNm>
+            <Ctry>GB</Ctry>
           </PstlAdr>
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <IBAN>CH9530611893252880957</IBAN>
+            <IBAN>GB17985435346247510799</IBAN>
           </Id>
         </CdtrAcct>
       </CdtTrfTxInf>

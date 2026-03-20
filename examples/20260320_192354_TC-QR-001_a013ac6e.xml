@@ -2,20 +2,19 @@
 <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <MsgId>MSG-5958a499eeea</MsgId>
-      <CreDtTm>2026-03-20T16:00:02.488254</CreDtTm>
+      <MsgId>MSG-f8cda88b436d</MsgId>
+      <CreDtTm>2026-03-20T19:23:54.856453</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>2500</CtrlSum>
+      <CtrlSum>3200</CtrlSum>
       <InitgPty>
         <Nm>Muster AG</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>PMT-3e896c64e117</PmtInfId>
+      <PmtInfId>PMT-81f76d1c2dbc</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>2500</CtrlSum>
-      <PmtTpInf/>
+      <CtrlSum>3200</CtrlSum>
       <ReqdExctnDt>
         <Dt>2026-03-23</Dt>
       </ReqdExctnDt>
@@ -41,26 +40,38 @@
       </DbtrAgt>
       <CdtTrfTxInf>
         <PmtId>
-          <EndToEndId>E2E-8181a8cc3691</EndToEndId>
+          <EndToEndId>E2E-b8db0672f42d</EndToEndId>
         </PmtId>
         <Amt>
-          <InstdAmt Ccy="GBP">2500</InstdAmt>
+          <InstdAmt Ccy="CHF">3200</InstdAmt>
         </Amt>
         <Cdtr>
-          <Nm>Ackermann Kaegi GmbH</Nm>
+          <Nm>Seiler  Cie.</Nm>
           <PstlAdr>
-            <StrtNm>Hernandez Hill</StrtNm>
-            <BldgNb>26</BldgNb>
-            <PstCd>56265</PstCd>
-            <TwnNm>Port Michelle</TwnNm>
-            <Ctry>GB</Ctry>
+            <StrtNm>Christenstrasse</StrtNm>
+            <BldgNb>36</BldgNb>
+            <PstCd>3375</PstCd>
+            <TwnNm>Suhr</TwnNm>
+            <Ctry>CH</Ctry>
           </PstlAdr>
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <IBAN>GB17985435346247510799</IBAN>
+            <IBAN>CH3530292423884969653</IBAN>
           </Id>
         </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <Tp>
+                <CdOrPrtry>
+                  <Prtry>QRR</Prtry>
+                </CdOrPrtry>
+              </Tp>
+              <Ref>871012269166978480184514629</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
       </CdtTrfTxInf>
     </PmtInf>
   </CstmrCdtTrfInitn>
