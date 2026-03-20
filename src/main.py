@@ -3,8 +3,9 @@
 import argparse
 import os
 import sys
+from collections import OrderedDict
 from datetime import datetime
-from typing import List
+from typing import Dict, List, Optional, Tuple
 
 from src.config import load_config
 from src.data_factory.generator import DataFactory
@@ -13,6 +14,7 @@ from src.mapping.field_mapper import validate_and_map_overrides
 from src.models.config import AppConfig
 from src.models.testcase import (
     ExpectedResult,
+    Pain001Document,
     PaymentInstruction,
     PaymentType,
     TestCase,
@@ -30,7 +32,11 @@ from src.validation.business_rules import (
     validate_all_business_rules,
 )
 from src.validation.xsd_validator import XsdValidator
-from src.xml_generator.pain001_builder import build_pain001_xml, serialize_xml
+from src.xml_generator.pain001_builder import (
+    build_pain001_document,
+    build_pain001_xml,
+    serialize_xml,
+)
 
 
 def _get_handler(payment_type: PaymentType):
@@ -43,20 +49,20 @@ def _get_handler(payment_type: PaymentType):
     return handlers[payment_type]
 
 
-def _process_testcase(
+def _build_instruction(
     testcase: TestCase,
     factory: DataFactory,
-    xsd_validator: XsdValidator,
-    output_dir: str,
-    verbose: bool = False,
-) -> TestCaseResult:
-    """Verarbeitet einen einzelnen Testfall."""
+) -> Tuple[Optional[PaymentInstruction], Optional[TestCaseResult]]:
+    """Baut eine PaymentInstruction aus einem Testfall.
 
+    Returns:
+        (instruction, None) bei Erfolg, (None, error_result) bei Fehler.
+    """
     # 1. Overrides validieren
     mapped, special, mapping_errors = validate_and_map_overrides(testcase.overrides)
     if mapping_errors:
         error_msgs = [e.message for e in mapping_errors]
-        return TestCaseResult(
+        return None, TestCaseResult(
             testcase_id=testcase.testcase_id,
             titel=testcase.titel,
             payment_type=testcase.payment_type,
@@ -83,7 +89,7 @@ def _process_testcase(
         transactions=transactions,
     )
 
-    # 4. Overrides anwenden (B-Level und C-Level)
+    # 4. Overrides anwenden (B-Level)
     for key, mapping_info in mapped.items():
         value = mapping_info["value"]
         if mapping_info["level"] == "B":
@@ -102,13 +108,26 @@ def _process_testcase(
     if testcase.violate_rule:
         instruction = apply_rule_violation(testcase, instruction)
 
-    # 6. XML generieren
+    return instruction, None
+
+
+def _process_single_testcase(
+    testcase: TestCase,
+    factory: DataFactory,
+    xsd_validator: XsdValidator,
+    output_dir: str,
+    verbose: bool = False,
+) -> TestCaseResult:
+    """Verarbeitet einen einzelnen Testfall (1 Testfall → 1 XML)."""
+    instruction, error_result = _build_instruction(testcase, factory)
+    if error_result:
+        return error_result
+
+    # XML generieren (Einzel-Payment)
     xml_doc = build_pain001_xml(instruction)
 
-    # 7. XSD-Validierung — jedes generierte XML MUSS schema-konform sein.
-    #    Ein XSD-Fehler bedeutet einen Bug im Generator, nicht im Testfall.
+    # XSD-Validierung
     xsd_valid, xsd_errors = xsd_validator.validate(xml_doc)
-
     if not xsd_valid:
         error_detail = "\n".join(f"  - {err}" for err in xsd_errors)
         raise RuntimeError(
@@ -119,21 +138,90 @@ def _process_testcase(
         )
 
     # XML speichern
+    xml_file_path = _save_xml(xml_doc, testcase.testcase_id, factory, output_dir)
+    if verbose:
+        print(f"  XML gespeichert: {xml_file_path}")
+
+    # Business-Rule-Validierung + Pass/Fail
+    return _evaluate_testcase(testcase, instruction, xml_file_path)
+
+
+def _process_group(
+    testcases: List[TestCase],
+    factory: DataFactory,
+    xsd_validator: XsdValidator,
+    output_dir: str,
+    verbose: bool = False,
+) -> List[TestCaseResult]:
+    """Verarbeitet eine Gruppe von Testfällen (N Testfälle → 1 XML mit N PmtInf)."""
+    instructions: List[Tuple[TestCase, PaymentInstruction]] = []
+    results: List[TestCaseResult] = []
+
+    # Instruktionen bauen
+    for tc in testcases:
+        instruction, error_result = _build_instruction(tc, factory)
+        if error_result:
+            results.append(error_result)
+        else:
+            instructions.append((tc, instruction))
+
+    if not instructions:
+        return results
+
+    # Pain001Document zusammenbauen (Multi-Payment)
+    group_id = testcases[0].group_id
+    all_instructions = [instr for _, instr in instructions]
+    first_instr = all_instructions[0]
+
+    document = Pain001Document(
+        msg_id=first_instr.msg_id,
+        cre_dt_tm=first_instr.cre_dt_tm,
+        initiating_party_name=first_instr.debtor.name,
+        payment_instructions=all_instructions,
+    )
+
+    # XML generieren (Multi-Payment)
+    xml_doc = build_pain001_document(document)
+
+    # XSD-Validierung
+    xsd_valid, xsd_errors = xsd_validator.validate(xml_doc)
+    if not xsd_valid:
+        tc_ids = ", ".join(tc.testcase_id for tc, _ in instructions)
+        error_detail = "\n".join(f"  - {err}" for err in xsd_errors)
+        raise RuntimeError(
+            f"XSD-Validierung fehlgeschlagen für Gruppe '{group_id}' "
+            f"(Testfälle: {tc_ids}). "
+            f"Dies deutet auf einen Bug im XML-Generator hin.\n"
+            f"XSD-Fehler:\n{error_detail}"
+        )
+
+    # XML speichern (Dateiname enthält GroupId)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     uuid_short = factory.generate_uuid_short()
-    filename = f"{timestamp}_{testcase.testcase_id}_{uuid_short}.xml"
+    filename = f"{timestamp}_Group-{group_id}_{uuid_short}.xml"
     xml_file_path = os.path.join(output_dir, filename)
     xml_bytes = serialize_xml(xml_doc)
     with open(xml_file_path, "wb") as f:
         f.write(xml_bytes)
 
     if verbose:
-        print(f"  XML gespeichert: {xml_file_path}")
+        print(f"  XML gespeichert (Multi-Payment, {len(instructions)} PmtInf): {xml_file_path}")
 
-    # 8. Business-Rule-Validierung
+    # Business-Rule-Validierung pro Testfall
+    for tc, instr in instructions:
+        result = _evaluate_testcase(tc, instr, xml_file_path)
+        results.append(result)
+
+    return results
+
+
+def _evaluate_testcase(
+    testcase: TestCase,
+    instruction: PaymentInstruction,
+    xml_file_path: str,
+) -> TestCaseResult:
+    """Business-Rule-Validierung und Pass/Fail-Bewertung für einen Testfall."""
     business_rule_results = validate_all_business_rules(instruction, testcase)
-
-    # 9. Pass/Fail-Logik
     all_rules_passed = all(br.passed for br in business_rule_results)
 
     if testcase.expected_result == ExpectedResult.OK:
@@ -153,6 +241,31 @@ def _process_testcase(
         xml_file_path=xml_file_path,
         remarks=testcase.remarks,
     )
+
+
+def _save_xml(
+    xml_doc, testcase_id: str, factory: DataFactory, output_dir: str
+) -> str:
+    """Speichert ein XML-Dokument und gibt den Dateipfad zurück."""
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    uuid_short = factory.generate_uuid_short()
+    filename = f"{timestamp}_{testcase_id}_{uuid_short}.xml"
+    xml_file_path = os.path.join(output_dir, filename)
+    xml_bytes = serialize_xml(xml_doc)
+    with open(xml_file_path, "wb") as f:
+        f.write(xml_bytes)
+    return xml_file_path
+
+
+def _group_testcases(testcases: List[TestCase]) -> List[List[TestCase]]:
+    """Gruppiert Testfälle nach GroupId. Ohne GroupId → Einzelgruppe."""
+    groups: OrderedDict[Optional[str], List[TestCase]] = OrderedDict()
+    for tc in testcases:
+        key = tc.group_id  # None für Einzel-Testfälle
+        if key not in groups:
+            groups[key] = []
+        groups[key].append(tc)
+    return list(groups.values())
 
 
 def run(
@@ -193,16 +306,37 @@ def run(
     os.makedirs(run_dir, exist_ok=True)
     print(f"Output-Verzeichnis: {run_dir}")
 
-    # 5. Testfälle verarbeiten
+    # 5. Testfälle verarbeiten (einzeln oder gruppiert)
     results = []
-    for tc in testcases:
-        if verbose:
-            print(f"\nVerarbeite: {tc.testcase_id} ({tc.payment_type.value})")
-        result = _process_testcase(tc, factory, xsd_validator, run_dir, verbose)
-        results.append(result)
+    groups = _group_testcases(testcases)
 
-        status = "Pass" if result.overall_pass else "Fail"
-        print(f"  {tc.testcase_id}: {status}")
+    for group in groups:
+        is_multi = group[0].group_id is not None and len(group) > 1
+
+        if is_multi:
+            group_id = group[0].group_id
+            if verbose:
+                tc_ids = ", ".join(tc.testcase_id for tc in group)
+                print(f"\nVerarbeite Gruppe '{group_id}': {tc_ids}")
+
+            group_results = _process_group(
+                group, factory, xsd_validator, run_dir, verbose
+            )
+            for result in group_results:
+                results.append(result)
+                status = "Pass" if result.overall_pass else "Fail"
+                print(f"  {result.testcase_id}: {status}")
+        else:
+            # Einzel-Testfälle (auch einzelne mit GroupId)
+            for tc in group:
+                if verbose:
+                    print(f"\nVerarbeite: {tc.testcase_id} ({tc.payment_type.value})")
+                result = _process_single_testcase(
+                    tc, factory, xsd_validator, run_dir, verbose
+                )
+                results.append(result)
+                status = "Pass" if result.overall_pass else "Fail"
+                print(f"  {tc.testcase_id}: {status}")
 
     # 6. Reports generieren
     print(f"\nErstelle Reports...")

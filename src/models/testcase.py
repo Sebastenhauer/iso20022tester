@@ -42,6 +42,7 @@ class TestCase(BaseModel):
     overrides: Dict[str, str] = {}
     violate_rule: Optional[str] = None
     tx_count: int = 1
+    group_id: Optional[str] = None
     expected_api_response: Optional[str] = None
     remarks: Optional[str] = None
 
@@ -71,6 +72,15 @@ class PaymentInstruction(BaseModel):
     category_purpose: Optional[str] = None
     charge_bearer: Optional[str] = None
     transactions: List[Transaction]
+
+
+class Pain001Document(BaseModel):
+    """Repräsentiert ein komplettes pain.001 XML-Dokument mit 1..n PmtInf-Blöcken."""
+
+    msg_id: str
+    cre_dt_tm: str
+    initiating_party_name: str
+    payment_instructions: List[PaymentInstruction]
 
 
 class ValidationResult(BaseModel):

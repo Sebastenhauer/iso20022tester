@@ -185,10 +185,13 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
         overrides = {}
         violate_rule = None
         tx_count = 1
+        group_id = None
         if overrides_raw:
             overrides = parse_key_value_pairs(str(overrides_raw))
             if "ViolateRule" in overrides:
                 violate_rule = overrides.pop("ViolateRule")
+            if "GroupId" in overrides:
+                group_id = overrides.pop("GroupId")
             if "TxCount" in overrides:
                 try:
                     tx_count = int(overrides.pop("TxCount"))
@@ -218,6 +221,7 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
             overrides=overrides,
             violate_rule=violate_rule,
             tx_count=tx_count,
+            group_id=group_id,
             expected_api_response=str(cell("Erwartete API-Antwort") or ""),
             remarks=str(cell("Bemerkungen") or ""),
         ))

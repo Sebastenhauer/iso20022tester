@@ -66,7 +66,7 @@ FIELD_MAPPINGS = {
 }
 
 # Spezial-Keys, die nicht gemappt, sondern separat verarbeitet werden
-SPECIAL_KEYS = {"ViolateRule", "TxCount"}
+SPECIAL_KEYS = {"ViolateRule", "TxCount", "GroupId"}
 
 
 def get_valid_keys() -> list[str]:
