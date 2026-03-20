@@ -13,6 +13,79 @@ Automatisierte Erstellung von ISO 20022-konformen **pain.001.001.09** Zahlungsda
 - **Reporting** — Word (.docx), JSON und JUnit-XML Reports pro Testlauf
 - **Deterministisches Feld-Mapping** — Key=Value Overrides werden auf XML-XPaths gemappt (KI-Mapping vorbereitet)
 
+## Ablauf & Architektur
+
+### Gesamtablauf
+
+```mermaid
+flowchart TD
+    A[CLI-Start] --> B[Config laden]
+    B --> C[Excel parsen & validieren]
+    C --> D{Testfälle vorhanden?}
+    D -- Nein --> E[Abbruch mit Fehler]
+    D -- Ja --> F[Nächster Testfall]
+    F --> G[Mapping: Key→XPath]
+    G --> H[Data Factory: Testdaten generieren]
+    H --> I[XML generieren pain.001]
+    I --> J{XSD valide?}
+    J -- Nein --> K{Erwartetes Ergebnis = NOK?}
+    K -- Ja --> L[✓ Pass]
+    K -- Nein --> M[✗ Fail]
+    J -- Ja --> N[Business Rules prüfen]
+    N --> O{Violations gefunden?}
+    O -- Nein --> P{Erwartetes Ergebnis = OK?}
+    P -- Ja --> Q[✓ Pass]
+    P -- Nein --> R[✗ Fail]
+    O -- Ja --> S{Erwartetes Ergebnis = NOK?}
+    S -- Ja --> T[✓ Pass]
+    S -- Nein --> U[✗ Fail]
+    L & M & Q & R & T & U --> V{Weitere Testfälle?}
+    V -- Ja --> F
+    V -- Nein --> W[Reporting: Word + JSON + JUnit-XML]
+```
+
+### Validierungs- und Pass/Fail-Logik
+
+```mermaid
+flowchart TD
+    A[XML generiert] --> B[Stufe 1: XSD-Validierung]
+    B --> C{XSD valide?}
+    C -- Nein --> D[XSD-Fehler gesammelt]
+    C -- Ja --> E[Stufe 2: Business Rules]
+    E --> F{Rule-Violations?}
+    F -- Nein --> G[Keine Fehler]
+    F -- Ja --> H[Violations gesammelt]
+
+    D & G & H --> I[Pass/Fail-Matrix]
+
+    I --> J["OK + keine Fehler → ✓ Pass"]
+    I --> K["OK + Fehler gefunden → ✗ Fail"]
+    I --> L["NOK + Fehler gefunden → ✓ Pass"]
+    I --> M["NOK + keine Fehler → ✗ Fail"]
+```
+
+### pain.001 XML-Struktur (A/B/C-Level)
+
+```mermaid
+flowchart TD
+    Doc["Document\n(xmlns:pain.001.001.09)"] --> Root["CstmrCdtTrfInitn"]
+    Root --> GrpHdr["A-Level: GrpHdr\n─────────────\nMsgId\nCreDtTm\nNbOfTxs\nCtrlSum\nInitgPty"]
+    Root --> PmtInf1["B-Level: PmtInf\n─────────────\nPmtInfId\nPmtMtd = TRF\nNbOfTxs\nCtrlSum\nReqdExctnDt\nDbtr + DbtrAcct + DbtrAgt"]
+    PmtInf1 --> Tx1["C-Level: CdtTrfTxInf\n─────────────\nPmtId (InstrId, EndToEndId)\nAmt (InstdAmt)\nCdtrAgt\nCdtr + CdtrAcct\nRmtInf (Ref, Ustrd)"]
+    PmtInf1 --> Tx2["C-Level: CdtTrfTxInf\n─────────────\n(weitere Transaktionen\nbei TxCount > 1)"]
+    Root --> PmtInf2["B-Level: PmtInf\n─────────────\n(1 Block pro Testfall)"]
+    PmtInf2 --> Tx3["C-Level: CdtTrfTxInf"]
+
+    style Doc fill:#e1f0ff,stroke:#4a90d9
+    style Root fill:#e1f0ff,stroke:#4a90d9
+    style GrpHdr fill:#d4edda,stroke:#28a745
+    style PmtInf1 fill:#fff3cd,stroke:#ffc107
+    style PmtInf2 fill:#fff3cd,stroke:#ffc107
+    style Tx1 fill:#f8d7da,stroke:#dc3545
+    style Tx2 fill:#f8d7da,stroke:#dc3545
+    style Tx3 fill:#f8d7da,stroke:#dc3545
+```
+
 ## Voraussetzungen
 
 - Python 3.10+
