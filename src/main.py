@@ -105,49 +105,49 @@ def _process_testcase(
     # 6. XML generieren
     xml_doc = build_pain001_xml(instruction)
 
-    # 7. XSD-Validierung
+    # 7. XSD-Validierung — jedes generierte XML MUSS schema-konform sein.
+    #    Ein XSD-Fehler bedeutet einen Bug im Generator, nicht im Testfall.
     xsd_valid, xsd_errors = xsd_validator.validate(xml_doc)
 
-    xml_file_path = None
-    if xsd_valid:
-        # XML speichern
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        uuid_short = factory.generate_uuid_short()
-        filename = f"{timestamp}_{testcase.testcase_id}_{uuid_short}.xml"
-        xml_file_path = os.path.join(output_dir, filename)
-        xml_bytes = serialize_xml(xml_doc)
-        with open(xml_file_path, "wb") as f:
-            f.write(xml_bytes)
+    if not xsd_valid:
+        error_detail = "\n".join(f"  - {err}" for err in xsd_errors)
+        raise RuntimeError(
+            f"XSD-Validierung fehlgeschlagen für {testcase.testcase_id} "
+            f"({testcase.payment_type.value}). "
+            f"Dies deutet auf einen Bug im XML-Generator hin.\n"
+            f"XSD-Fehler:\n{error_detail}"
+        )
 
-        if verbose:
-            print(f"  XML gespeichert: {xml_file_path}")
-    else:
-        if verbose:
-            print(f"  XSD-Validierung fehlgeschlagen:")
-            for err in xsd_errors:
-                print(f"    {err}")
+    # XML speichern
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    uuid_short = factory.generate_uuid_short()
+    filename = f"{timestamp}_{testcase.testcase_id}_{uuid_short}.xml"
+    xml_file_path = os.path.join(output_dir, filename)
+    xml_bytes = serialize_xml(xml_doc)
+    with open(xml_file_path, "wb") as f:
+        f.write(xml_bytes)
 
-    # 8. Business-Rule-Validierung (nur nach XSD-Erfolg)
-    business_rule_results = []
-    if xsd_valid:
-        business_rule_results = validate_all_business_rules(instruction, testcase)
+    if verbose:
+        print(f"  XML gespeichert: {xml_file_path}")
+
+    # 8. Business-Rule-Validierung
+    business_rule_results = validate_all_business_rules(instruction, testcase)
 
     # 9. Pass/Fail-Logik
     all_rules_passed = all(br.passed for br in business_rule_results)
 
     if testcase.expected_result == ExpectedResult.OK:
-        overall_pass = xsd_valid and all_rules_passed
+        overall_pass = all_rules_passed
     else:  # NOK
-        has_rule_violation = not all_rules_passed
-        overall_pass = xsd_valid and has_rule_violation
+        overall_pass = not all_rules_passed
 
     return TestCaseResult(
         testcase_id=testcase.testcase_id,
         titel=testcase.titel,
         payment_type=testcase.payment_type,
         expected_result=testcase.expected_result,
-        xsd_valid=xsd_valid,
-        xsd_errors=xsd_errors,
+        xsd_valid=True,
+        xsd_errors=[],
         business_rule_results=business_rule_results,
         overall_pass=overall_pass,
         xml_file_path=xml_file_path,
