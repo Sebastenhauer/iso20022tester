@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-aff8754d1238</MsgId>
+      <CreDtTm>2026-03-20T19:23:54.879526</CreDtTm>
+      <NbOfTxs>4</NbOfTxs>
+      <CtrlSum>13000</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-c9af18f843b9</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>2</NbOfTxs>
+      <CtrlSum>4000</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-03-23</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+        <PstlAdr>
+          <StrtNm>Bahnhofstrasse</StrtNm>
+          <BldgNb>1</BldgNb>
+          <PstCd>8001</PstCd>
+          <TwnNm>Zuerich</TwnNm>
+          <Ctry>CH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>SLEV</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-bd767e35f5c9</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">2000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Naef Frick  Soehne</Nm>
+          <PstlAdr>
+            <StrtNm>Hamilton Landing</StrtNm>
+            <BldgNb>159</BldgNb>
+            <PstCd>79058</PstCd>
+            <TwnNm>South Lisa</TwnNm>
+            <Ctry>EE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>EE641869993867749649</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-b3f6fe0d4860</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">2000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Weibel Bernasconi  Soehne</Nm>
+          <PstlAdr>
+            <StrtNm>Erin Squares</StrtNm>
+            <BldgNb>60</BldgNb>
+            <PstCd>76648</PstCd>
+            <TwnNm>Nicholashaven</TwnNm>
+            <Ctry>HR</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>HR2233412328120679740</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+    <PmtInf>
+      <PmtInfId>PMT-d045dd1c6684</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>2</NbOfTxs>
+      <CtrlSum>9000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-23</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+        <PstlAdr>
+          <StrtNm>Bahnhofstrasse</StrtNm>
+          <BldgNb>1</BldgNb>
+          <PstCd>8001</PstCd>
+          <TwnNm>Zuerich</TwnNm>
+          <Ctry>CH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-c19ad58cc35b</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">4500</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Tanner Zuercher  Partner</Nm>
+          <PstlAdr>
+            <StrtNm>Christenstrasse</StrtNm>
+            <BldgNb>79</BldgNb>
+            <PstCd>3375</PstCd>
+            <TwnNm>Suhr</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CH4083927936183242102</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <Tp>
+                <CdOrPrtry>
+                  <Cd>SCOR</Cd>
+                </CdOrPrtry>
+              </Tp>
+              <Ref>RF41IS7TJPHWYVS52RKG15E1H</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-546e035a292b</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">4500</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Naef Frick  Soehne</Nm>
+          <PstlAdr>
+            <StrtNm>Christenstrasse</StrtNm>
+            <BldgNb>86</BldgNb>
+            <PstCd>3375</PstCd>
+            <TwnNm>Suhr</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CH2722962787429671756</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

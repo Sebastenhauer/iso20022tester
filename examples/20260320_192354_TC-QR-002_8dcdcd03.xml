@@ -2,24 +2,19 @@
 <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <MsgId>MSG-28df6ec4ce4a</MsgId>
-      <CreDtTm>2026-03-20T16:00:02.421751</CreDtTm>
+      <MsgId>MSG-7394988f847f</MsgId>
+      <CreDtTm>2026-03-20T19:23:54.857650</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>1500</CtrlSum>
+      <CtrlSum>890</CtrlSum>
       <InitgPty>
         <Nm>Muster AG</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>PMT-47229389571a</PmtInfId>
+      <PmtInfId>PMT-1064005c3985</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>1500</CtrlSum>
-      <PmtTpInf>
-        <SvcLvl>
-          <Cd>SEPA</Cd>
-        </SvcLvl>
-      </PmtTpInf>
+      <CtrlSum>890</CtrlSum>
       <ReqdExctnDt>
         <Dt>2026-03-23</Dt>
       </ReqdExctnDt>
@@ -43,27 +38,26 @@
           <BICFI>CRESCHZZ80A</BICFI>
         </FinInstnId>
       </DbtrAgt>
-      <ChrgBr>SLEV</ChrgBr>
       <CdtTrfTxInf>
         <PmtId>
-          <EndToEndId>E2E-de8a774bcf36</EndToEndId>
+          <EndToEndId>E2E-5f987c71a65e</EndToEndId>
         </PmtId>
         <Amt>
-          <InstdAmt Ccy="EUR">1500</InstdAmt>
+          <InstdAmt Ccy="CHF">890</InstdAmt>
         </Amt>
         <Cdtr>
-          <Nm>Bachmann GmbH</Nm>
+          <Nm>Naef Frick  Soehne</Nm>
           <PstlAdr>
-            <StrtNm>Smith Causeway</StrtNm>
-            <BldgNb>115</BldgNb>
-            <PstCd>11315</PstCd>
-            <TwnNm>South Carolside</TwnNm>
-            <Ctry>PL</Ctry>
+            <StrtNm>Christenstrasse</StrtNm>
+            <BldgNb>5</BldgNb>
+            <PstCd>3375</PstCd>
+            <TwnNm>Suhr</TwnNm>
+            <Ctry>CH</Ctry>
           </PstlAdr>
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <IBAN>PL12104332181960013389083863</IBAN>
+            <IBAN>CH9530611893252880957</IBAN>
           </Id>
         </CdtrAcct>
       </CdtTrfTxInf>

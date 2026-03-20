@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<testsuite name="pain001-testgenerator" tests="10" failures="0">
+<testsuite name="pain001-testgenerator" tests="20" failures="0">
   <testcase name="TC-SEPA-001: SEPA Standardzahlung" classname="SEPA" />
   <testcase name="TC-SEPA-002: SEPA falsche Waehrung" classname="SEPA" />
   <testcase name="TC-SEPA-003: SEPA mit Creditor-Override" classname="SEPA" />
@@ -10,4 +10,14 @@
   <testcase name="TC-CBPR-001: CBPR+ USD-Zahlung" classname="CBPR+" />
   <testcase name="TC-CBPR-002: CBPR+ ohne Agent" classname="CBPR+" />
   <testcase name="TC-CBPR-003: CBPR+ JPY-Zahlung" classname="CBPR+" />
+  <testcase name="TC-MULTI-001: SEPA Sammelzahlung 3 Tx" classname="SEPA" />
+  <testcase name="TC-MULTI-002: QR-Sammelzahlung 2 Tx" classname="Domestic-QR" />
+  <testcase name="TC-MULTI-003: Domestic-IBAN Sammelzahlung 2 Tx" classname="Domestic-IBAN" />
+  <testcase name="TC-MULTI-004: CBPR+ Sammelzahlung 2 Tx" classname="CBPR+" />
+  <testcase name="TC-MULTI-005: SEPA Sammelzahlung NOK Name" classname="SEPA" />
+  <testcase name="TC-MULTI-006: QR-Sammelzahlung NOK SCOR" classname="Domestic-QR" />
+  <testcase name="TC-MULTI-007: Batch-A: SEPA-Teil" classname="SEPA" />
+  <testcase name="TC-MULTI-008: Batch-A: Domestic-IBAN-Teil" classname="Domestic-IBAN" />
+  <testcase name="TC-MULTI-009: Batch-B: CBPR+-Teil" classname="CBPR+" />
+  <testcase name="TC-MULTI-010: Batch-B: SEPA-Teil" classname="SEPA" />
 </testsuite>
