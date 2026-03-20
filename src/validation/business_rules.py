@@ -167,6 +167,14 @@ def validate_all_business_rules(
     results = []
     results.extend(validate_general_rules(instruction, testcase))
 
+    # BR-SEPA-003: ChrgBr muss SLEV sein (braucht instruction.charge_bearer)
+    if testcase.payment_type == PaymentType.SEPA:
+        cb = instruction.charge_bearer or ""
+        results.append(_check(
+            "BR-SEPA-003", cb == "SLEV",
+            f"ChrgBr ist '{cb}'" if cb != "SLEV" else None,
+        ))
+
     handler = _get_handler(testcase.payment_type)
     results.extend(handler.validate(testcase, instruction.transactions))
 

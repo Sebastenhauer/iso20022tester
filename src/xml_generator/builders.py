@@ -78,9 +78,6 @@ def build_debtor_elements(parent: etree._Element, debtor: DebtorInfo) -> None:
     fin_instn_id = el(dbtr_agt, "FinInstnId")
     if debtor.bic:
         el(fin_instn_id, "BICFI", debtor.bic)
-    else:
-        othr = el(fin_instn_id, "Othr")
-        el(othr, "Id", "NOTPROVIDED")
 
 
 def build_creditor_elements(
