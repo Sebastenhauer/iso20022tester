@@ -219,6 +219,33 @@ def validate_all_business_rules(
             f"ChrgBr ist '{cb}'" if cb != "SLEV" else None,
         ))
 
+    # BR-CBPR-003: ChrgBr muss DEBT/CRED/SHAR/SLEV sein
+    if testcase.payment_type == PaymentType.CBPR_PLUS:
+        cb = instruction.charge_bearer or ""
+        valid_cb = cb in ("DEBT", "CRED", "SHAR", "SLEV")
+        results.append(_check(
+            "BR-CBPR-003", valid_cb,
+            f"ChrgBr '{cb}' ist ungueltig fuer CBPR+" if not valid_cb else None,
+        ))
+
+    # BR-REM-002: USTRD max 140 Zeichen
+    for tx in instruction.transactions:
+        if tx.remittance_info and tx.remittance_info.get("type") == "USTRD":
+            val = tx.remittance_info.get("value", "")
+            results.append(_check(
+                "BR-REM-002", len(val) <= 140,
+                f"Ustrd hat {len(val)} Zeichen (max 140)" if len(val) > 140 else None,
+            ))
+
+    # BR-CCY-001: Waehrungscode 3 Grossbuchstaben
+    ccy_pattern = re.compile(r'^[A-Z]{3}$')
+    for tx in instruction.transactions:
+        valid_ccy = bool(ccy_pattern.match(tx.currency))
+        results.append(_check(
+            "BR-CCY-001", valid_ccy,
+            f"Waehrung '{tx.currency}' ist kein gueltiger ISO 4217 Code" if not valid_ccy else None,
+        ))
+
     handler = get_handler(testcase.payment_type)
     results.extend(handler.validate(testcase, instruction.transactions))
 
@@ -253,7 +280,9 @@ def apply_rule_violation(
         "BR-IBAN-002": _violate_iban_qrr,
         "BR-IBAN-004": _violate_iban_currency,
         "BR-CBPR-001": _violate_cbpr_currency,
+        "BR-CBPR-003": _violate_cbpr_charge_bearer,
         "BR-CBPR-005": _violate_cbpr_agent,
+        # BR-CCY-001 ist XSD-geschuetzt ([A-Z]{3}), keine Violation moeglich
     }
 
     violation_fn = violations.get(rule_id)
@@ -332,3 +361,20 @@ def _violate_cbpr_currency(instr: PaymentInstruction) -> PaymentInstruction:
 def _violate_cbpr_agent(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-CBPR-005: Entfernt den Creditor-Agent BIC."""
     return _update_all_transactions(instr, creditor_bic=None)
+
+
+def _violate_cbpr_charge_bearer(instr: PaymentInstruction) -> PaymentInstruction:
+    """BR-CBPR-003: Entfernt ChrgBr (leerer String wird als ungueltig erkannt)."""
+    return instr.model_copy(update={"charge_bearer": ""})
+
+
+def _violate_ustrd_length(instr: PaymentInstruction) -> PaymentInstruction:
+    """BR-REM-002: Setzt zu langen unstrukturierten Verwendungszweck."""
+    return _update_all_transactions(
+        instr, remittance_info={"type": "USTRD", "value": "X" * 141},
+    )
+
+
+def _violate_currency_code(instr: PaymentInstruction) -> PaymentInstruction:
+    """BR-CCY-001: Setzt ungueltigen Waehrungscode (kleinbuchstaben - Pattern-Fehler)."""
+    return _update_all_transactions(instr, currency="usd")

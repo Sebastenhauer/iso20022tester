@@ -333,11 +333,39 @@ BR_CBPR_002 = _r(
     "Business Rules SPS 2025 Tabelle 3, Typ X",
 )
 
+BR_CBPR_003 = _r(
+    "BR-CBPR-003", "CBPR",
+    "ChrgBr muss DEBT, CRED, SHAR oder SLEV sein",
+    _CBPR,
+    "IG CT SPS 2025 §4.2.11, §4.3.19",
+    violatable=True,
+)
+
 BR_CBPR_005 = _r(
     "BR-CBPR-005", "CBPR",
     "Creditor-Agent (BIC) muss angegeben werden",
     _CBPR,
     "IG CT SPS 2025 §4.3.6",
+    violatable=True,
+)
+
+# --- Remittance Information ---
+
+BR_REM_002 = _r(
+    "BR-REM-002", "REM",
+    "Unstrukturierte Remittance Info darf maximal 140 Zeichen lang sein",
+    None,
+    "IG CT SPS 2025 §3.2.2",
+    violatable=True,
+)
+
+# --- Currency ---
+
+BR_CCY_001 = _r(
+    "BR-CCY-001", "CCY",
+    "Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+    None,
+    "IG CT SPS 2025, ISO 4217",
     violatable=True,
 )
 
@@ -403,10 +431,12 @@ _CATEGORY_NAMES = {
     "SEPA": "SEPA-spezifisch (Typ S)",
     "QR": "QR-IBAN-spezifisch (Typ D/QR)",
     "IBAN": "Domestic-IBAN-spezifisch (Typ D/IBAN)",
+    "REM": "Remittance Information",
+    "CCY": "Waehrung",
     "CBPR": "CBPR+-spezifisch (Typ X)",
 }
 
-_CATEGORY_ORDER = ["HDR", "GEN", "ADDR", "IBAN-V", "REF-V", "SEPA", "QR", "IBAN", "CBPR"]
+_CATEGORY_ORDER = ["HDR", "GEN", "ADDR", "IBAN-V", "REF-V", "REM", "CCY", "SEPA", "QR", "IBAN", "CBPR"]
 
 
 def rules_to_markdown() -> str:
