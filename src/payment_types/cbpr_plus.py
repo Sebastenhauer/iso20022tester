@@ -7,26 +7,13 @@ from src.data_factory.generator import DataFactory
 from src.data_factory.iban import validate_iban
 from src.models.testcase import PaymentType, TestCase, Transaction, ValidationResult
 from src.payment_types.base import PaymentTypeHandler
-from src.validation.rule_catalog import get_rule
-
-
-def _check(rule_id: str, passed: bool, details: str = None) -> ValidationResult:
-    rule = get_rule(rule_id)
-    return ValidationResult(
-        rule_id=rule.rule_id,
-        rule_description=rule.description,
-        passed=passed,
-        details=details,
-    )
+from src.validation.rule_catalog import check_rule as _check
 
 
 class CbprPlusHandler(PaymentTypeHandler):
     @property
     def payment_type(self) -> PaymentType:
         return PaymentType.CBPR_PLUS
-
-    def get_defaults(self) -> Dict[str, str]:
-        return {}
 
     def get_service_level(self) -> Optional[str]:
         return None

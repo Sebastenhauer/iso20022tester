@@ -349,6 +349,22 @@ BR_CBPR_005 = _r(
 RULE_CATALOG: Dict[str, BusinessRule] = {r.rule_id: r for r in _ALL_RULES}
 
 
+def check_rule(rule_id: str, passed: bool, details: str = None):
+    """Erstellt ein ValidationResult mit Beschreibung aus dem Katalog.
+
+    Zentrale Hilfsfunktion — wird von business_rules.py und
+    allen Payment-Handlern verwendet.
+    """
+    from src.models.testcase import ValidationResult
+    rule = RULE_CATALOG[rule_id]
+    return ValidationResult(
+        rule_id=rule.rule_id,
+        rule_description=rule.description,
+        passed=passed,
+        details=details,
+    )
+
+
 def get_rule(rule_id: str) -> BusinessRule:
     """Gibt eine Rule anhand ihrer ID zurück."""
     if rule_id not in RULE_CATALOG:

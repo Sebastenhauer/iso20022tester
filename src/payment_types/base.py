@@ -17,11 +17,6 @@ class PaymentTypeHandler(ABC):
         ...
 
     @abstractmethod
-    def get_defaults(self) -> Dict[str, str]:
-        """Gibt typ-spezifische Defaultwerte zurück."""
-        ...
-
-    @abstractmethod
     def validate(
         self, testcase: TestCase, transactions: List[Transaction]
     ) -> List[ValidationResult]:

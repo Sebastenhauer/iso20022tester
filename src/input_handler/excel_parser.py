@@ -190,7 +190,6 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
                     violate_rule = violate_rule or overrides.pop("ViolateRule")
                 if "GroupId" in overrides:
                     group_id = overrides.pop("GroupId")
-                overrides.pop("TxCount", None)
 
             first_tx = _parse_transaction_input(row, col_index)
 

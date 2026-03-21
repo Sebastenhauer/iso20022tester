@@ -8,29 +8,16 @@ from src.data_factory.iban import is_qr_iban, validate_iban
 from src.data_factory.reference import validate_scor
 from src.models.testcase import PaymentType, TestCase, Transaction, ValidationResult
 from src.payment_types.base import PaymentTypeHandler
-from src.validation.rule_catalog import get_rule
+from src.validation.rule_catalog import check_rule as _check
 
 DOMESTIC_MAX_AMOUNT = Decimal("9999999999.99")
 DOMESTIC_MIN_AMOUNT = Decimal("0.01")
-
-
-def _check(rule_id: str, passed: bool, details: str = None) -> ValidationResult:
-    rule = get_rule(rule_id)
-    return ValidationResult(
-        rule_id=rule.rule_id,
-        rule_description=rule.description,
-        passed=passed,
-        details=details,
-    )
 
 
 class DomesticIbanHandler(PaymentTypeHandler):
     @property
     def payment_type(self) -> PaymentType:
         return PaymentType.DOMESTIC_IBAN
-
-    def get_defaults(self) -> Dict[str, str]:
-        return {}
 
     def get_service_level(self) -> Optional[str]:
         return None
