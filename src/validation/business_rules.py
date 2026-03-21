@@ -5,6 +5,7 @@ Diese Datei enthält nur die Validierungs- und Violation-Logik.
 """
 
 import random
+import re
 from decimal import Decimal
 from typing import List
 
@@ -114,6 +115,15 @@ def validate_general_rules(
                 f"{field_name}='{value}' verletzt Zeichensatz-Regeln" if not valid else None,
             ))
 
+    # BR-GEN-001: Betrag max 2 Dezimalstellen
+    for tx in txs:
+        dec_tuple = tx.amount.as_tuple()
+        decimal_places = max(0, -dec_tuple.exponent) if dec_tuple.exponent < 0 else 0
+        results.append(_check(
+            "BR-GEN-001", decimal_places <= 2,
+            f"Betrag {tx.amount} hat {decimal_places} Dezimalstellen" if decimal_places > 2 else None,
+        ))
+
     # BR-GEN-010: Betrag > 0
     for tx in txs:
         results.append(_check(
@@ -151,6 +161,74 @@ def validate_general_rules(
             "BR-IBAN-V02", validate_iban_length(iban),
             f"IBAN '{iban}' hat falsche Länge" if not validate_iban_length(iban) else None,
         ))
+
+    # BR-GEN-002: BIC-Format (8 oder 11 alphanumerische Zeichen)
+    bic_pattern = re.compile(r'^[A-Z0-9]{8}$|^[A-Z0-9]{11}$')
+    bic_fields = []
+    if instruction.debtor.bic:
+        bic_fields.append(("Debtor BIC", instruction.debtor.bic))
+    for tx in txs:
+        if tx.creditor_bic:
+            bic_fields.append(("Creditor BIC", tx.creditor_bic))
+
+    for field_name, bic in bic_fields:
+        valid = bool(bic_pattern.match(bic))
+        results.append(_check(
+            "BR-GEN-002", valid,
+            f"{field_name} '{bic}' hat ungültiges Format" if not valid else None,
+        ))
+
+    # BR-GEN-007: Country-Code 2 Grossbuchstaben
+    country_pattern = re.compile(r'^[A-Z]{2}$')
+    country_fields = []
+    if instruction.debtor.country:
+        country_fields.append(("Debtor Country", instruction.debtor.country))
+    for tx in txs:
+        if tx.creditor_address and "Ctry" in tx.creditor_address:
+            country_fields.append(("Creditor Country", tx.creditor_address["Ctry"]))
+
+    for field_name, ctry in country_fields:
+        valid = bool(country_pattern.match(ctry))
+        results.append(_check(
+            "BR-GEN-007", valid,
+            f"{field_name} '{ctry}' ist kein gültiger ISO 3166-1 Code" if not valid else None,
+        ))
+
+    # BR-ADDR-001: Strukturierte Adresse — TwnNm und Ctry Pflicht
+    for tx in txs:
+        if tx.creditor_address:
+            has_town = bool(tx.creditor_address.get("TwnNm"))
+            has_ctry = bool(tx.creditor_address.get("Ctry"))
+            if not has_town or not has_ctry:
+                missing = []
+                if not has_town:
+                    missing.append("TwnNm")
+                if not has_ctry:
+                    missing.append("Ctry")
+                results.append(_check(
+                    "BR-ADDR-001", False,
+                    f"Creditor-Adresse: {', '.join(missing)} fehlt",
+                ))
+
+    # BR-GEN-006: Creditor-Name max 140 Zeichen (non-SEPA)
+    if testcase.payment_type != PaymentType.SEPA:
+        for tx in txs:
+            if len(tx.creditor_name) > 140:
+                results.append(_check(
+                    "BR-GEN-006", False,
+                    f"Name hat {len(tx.creditor_name)} Zeichen (max 140)",
+                ))
+
+    # BR-REF-V01: SCOR-Format (RF + 2 Prüfziffern, max 25 Zeichen)
+    scor_pattern = re.compile(r'^RF[0-9]{2}[A-Za-z0-9]{1,21}$')
+    for tx in txs:
+        if tx.remittance_info and tx.remittance_info.get("type") == "SCOR":
+            ref = tx.remittance_info.get("value", "")
+            valid = bool(scor_pattern.match(ref)) and len(ref) <= 25
+            results.append(_check(
+                "BR-REF-V01", valid,
+                f"SCOR '{ref}' hat ungültiges Format" if not valid else None,
+            ))
 
     return results
 

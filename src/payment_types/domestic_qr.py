@@ -61,6 +61,13 @@ class DomesticQrHandler(PaymentTypeHandler):
                 f"IBAN '{tx.creditor_iban}' ist keine QR-IBAN" if not is_qr_iban(tx.creditor_iban) else None,
             ))
 
+            # BR-QR-007: QR-IBAN muss CH oder LI sein
+            iban_country = tx.creditor_iban[:2].upper() if len(tx.creditor_iban) >= 2 else ""
+            results.append(_check(
+                "BR-QR-007", iban_country in ("CH", "LI"),
+                f"QR-IBAN Länderkennzeichen '{iban_country}' ist nicht CH/LI" if iban_country not in ("CH", "LI") else None,
+            ))
+
             # BR-QR-002 & BR-QR-006: QRR Pflicht und Format
             ref_info = tx.remittance_info or {}
             ref_type = ref_info.get("type", "")

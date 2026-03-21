@@ -55,6 +55,13 @@ class DomesticIbanHandler(PaymentTypeHandler):
         ))
 
         for tx in transactions:
+            # BR-IBAN-006: Domestic-IBAN muss CH oder LI sein
+            iban_country = tx.creditor_iban[:2].upper() if len(tx.creditor_iban) >= 2 else ""
+            results.append(_check(
+                "BR-IBAN-006", iban_country in ("CH", "LI"),
+                f"IBAN Länderkennzeichen '{iban_country}' ist nicht CH/LI" if iban_country not in ("CH", "LI") else None,
+            ))
+
             # BR-IBAN-001: Reguläre CH-IBAN (nicht QR)
             results.append(_check(
                 "BR-IBAN-001", not is_qr_iban(tx.creditor_iban),

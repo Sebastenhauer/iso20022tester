@@ -77,6 +77,20 @@ BR_HDR_004 = _r(
 
 # --- Übergreifende Regeln ---
 
+BR_GEN_001 = _r(
+    "BR-GEN-001", "GEN",
+    "Betrag darf maximal 2 Dezimalstellen haben",
+    None,
+    "Business Rules SPS 2025 §2.5",
+)
+
+BR_GEN_002 = _r(
+    "BR-GEN-002", "GEN",
+    "BIC muss 8 oder 11 alphanumerische Zeichen haben",
+    None,
+    "IG CT SPS 2025 §3.12",
+)
+
 BR_GEN_005 = _r(
     "BR-GEN-005", "GEN",
     "ReqdExctnDt muss ein Bankarbeitstag sein (TARGET2 für SEPA, CH für Inland/CBPR+)",
@@ -105,6 +119,29 @@ BR_GEN_012 = _r(
     "IG CT SPS 2025 §3.1",
 )
 
+# --- Adress-Regeln ---
+
+BR_ADDR_001 = _r(
+    "BR-ADDR-001", "ADDR",
+    "Strukturierte Adresse: TwnNm und Ctry müssen gesetzt sein",
+    None,
+    "IG CT SPS 2025 §3.1, §3.11",
+)
+
+BR_GEN_006 = _r(
+    "BR-GEN-006", "GEN",
+    "Creditor-Name darf maximal 140 Zeichen lang sein (non-SEPA)",
+    (PaymentType.DOMESTIC_QR, PaymentType.DOMESTIC_IBAN, PaymentType.CBPR_PLUS),
+    "IG CT SPS 2025 v2.2 §4.3.7",
+)
+
+BR_GEN_007 = _r(
+    "BR-GEN-007", "GEN",
+    "Country-Code muss 2 Grossbuchstaben sein (ISO 3166-1)",
+    None,
+    "IG CT SPS 2025 §3.11, SwissQRBill",
+)
+
 # --- IBAN-Validierung ---
 
 BR_IBAN_V01 = _r(
@@ -119,6 +156,15 @@ BR_IBAN_V02 = _r(
     "IBAN-Länge muss dem Länderschlüssel entsprechen",
     None,
     "ISO 13616",
+)
+
+# --- Referenz-Validierung ---
+
+BR_REF_V01 = _r(
+    "BR-REF-V01", "REF-V",
+    "SCOR-Referenz: muss mit RF beginnen, max 25 Zeichen, Mod-97 Prüfziffer",
+    None,
+    "ISO 11649, SwissQRBill",
 )
 
 # --- SEPA-spezifisch (Typ S) ---
@@ -212,6 +258,13 @@ BR_QR_006 = _r(
     "Business Rules SPS 2025 §3.2",
 )
 
+BR_QR_007 = _r(
+    "BR-QR-007", "QR",
+    "QR-IBAN muss eine Schweizer (CH) oder Liechtensteiner (LI) IBAN sein",
+    _QR,
+    "Business Rules SPS 2025 Tabelle 3, SwissQRBill",
+)
+
 # --- Domestic-IBAN-spezifisch (Typ D mit regulärer IBAN) ---
 
 _IBAN = (PaymentType.DOMESTIC_IBAN,)
@@ -252,6 +305,13 @@ BR_IBAN_005 = _r(
     "SvcLvl darf nicht 'SEPA' sein",
     _IBAN,
     "Business Rules SPS 2025 Tabelle 3, Typ D",
+)
+
+BR_IBAN_006 = _r(
+    "BR-IBAN-006", "IBAN",
+    "Domestic-IBAN muss eine Schweizer (CH) oder Liechtensteiner (LI) IBAN sein",
+    _IBAN,
+    "Business Rules SPS 2025 Tabelle 3, SwissQRBill",
 )
 
 # --- CBPR+-spezifisch (Typ X) ---
@@ -321,14 +381,16 @@ def get_violatable_rules() -> List[BusinessRule]:
 _CATEGORY_NAMES = {
     "HDR": "Header-Regeln (A-Level)",
     "GEN": "Übergreifende Regeln",
+    "ADDR": "Adress-Regeln",
     "IBAN-V": "IBAN-Validierung",
+    "REF-V": "Referenz-Validierung",
     "SEPA": "SEPA-spezifisch (Typ S)",
     "QR": "QR-IBAN-spezifisch (Typ D/QR)",
     "IBAN": "Domestic-IBAN-spezifisch (Typ D/IBAN)",
     "CBPR": "CBPR+-spezifisch (Typ X)",
 }
 
-_CATEGORY_ORDER = ["HDR", "GEN", "IBAN-V", "SEPA", "QR", "IBAN", "CBPR"]
+_CATEGORY_ORDER = ["HDR", "GEN", "ADDR", "IBAN-V", "REF-V", "SEPA", "QR", "IBAN", "CBPR"]
 
 
 def rules_to_markdown() -> str:
