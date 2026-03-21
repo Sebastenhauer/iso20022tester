@@ -97,20 +97,30 @@ def validate_general_rules(
             f"Betrag ist {tx.amount}" if tx.amount <= 0 else None,
         ))
 
-    # BR-GEN-012: SPS-Zeichensatz
+    # BR-GEN-012: SPS-Zeichensatz (alle Textfelder)
     text_fields = [("Debtor Name", instruction.debtor.name)]
+    if instruction.debtor.street:
+        text_fields.append(("Debtor Strasse", instruction.debtor.street))
+    if instruction.debtor.town:
+        text_fields.append(("Debtor Ort", instruction.debtor.town))
     for tx in txs:
         text_fields.append(("Creditor Name", tx.creditor_name))
         if tx.creditor_address:
             for key, val in tx.creditor_address.items():
                 if key != "Ctry":
                     text_fields.append((f"Creditor {key}", val))
+        if tx.remittance_info:
+            rmt_val = tx.remittance_info.get("value", "")
+            rmt_type = tx.remittance_info.get("type", "")
+            if rmt_type == "USTRD" and rmt_val:
+                text_fields.append(("Verwendungszweck", rmt_val))
 
     for field_name, value in text_fields:
         if value and not validate_sps_charset(value):
             results.append(_check(
                 "BR-GEN-012", False,
-                f"'{value}' enthält ungültige Zeichen",
+                f"{field_name}: '{value[:50]}...' enthaelt ungueltige Zeichen" if len(value) > 50
+                else f"{field_name}: '{value}' enthaelt ungueltige Zeichen",
             ))
 
     # BR-IBAN-V01 / V02: IBAN-Validierung
@@ -176,6 +186,34 @@ def validate_general_rules(
                     f"Creditor-Adresse: {', '.join(missing)} fehlt",
                 ))
 
+    # BR-ADDR-002: Creditor muss strukturierte Adresse haben (StrtNm+TwnNm+Ctry)
+    for tx in txs:
+        if tx.creditor_address:
+            has_strt = bool(tx.creditor_address.get("StrtNm"))
+            has_town = bool(tx.creditor_address.get("TwnNm"))
+            has_ctry = bool(tx.creditor_address.get("Ctry"))
+            structured = has_strt and has_town and has_ctry
+            results.append(_check(
+                "BR-ADDR-002", structured,
+                f"Creditor-Adresse nicht vollstaendig strukturiert" if not structured else None,
+            ))
+        else:
+            results.append(_check(
+                "BR-ADDR-002", False,
+                "Creditor-Adresse fehlt (strukturiert erforderlich)",
+            ))
+
+    # BR-ADDR-003: Debtor-Adresse — wenn Felder vorhanden, TwnNm+Ctry Pflicht
+    dbtr = instruction.debtor
+    has_any_addr = dbtr.street or dbtr.town or dbtr.postal_code
+    if has_any_addr:
+        has_town = bool(dbtr.town)
+        has_ctry = bool(dbtr.country)
+        results.append(_check(
+            "BR-ADDR-003", has_town and has_ctry,
+            "Debtor-Adresse: TwnNm oder Ctry fehlt" if not (has_town and has_ctry) else None,
+        ))
+
     # BR-GEN-006: Creditor-Name max 140 Zeichen (non-SEPA)
     if testcase.payment_type != PaymentType.SEPA:
         for tx in txs:
@@ -219,6 +257,33 @@ def validate_all_business_rules(
             f"ChrgBr ist '{cb}'" if cb != "SLEV" else None,
         ))
 
+    # BR-CBPR-003: ChrgBr muss DEBT/CRED/SHAR/SLEV sein
+    if testcase.payment_type == PaymentType.CBPR_PLUS:
+        cb = instruction.charge_bearer or ""
+        valid_cb = cb in ("DEBT", "CRED", "SHAR", "SLEV")
+        results.append(_check(
+            "BR-CBPR-003", valid_cb,
+            f"ChrgBr '{cb}' ist ungueltig fuer CBPR+" if not valid_cb else None,
+        ))
+
+    # BR-REM-002: USTRD max 140 Zeichen
+    for tx in instruction.transactions:
+        if tx.remittance_info and tx.remittance_info.get("type") == "USTRD":
+            val = tx.remittance_info.get("value", "")
+            results.append(_check(
+                "BR-REM-002", len(val) <= 140,
+                f"Ustrd hat {len(val)} Zeichen (max 140)" if len(val) > 140 else None,
+            ))
+
+    # BR-CCY-001: Waehrungscode 3 Grossbuchstaben
+    ccy_pattern = re.compile(r'^[A-Z]{3}$')
+    for tx in instruction.transactions:
+        valid_ccy = bool(ccy_pattern.match(tx.currency))
+        results.append(_check(
+            "BR-CCY-001", valid_ccy,
+            f"Waehrung '{tx.currency}' ist kein gueltiger ISO 4217 Code" if not valid_ccy else None,
+        ))
+
     handler = get_handler(testcase.payment_type)
     results.extend(handler.validate(testcase, instruction.transactions))
 
@@ -253,7 +318,10 @@ def apply_rule_violation(
         "BR-IBAN-002": _violate_iban_qrr,
         "BR-IBAN-004": _violate_iban_currency,
         "BR-CBPR-001": _violate_cbpr_currency,
+        "BR-CBPR-003": _violate_cbpr_charge_bearer,
         "BR-CBPR-005": _violate_cbpr_agent,
+        "BR-ADDR-002": _violate_unstructured_address,
+        # BR-CCY-001 ist XSD-geschuetzt ([A-Z]{3}), keine Violation moeglich
     }
 
     violation_fn = violations.get(rule_id)
@@ -332,3 +400,30 @@ def _violate_cbpr_currency(instr: PaymentInstruction) -> PaymentInstruction:
 def _violate_cbpr_agent(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-CBPR-005: Entfernt den Creditor-Agent BIC."""
     return _update_all_transactions(instr, creditor_bic=None)
+
+
+def _violate_cbpr_charge_bearer(instr: PaymentInstruction) -> PaymentInstruction:
+    """BR-CBPR-003: Entfernt ChrgBr (leerer String wird als ungueltig erkannt)."""
+    return instr.model_copy(update={"charge_bearer": ""})
+
+
+def _violate_ustrd_length(instr: PaymentInstruction) -> PaymentInstruction:
+    """BR-REM-002: Setzt zu langen unstrukturierten Verwendungszweck."""
+    return _update_all_transactions(
+        instr, remittance_info={"type": "USTRD", "value": "X" * 141},
+    )
+
+
+def _violate_currency_code(instr: PaymentInstruction) -> PaymentInstruction:
+    """BR-CCY-001: Setzt ungueltigen Waehrungscode (kleinbuchstaben - Pattern-Fehler)."""
+    return _update_all_transactions(instr, currency="usd")
+
+
+def _violate_unstructured_address(instr: PaymentInstruction) -> PaymentInstruction:
+    """BR-ADDR-002: Entfernt StrtNm aus Creditor-Adresse (unvollstaendig strukturiert)."""
+    updated_txs = []
+    for tx in instr.transactions:
+        addr = dict(tx.creditor_address or {})
+        addr.pop("StrtNm", None)
+        updated_txs.append(tx.model_copy(update={"creditor_address": addr}))
+    return instr.model_copy(update={"transactions": updated_txs})

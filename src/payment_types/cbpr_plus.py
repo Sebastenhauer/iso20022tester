@@ -18,6 +18,9 @@ class CbprPlusHandler(PaymentTypeHandler):
     def get_service_level(self) -> Optional[str]:
         return None
 
+    def get_charge_bearer(self) -> Optional[str]:
+        return "SHAR"
+
     def validate(
         self, testcase: TestCase, transactions: List[Transaction]
     ) -> List[ValidationResult]:

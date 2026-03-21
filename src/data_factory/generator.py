@@ -7,7 +7,7 @@ from typing import Dict, Optional
 
 from faker import Faker
 
-from src.data_factory.iban import generate_ch_iban, generate_iban, SEPA_COUNTRIES
+from src.data_factory.iban import generate_ch_iban, generate_iban, IBAN_LENGTHS, SEPA_COUNTRIES
 from src.data_factory.reference import generate_qrr, generate_scor
 from src.models.testcase import PaymentType
 
@@ -103,6 +103,14 @@ class DataFactory:
             country = self.rng.choice([c for c in SEPA_COUNTRIES if c != "CH"])
             return generate_iban(self.rng, country)
         elif payment_type == PaymentType.CBPR_PLUS:
+            # CBPR+: Zufaelliges Land mit IBAN-Support ausserhalb SEPA
+            cbpr_iban_countries = [
+                c for c, l in IBAN_LENGTHS.items()
+                if l > 0 and c not in SEPA_COUNTRIES and c not in ("CH", "LI")
+            ]
+            if cbpr_iban_countries:
+                country = self.rng.choice(cbpr_iban_countries)
+                return generate_iban(self.rng, country)
             return generate_iban(self.rng, "GB")
         return generate_ch_iban(self.rng, qr=False)
 

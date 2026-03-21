@@ -35,7 +35,44 @@ IBAN_LENGTHS = {
     "SI": 19,
     "GR": 27,
     "IS": 26,
-    "US": 0,  # USA hat keine IBAN
+    # Aussereuropaeische Laender (fuer CBPR+)
+    "SA": 24,  # Saudi-Arabien
+    "AE": 23,  # VAE
+    "QA": 29,  # Katar
+    "BH": 22,  # Bahrain
+    "KW": 30,  # Kuwait
+    "IL": 23,  # Israel
+    "TR": 26,  # Tuerkei
+    "JO": 30,  # Jordanien
+    "TN": 24,  # Tunesien
+    "MU": 30,  # Mauritius
+    "BR": 29,  # Brasilien
+    "CR": 22,  # Costa Rica
+    "DO": 28,  # Dominikanische Republik
+    "GT": 28,  # Guatemala
+    "PK": 24,  # Pakistan
+    "KZ": 20,  # Kasachstan
+    "GE": 22,  # Georgien
+    "AL": 28,  # Albanien
+    "RS": 22,  # Serbien
+    "BA": 20,  # Bosnien
+    "ME": 22,  # Montenegro
+    "MK": 19,  # Nordmazedonien
+    "XK": 20,  # Kosovo
+    # Laender ohne IBAN (Kontonummer-basiert fuer CBPR+)
+    "US": 0,
+    "JP": 0,
+    "CN": 0,
+    "AU": 0,
+    "CA": 0,
+    "IN": 0,
+    "SG": 0,
+    "HK": 0,
+    "KR": 0,
+    "TH": 0,
+    "MX": 0,
+    "ZA": 0,
+    "NG": 0,
 }
 
 # QR-IBAN IID-Bereich
