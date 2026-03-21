@@ -7,32 +7,16 @@ from src.data_factory.generator import DataFactory
 from src.data_factory.iban import validate_iban
 from src.models.testcase import PaymentType, TestCase, Transaction, ValidationResult
 from src.payment_types.base import PaymentTypeHandler
-from src.validation.rule_catalog import get_rule
+from src.validation.rule_catalog import check_rule as _check
 
 SEPA_MAX_AMOUNT = Decimal("999999999.99")
 SEPA_MIN_AMOUNT = Decimal("0.01")
-
-
-def _check(rule_id: str, passed: bool, details: str = None) -> ValidationResult:
-    rule = get_rule(rule_id)
-    return ValidationResult(
-        rule_id=rule.rule_id,
-        rule_description=rule.description,
-        passed=passed,
-        details=details,
-    )
 
 
 class SepaHandler(PaymentTypeHandler):
     @property
     def payment_type(self) -> PaymentType:
         return PaymentType.SEPA
-
-    def get_defaults(self) -> Dict[str, str]:
-        return {
-            "SvcLvl.Cd": "SEPA",
-            "ChrgBr": "SLEV",
-        }
 
     def get_service_level(self) -> Optional[str]:
         return "SEPA"

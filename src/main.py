@@ -3,7 +3,6 @@
 import argparse
 import os
 import sys
-from collections import OrderedDict
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 
@@ -20,10 +19,7 @@ from src.models.testcase import (
     TestCase,
     TestCaseResult,
 )
-from src.payment_types.cbpr_plus import CbprPlusHandler
-from src.payment_types.domestic_iban import DomesticIbanHandler
-from src.payment_types.domestic_qr import DomesticQrHandler
-from src.payment_types.sepa import SepaHandler
+from src.payment_types import get_handler
 from src.reporting.json_reporter import generate_json_report
 from src.reporting.junit_reporter import generate_junit_report
 from src.reporting.word_reporter import generate_word_report, generate_txt_report
@@ -39,14 +35,6 @@ from src.xml_generator.pain001_builder import (
 )
 
 
-def _get_handler(payment_type: PaymentType):
-    handlers = {
-        PaymentType.SEPA: SepaHandler(),
-        PaymentType.DOMESTIC_QR: DomesticQrHandler(),
-        PaymentType.DOMESTIC_IBAN: DomesticIbanHandler(),
-        PaymentType.CBPR_PLUS: CbprPlusHandler(),
-    }
-    return handlers[payment_type]
 
 
 def _apply_defaults(testcase: TestCase, factory: DataFactory) -> TestCase:
@@ -102,7 +90,7 @@ def _build_instruction(
         )
 
     # 2. Handler und Transaktionen generieren
-    handler = _get_handler(testcase.payment_type)
+    handler = get_handler(testcase.payment_type)
     transactions = handler.generate_transactions(testcase, factory)
 
     # 2a. Per-Transaktions C-Level-Overrides anwenden (F-13)
@@ -183,7 +171,6 @@ def _process_single_testcase(
     verbose: bool = False,
 ) -> TestCaseResult:
     """Verarbeitet einen einzelnen Testfall (1 Testfall -> 1 XML)."""
-    testcase = _apply_defaults(testcase, factory)
     instruction, error_result = _build_instruction(testcase, factory)
     if error_result:
         return error_result
@@ -222,8 +209,7 @@ def _process_group(
     instructions: List[Tuple[TestCase, PaymentInstruction]] = []
     results: List[TestCaseResult] = []
 
-    # Instruktionen bauen (Defaults anwenden)
-    testcases = [_apply_defaults(tc, factory) for tc in testcases]
+    # Instruktionen bauen
     for tc in testcases:
         instruction, error_result = _build_instruction(tc, factory)
         if error_result:
@@ -325,7 +311,7 @@ def _save_xml(
 
 def _group_testcases(testcases: List[TestCase]) -> List[List[TestCase]]:
     """Gruppiert Testfälle nach GroupId. Ohne GroupId → Einzelgruppe."""
-    groups: OrderedDict[Optional[str], List[TestCase]] = OrderedDict()
+    groups: Dict[Optional[str], List[TestCase]] = {}
     for tc in testcases:
         key = tc.group_id  # None für Einzel-Testfälle
         if key not in groups:

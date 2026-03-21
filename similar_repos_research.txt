@@ -1,0 +1,347 @@
+================================================================================
+  RECHERCHE: Aehnliche GitHub-Repos zu iso20022tester
+  Erstellt: 2026-03-20
+================================================================================
+
+ZIEL DES EIGENEN REPOS (Sebastenhauer/iso20022tester):
+  ISO 20022 pain.001.001.09 Test-Generator fuer Swiss Payment Standards (SPS)
+  2025. Generiert aus Excel-Testfalldefinitionen XML-Dateien inkl. XSD- und
+  Business-Rule-Validierung. Unterstuetzt SEPA, Domestic-QR, Domestic-IBAN,
+  CBPR+. Negativ-Testfaelle via ViolateRule. Reporting in Word/JSON/JUnit.
+
+================================================================================
+  KATEGORIE 1: ISO 20022 PAYMENT XML GENERIERUNG (Python)
+================================================================================
+
+1. pain001 (sebastienrousseau/pain001)
+   Link:     https://github.com/sebastienrousseau/pain001
+   Sprache:  Python
+   Stars:    ~37 | Forks: k.A.
+   Lizenz:   Apache 2.0
+   Maintainer: Sebastien Rousseau (Einzelperson, aktiver Open-Source-Entwickler)
+   Ziel:     ISO 20022-konforme pain.001 Payment Files aus CSV, SQLite oder
+             Python-Datenstrukturen generieren.
+   Features:
+     - Unterstuetzt pain.001.001.03 bis pain.001.001.11 (alle 9 Versionen)
+     - Automatische XSD-Validierung vor dem Speichern
+     - --dry-run Modus fuer reine Validierung ohne Output
+     - CLI-Tool und Python-API
+   Relevanz fuer iso20022tester:
+     - Vergleichbare Grundfunktion (pain.001 generieren)
+     - CSV-zu-XML Mapping koennte als Inspiration fuer alternatives Input-Format
+       dienen (neben Excel)
+     - Multi-Version-Support (v03-v11) ist interessant fuer Erweiterbarkeit
+
+--------------------------------------------------------------------------------
+
+2. python-sepaxml (raphaelm/python-sepaxml)
+   Link:     https://github.com/raphaelm/python-sepaxml
+   Sprache:  Python
+   Stars:    ~133 | Forks: ~47
+   Lizenz:   MIT
+   Maintainer: Raphael Michel (bekannter Open-Source-Entwickler, Gruender von
+               pretix - grosses Ticketing-System)
+   Ziel:     SEPA XML-Generierung (Credit Transfer + Direct Debit) in Python.
+   Features:
+     - pain.001.001.03 (Credit Transfer) und pain.008.003.02 (Direct Debit)
+     - Unicode-zu-SEPA-Charset-Konvertierung (text-unidecode)
+     - xmlschema-basierte Validierung
+     - Auf PyPI verfuegbar, weit verbreitet
+   Relevanz fuer iso20022tester:
+     - SEPA-Charset-Handling koennte als Referenz fuer SPS Latin-1 dienen
+     - Etablierte Validierungslogik
+     - Hohe Verbreitung = gut getesteter Code
+
+--------------------------------------------------------------------------------
+
+3. pyiso20022 (phoughton/pyiso20022)
+   Link:     https://github.com/phoughton/pyiso20022
+   Sprache:  Python
+   Stars:    k.A. | Auf PyPI verfuegbar
+   Lizenz:   k.A.
+   Maintainer: phoughton (Einzelperson)
+   Ziel:     ISO 20022 Messages erstellen und parsen (PACS, PAIN, ADMI, CAMT,
+             COLR, HEAD).
+   Features:
+     - BETA: Dokumentvalidierung mit menschenlesbaren Fehlermeldungen
+     - Unterstuetzt Payment Schemes: FedNow, FedWire, TARGET2, CHAPS, CBPR+,
+       MEPS+
+     - Breite Message-Type-Abdeckung (nicht nur pain.001)
+   Relevanz fuer iso20022tester:
+     - CBPR+ Support koennte als Referenz fuer eigene CBPR+-Implementierung
+       dienen
+     - Validierung mit lesbaren Meldungen ist ein aehnliches Konzept wie die
+       Business-Rule-Checks im eigenen Projekt
+     - Parser-Funktionalitaet koennte fuer Round-Trip-Tests nuetzlich sein
+
+--------------------------------------------------------------------------------
+
+4. python-iso20022 (galactixx/python-iso20022)
+   Link:     https://github.com/galactixx/python-iso20022
+   Sprache:  Python
+   Stars:    k.A.
+   Lizenz:   k.A.
+   Maintainer: galactixx (Einzelperson)
+   Ziel:     Automatische Generierung von Python-Dataclasses aus ISO 20022
+             Schemas, taeglich aktualisiert.
+   Features:
+     - Taeglich automatisches Clonen des ISO 20022 Message Catalogue
+     - Schema-zu-Dataclass-Konvertierung
+     - Validierung gegen ISO 20022 Standards
+     - Sauber strukturiert nach Message-Sets (acmt, auth, pain, pacs, etc.)
+   Relevanz fuer iso20022tester:
+     - Dataclass-Ansatz koennte als Typsicherheits-Layer nuetzlich sein
+     - Automatische Schema-Updates = stets aktuelle Message-Definitionen
+     - Koennte als Basis fuer typisierte XML-Generierung dienen
+
+--------------------------------------------------------------------------------
+
+5. Mbanq iso20022 (Mbanq/iso20022)
+   Link:     https://github.com/Mbanq/iso20022
+   Sprache:  Python
+   Stars:    k.A.
+   Lizenz:   k.A.
+   Maintainer: Mbanq Cloud Devs (Fintech-Unternehmen, Banking-as-a-Service)
+   Ziel:     Python ISO 20022 Library fuer Fedwire und FedNow Payment Messages.
+   Features:
+     - Web-basiertes UI fuer Message-Generierung ohne Code
+     - CLI-Tools fuer Generierung und Parsing
+     - Standalone Python-Library (miso20022 auf PyPI)
+     - Fokus auf US-Payment-Systeme (Fedwire, FedNow)
+   Relevanz fuer iso20022tester:
+     - Web-UI-Ansatz koennte als Inspiration fuer Phase 2 (API) dienen
+     - CLI + Library Architektur aehnlich dem eigenen Projekt
+     - Weniger relevant fuer CH/EU-spezifische Zahlungen
+
+================================================================================
+  KATEGORIE 2: SCHWEIZ-SPEZIFISCHE ZAHLUNGS-TOOLS
+================================================================================
+
+6. sps_king (viafintech/sps_king)
+   Link:     https://github.com/viafintech/sps_king
+   Sprache:  Ruby
+   Stars:    k.A.
+   Lizenz:   k.A.
+   Maintainer: viafintech (groesstes bankunabhaengiges Payment-Infrastruktur-
+               Unternehmen in Europa, 16k+ Stores)
+   Ziel:     Swiss Payment Standard (SPS) Payment Initiation File Generation.
+   Features:
+     - pain.001.001.03.ch.02 (Swiss Credit Transfer, SPS v1.8)
+     - pain.008.001.02.ch.03 (Swiss Direct Debit, SPS v1.2)
+     - Fork von sepa_king, angepasst fuer Schweizer Standards
+     - Produktionsreifes Ruby-Gem
+   Relevanz fuer iso20022tester:
+     *** HOCH *** - Gleicher Domainbereich (Swiss Payment Standards)
+     - Referenz fuer SPS-spezifische Validierungslogik
+     - Aeltere SPS-Version (v1.8), iso20022tester zielt auf SPS 2025
+     - Ruby statt Python, aber Logik/Struktur uebertragbar
+
+--------------------------------------------------------------------------------
+
+7. SwissQRBill - Java (manuelbl/SwissQRBill)
+   Link:     https://github.com/manuelbl/SwissQRBill
+   Sprache:  Java
+   Stars:    ~176 | Forks: ~44
+   Lizenz:   MIT
+   Maintainer: Manuel Bl. (Einzelperson, aktiv)
+   Ziel:     Java-Library fuer Swiss QR Bill Payment Slips (QR-Rechnung).
+   Features:
+     - QR-Code-Generierung fuer Zahlungsbelege
+     - PDF- und SVG-Output
+     - Umfangreiche Validierung (IBAN, QR-IBAN, Referenzen)
+     - Maven Central verfuegbar
+     - Detaillierte Validierungsdokumentation im Wiki
+   Relevanz fuer iso20022tester:
+     - Validierungslogik fuer QR-IBAN, SCOR, QRR als Referenz
+     - Wiki mit dokumentierten Validierungsregeln koennte als Pruefquelle
+       fuer eigene Business Rules dienen
+
+--------------------------------------------------------------------------------
+
+8. SwissQRBill - Python (boessu/SwissQRBill)
+   Link:     https://github.com/boessu/SwissQRBill
+   Sprache:  Python / diverse
+   Stars:    k.A.
+   Lizenz:   k.A.
+   Maintainer: boessu (Einzelperson)
+   Ziel:     Dokumentierte Validierungschecks fuer IBAN, SCOR, QRR/ESR,
+             PostFinance-Kontonummern, Swiss QR Bill Inhalte.
+   Features:
+     - Modulo-10-Rekursiv-Berechnung (QRR/ESR)
+     - IBAN-Validierung
+     - SCOR (ISO 11649 Creditor Reference) Validierung
+     - PostFinance-Kontonummern-Pruefung
+     - Gut dokumentierter Code
+   Relevanz fuer iso20022tester:
+     *** HOCH *** - Direkt relevante Validierungsalgorithmen
+     - Mod-10-Rekursiv und SCOR-Berechnung = gleiche Algorithmen wie im
+       eigenen data_factory Modul
+     - Koennte als Testvergleich/Referenzimplementierung dienen
+
+--------------------------------------------------------------------------------
+
+9. swiss-qr-bill - Python (claudep/swiss-qr-bill)
+   Link:     https://github.com/claudep/swiss-qr-bill
+   Sprache:  Python
+   Stars:    ~111
+   Lizenz:   k.A.
+   Maintainer: Claude Paroz (bekannter Django-Core-Contributor)
+   Ziel:     Python-Library zur Generierung von Swiss QR-Bill Payment Slips
+             als SVG.
+   Features:
+     - CLI und Python-API
+     - SVG-Output fuer QR-Rechnungen
+     - IBAN/QR-IBAN Validierung
+     - Referenz-Typ-Validierung (QRR, SCOR, NON)
+   Relevanz fuer iso20022tester:
+     - Maintainer ist bekannter Django-Contributor = hohe Code-Qualitaet
+     - QR-IBAN/Referenz-Logik als Referenz nuetzlich
+     - Koennte fuer zukuenftige QR-Bill-Reporting-Erweiterung relevant sein
+
+================================================================================
+  KATEGORIE 3: MULTI-SPRACH / ENTERPRISE-LEVEL ISO 20022
+================================================================================
+
+10. prowide-iso20022 (prowide/prowide-iso20022)
+    Link:     https://github.com/prowide/prowide-iso20022
+    Sprache:  Java
+    Stars:    ~208 | Forks: k.A.
+    Lizenz:   Apache 2.0
+    Maintainer: Prowide (Unternehmen, fuehrender Anbieter von SWIFT/ISO20022
+                Software-Tools, bekannt in der Finanzbranche)
+    Ziel:     Umfassendes Business Model und Parser fuer ALLE ISO 20022 Messages.
+    Features:
+      - Parser fuer XML zu Java-Objekten und zurueck
+      - JSON-Konvertierung
+      - JPA-Entities fuer Persistierung
+      - Alle MX Message-Kategorien abgedeckt
+      - Kommerzielle Erweiterung: SEPA, CBPR+, TARGET Validierung
+    Relevanz fuer iso20022tester:
+      - Referenzarchitektur fuer umfassende ISO 20022 Implementierung
+      - Business-Rule-Validierung nur in kommerzieller Version, zeigt Marktluecke
+      - Koennte als Vergleichsmassstab fuer Message-Parsing dienen
+
+--------------------------------------------------------------------------------
+
+11. iso20022.js (svapnil/iso20022.js)
+    Link:     https://github.com/Svapnil/iso20022.js
+    Sprache:  TypeScript/JavaScript
+    Stars:    ~380 | Forks: k.A.
+    Lizenz:   Open Source
+    Maintainer: Svapnil Ankolkar (Einzelperson, war auf Hacker News Featured)
+    Ziel:     ISO 20022 Payments in 3 Zeilen Code - ACH, SEPA, FedNow, SWIFT,
+              RTP.
+    Features:
+      - Produktionseinsatz (bewegt hunderttausende USD/Monat)
+      - Payment Initiation + Bank Statement Processing
+      - Multi-Payment-System-Support
+      - Developer-freundliche API
+    Relevanz fuer iso20022tester:
+      - Hoechste Starcount in der Recherche = grosse Community
+      - API-Design als Inspiration fuer Phase 2
+      - Produktionsvalidiert, koennte Testfaelle liefern
+
+--------------------------------------------------------------------------------
+
+12. moov-io/iso20022 (moov-io/iso20022)
+    Link:     https://github.com/moov-io/iso20022
+    Sprache:  Go
+    Stars:    ~75 | Forks: ~26
+    Lizenz:   Apache 2.0
+    Maintainer: Moov Financial (Fintech-Unternehmen, bekannt fuer Open-Source
+                Financial Infrastructure)
+    Ziel:     ISO 20022 Standards in Go - Reader/Writer mit HTTP API.
+    Features:
+      - JSON und XML Message Support
+      - HTTP API fuer Erstellen, Parsen, Validieren
+      - Unit Tests und Fuzzing fuer Produktionsreife
+      - Teil des groesseren Moov-Oekosystems (ACH, Wire, Fed, etc.)
+    Relevanz fuer iso20022tester:
+      - HTTP API Architektur als Referenz fuer Phase 2
+      - Fuzzing-Ansatz koennte fuer Robustheitstests uebernommen werden
+      - Moov ist ein bekanntes Fintech-Unternehmen mit grossem Oekosystem
+
+--------------------------------------------------------------------------------
+
+13. aws-samples/iso20022-message-generator
+    Link:     https://github.com/aws-samples/iso20022-message-generator
+    Sprache:  Java
+    Stars:    ~17 | Forks: ~15
+    Lizenz:   k.A. (AWS Samples)
+    Maintainer: AWS (Amazon Web Services - Grossunternehmen)
+    Ziel:     ISO 20022 pacs.008 Message Generator fuer Serial Message Flow.
+    Features:
+      - Codename "Rapide"
+      - pacs.008 XML-Generierung
+      - Machine-Learning-Prototypen fuer Vorhersage von Message-Processing
+      - SQL-Schema fuer Message-Persistierung
+    Relevanz fuer iso20022tester:
+      - ML-basierte Vorhersagen = innovativer Ansatz
+      - AWS-backed = Enterprise-Qualitaet
+      - Fokus auf pacs.008 (nicht pain.001), aber Architektur uebertragbar
+
+--------------------------------------------------------------------------------
+
+14. SwissQRBill - TypeScript (schoero/SwissQRBill)
+    Link:     https://github.com/schoero/SwissQRBill
+    Sprache:  TypeScript
+    Stars:    ~148 | Forks: k.A.
+    Lizenz:   MIT
+    Maintainer: schoero (Einzelperson)
+    Ziel:     Swiss QR Bill Generierung in Node.js und Browsern.
+    Features:
+      - PDF- und SVG-Output
+      - Mehrsprachig (DE, EN, IT, FR)
+      - Browser- und Node.js-kompatibel
+      - Aktiv maintained, Version 4.2.0
+    Relevanz fuer iso20022tester:
+      - Mehrsprachigkeit als Inspiration
+      - Aktives Projekt im Schweizer Zahlungsbereich
+
+--------------------------------------------------------------------------------
+
+15. Payment-Components/demo-iso20022
+    Link:     https://github.com/Payment-Components/demo-iso20022
+    Sprache:  Java
+    Stars:    k.A.
+    Lizenz:   k.A.
+    Maintainer: Payment Components (Unternehmen, paymentcomponents.com,
+                kommerzieller ISO 20022 Tooling-Anbieter)
+    Ziel:     Demo-Projekt fuer ISO 20022 Message Validation Library.
+    Features:
+      - SEPA-EPC-CT Message Handling
+      - Parsing und Validierung von ISO 20022 Messages
+      - Code-Beispiele fuer verschiedene Message-Typen
+      - Erweitert ISO 20022 Basisklassen fuer SEPA
+    Relevanz fuer iso20022tester:
+      - Validierungsbeispiele als Referenz
+      - Zeigt kommerziellen Markt fuer solche Tools
+
+================================================================================
+  ZUSAMMENFASSUNG: TOP-EMPFEHLUNGEN FUER iso20022tester
+================================================================================
+
+Die folgenden Repos sind am relevantesten fuer Ergaenzungen:
+
+1. boessu/SwissQRBill (Python)
+   -> Validierungsalgorithmen (Mod-10, SCOR, IBAN) als Referenz/Testvergleich
+
+2. viafintech/sps_king (Ruby)
+   -> Gleicher Domainbereich (SPS), Validierungslogik uebertragbar
+
+3. raphaelm/python-sepaxml (Python)
+   -> SEPA-Charset-Handling, bewaeaehrte Validierung, 133 Stars
+
+4. pyiso20022 (Python)
+   -> CBPR+ Support, lesbahre Validierungsmeldungen, Parser fuer Round-Trip
+
+5. claudep/swiss-qr-bill (Python)
+   -> QR-IBAN-Logik, hohe Code-Qualitaet (Django-Core-Contributor)
+
+6. moov-io/iso20022 (Go)
+   -> HTTP API Architektur als Vorlage fuer Phase 2
+
+7. iso20022.js (TypeScript)
+   -> API-Design, groesste Community (380 Stars)
+
+================================================================================

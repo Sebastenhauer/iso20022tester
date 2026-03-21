@@ -6,7 +6,6 @@ Diese Datei enthält nur die Validierungs- und Violation-Logik.
 
 import random
 import re
-from decimal import Decimal
 from typing import List
 
 from src.data_factory.generator import validate_sps_charset
@@ -15,30 +14,10 @@ from src.models.testcase import (
     PaymentInstruction,
     PaymentType,
     TestCase,
-    Transaction,
     ValidationResult,
 )
-from src.payment_types.base import PaymentTypeHandler
-from src.payment_types.cbpr_plus import CbprPlusHandler
-from src.payment_types.domestic_iban import DomesticIbanHandler
-from src.payment_types.domestic_qr import DomesticQrHandler
-from src.payment_types.sepa import SepaHandler
-from src.validation.rule_catalog import get_rule
-
-
-# ---------------------------------------------------------------------------
-# Hilfsfunktion: ValidationResult aus Katalog erstellen
-# ---------------------------------------------------------------------------
-
-def _check(rule_id: str, passed: bool, details: str = None) -> ValidationResult:
-    """Erstellt ein ValidationResult mit Beschreibung aus dem Katalog."""
-    rule = get_rule(rule_id)
-    return ValidationResult(
-        rule_id=rule.rule_id,
-        rule_description=rule.description,
-        passed=passed,
-        details=details,
-    )
+from src.payment_types import get_handler
+from src.validation.rule_catalog import check_rule as _check
 
 
 # ---------------------------------------------------------------------------
@@ -56,19 +35,6 @@ def _validate_ref_charset(value: str) -> bool:
     return True
 
 
-# ---------------------------------------------------------------------------
-# Handler-Lookup
-# ---------------------------------------------------------------------------
-
-def _get_handler(payment_type: PaymentType) -> PaymentTypeHandler:
-    """Gibt den passenden Handler für einen Zahlungstyp zurück."""
-    handlers = {
-        PaymentType.SEPA: SepaHandler(),
-        PaymentType.DOMESTIC_QR: DomesticQrHandler(),
-        PaymentType.DOMESTIC_IBAN: DomesticIbanHandler(),
-        PaymentType.CBPR_PLUS: CbprPlusHandler(),
-    }
-    return handlers[payment_type]
 
 
 # ---------------------------------------------------------------------------
@@ -253,7 +219,7 @@ def validate_all_business_rules(
             f"ChrgBr ist '{cb}'" if cb != "SLEV" else None,
         ))
 
-    handler = _get_handler(testcase.payment_type)
+    handler = get_handler(testcase.payment_type)
     results.extend(handler.validate(testcase, instruction.transactions))
 
     return results
