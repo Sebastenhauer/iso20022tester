@@ -105,6 +105,42 @@ def _build_instruction(
     handler = _get_handler(testcase.payment_type)
     transactions = handler.generate_transactions(testcase, factory)
 
+    # 2a. Per-Transaktions C-Level-Overrides anwenden (F-13)
+    tx_inputs = testcase.transaction_inputs or []
+    for i, tx in enumerate(transactions):
+        if i < len(tx_inputs) and tx_inputs[i].overrides:
+            tx_mapped, _, tx_errors = validate_and_map_overrides(tx_inputs[i].overrides)
+            if tx_errors:
+                error_msgs = [e.message for e in tx_errors]
+                return None, TestCaseResult(
+                    testcase_id=testcase.testcase_id,
+                    titel=testcase.titel,
+                    payment_type=testcase.payment_type,
+                    expected_result=testcase.expected_result,
+                    xsd_valid=False,
+                    xsd_errors=error_msgs,
+                    overall_pass=False,
+                    remarks=f"Mapping-Fehler in Transaktion {i+1}: " + "; ".join(error_msgs),
+                )
+            updates = {}
+            for key, info in tx_mapped.items():
+                if info["level"] == "C":
+                    if key == "Cdtr.Nm":
+                        updates["creditor_name"] = info["value"]
+                    elif key == "CdtrAcct.IBAN":
+                        updates["creditor_iban"] = info["value"]
+                    elif key == "CdtrAgt.BICFI":
+                        updates["creditor_bic"] = info["value"]
+                    elif key == "RmtInf.Ustrd":
+                        updates["remittance_info"] = {"type": "USTRD", "value": info["value"]}
+                    elif key.startswith("Cdtr.PstlAdr."):
+                        addr_key = key.split(".")[-1]
+                        addr = dict(tx.creditor_address or {})
+                        addr[addr_key] = info["value"]
+                        updates["creditor_address"] = addr
+            if updates:
+                transactions[i] = tx.model_copy(update=updates)
+
     # 3. PaymentInstruction zusammenbauen
     instruction = PaymentInstruction(
         msg_id=factory.generate_msg_id(),
@@ -403,31 +439,82 @@ def run(
     return results
 
 
+def run_roundtrip_mode(xml_paths: List[str], config: AppConfig, verbose: bool = False):
+    """Round-Trip-Modus: Parst XMLs zurueck und prueft Konsistenz."""
+    from src.validation.roundtrip import run_roundtrip
+
+    xsd_validator = None
+    try:
+        xsd_validator = XsdValidator(config.xsd_path)
+    except Exception as e:
+        print(f"Warnung: XSD-Schema konnte nicht geladen werden: {e}")
+
+    print(f"Round-Trip-Validierung fuer {len(xml_paths)} XML-Datei(en)...")
+    results = run_roundtrip(xml_paths, xsd_validator, verbose)
+
+    pass_count = sum(1 for r in results if r.passed)
+    fail_count = len(results) - pass_count
+    print(f"\n{'=' * 50}")
+    print(f"Round-Trip: {pass_count} OK, {fail_count} Fehler von {len(results)} Dateien")
+    print(f"{'=' * 50}")
+
+    return 0 if fail_count == 0 else 1
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="ISO 20022 pain.001 Test Generator",
     )
-    parser.add_argument(
-        "--input", required=True,
-        help="Pfad zur Excel-Datei mit Testfällen",
-    )
-    parser.add_argument(
-        "--config", required=True,
-        help="Pfad zur config.yaml",
-    )
-    parser.add_argument(
-        "--seed", type=int, default=None,
-        help="Übersteuert den Seed aus config.yaml",
-    )
-    parser.add_argument(
-        "--verbose", action="store_true",
-        help="Ausführliche Konsolenausgabe",
-    )
+
+    subparsers = parser.add_subparsers(dest="command")
+
+    # Default-Modus: generate
+    gen_parser = subparsers.add_parser("generate", help="XML-Dateien generieren (Standard)")
+    gen_parser.add_argument("--input", required=True, help="Pfad zur Excel-Datei mit Testfaellen")
+    gen_parser.add_argument("--config", required=True, help="Pfad zur config.yaml")
+    gen_parser.add_argument("--seed", type=int, default=None, help="Uebersteuert den Seed")
+    gen_parser.add_argument("--verbose", action="store_true", help="Ausfuehrliche Ausgabe")
+
+    # Round-Trip-Modus
+    rt_parser = subparsers.add_parser("roundtrip", help="Round-Trip-Validierung fuer XML-Dateien")
+    rt_parser.add_argument("xml_files", nargs="+", help="XML-Dateien oder Verzeichnis")
+    rt_parser.add_argument("--config", required=True, help="Pfad zur config.yaml")
+    rt_parser.add_argument("--verbose", action="store_true", help="Ausfuehrliche Ausgabe")
+
+    # Abwaertskompatibilitaet: --input ohne Subcommand = generate
+    parser.add_argument("--input", help="Pfad zur Excel-Datei (Abwaertskompatibilitaet)")
+    parser.add_argument("--config", help="Pfad zur config.yaml")
+    parser.add_argument("--seed", type=int, default=None, help="Seed")
+    parser.add_argument("--verbose", action="store_true", help="Verbose")
 
     args = parser.parse_args()
 
-    config = load_config(args.config)
-    run(args.input, config, seed_override=args.seed, verbose=args.verbose)
+    if args.command == "roundtrip":
+        config = load_config(args.config)
+        # Verzeichnisse zu einzelnen XML-Dateien auflösen
+        xml_files = []
+        for path in args.xml_files:
+            if os.path.isdir(path):
+                for f in sorted(os.listdir(path)):
+                    if f.endswith(".xml") and not f.startswith("testlauf"):
+                        xml_files.append(os.path.join(path, f))
+            else:
+                xml_files.append(path)
+        exit_code = run_roundtrip_mode(xml_files, config, verbose=args.verbose)
+        sys.exit(exit_code)
+
+    elif args.command == "generate" or args.input:
+        input_file = getattr(args, "input", None)
+        config_file = getattr(args, "config", None)
+        if not input_file or not config_file:
+            parser.error("--input und --config sind erforderlich")
+        config = load_config(config_file)
+        seed = getattr(args, "seed", None)
+        verbose = getattr(args, "verbose", False)
+        run(input_file, config, seed_override=seed, verbose=verbose)
+
+    else:
+        parser.print_help()
 
 
 if __name__ == "__main__":
