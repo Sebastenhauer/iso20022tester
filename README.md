@@ -2,18 +2,36 @@
 
 Automatisierte Erstellung von ISO 20022-konformen **pain.001.001.09** Zahlungsdateien auf Basis von Excel-Testfalldefinitionen. Validierung gegen das XSD-Schema und die Business Rules der **Swiss Payment Standards (SPS) 2025**.
 
+### Schema-Version und Kompatibilitaet
+
+| Standard | Schema | Status ab 2027 |
+|----------|--------|---------------|
+| **SPS (Schweiz)** | `pain.001.001.09.ch.03` | Aktuelle Version, gueltig bis mind. Nov 2027 |
+| **EPC SEPA** | `pain.001.001.09` | Migration von .03 auf .09 Pflicht bis Nov 2026. CH-Schema ist Obermenge der EPC-Restriktionen |
+| **CBPR+ (SWIFT)** | `pain.001.001.09` | MT101 wird per Nov 2026 abgeloest. CH-Schema deckt CBPR+-Anforderungen ab |
+
+Das verwendete Schema `pain.001.001.09.ch.03.xsd` (SIX Group) ist eine **Swiss Restriction** des ISO-Basis-Schemas und deckt alle vier Zahlungstypen (Domestic D, SEPA S, CBPR+ X, Cheque C) ab. Die Differenzierung der Standards erfolgt ueber **Business Rules**, nicht ueber unterschiedliche Schemas.
+
+**Ab November 2026 gelten verschaerfte Anforderungen:**
+- Strukturierte Adressen sind Pflicht (keine AdrLine-only Adressen mehr) — bereits implementiert via BR-ADDR-002
+- SPS-Zeichensatz (Latin-1 Subset) wird auf alle Textfelder angewendet — bereits implementiert via BR-GEN-012
+
 ## Features
 
 - **Excel-basierte Testfalldefinition** — ein Testfall pro Zeile, zusätzliche Transaktionen als Folgezeilen ohne TestcaseID
 - **4 Zahlungstypen** — SEPA, Domestic-QR, Domestic-IBAN, CBPR+ mit typ-spezifischen Regeln und automatischer Erkennung
-- **36 Business Rules** — zentraler Rule-Katalog mit Spec-Referenzen, organisiert in 9 Kategorien
+- **40+ Business Rules** — zentraler Rule-Katalog mit Spec-Referenzen, organisiert in 11 Kategorien inkl. Zeichensatz, Adressen, Waehrungen
 - **Multi-Payment** — mehrere Testfälle in einer XML-Datei via `GroupId` (mehrere PmtInf-Blöcke pro Dokument)
 - **Negative Testing** — 10 violatable Rules für gezielte Regelverletzungen via `ViolateRule=<RuleID>`
 - **Reproduzierbare Testdaten** — Seed-basierte Generierung von IBANs (Mod-97), QR-Referenzen (Mod-10), SCOR-Referenzen (ISO 11649), Namen und Adressen
 - **Minimale Pflichtfelder** — nur TestcaseID, Titel, Ziel, Erwartetes Ergebnis und Debtor-IBAN sind Pflicht; alles andere wird automatisch generiert
 - **Second-Opinion-Validierung** — unabhängige Gegenprüfung mit `xmlschema`-Library zusätzlich zur lxml-Validierung
+- **Round-Trip-Validierung** — CLI-Modus `roundtrip` parst XMLs zurueck und prueft Konsistenz (NbOfTxs, CtrlSum, Pflichtfelder)
+- **Per-Transaction C-Level-Overrides** — individuelle Creditor-Daten pro Transaktion via "Weitere Testdaten" in Transaktionszeilen
+- **Strukturierte Adressen (SPS 2026)** — Creditor-Adressen muessen StrtNm, TwnNm und Ctry enthalten (BR-ADDR-002)
+- **CBPR+ Charge Bearer** — Unterstuetzung fuer DEBT, CRED, SHAR mit Validierung (BR-CBPR-003)
+- **50+ Laender IBAN-Generierung** — Europa, Naher Osten, Asien, Amerika, Afrika
 - **Reporting** — Word (.docx), JSON und JUnit-XML Reports pro Testlauf
-- **59 Beispiel-XMLs** — vorab generierte Beispieldateien im `examples/`-Verzeichnis
 
 ---
 
@@ -102,23 +120,41 @@ poetry install
 ## Verwendung
 
 ```bash
+# XML generieren (Standard-Modus)
 poetry run python -m src.main --input <excel-datei> --config config.yaml [--seed 42] [--verbose]
+
+# Round-Trip-Validierung (F-09)
+poetry run python -m src.main roundtrip <xml-dateien-oder-verzeichnis> --config config.yaml [--verbose]
 ```
 
-**Beispiel mit dem mitgelieferten Template (65 Testfälle):**
+**Beispiele:**
 
 ```bash
-poetry run python -m src.main --input templates/testfaelle_vorlage.xlsx --config config.yaml --verbose
+# 90 Testfaelle generieren (comprehensive suite)
+poetry run python -m src.main --input templates/testfaelle_comprehensive.xlsx --config config.yaml --verbose
+
+# Round-Trip: alle generierten XMLs zurueck parsen und pruefen
+poetry run python -m src.main roundtrip output/2026-03-21_*/ --config config.yaml --verbose
 ```
 
 ### CLI-Argumente
 
+**Generierung (`--input` oder `generate` Subcommand):**
+
 | Argument | Pflicht | Beschreibung |
 |----------|---------|-------------|
-| `--input` | Ja | Pfad zur Excel-Datei mit Testfällen |
+| `--input` | Ja | Pfad zur Excel-Datei mit Testfaellen |
 | `--config` | Ja | Pfad zur `config.yaml` |
-| `--seed` | Nein | Seed für reproduzierbare Zufallsdaten (übersteuert config.yaml) |
-| `--verbose` | Nein | Ausführliche Konsolenausgabe |
+| `--seed` | Nein | Seed fuer reproduzierbare Zufallsdaten |
+| `--verbose` | Nein | Ausfuehrliche Konsolenausgabe |
+
+**Round-Trip (`roundtrip` Subcommand):**
+
+| Argument | Pflicht | Beschreibung |
+|----------|---------|-------------|
+| `xml_files` | Ja | XML-Dateien oder Verzeichnis |
+| `--config` | Ja | Pfad zur `config.yaml` (fuer XSD re-validation) |
+| `--verbose` | Nein | Zeigt Abweichungs-Details |
 
 ### Konfiguration (`config.yaml`)
 
@@ -197,7 +233,7 @@ Das vollständige Template mit 65 Testfällen liegt unter `templates/testfaelle_
 | **SEPA** | S | EUR | SvcLvl=SEPA, ChrgBr=SLEV, Creditor-Name max. 70 Zeichen |
 | **Domestic-QR** | D | CHF/EUR | QR-IBAN (IID 30000–31999), QRR-Referenz zwingend (Prtry) |
 | **Domestic-IBAN** | D | CHF | Reguläre CH-IBAN, SCOR optional (Mod-97), keine QRR |
-| **CBPR+** | X | vom User | Creditor-Agent BIC Pflicht (`CdtrAgt.BICFI=...`) |
+| **CBPR+** | X | vom User | Creditor-Agent BIC Pflicht, ChrgBr: DEBT/CRED/SHAR (Default: SHAR), 50+ Laender/28 Waehrungen |
 
 Wenn kein Zahlungstyp angegeben wird, erkennt das System den Typ automatisch anhand von Creditor-IBAN und Währung.
 
@@ -205,21 +241,23 @@ Wenn kein Zahlungstyp angegeben wird, erkennt das System den Typ automatisch anh
 
 ## Business Rules
 
-**36 Business Rules** in einem zentralen Katalog (`src/validation/rule_catalog.py`), organisiert in 9 Kategorien:
+**40+ Business Rules** in einem zentralen Katalog (`src/validation/rule_catalog.py`), organisiert in 11 Kategorien:
 
 | Kategorie | Anzahl | Beispiele |
 |-----------|--------|-----------|
 | **HDR** | 3 | MsgId-Eindeutigkeit, NbOfTxs/CtrlSum-Konsistenz |
-| **GEN** | 8 | Betrag > 0, Zeichensatz, Adresse, Referenzfelder, Bankarbeitstag |
+| **GEN** | 8 | Betrag > 0, Zeichensatz (alle Textfelder), BIC-Format, Country-Code |
+| **ADDR** | 3 | Strukturierte Adressen Pflicht (StrtNm+TwnNm+Ctry), Debtor-Adresse |
+| **REM** | 1 | USTRD max 140 Zeichen |
+| **CCY** | 1 | ISO 4217 Waehrungscode-Format |
 | **SEPA** | 5 | EUR-Pflicht, SLEV, Name max. 70, Betragsgrenzen |
-| **QR** | 7 | QR-IBAN-Pflicht, QRR-Pflicht, keine SCOR, Mod-10-Prüfziffer |
+| **QR** | 7 | QR-IBAN-Pflicht, QRR-Pflicht, keine SCOR, Mod-10-Pruefziffer |
 | **IBAN** | 6 | Keine QR-IBAN, keine QRR, CHF-Pflicht, SCOR-Validierung |
-| **CBPR** | 3 | Creditor-Agent-Pflicht, strukturierte Adressen |
-| **ADDR** | 1 | Adressformat-Validierung (strukturiert/hybrid) |
-| **IBAN-V** | 2 | Mod-97-Prüfziffer, Längenvalidierung |
-| **REF-V** | 1 | SCOR RF-Prüfziffer (ISO 11649) |
+| **CBPR** | 4 | Creditor-Agent-Pflicht, ChrgBr DEBT/CRED/SHAR/SLEV |
+| **IBAN-V** | 2 | Mod-97-Pruefziffer, Laengenvalidierung |
+| **REF-V** | 1 | SCOR RF-Pruefziffer (ISO 11649) |
 
-Davon sind **10 Rules violatable** für Negative Testing (z.B. `BR-SEPA-001`, `BR-QR-002`, `BR-CBPR-005`).
+Davon sind **13 Rules violatable** fuer Negative Testing (z.B. `BR-SEPA-001`, `BR-QR-002`, `BR-CBPR-003`, `BR-CBPR-005`, `BR-ADDR-002`).
 
 Vollständiger Katalog mit Spec-Referenzen: `docs/SDD_v2.md` §5.7
 
@@ -304,7 +342,8 @@ iso20022tester/
 │   ├── validation/
 │   │   ├── xsd_validator.py             # XSD-Schema-Validierung
 │   │   ├── business_rules.py            # Validierungs- & Violation-Logik
-│   │   └── rule_catalog.py              # Zentraler Rule-Katalog (36 Rules)
+│   │   ├── rule_catalog.py              # Zentraler Rule-Katalog (40+ Rules)
+│   │   └── roundtrip.py                # Round-Trip-Validierung (F-09)
 │   ├── reporting/                       # Word, JSON, JUnit Reports
 │   └── cache/                           # Mapping-Cache (vorbereitet für Phase 2)
 ├── tests/                               # Unit Tests (pytest)

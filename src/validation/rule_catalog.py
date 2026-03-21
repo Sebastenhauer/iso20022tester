@@ -123,9 +123,24 @@ BR_GEN_012 = _r(
 
 BR_ADDR_001 = _r(
     "BR-ADDR-001", "ADDR",
-    "Strukturierte Adresse: TwnNm und Ctry müssen gesetzt sein",
+    "Strukturierte Adresse: TwnNm und Ctry muessen gesetzt sein",
     None,
     "IG CT SPS 2025 §3.1, §3.11",
+)
+
+BR_ADDR_002 = _r(
+    "BR-ADDR-002", "ADDR",
+    "Creditor-Adresse muss strukturiert sein (StrtNm, TwnNm, Ctry Pflicht, kein AdrLine allein)",
+    None,
+    "IG CT SPS 2026 §3.1.2, ab Nov 2026 Pflicht",
+    violatable=True,
+)
+
+BR_ADDR_003 = _r(
+    "BR-ADDR-003", "ADDR",
+    "Debtor-Adresse: wenn vorhanden, muessen TwnNm und Ctry gesetzt sein",
+    None,
+    "IG CT SPS 2025 §4.2.6",
 )
 
 BR_GEN_006 = _r(

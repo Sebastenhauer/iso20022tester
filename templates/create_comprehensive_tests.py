@@ -253,6 +253,40 @@ for country, bic, ccy in sepa_countries_sample:
     )
 
 # ============================================================
+# Strukturierte Adressen Tests
+# ============================================================
+
+add_row("TC-ADDR-001", "Strukturierte Adresse OK", "Vollstaendig strukturierte Creditor-Adresse", "OK",
+        "CBPR+", 5000.00, "USD", cdtr_bic="CHASUS33XXX",
+        bemerkung="StrtNm, TwnNm, Ctry alle vorhanden")
+
+add_row("TC-ADDR-002", "Unvollstaendige Adresse", "StrtNm fehlt in Creditor-Adresse", "NOK",
+        "CBPR+", 3000.00, "GBP", cdtr_bic="BARCGB22XXX",
+        violate="BR-ADDR-002",
+        bemerkung="Violation entfernt StrtNm")
+
+add_row("TC-ADDR-003", "SEPA strukturierte Adresse", "SEPA mit vollstaendiger Adresse", "OK",
+        "SEPA", 2000.00, "EUR",
+        bemerkung="SEPA mit strukturierter Adresse")
+
+add_row("TC-ADDR-004", "Domestic QR strukturierte Adresse", "QR mit vollstaendiger Adresse", "OK",
+        "Domestic-QR", 1500.00, "CHF",
+        bemerkung="QR-Zahlung mit strukturierter Adresse")
+
+# ============================================================
+# Zeichensatz Tests (SPS Latin-1 Subset)
+# ============================================================
+
+add_row("TC-CHAR-001", "SPS-Zeichensatz OK", "Gueltige Zeichen im Creditor-Namen", "OK",
+        "CBPR+", 8000.00, "USD", cdtr_name="ABC Trading Co. (Int'l)",
+        cdtr_bic="CHASUS33XXX",
+        bemerkung="Alle Zeichen im SPS-Subset")
+
+add_row("TC-CHAR-002", "SPS-Zeichensatz Sonderzeichen", "Erlaubte Sonderzeichen testen", "OK",
+        "SEPA", 1000.00, "EUR", cdtr_name="Firma A/B - Test? Ja: (ok), +mehr",
+        bemerkung="Alle erlaubten Sonderzeichen: / - ? : ( ) . , ' +")
+
+# ============================================================
 # Spaltenbreiten
 # ============================================================
 
