@@ -350,9 +350,9 @@ BR_CBPR_002 = _r(
 
 BR_CBPR_003 = _r(
     "BR-CBPR-003", "CBPR",
-    "ChrgBr muss DEBT, CRED, SHAR oder SLEV sein",
+    "ChrgBr darf nicht SLEV sein (CBPR+ erlaubt nur DEBT, CRED, SHAR)",
     _CBPR,
-    "IG CT SPS 2025 §4.2.11, §4.3.19",
+    "CBPR+ SR2025 Usage Guideline p.203-204",
     violatable=True,
 )
 
@@ -362,6 +362,13 @@ BR_CBPR_005 = _r(
     _CBPR,
     "IG CT SPS 2025 §4.3.6",
     violatable=True,
+)
+
+BR_CBPR_006 = _r(
+    "BR-CBPR-006", "CBPR",
+    "UETR (UUIDv4) ist Pflicht für CBPR+-Zahlungen",
+    _CBPR,
+    "CBPR+ SR2025 Usage Guideline p.133",
 )
 
 # --- Remittance Information ---

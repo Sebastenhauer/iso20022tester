@@ -50,6 +50,7 @@ def test_sepa_valid():
         currency="EUR",
         creditor_name="Creditor AG",
         creditor_iban="DE89370400440532013000",
+        creditor_address={"StrtNm": "Berliner Str.", "TwnNm": "Berlin", "Ctry": "DE"},
     )
     instr = _make_instruction(tc, [tx])
     results = validate_all_business_rules(instr, tc)
