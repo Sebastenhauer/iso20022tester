@@ -77,18 +77,37 @@ class SepaHandler(PaymentTypeHandler):
         self, testcase: TestCase, factory: DataFactory
     ) -> List[Transaction]:
         transactions = []
-        for i in range(testcase.tx_count):
-            creditor_iban = testcase.overrides.get(
-                "CdtrAcct.IBAN",
-                factory.generate_creditor_iban(PaymentType.SEPA),
+        tx_inputs = testcase.transaction_inputs or [None]
+
+        for tx_input in tx_inputs:
+            creditor_iban = (
+                (tx_input.creditor_iban if tx_input else None)
+                or testcase.overrides.get("CdtrAcct.IBAN")
+                or factory.generate_creditor_iban(PaymentType.SEPA)
             )
-            creditor_name = testcase.overrides.get(
-                "Cdtr.Nm",
-                factory.generate_creditor_name(),
+            creditor_name = (
+                (tx_input.creditor_name if tx_input else None)
+                or testcase.overrides.get("Cdtr.Nm")
+                or factory.generate_creditor_name()
             )
-            # SEPA: Name max 70 Zeichen
             if len(creditor_name) > 70:
                 creditor_name = creditor_name[:70]
+
+            creditor_bic = (
+                (tx_input.creditor_bic if tx_input else None)
+                or testcase.overrides.get("CdtrAgt.BICFI")
+            )
+            amount = (
+                (tx_input.amount if tx_input else None)
+                or testcase.amount
+                or factory.generate_amount(PaymentType.SEPA)
+            )
+            currency = (
+                (tx_input.currency if tx_input else None)
+                or testcase.currency
+                or "EUR"
+            )
+            remittance_ustrd = (tx_input.remittance_info if tx_input else None)
 
             address = factory.generate_creditor_address(
                 creditor_iban[:2] if len(creditor_iban) >= 2 else "DE"
@@ -96,13 +115,14 @@ class SepaHandler(PaymentTypeHandler):
 
             tx = Transaction(
                 end_to_end_id=factory.generate_end_to_end_id(),
-                amount=testcase.amount,
-                currency=testcase.currency,
+                amount=amount,
+                currency=currency,
                 creditor_name=creditor_name,
                 creditor_iban=creditor_iban,
                 creditor_address=address,
-                creditor_bic=testcase.overrides.get("CdtrAgt.BICFI"),
+                creditor_bic=creditor_bic,
                 charge_bearer="SLEV",
+                remittance_info={"type": "USTRD", "value": remittance_ustrd} if remittance_ustrd else None,
                 overrides=testcase.overrides,
             )
             transactions.append(tx)

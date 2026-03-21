@@ -18,9 +18,9 @@ class ExpectedResult(str, Enum):
 
 
 class DebtorInfo(BaseModel):
-    """Debtor-Daten werden vollständig aus dem Excel eingelesen."""
+    """Debtor-Daten. Nur IBAN ist Pflicht, Rest wird generiert."""
 
-    name: str
+    name: Optional[str] = None
     iban: str
     bic: Optional[str] = None
     street: Optional[str] = None
@@ -30,18 +30,32 @@ class DebtorInfo(BaseModel):
     country: str = "CH"
 
 
+class TransactionInput(BaseModel):
+    """Pro-Transaktions-Daten aus dem Excel (eine Zeile)."""
+
+    amount: Optional[Decimal] = None
+    currency: Optional[str] = None
+    creditor_name: Optional[str] = None
+    creditor_iban: Optional[str] = None
+    creditor_bic: Optional[str] = None
+    creditor_address: Optional[str] = None
+    remittance_info: Optional[str] = None
+    overrides: Dict[str, str] = {}
+
+
 class TestCase(BaseModel):
     testcase_id: str
     titel: str
     ziel: str
     expected_result: ExpectedResult
-    payment_type: PaymentType
-    amount: Decimal = Field(..., decimal_places=2)
-    currency: str
+    payment_type: Optional[PaymentType] = None
+    amount: Optional[Decimal] = Field(None, decimal_places=2)
+    currency: Optional[str] = None
     debtor: DebtorInfo
     overrides: Dict[str, str] = {}
     violate_rule: Optional[str] = None
     tx_count: int = 1
+    transaction_inputs: List[TransactionInput] = []
     group_id: Optional[str] = None
     expected_api_response: Optional[str] = None
     remarks: Optional[str] = None

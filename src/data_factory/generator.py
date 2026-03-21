@@ -117,7 +117,22 @@ class DataFactory:
             return None
         return None
 
-    def generate_amount(self, payment_type: PaymentType, currency: str) -> Decimal:
+    def generate_debtor_name(self) -> str:
+        """Generiert einen Debtor-Namen."""
+        name = self.faker.company()
+        return sanitize_sps_charset(name)
+
+    def generate_currency(self, payment_type: PaymentType) -> str:
+        """Gibt die Default-Waehrung fuer einen Zahlungstyp zurueck."""
+        if payment_type == PaymentType.SEPA:
+            return "EUR"
+        elif payment_type in (PaymentType.DOMESTIC_QR, PaymentType.DOMESTIC_IBAN):
+            return "CHF"
+        elif payment_type == PaymentType.CBPR_PLUS:
+            return self.rng.choice(["USD", "GBP", "JPY", "EUR"])
+        return "CHF"
+
+    def generate_amount(self, payment_type: PaymentType) -> Decimal:
         """Generiert einen gültigen Betrag je nach Zahlungstyp."""
         if payment_type == PaymentType.SEPA:
             max_amount = Decimal("999999999.99")

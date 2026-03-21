@@ -49,6 +49,31 @@ def _get_handler(payment_type: PaymentType):
     return handlers[payment_type]
 
 
+def _apply_defaults(testcase: TestCase, factory: DataFactory) -> TestCase:
+    """Wendet Defaults an fuer optionale Felder die leer sind."""
+    updates = {}
+
+    if testcase.payment_type is None:
+        updates["payment_type"] = PaymentType.DOMESTIC_IBAN
+
+    payment_type = updates.get("payment_type", testcase.payment_type)
+
+    if testcase.debtor.name is None:
+        debtor = testcase.debtor.model_copy(update={"name": factory.generate_debtor_name()})
+        updates["debtor"] = debtor
+
+    if testcase.currency is None:
+        updates["currency"] = factory.generate_currency(payment_type)
+
+    if testcase.amount is None:
+        updates["amount"] = factory.generate_amount(payment_type)
+
+    if updates:
+        testcase = testcase.model_copy(update=updates)
+
+    return testcase
+
+
 def _build_instruction(
     testcase: TestCase,
     factory: DataFactory,
@@ -58,6 +83,9 @@ def _build_instruction(
     Returns:
         (instruction, None) bei Erfolg, (None, error_result) bei Fehler.
     """
+    # 0. Defaults anwenden
+    testcase = _apply_defaults(testcase, factory)
+
     # 1. Overrides validieren
     mapped, special, mapping_errors = validate_and_map_overrides(testcase.overrides)
     if mapping_errors:
@@ -118,7 +146,8 @@ def _process_single_testcase(
     output_dir: str,
     verbose: bool = False,
 ) -> TestCaseResult:
-    """Verarbeitet einen einzelnen Testfall (1 Testfall → 1 XML)."""
+    """Verarbeitet einen einzelnen Testfall (1 Testfall -> 1 XML)."""
+    testcase = _apply_defaults(testcase, factory)
     instruction, error_result = _build_instruction(testcase, factory)
     if error_result:
         return error_result
@@ -157,7 +186,8 @@ def _process_group(
     instructions: List[Tuple[TestCase, PaymentInstruction]] = []
     results: List[TestCaseResult] = []
 
-    # Instruktionen bauen
+    # Instruktionen bauen (Defaults anwenden)
+    testcases = [_apply_defaults(tc, factory) for tc in testcases]
     for tc in testcases:
         instruction, error_result = _build_instruction(tc, factory)
         if error_result:
@@ -330,7 +360,8 @@ def run(
             # Einzel-Testfälle (auch einzelne mit GroupId)
             for tc in group:
                 if verbose:
-                    print(f"\nVerarbeite: {tc.testcase_id} ({tc.payment_type.value})")
+                    pt_label = tc.payment_type.value if tc.payment_type else "auto"
+                    print(f"\nVerarbeite: {tc.testcase_id} ({pt_label})")
                 result = _process_single_testcase(
                     tc, factory, xsd_validator, run_dir, verbose
                 )

@@ -90,23 +90,37 @@ class DomesticIbanHandler(PaymentTypeHandler):
         self, testcase: TestCase, factory: DataFactory
     ) -> List[Transaction]:
         transactions = []
-        for i in range(testcase.tx_count):
-            creditor_iban = testcase.overrides.get(
-                "CdtrAcct.IBAN",
-                factory.generate_creditor_iban(PaymentType.DOMESTIC_IBAN),
-            )
-            creditor_name = testcase.overrides.get(
-                "Cdtr.Nm",
-                factory.generate_creditor_name(),
-            )
-            address = factory.generate_creditor_address("CH")
+        tx_inputs = testcase.transaction_inputs or [None]
 
+        for tx_input in tx_inputs:
+            creditor_iban = (
+                (tx_input.creditor_iban if tx_input else None)
+                or testcase.overrides.get("CdtrAcct.IBAN")
+                or factory.generate_creditor_iban(PaymentType.DOMESTIC_IBAN)
+            )
+            creditor_name = (
+                (tx_input.creditor_name if tx_input else None)
+                or testcase.overrides.get("Cdtr.Nm")
+                or factory.generate_creditor_name()
+            )
+            amount = (
+                (tx_input.amount if tx_input else None)
+                or testcase.amount
+                or factory.generate_amount(PaymentType.DOMESTIC_IBAN)
+            )
+            currency = (
+                (tx_input.currency if tx_input else None)
+                or testcase.currency
+                or "CHF"
+            )
+
+            address = factory.generate_creditor_address("CH")
             ref = factory.generate_reference(PaymentType.DOMESTIC_IBAN)
 
             tx = Transaction(
                 end_to_end_id=factory.generate_end_to_end_id(),
-                amount=testcase.amount,
-                currency=testcase.currency,
+                amount=amount,
+                currency=currency,
                 creditor_name=creditor_name,
                 creditor_iban=creditor_iban,
                 creditor_address=address,
