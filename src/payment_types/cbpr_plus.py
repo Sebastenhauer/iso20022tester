@@ -1,5 +1,6 @@
 """CBPR+ Cross-Border Zahlung (Typ X)."""
 
+import uuid
 from decimal import Decimal
 from typing import Dict, List, Optional
 
@@ -50,6 +51,12 @@ class CbprPlusHandler(PaymentTypeHandler):
                 ) if not has_bic else None,
             ))
 
+            # BR-CBPR-006: UETR Pflicht
+            results.append(_check(
+                "BR-CBPR-006", bool(tx.uetr),
+                "UETR fehlt (UUIDv4 ist Pflicht für CBPR+)" if not tx.uetr else None,
+            ))
+
         return results
 
     def generate_transactions(
@@ -89,6 +96,7 @@ class CbprPlusHandler(PaymentTypeHandler):
 
             tx = Transaction(
                 end_to_end_id=factory.generate_end_to_end_id(),
+                uetr=str(uuid.uuid4()),
                 amount=amount,
                 currency=currency,
                 creditor_name=creditor_name,

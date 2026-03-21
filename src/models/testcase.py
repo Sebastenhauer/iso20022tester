@@ -63,6 +63,7 @@ class TestCase(BaseModel):
 
 class Transaction(BaseModel):
     end_to_end_id: str
+    uetr: Optional[str] = None
     amount: Decimal = Field(..., decimal_places=2)
     currency: str
     creditor_name: str

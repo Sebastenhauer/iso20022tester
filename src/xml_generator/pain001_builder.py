@@ -28,6 +28,8 @@ def _build_transaction(parent: etree._Element, tx: Transaction) -> None:
     # PmtId
     pmt_id = el(cdt_trf, "PmtId")
     el(pmt_id, "EndToEndId", tx.end_to_end_id)
+    if tx.uetr:
+        el(pmt_id, "UETR", tx.uetr)
 
     # Amt
     build_amount(cdt_trf, tx.amount, tx.currency)

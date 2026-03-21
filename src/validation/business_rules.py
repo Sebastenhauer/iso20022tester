@@ -257,13 +257,13 @@ def validate_all_business_rules(
             f"ChrgBr ist '{cb}'" if cb != "SLEV" else None,
         ))
 
-    # BR-CBPR-003: ChrgBr muss DEBT/CRED/SHAR/SLEV sein
+    # BR-CBPR-003: ChrgBr darf nicht SLEV sein (CBPR+ erlaubt nur DEBT/CRED/SHAR)
     if testcase.payment_type == PaymentType.CBPR_PLUS:
         cb = instruction.charge_bearer or ""
-        valid_cb = cb in ("DEBT", "CRED", "SHAR", "SLEV")
+        valid_cb = cb in ("DEBT", "CRED", "SHAR")
         results.append(_check(
             "BR-CBPR-003", valid_cb,
-            f"ChrgBr '{cb}' ist ungueltig fuer CBPR+" if not valid_cb else None,
+            f"ChrgBr '{cb}' ist ungueltig fuer CBPR+ (SLEV nicht erlaubt)" if not valid_cb else None,
         ))
 
     # BR-REM-002: USTRD max 140 Zeichen
