@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-38b8f24e56ea</MsgId>
+      <CreDtTm>2026-03-21T10:50:44.893093</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>9500</CtrlSum>
+      <InitgPty>
+        <Nm>Helvetia Versicherungen AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-138d994c2b0a</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>9500</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-23</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Helvetia Versicherungen AG</Nm>
+        <PstlAdr>
+          <StrtNm>Dufourstrasse</StrtNm>
+          <BldgNb>40</BldgNb>
+          <PstCd>9001</PstCd>
+          <TwnNm>St. Gallen</TwnNm>
+          <Ctry>CH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH3908704016075473007</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>RAIFCH22</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-dedab0276550</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">9500</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Hirt AG</Nm>
+          <PstlAdr>
+            <StrtNm>Studerstrasse</StrtNm>
+            <BldgNb>20</BldgNb>
+            <PstCd>4547</PstCd>
+            <TwnNm>Maennedorf</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CH7216932683885160607</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <Tp>
+                <CdOrPrtry>
+                  <Cd>SCOR</Cd>
+                </CdOrPrtry>
+              </Tp>
+              <Ref>RF23RPQI7P1KATN5R6FRP</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

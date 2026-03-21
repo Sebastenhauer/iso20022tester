@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-b6dd6257fb7d</MsgId>
+      <CreDtTm>2026-03-21T10:50:44.895965</CreDtTm>
+      <NbOfTxs>3</NbOfTxs>
+      <CtrlSum>3000</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-2c2cd22ba568</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>3</NbOfTxs>
+      <CtrlSum>3000</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-03-23</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+        <PstlAdr>
+          <StrtNm>Bahnhofstrasse</StrtNm>
+          <BldgNb>1</BldgNb>
+          <PstCd>8001</PstCd>
+          <TwnNm>Zuerich</TwnNm>
+          <Ctry>CH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>SLEV</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-72eb74749458</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">1000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Hirt AG</Nm>
+          <PstlAdr>
+            <StrtNm>Zachary Light</StrtNm>
+            <BldgNb>194</BldgNb>
+            <PstCd>24654</PstCd>
+            <TwnNm>New James</TwnNm>
+            <Ctry>LT</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>LT743552312432921277</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-a508dc9513a4</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">1000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Schuerch Geiger  Soehne</Nm>
+          <PstlAdr>
+            <StrtNm>Abigail Orchard</StrtNm>
+            <BldgNb>95</BldgNb>
+            <PstCd>64441</PstCd>
+            <TwnNm>Stevensfurt</TwnNm>
+            <Ctry>PT</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>PT40995527177449058147700</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-e62d2d06cf9b</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">1000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Fehr Felber GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Juan Shores</StrtNm>
+            <BldgNb>16</BldgNb>
+            <PstCd>59695</PstCd>
+            <TwnNm>Lorihaven</TwnNm>
+            <Ctry>LI</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>LI3919986798079359782</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

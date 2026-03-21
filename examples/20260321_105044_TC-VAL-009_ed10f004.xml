@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-65a16fa9d611</MsgId>
+      <CreDtTm>2026-03-21T10:50:44.921237</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>800</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-efc597382fb2</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>800</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-23</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+        <PstlAdr>
+          <StrtNm>Bahnhofstrasse</StrtNm>
+          <BldgNb>1</BldgNb>
+          <PstCd>8001</PstCd>
+          <TwnNm>Zuerich</TwnNm>
+          <Ctry>CH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-eb6d2fedef15</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">800</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Hirt AG</Nm>
+          <PstlAdr>
+            <StrtNm>Studerstrasse</StrtNm>
+            <BldgNb>45</BldgNb>
+            <PstCd>4547</PstCd>
+            <TwnNm>Maennedorf</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CH9687575773454019380</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

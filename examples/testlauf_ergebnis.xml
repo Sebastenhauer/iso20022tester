@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<testsuite name="pain001-testgenerator" tests="20" failures="0">
+<testsuite name="pain001-testgenerator" tests="65" failures="0">
   <testcase name="TC-SEPA-001: SEPA Standardzahlung" classname="SEPA" />
   <testcase name="TC-SEPA-002: SEPA falsche Waehrung" classname="SEPA" />
   <testcase name="TC-SEPA-003: SEPA mit Creditor-Override" classname="SEPA" />
@@ -16,8 +16,53 @@
   <testcase name="TC-MULTI-004: CBPR+ Sammelzahlung 2 Tx" classname="CBPR+" />
   <testcase name="TC-MULTI-005: SEPA Sammelzahlung NOK Name" classname="SEPA" />
   <testcase name="TC-MULTI-006: QR-Sammelzahlung NOK SCOR" classname="Domestic-QR" />
+  <testcase name="TC-SEPA-004: SEPA falsche Gebuehrenregelung" classname="SEPA" />
+  <testcase name="TC-SEPA-005: SEPA zu langer Creditor-Name" classname="SEPA" />
+  <testcase name="TC-QR-003: QR-Zahlung falsche Waehrung" classname="Domestic-QR" />
+  <testcase name="TC-IBAN-003: Domestic-IBAN mit QR-IBAN" classname="Domestic-IBAN" />
+  <testcase name="TC-IBAN-005: Domestic-IBAN mit QRR-Referenz" classname="Domestic-IBAN" />
+  <testcase name="TC-SEPA-006: SEPA Kleinstbetrag" classname="SEPA" />
+  <testcase name="TC-SEPA-007: SEPA Grossbetrag" classname="SEPA" />
+  <testcase name="TC-SEPA-008: SEPA Grenzwert Creditor-Name 70 Zeichen" classname="SEPA" />
+  <testcase name="TC-SEPA-009: SEPA mit vollem Creditor-Override" classname="SEPA" />
+  <testcase name="TC-SEPA-010: SEPA SEPA-Maxbetrag" classname="SEPA" />
+  <testcase name="TC-QR-004: QR-Zahlung EUR" classname="Domestic-QR" />
+  <testcase name="TC-QR-005: QR-Zahlung Kleinstbetrag" classname="Domestic-QR" />
+  <testcase name="TC-IBAN-006: Domestic-IBAN Kleinstbetrag" classname="Domestic-IBAN" />
+  <testcase name="TC-IBAN-007: Domestic-IBAN Grossbetrag" classname="Domestic-IBAN" />
+  <testcase name="TC-CBPR-004: CBPR+ EUR-Zahlung" classname="CBPR+" />
+  <testcase name="TC-CBPR-005: CBPR+ GBP-Zahlung" classname="CBPR+" />
+  <testcase name="TC-CBPR-006: CBPR+ CHF-Zahlung" classname="CBPR+" />
+  <testcase name="TC-DBT-001: Minimaler Debtor" classname="SEPA" />
+  <testcase name="TC-DBT-002: Alternativer Debtor" classname="Domestic-QR" />
+  <testcase name="TC-DBT-003: Alternativer Debtor Domestic" classname="Domestic-IBAN" />
+  <testcase name="TC-NOK-001: SEPA 3 Tx falsche Waehrung" classname="SEPA" />
+  <testcase name="TC-NOK-002: QR 3 Tx ohne Referenz" classname="Domestic-QR" />
+  <testcase name="TC-NOK-003: IBAN 2 Tx mit QR-IBAN" classname="Domestic-IBAN" />
+  <testcase name="TC-NOK-004: CBPR+ 2 Tx ohne Agent" classname="CBPR+" />
+  <testcase name="TC-NOK-005: IBAN 2 Tx mit QRR" classname="Domestic-IBAN" />
+  <testcase name="TC-NOK-007: SEPA falsche Gebuehr anderer Debtor" classname="SEPA" />
+  <testcase name="TC-NOK-008: QR falsche Waehrung anderer Debtor" classname="Domestic-QR" />
+  <testcase name="TC-VAL-001: Betrag mit 2 Dezimalstellen" classname="SEPA" />
+  <testcase name="TC-VAL-002: BIC 8 Zeichen" classname="CBPR+" />
+  <testcase name="TC-VAL-003: BIC 11 Zeichen" classname="CBPR+" />
+  <testcase name="TC-VAL-004: Country-Code DE" classname="SEPA" />
+  <testcase name="TC-VAL-005: Vollstaendige Creditor-Adresse" classname="Domestic-IBAN" />
+  <testcase name="TC-VAL-006: Creditor-Name 140 Zeichen non-SEPA" classname="Domestic-IBAN" />
+  <testcase name="TC-VAL-007: QR-IBAN CH-Laenderkennzeichen" classname="Domestic-QR" />
+  <testcase name="TC-VAL-008: Domestic-IBAN CH-Laenderkennzeichen" classname="Domestic-IBAN" />
+  <testcase name="TC-VAL-009: SCOR-Referenz valide" classname="Domestic-IBAN" />
+  <testcase name="TC-VAL-010: Betrag ganzzahlig" classname="SEPA" />
   <testcase name="TC-MULTI-007: Batch-A: SEPA-Teil" classname="SEPA" />
   <testcase name="TC-MULTI-008: Batch-A: Domestic-IBAN-Teil" classname="Domestic-IBAN" />
   <testcase name="TC-MULTI-009: Batch-B: CBPR+-Teil" classname="CBPR+" />
   <testcase name="TC-MULTI-010: Batch-B: SEPA-Teil" classname="SEPA" />
+  <testcase name="TC-BATCH-C-001: Batch-C: SEPA-Teil" classname="SEPA" />
+  <testcase name="TC-BATCH-C-002: Batch-C: QR-Teil" classname="Domestic-QR" />
+  <testcase name="TC-BATCH-C-003: Batch-C: IBAN-Teil" classname="Domestic-IBAN" />
+  <testcase name="TC-BATCH-D-001: Batch-D: SEPA OK-Teil" classname="SEPA" />
+  <testcase name="TC-BATCH-D-002: Batch-D: SEPA NOK-Teil" classname="SEPA" />
+  <testcase name="TC-BATCH-E-001: Batch-E: SEPA OK" classname="SEPA" />
+  <testcase name="TC-BATCH-E-002: Batch-E: QR NOK ohne Ref" classname="Domestic-QR" />
+  <testcase name="TC-BATCH-E-003: Batch-E: CBPR+ NOK ohne BIC" classname="CBPR+" />
 </testsuite>

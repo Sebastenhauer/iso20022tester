@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-fd247c11bf6b</MsgId>
+      <CreDtTm>2026-03-21T10:50:44.937475</CreDtTm>
+      <NbOfTxs>4</NbOfTxs>
+      <CtrlSum>13000</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-b3b263376a74</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>2</NbOfTxs>
+      <CtrlSum>4000</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-03-23</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+        <PstlAdr>
+          <StrtNm>Bahnhofstrasse</StrtNm>
+          <BldgNb>1</BldgNb>
+          <PstCd>8001</PstCd>
+          <TwnNm>Zuerich</TwnNm>
+          <Ctry>CH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>SLEV</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-02ed73ce92a8</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">2000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Marti GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Zachary Light</StrtNm>
+            <BldgNb>78</BldgNb>
+            <PstCd>24654</PstCd>
+            <TwnNm>New James</TwnNm>
+            <Ctry>LT</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>LT635161227530463745</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-7a6a21072231</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">2000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Schuerch Geiger  Soehne</Nm>
+          <PstlAdr>
+            <StrtNm>Russell Drive</StrtNm>
+            <BldgNb>57</BldgNb>
+            <PstCd>86014</PstCd>
+            <TwnNm>North Michelle</TwnNm>
+            <Ctry>FI</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>FI4053017426841459</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+    <PmtInf>
+      <PmtInfId>PMT-ef0bea4ffc73</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>2</NbOfTxs>
+      <CtrlSum>9000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-23</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+        <PstlAdr>
+          <StrtNm>Bahnhofstrasse</StrtNm>
+          <BldgNb>1</BldgNb>
+          <PstCd>8001</PstCd>
+          <TwnNm>Zuerich</TwnNm>
+          <Ctry>CH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-33c08bf18167</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">4500</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Ernst GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Studerstrasse</StrtNm>
+            <BldgNb>29</BldgNb>
+            <PstCd>4547</PstCd>
+            <TwnNm>Maennedorf</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CH5373989783391878519</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-105291d3b34c</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">4500</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Hirt AG</Nm>
+          <PstlAdr>
+            <StrtNm>Studerstrasse</StrtNm>
+            <BldgNb>115</BldgNb>
+            <PstCd>4547</PstCd>
+            <TwnNm>Maennedorf</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CH7377065822587139718</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <Tp>
+                <CdOrPrtry>
+                  <Cd>SCOR</Cd>
+                </CdOrPrtry>
+              </Tp>
+              <Ref>RF718WQT3ZTJ1PG0D42</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

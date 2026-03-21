@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-f8c88faea217</MsgId>
+      <CreDtTm>2026-03-21T10:50:44.890913</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>200</CtrlSum>
+      <InitgPty>
+        <Nm>Klein GmbH</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-87cdb6a1bf01</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>200</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-03-23</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Klein GmbH</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH9300762011623852957</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SLEV</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-11d059b26699</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">200</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Steiger Meier AG</Nm>
+          <PstlAdr>
+            <StrtNm>Woodward Manors</StrtNm>
+            <BldgNb>37</BldgNb>
+            <PstCd>30444</PstCd>
+            <TwnNm>West Matthew</TwnNm>
+            <Ctry>EE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>EE036899809402445502</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

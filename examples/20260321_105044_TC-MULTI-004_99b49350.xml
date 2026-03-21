@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-a092f52ad4a0</MsgId>
+      <CreDtTm>2026-03-21T10:50:44.860691</CreDtTm>
+      <NbOfTxs>2</NbOfTxs>
+      <CtrlSum>16000</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-c5c14eb4b27b</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>2</NbOfTxs>
+      <CtrlSum>16000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-23</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+        <PstlAdr>
+          <StrtNm>Bahnhofstrasse</StrtNm>
+          <BldgNb>1</BldgNb>
+          <PstCd>8001</PstCd>
+          <TwnNm>Zuerich</TwnNm>
+          <Ctry>CH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-ab61a7b1793b</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="USD">8000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>CHASUS33</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Hirt AG</Nm>
+          <PstlAdr>
+            <StrtNm>Denise Vista</StrtNm>
+            <BldgNb>40</BldgNb>
+            <PstCd>25232</PstCd>
+            <TwnNm>South Stephanie</TwnNm>
+            <Ctry>GB</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>GB04646417080531003309</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-1374814632c5</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="USD">8000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>CHASUS33</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Steiger Meier AG</Nm>
+          <PstlAdr>
+            <StrtNm>Denise Vista</StrtNm>
+            <BldgNb>102</BldgNb>
+            <PstCd>25232</PstCd>
+            <TwnNm>South Stephanie</TwnNm>
+            <Ctry>GB</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>GB84193745299124190496</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

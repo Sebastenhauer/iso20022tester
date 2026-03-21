@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-6f3f920c98b8</MsgId>
+      <CreDtTm>2026-03-21T10:50:44.853780</CreDtTm>
+      <NbOfTxs>3</NbOfTxs>
+      <CtrlSum>2250</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-504d281fc953</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>3</NbOfTxs>
+      <CtrlSum>2250</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-03-23</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+        <PstlAdr>
+          <StrtNm>Bahnhofstrasse</StrtNm>
+          <BldgNb>1</BldgNb>
+          <PstCd>8001</PstCd>
+          <TwnNm>Zuerich</TwnNm>
+          <Ctry>CH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>SLEV</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-4eea04e70ab5</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">750</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Steiger Meier AG</Nm>
+          <PstlAdr>
+            <StrtNm>Flores Falls</StrtNm>
+            <BldgNb>38</BldgNb>
+            <PstCd>79896</PstCd>
+            <TwnNm>Davisberg</TwnNm>
+            <Ctry>SE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>SE9540052427868011280598</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-3317347038f1</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">750</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Egli GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Brooks Stravenue</StrtNm>
+            <BldgNb>10</BldgNb>
+            <PstCd>62437</PstCd>
+            <TwnNm>Aaronview</TwnNm>
+            <Ctry>GR</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>GR7005331586923226025634216</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-43f59a85fbc9</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">750</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Meier Gerber GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Flores Falls</StrtNm>
+            <BldgNb>46</BldgNb>
+            <PstCd>79896</PstCd>
+            <TwnNm>Davisberg</TwnNm>
+            <Ctry>SE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>SE2375433036541458685014</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>
