@@ -19,6 +19,7 @@ workalendar = "^17.0"
 [tool.poetry.group.dev.dependencies]
 pytest = ">=8.0,<10.0"
 pytest-cov = ">=6.0,<8.0"
+xmlschema = "^4.3.1"
 
 [tool.poetry.scripts]
 pain001-generator = "src.main:main"
