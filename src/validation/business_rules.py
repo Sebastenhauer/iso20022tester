@@ -321,6 +321,7 @@ def apply_rule_violation(
         "BR-CBPR-003": _violate_cbpr_charge_bearer,
         "BR-CBPR-005": _violate_cbpr_agent,
         "BR-ADDR-002": _violate_unstructured_address,
+        "BR-REM-002": _violate_ustrd_length,
         # BR-CCY-001 ist XSD-geschuetzt ([A-Z]{3}), keine Violation moeglich
     }
 
