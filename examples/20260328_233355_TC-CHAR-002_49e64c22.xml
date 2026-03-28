@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-cbbed98007e6</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.911995</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>1000</CtrlSum>
+      <InitgPty>
+        <Nm>Favre Hirt GmbH</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-085eb4894ac6</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>1000</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Favre Hirt GmbH</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SLEV</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-2ad11fe87d1b</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">1000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Firma A/B - Test? Ja: (ok), +mehr</Nm>
+          <PstlAdr>
+            <StrtNm>Robert Square</StrtNm>
+            <BldgNb>182</BldgNb>
+            <PstCd>04348</PstCd>
+            <TwnNm>South Stevenborough</TwnNm>
+            <Ctry>CZ</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CZ5174225790507236887676</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

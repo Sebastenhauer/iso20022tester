@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-a021c0ca3531</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.814449</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>10000</CtrlSum>
+      <InitgPty>
+        <Nm>Stocker Buehlmann  Soehne</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-14c8b3b4a911</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>10000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Stocker Buehlmann  Soehne</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-19675f06bd76</EndToEndId>
+          <UETR>5a851dd8-42b3-4177-aab9-4fe62673c0b4</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">10000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BKCHCNBJXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Wolf  Cie.</Nm>
+          <PstlAdr>
+            <StrtNm>Jackson Ports</StrtNm>
+            <BldgNb>16</BldgNb>
+            <PstCd>72218</PstCd>
+            <TwnNm>West Brianville</TwnNm>
+            <Ctry>QA</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>QA099022941318699938677496499</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

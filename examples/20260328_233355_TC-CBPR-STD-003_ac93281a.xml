@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-2ab8bd33911f</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.949916+01:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>MSG-2ab8bd33911f</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>CRED</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-0e3141ec5c31</EndToEndId>
+          <UETR>94474324-fbd0-415c-a143-8bed3e26cbf5</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="USD">25000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>DEUTDEFF</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Deutsche Bank AG</Nm>
+          <PstlAdr>
+            <StrtNm>Kunibert-Adler-Allee</StrtNm>
+            <BldgNb>128</BldgNb>
+            <PstCd>99429</PstCd>
+            <TwnNm>Buesingen am Hochrhein</TwnNm>
+            <Ctry>DE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>DE89370400440532013000</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Contract payment</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

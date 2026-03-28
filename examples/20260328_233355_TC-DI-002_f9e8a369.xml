@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-9ee3ac2af94d</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.792359</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>750</CtrlSum>
+      <InitgPty>
+        <Nm>Bucher  Cie.</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-ee0caeb5ecfe</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>750</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Bucher  Cie.</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-e256a6dc8f54</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">750</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Bieri Luethi AG</Nm>
+          <PstlAdr>
+            <StrtNm>Winklerstrasse</StrtNm>
+            <BldgNb>95</BldgNb>
+            <PstCd>1240</PstCd>
+            <TwnNm>Kloten</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CH5031309104332181960</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <Tp>
+                <CdOrPrtry>
+                  <Cd>SCOR</Cd>
+                </CdOrPrtry>
+              </Tp>
+              <Ref>RF34R82JN2MDF6</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

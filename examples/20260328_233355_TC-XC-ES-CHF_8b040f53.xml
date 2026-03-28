@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-45667c4879ba</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.896454</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>25000</CtrlSum>
+      <InitgPty>
+        <Nm>Luethi GmbH</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-af36b8cc1308</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>25000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Luethi GmbH</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-b139c476de3c</EndToEndId>
+          <UETR>31bd59a3-43c5-4162-affb-2f3356b83a11</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="JPY">25000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BBVAESMMXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Vogel GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Weber Ford</StrtNm>
+            <BldgNb>59</BldgNb>
+            <PstCd>91123</PstCd>
+            <TwnNm>North Nataliemouth</TwnNm>
+            <Ctry>DO</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>DO06793341016668700217659180</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

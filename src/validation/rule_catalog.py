@@ -391,6 +391,99 @@ BR_CCY_001 = _r(
     violatable=True,
 )
 
+# --- CGI-MP-spezifisch ---
+
+BR_CGI_ADDR_01 = _r(
+    "BR-CGI-ADDR-01", "CGI",
+    "Adresse: Country Pflicht, TownName empfohlen (Pflicht ab Nov 2025 fuer int./urgent)",
+    None,
+    "CGI-MP Handbook Slide 11",
+)
+
+BR_CGI_ADDR_02 = _r(
+    "BR-CGI-ADDR-02", "CGI",
+    "Unstructured Adresse verboten fuer UltmtDbtr, UltmtCdtr, InitgPty",
+    None,
+    "CGI-MP Handbook Slide 8",
+)
+
+BR_CGI_RMT_01 = _r(
+    "BR-CGI-RMT-01", "CGI",
+    "Structured und Unstructured Remittance gegenseitig exklusiv",
+    None,
+    "CGI-MP Handbook Slide 24",
+)
+
+BR_CGI_RMT_02 = _r(
+    "BR-CGI-RMT-02", "CGI",
+    "Structured Remittance max 9000 Zeichen (exkl. Tag-Namen)",
+    None,
+    "CGI-MP Handbook Slide 24",
+)
+
+BR_CGI_RMT_03 = _r(
+    "BR-CGI-RMT-03", "CGI",
+    "RfrdDocInf: Wenn Number vorhanden, Type Pflicht",
+    None,
+    "CGI-MP Handbook Slide 26",
+)
+
+BR_CGI_PURP_01 = _r(
+    "BR-CGI-PURP-01", "CGI",
+    "Regulatory purpose unter RgltryRptg, NICHT unter Purp",
+    None,
+    "CGI-MP Handbook Slide 13",
+)
+
+BR_CGI_PURP_02 = _r(
+    "BR-CGI-PURP-02", "CGI",
+    "Wenn RgltryRptg verwendet, DbtCdtRptgInd (DEBT/CRED) Pflicht",
+    None,
+    "CGI-MP Handbook Slide 15",
+)
+
+BR_CGI_CHAR_01 = _r(
+    "BR-CGI-CHAR-01", "CGI",
+    "Leere XML-Tags (ohne Wert oder nur Blanks) verboten",
+    None,
+    "CGI-MP Handbook Slide 4",
+)
+
+BR_CGI_TAX_01 = _r(
+    "BR-CGI-TAX-01", "CGI",
+    "Wenn CtgyPurp=WHLD, Tax-Element erwartet",
+    None,
+    "CGI-MP Handbook Slide 42",
+)
+
+BR_CGI_TAX_02 = _r(
+    "BR-CGI-TAX-02", "CGI",
+    "Tax: Creditor und Debtor TaxId Pflicht wenn Tax vorhanden",
+    None,
+    "CGI-MP Handbook Slide 44",
+)
+
+BR_CGI_TAX_03 = _r(
+    "BR-CGI-TAX-03", "CGI",
+    "Tax: Method Pflicht wenn Tax vorhanden",
+    None,
+    "CGI-MP Handbook Slide 44",
+)
+
+BR_CGI_RGRP_01 = _r(
+    "BR-CGI-RGRP-01", "CGI",
+    "RgltryRptg: Wenn Details vorhanden, Type (Tp) Pflicht",
+    None,
+    "CGI-MP Handbook Slide 17",
+)
+
+BR_CGI_RGRP_02 = _r(
+    "BR-CGI-RGRP-02", "CGI",
+    "RgltryRptg: Code max 10 Zeichen",
+    None,
+    "CGI-MP Handbook Slide 17",
+)
+
 
 # ---------------------------------------------------------------------------
 # Katalog-Zugriff
@@ -456,9 +549,10 @@ _CATEGORY_NAMES = {
     "REM": "Remittance Information",
     "CCY": "Währung",
     "CBPR": "CBPR+-spezifisch (Typ X)",
+    "CGI": "CGI-MP-spezifisch (C2B global)",
 }
 
-_CATEGORY_ORDER = ["HDR", "GEN", "ADDR", "IBAN-V", "REF-V", "REM", "CCY", "SEPA", "QR", "IBAN", "CBPR"]
+_CATEGORY_ORDER = ["HDR", "GEN", "ADDR", "IBAN-V", "REF-V", "REM", "CCY", "SEPA", "QR", "IBAN", "CBPR", "CGI"]
 
 
 def rules_to_markdown() -> str:

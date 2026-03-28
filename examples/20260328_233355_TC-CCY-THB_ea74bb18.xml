@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-692ac1391f4a</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.840405</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>10000</CtrlSum>
+      <InitgPty>
+        <Nm>Kohler Tobler GmbH</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-f0ede303aa53</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>10000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Kohler Tobler GmbH</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-8fca7b6a8fc4</EndToEndId>
+          <UETR>959e13be-1945-4725-907f-1b2aea9d1a07</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="GBP">10000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BKKBTHBKXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Burri  Partner</Nm>
+          <PstlAdr>
+            <StrtNm>Daniel Squares</StrtNm>
+            <BldgNb>16</BldgNb>
+            <PstCd>49254</PstCd>
+            <TwnNm>Ryanton</TwnNm>
+            <Ctry>GT</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>GT57736576615654527111161528</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

@@ -96,6 +96,37 @@ class CbprPlus2026Strategy(StandardStrategy):
         return msg_id
 
 
+class CgiMpStrategy(StandardStrategy):
+    """CGI-MP (Common Global Implementation — Market Practice).
+
+    Corporate-to-Bank global standard. XML-Struktur identisch mit SPS:
+    - NbOfTxs: Summe aller Transaktionen
+    - CtrlSum: Summe aller Betraege (GrpHdr + PmtInf)
+    - CreDtTm: lokale Zeit OK (UTF-8, kein FIN-X)
+    - PmtInfId: unabhaengig von MsgId
+    - UETR: optional (empfohlen)
+    - ChrgBr: DEBT/CRED/SHAR/SLEV alle erlaubt
+
+    Unterschiede zu SPS liegen auf Business-Rule-Ebene:
+    - Leere Tags verboten (BR-CGI-CHAR-01)
+    - Structured/Unstructured Remittance exklusiv (BR-CGI-RMT-01)
+    - Regulatory Reporting unterstuetzt (BR-CGI-PURP-01/02)
+    - Adress-Regeln fuer UltmtDbtr/UltmtCdtr (BR-CGI-ADDR-02)
+    """
+
+    def grp_hdr_nb_of_txs(self, all_txs: List[Transaction]) -> str:
+        return str(len(all_txs))
+
+    def grp_hdr_ctrl_sum(self, all_txs: List[Transaction]) -> Optional[str]:
+        return str(sum(tx.amount for tx in all_txs))
+
+    def pmt_inf_nb_of_txs(self, txs: List[Transaction]) -> Optional[str]:
+        return str(len(txs))
+
+    def pmt_inf_ctrl_sum(self, txs: List[Transaction]) -> Optional[str]:
+        return str(sum(tx.amount for tx in txs))
+
+
 # ---------------------------------------------------------------------------
 # Factory
 # ---------------------------------------------------------------------------
@@ -103,6 +134,7 @@ class CbprPlus2026Strategy(StandardStrategy):
 _STRATEGIES = {
     Standard.SPS_2025: Sps2025Strategy,
     Standard.CBPR_PLUS_2026: CbprPlus2026Strategy,
+    Standard.CGI_MP: CgiMpStrategy,
 }
 
 

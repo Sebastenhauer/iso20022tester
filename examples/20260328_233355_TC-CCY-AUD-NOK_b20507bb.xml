@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-d0421dfa56ab</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.858657</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <InitgPty>
+        <Nm>Stocker Buehlmann  Soehne</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-c775e395d494</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Stocker Buehlmann  Soehne</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-0b5995622227</EndToEndId>
+          <UETR>4216b723-c333-48de-83b7-4ede7a936c35</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="USD">5000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Wolf  Cie.</Nm>
+          <PstlAdr>
+            <StrtNm>Brown Brooks</StrtNm>
+            <BldgNb>189</BldgNb>
+            <PstCd>16501</PstCd>
+            <TwnNm>Lake Jamesfurt</TwnNm>
+            <Ctry>GE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>GE48888806706540515319</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

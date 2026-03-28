@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-beed10b64f6e</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.846273</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>10000</CtrlSum>
+      <InitgPty>
+        <Nm>Stutz GmbH</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-c77444cb5543</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>10000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Stutz GmbH</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-1422373f8622</EndToEndId>
+          <UETR>6cc7d502-51c8-42b8-807c-065fba644238</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="JPY">10000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>NBABORJXXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Sidler Mueller AG</Nm>
+          <PstlAdr>
+            <StrtNm>Jackson Ports</StrtNm>
+            <BldgNb>112</BldgNb>
+            <PstCd>72218</PstCd>
+            <TwnNm>West Brianville</TwnNm>
+            <Ctry>QA</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>QA936060715969664160529751613</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

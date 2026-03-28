@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-e6e987cab87b</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.866596</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <InitgPty>
+        <Nm>Amrein Rueegg  Cie.</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-ec86a890d7b0</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Amrein Rueegg  Cie.</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-2bd3cdcd2779</EndToEndId>
+          <UETR>cea2f045-b2ac-4123-bebb-4244ed7146b8</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="GBP">5000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Keller Zimmermann AG</Nm>
+          <PstlAdr>
+            <StrtNm>Adams Pass</StrtNm>
+            <BldgNb>152</BldgNb>
+            <PstCd>19733</PstCd>
+            <TwnNm>North Johntown</TwnNm>
+            <Ctry>KW</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>KW4968018242253584143842498182</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

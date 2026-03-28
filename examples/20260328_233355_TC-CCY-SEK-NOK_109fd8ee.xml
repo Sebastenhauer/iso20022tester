@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-ae92ea71cf7d</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.864102</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <InitgPty>
+        <Nm>Meister Roos  Co.</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-51d08109fc90</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Meister Roos  Co.</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-71f2ce8fb69f</EndToEndId>
+          <UETR>ef5af3ee-d600-4223-a8e8-3d0c3d195ee4</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="GBP">5000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Bianchi AG</Nm>
+          <PstlAdr>
+            <StrtNm>Wright Hill</StrtNm>
+            <BldgNb>116</BldgNb>
+            <PstCd>21150</PstCd>
+            <TwnNm>Port Brandystad</TwnNm>
+            <Ctry>BH</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>BH63027868144739473121</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-91ddb9bf613d</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.891986</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>25000</CtrlSum>
+      <InitgPty>
+        <Nm>Gloor  Partner</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-8cf6e8b87fd2</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>25000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Gloor  Partner</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-32399ffb2704</EndToEndId>
+          <UETR>4a4ce069-2a2f-424e-8baf-5b049f0880f3</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="JPY">25000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>DEUTDEFFXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Peter Meister  Co.</Nm>
+          <PstlAdr>
+            <StrtNm>Shaw Locks</StrtNm>
+            <BldgNb>185</BldgNb>
+            <PstCd>03117</PstCd>
+            <TwnNm>South Ericmouth</TwnNm>
+            <Ctry>TN</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>TN8558771753556093204899</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

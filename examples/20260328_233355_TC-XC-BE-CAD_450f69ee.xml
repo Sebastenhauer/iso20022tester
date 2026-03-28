@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-1b46ebdc5c56</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.899061</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>25000</CtrlSum>
+      <InitgPty>
+        <Nm>Aebi GmbH</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-4eea9db8f165</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>25000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Aebi GmbH</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-bd5a0c9e277e</EndToEndId>
+          <UETR>c3cad2fe-627f-4484-9c89-696ae804e346</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="JPY">25000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>GEBABEBB</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Wyss Friedli  Cie.</Nm>
+          <PstlAdr>
+            <StrtNm>Melissa Valleys</StrtNm>
+            <BldgNb>183</BldgNb>
+            <PstCd>25053</PstCd>
+            <TwnNm>Johnfort</TwnNm>
+            <Ctry>SA</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>SA8147735866296194311426</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

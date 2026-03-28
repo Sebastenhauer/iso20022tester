@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-f8f9a45d0f55</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.960040+01:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>MSG-f8f9a45d0f55</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-6b790d013cf8</EndToEndId>
+          <UETR>6d4ae610-2fd8-4eb0-954d-e7b9c7359a52</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">5000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>CHASUS33</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Stadelmann Knecht  Soehne</Nm>
+          <PstlAdr>
+            <StrtNm>Hawkins Shoals</StrtNm>
+            <BldgNb>53</BldgNb>
+            <PstCd>92195</PstCd>
+            <TwnNm>Matthewchester</TwnNm>
+            <Ctry>CR</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CR84973832060385050641</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

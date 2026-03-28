@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-77a6e17cd72b</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.803228</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>2500</CtrlSum>
+      <InitgPty>
+        <Nm>Kohler Tobler GmbH</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-9f4c3b79fb10</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>2500</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Kohler Tobler GmbH</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-67814c1fcc53</EndToEndId>
+          <UETR>890c332d-0156-4d56-af33-0debdf843742</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="USD">2500</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Burri  Partner</Nm>
+          <PstlAdr>
+            <StrtNm>Aguilar Rapids</StrtNm>
+            <BldgNb>87</BldgNb>
+            <PstCd>36980</PstCd>
+            <TwnNm>Roweside</TwnNm>
+            <Ctry>RS</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>RS43670546688937346706</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

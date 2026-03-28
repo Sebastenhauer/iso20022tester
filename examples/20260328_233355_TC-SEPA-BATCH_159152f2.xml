@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-f69777a159fe</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.941259</CreDtTm>
+      <NbOfTxs>3</NbOfTxs>
+      <CtrlSum>2450</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-23cbe943ca84</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>3</NbOfTxs>
+      <CtrlSum>2450</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>SLEV</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-afc2ccfc9db7</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">500</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Berliner Handels GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Kunibert-Adler-Allee</StrtNm>
+            <BldgNb>39</BldgNb>
+            <PstCd>99429</PstCd>
+            <TwnNm>Buesingen am Hochrhein</TwnNm>
+            <Ctry>DE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>DE89370400440532013000</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Rechnung RE-001</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-e5871d891631</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">750</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Societe Parisienne SA</Nm>
+          <PstlAdr>
+            <StrtNm>rue de Pierre</StrtNm>
+            <BldgNb>114</BldgNb>
+            <PstCd>20292</PstCd>
+            <TwnNm>Pierre-les-Bains</TwnNm>
+            <Ctry>FR</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>FR7630006000011234567890189</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Facture FA-002</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-96ee50e51f87</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">1200</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Banco di Roma SpA</Nm>
+          <PstlAdr>
+            <StrtNm>Sara Grove</StrtNm>
+            <BldgNb>26</BldgNb>
+            <PstCd>49811</PstCd>
+            <TwnNm>Hillfurt</TwnNm>
+            <Ctry>IT</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>IT60X0542811101000000123456</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Fattura FT-003</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

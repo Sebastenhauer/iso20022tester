@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-290a3abbc35b</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.854467</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <InitgPty>
+        <Nm>Luethi GmbH</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-836b15c7e7c2</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Luethi GmbH</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-1feae1e0d9e6</EndToEndId>
+          <UETR>bc2603f8-81b1-4dff-8a57-62ae844f9e70</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="GBP">5000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Vogel GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Hawkins Shoals</StrtNm>
+            <BldgNb>183</BldgNb>
+            <PstCd>92195</PstCd>
+            <TwnNm>Matthewchester</TwnNm>
+            <Ctry>CR</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CR62977468862392407581</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

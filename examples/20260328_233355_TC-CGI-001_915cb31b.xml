@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-1877bc0694ad</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.961162</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>25000</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-d1e91691a320</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>25000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-f97c6c3c755d</EndToEndId>
+          <UETR>2a0a5d51-205b-4dcc-a33f-40fd6f86384e</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">25000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>DEUTDEFF</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Deutsche Industrie GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Kunibert-Adler-Allee</StrtNm>
+            <BldgNb>180</BldgNb>
+            <PstCd>99429</PstCd>
+            <TwnNm>Buesingen am Hochrhein</TwnNm>
+            <Ctry>DE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>DE89370400440532013000</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Invoice INV-2026-100</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

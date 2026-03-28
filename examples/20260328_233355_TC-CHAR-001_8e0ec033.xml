@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-a2b03c4b7c96</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.910392</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>8000</CtrlSum>
+      <InitgPty>
+        <Nm>Bucher  Cie.</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-a52fc3eceb4e</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>8000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Bucher  Cie.</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-623ad0fc9326</EndToEndId>
+          <UETR>7669a60f-39f7-4660-98a6-8cf8effadcea</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">8000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>CHASUS33XXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>ABC Trading Co. (Int'l)</Nm>
+          <PstlAdr>
+            <StrtNm>Kristin Island</StrtNm>
+            <BldgNb>108</BldgNb>
+            <PstCd>24266</PstCd>
+            <TwnNm>Andersonton</TwnNm>
+            <Ctry>BA</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>BA292499125134125286</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

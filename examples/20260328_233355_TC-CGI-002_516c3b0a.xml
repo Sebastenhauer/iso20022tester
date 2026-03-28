@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-50a46c85d9d5</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.962299</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>50000</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-b362c0d26498</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>50000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>DEBT</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-3c9d128a2176</EndToEndId>
+          <UETR>308f410c-a1d9-4653-a2ab-2fb30c285452</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="USD">50000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BNPAFRPP</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Acme International SA</Nm>
+          <PstlAdr>
+            <StrtNm>rue de Pierre</StrtNm>
+            <BldgNb>112</BldgNb>
+            <PstCd>20292</PstCd>
+            <TwnNm>Pierre-les-Bains</TwnNm>
+            <Ctry>FR</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>FR7630006000011234567890189</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Contract REF-44891</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

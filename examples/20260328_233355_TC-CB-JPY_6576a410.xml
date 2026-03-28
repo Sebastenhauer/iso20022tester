@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-401983035c45</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.922471</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>50000</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-e75f745aaa1d</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>50000</CtrlSum>
+      <PmtTpInf>
+        <CtgyPurp>
+          <Cd>SUPP</Cd>
+        </CtgyPurp>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-462623bee068</EndToEndId>
+          <UETR>371bac12-f955-47b9-9fc8-48f33506f846</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="JPY">50000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>RIABORJX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Saudi Aramco Trading</Nm>
+          <PstlAdr>
+            <StrtNm>Melissa Valleys</StrtNm>
+            <BldgNb>41</BldgNb>
+            <PstCd>25053</PstCd>
+            <TwnNm>Johnfort</TwnNm>
+            <Ctry>SA</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>SA0380000000608010167519</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Invoice INV-2026-JP-0044</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

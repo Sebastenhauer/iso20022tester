@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-d7665cdafe04</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.822053</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>10000</CtrlSum>
+      <InitgPty>
+        <Nm>Aebi GmbH</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-f27292b67621</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>10000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Aebi GmbH</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-687213f98d60</EndToEndId>
+          <UETR>0ef3707f-8737-4fe8-a096-b50bb46a2099</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">10000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>DBSSSGSGXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Wyss Friedli  Cie.</Nm>
+          <PstlAdr>
+            <StrtNm>Humphrey Expressway</StrtNm>
+            <BldgNb>80</BldgNb>
+            <PstCd>84756</PstCd>
+            <TwnNm>Jamiechester</TwnNm>
+            <Ctry>AE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>AE143859770348247710932</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

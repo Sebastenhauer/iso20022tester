@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-81fb18b3c9a7</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.823651</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>10000</CtrlSum>
+      <InitgPty>
+        <Nm>Gloor  Partner</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-486822b900a8</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>10000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Gloor  Partner</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-6a39aaa6daba</EndToEndId>
+          <UETR>6d4d1754-646f-4520-88ca-00c80aa35f02</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">10000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>SWEDSESSXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Peter Meister  Co.</Nm>
+          <PstlAdr>
+            <StrtNm>Kristin Island</StrtNm>
+            <BldgNb>71</BldgNb>
+            <PstCd>83064</PstCd>
+            <TwnNm>Ashleyfurt</TwnNm>
+            <Ctry>XK</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>XK774846773782639821</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

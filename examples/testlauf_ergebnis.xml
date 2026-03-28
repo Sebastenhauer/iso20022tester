@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<testsuite name="pain001-testgenerator" tests="112" failures="0">
+<testsuite name="pain001-testgenerator" tests="122" failures="0">
   <testcase name="TC-S-001: SEPA Standard EUR" classname="SEPA" />
   <testcase name="TC-S-002: SEPA falsche Waehrung" classname="SEPA" />
   <testcase name="TC-S-003: SEPA falscher ChrgBr" classname="SEPA" />
@@ -110,6 +110,16 @@
   <testcase name="TC-CBPR-STD-006: CBPR+ AED Investment" classname="CBPR+" />
   <testcase name="TC-CBPR-STD-007: CBPR+ Gehaltszahlung" classname="CBPR+" />
   <testcase name="TC-CBPR-STD-NOK1: CBPR+ mit SLEV verboten" classname="CBPR+" />
+  <testcase name="TC-CGI-001: CGI-MP Standard EUR Wire" classname="CBPR+" />
+  <testcase name="TC-CGI-002: CGI-MP USD Wire mit UETR" classname="CBPR+" />
+  <testcase name="TC-CGI-003: CGI-MP Gehaltszahlung SALA" classname="CBPR+" />
+  <testcase name="TC-CGI-004: CGI-MP SCOR Creditor Reference" classname="Domestic-IBAN" />
+  <testcase name="TC-CGI-005: CGI-MP Multi-Tx 3 Creditors" classname="CBPR+" />
+  <testcase name="TC-CGI-006: CGI-MP Hybrid-Adresse" classname="CBPR+" />
+  <testcase name="TC-CGI-007: CGI-MP Commercial Payment COMC" classname="CBPR+" />
+  <testcase name="TC-CGI-008: CGI-MP SLEV erlaubt" classname="SEPA" />
+  <testcase name="TC-CGI-009: CGI-MP AED Investment" classname="CBPR+" />
+  <testcase name="TC-CGI-010: CGI-MP Maximal alle Optionen" classname="CBPR+" />
   <testcase name="TC-CB-MULTI1: CBPR+ Multi-Currency Gruppe 1" classname="CBPR+" />
   <testcase name="TC-CB-MULTI2: CBPR+ Multi-Currency Gruppe 2" classname="CBPR+" />
 </testsuite>

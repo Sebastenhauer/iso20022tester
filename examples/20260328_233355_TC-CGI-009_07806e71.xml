@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-5254aad3809c</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.973563</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>100000</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-06ac10102e08</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>100000</CtrlSum>
+      <PmtTpInf>
+        <CtgyPurp>
+          <Cd>IVPT</Cd>
+        </CtgyPurp>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-58129eb27c13</EndToEndId>
+          <UETR>5853e84e-9f11-4322-a633-b79f07a14ff8</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="JPY">100000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>ABORAEADXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Emirates Fund LLC</Nm>
+          <PstlAdr>
+            <StrtNm>Humphrey Expressway</StrtNm>
+            <BldgNb>123</BldgNb>
+            <PstCd>84756</PstCd>
+            <TwnNm>Jamiechester</TwnNm>
+            <Ctry>AE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>AE070331234567890123456</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Investment allocation Q2</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

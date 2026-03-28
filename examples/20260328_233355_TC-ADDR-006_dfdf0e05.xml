@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-5e1885c35037</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.923774</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>2200</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-61fa01ba231a</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>2200</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-ce532ffdbb13</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">2200</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Wolf Baettig AG</Nm>
+          <PstlAdr>
+            <BldgNb>133</BldgNb>
+            <PstCd>1240</PstCd>
+            <TwnNm>Kloten</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CH5483999436110371293</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <Tp>
+                <CdOrPrtry>
+                  <Cd>SCOR</Cd>
+                </CdOrPrtry>
+              </Tp>
+              <Ref>RF380L7R8U4E</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

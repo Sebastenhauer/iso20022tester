@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-f2dcb12b0f7a</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.943468</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>890</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-495743a281b1</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>890</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-373aedf8431e</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">890</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Kunz Kern  Cie.</Nm>
+          <PstlAdr>
+            <StrtNm>Winklerstrasse</StrtNm>
+            <BldgNb>192</BldgNb>
+            <PstCd>1240</PstCd>
+            <TwnNm>Kloten</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CH7330508899940438983</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <Tp>
+                <CdOrPrtry>
+                  <Prtry>QRR</Prtry>
+                </CdOrPrtry>
+              </Tp>
+              <Ref>640376137918055269658271096</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-89e03e22d3f4</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.875881</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <InitgPty>
+        <Nm>Kohler Tobler GmbH</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-b23848498fe0</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Kohler Tobler GmbH</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-7aa4f052bf51</EndToEndId>
+          <UETR>c3d2e75e-e928-4837-a5cd-de5c18e6f9d3</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="GBP">5000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Burri  Partner</Nm>
+          <PstlAdr>
+            <StrtNm>Gomez Cove</StrtNm>
+            <BldgNb>114</BldgNb>
+            <PstCd>35035</PstCd>
+            <TwnNm>Davidmouth</TwnNm>
+            <Ctry>JO</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>JO5448434437575844198665240415</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>
