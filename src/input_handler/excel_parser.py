@@ -221,7 +221,6 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
                 debtor=debtor,
                 overrides=overrides,
                 violate_rule=violate_rule,
-                tx_count=1,
                 transaction_inputs=[first_tx],
                 standard=standard,
                 group_id=group_id,
@@ -236,7 +235,6 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
 
             tx_input = _parse_transaction_input(row, col_index)
             current_tc.transaction_inputs.append(tx_input)
-            current_tc.tx_count = len(current_tc.transaction_inputs)
 
     if current_tc is not None:
         testcases.append(current_tc)

@@ -49,6 +49,12 @@ class TransactionInput(BaseModel):
 
 
 class TestCase(BaseModel):
+    """Testfall aus dem Excel.
+
+    Vorrang fuer amount/currency:
+      TransactionInput > TestCase > Auto-Generierung (DataFactory)
+    """
+
     testcase_id: str
     titel: str
     ziel: str
@@ -59,9 +65,13 @@ class TestCase(BaseModel):
     debtor: DebtorInfo
     overrides: Dict[str, str] = {}
     violate_rule: Optional[str] = None
-    tx_count: int = 1
     transaction_inputs: List[TransactionInput] = []
     standard: Standard = Standard.SPS_2025
+
+    @property
+    def tx_count(self) -> int:
+        """Anzahl Transaktionen (abgeleitet aus transaction_inputs)."""
+        return max(1, len(self.transaction_inputs))
     group_id: Optional[str] = None
     expected_api_response: Optional[str] = None
     remarks: Optional[str] = None
