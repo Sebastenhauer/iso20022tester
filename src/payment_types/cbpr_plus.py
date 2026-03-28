@@ -1,11 +1,8 @@
 """CBPR+ Cross-Border Zahlung (Typ X)."""
 
-import uuid
-from decimal import Decimal
 from typing import Dict, List, Optional
 
 from src.data_factory.generator import DataFactory
-from src.data_factory.iban import validate_iban
 from src.models.testcase import PaymentType, TestCase, Transaction, ValidationResult
 from src.payment_types.base import PaymentTypeHandler
 from src.validation.rule_catalog import check_rule as _check
@@ -16,18 +13,26 @@ class CbprPlusHandler(PaymentTypeHandler):
     def payment_type(self) -> PaymentType:
         return PaymentType.CBPR_PLUS
 
-    def get_service_level(self) -> Optional[str]:
-        return None
-
     def get_charge_bearer(self) -> Optional[str]:
         return "SHAR"
+
+    def get_default_currency(self, factory: DataFactory) -> str:
+        return factory.generate_currency(PaymentType.CBPR_PLUS)
+
+    def get_address_country(self, creditor_iban: str) -> str:
+        return creditor_iban[:2] if len(creditor_iban) >= 2 else "GB"
+
+    def should_generate_uetr(self) -> bool:
+        return True
+
+    def generate_remittance(self, factory: DataFactory) -> Optional[Dict[str, str]]:
+        return None  # CBPR+: keine automatische Referenz
 
     def validate(
         self, testcase: TestCase, transactions: List[Transaction]
     ) -> List[ValidationResult]:
         results = []
 
-        # BR-CBPR-002: SvcLvl ≠ SEPA
         svc_lvl = testcase.overrides.get("SvcLvl.Cd", "")
         results.append(_check(
             "BR-CBPR-002", svc_lvl != "SEPA",
@@ -35,75 +40,22 @@ class CbprPlusHandler(PaymentTypeHandler):
         ))
 
         for tx in transactions:
-            # BR-CBPR-001: Währung muss angegeben sein (prüfe tatsächliche Transaktionsdaten)
             results.append(_check(
                 "BR-CBPR-001", bool(tx.currency),
-                "Keine Währung angegeben" if not tx.currency else None,
+                "Keine Waehrung angegeben" if not tx.currency else None,
             ))
 
-            # BR-CBPR-005: Creditor-Agent Pflicht
-            has_bic = bool(tx.creditor_bic)
             results.append(_check(
-                "BR-CBPR-005", has_bic,
+                "BR-CBPR-005", bool(tx.creditor_bic),
                 (
                     "Creditor-Agent (BIC) fehlt. Bitte 'CdtrAgt.BICFI=<BIC>' "
                     "in 'Weitere Testdaten' angeben."
-                ) if not has_bic else None,
+                ) if not tx.creditor_bic else None,
             ))
 
-            # BR-CBPR-006: UETR Pflicht
             results.append(_check(
                 "BR-CBPR-006", bool(tx.uetr),
-                "UETR fehlt (UUIDv4 ist Pflicht für CBPR+)" if not tx.uetr else None,
+                "UETR fehlt (UUIDv4 ist Pflicht fuer CBPR+)" if not tx.uetr else None,
             ))
 
         return results
-
-    def generate_transactions(
-        self, testcase: TestCase, factory: DataFactory
-    ) -> List[Transaction]:
-        transactions = []
-        tx_inputs = testcase.transaction_inputs or [None]
-
-        for tx_input in tx_inputs:
-            creditor_iban = (
-                (tx_input.creditor_iban if tx_input else None)
-                or testcase.overrides.get("CdtrAcct.IBAN")
-                or factory.generate_creditor_iban(PaymentType.CBPR_PLUS)
-            )
-            creditor_name = (
-                (tx_input.creditor_name if tx_input else None)
-                or testcase.overrides.get("Cdtr.Nm")
-                or factory.generate_creditor_name()
-            )
-            creditor_bic = (
-                (tx_input.creditor_bic if tx_input else None)
-                or testcase.overrides.get("CdtrAgt.BICFI")
-            )
-            amount = (
-                (tx_input.amount if tx_input else None)
-                or testcase.amount
-                or factory.generate_amount(PaymentType.CBPR_PLUS)
-            )
-            currency = (
-                (tx_input.currency if tx_input else None)
-                or testcase.currency
-                or factory.generate_currency(PaymentType.CBPR_PLUS)
-            )
-
-            country = creditor_iban[:2] if len(creditor_iban) >= 2 else "GB"
-            address = factory.generate_creditor_address(country)
-
-            tx = Transaction(
-                end_to_end_id=factory.generate_end_to_end_id(),
-                uetr=str(uuid.uuid4()),
-                amount=amount,
-                currency=currency,
-                creditor_name=creditor_name,
-                creditor_iban=creditor_iban,
-                creditor_address=address,
-                creditor_bic=creditor_bic,
-                overrides=testcase.overrides,
-            )
-            transactions.append(tx)
-        return transactions

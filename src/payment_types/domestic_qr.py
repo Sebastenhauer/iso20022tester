@@ -4,14 +4,11 @@ from decimal import Decimal
 from typing import Dict, List, Optional
 
 from src.data_factory.generator import DataFactory
-from src.data_factory.iban import is_qr_iban, validate_iban
+from src.data_factory.iban import is_qr_iban
 from src.data_factory.reference import validate_qrr
 from src.models.testcase import PaymentType, TestCase, Transaction, ValidationResult
 from src.payment_types.base import PaymentTypeHandler
 from src.validation.rule_catalog import check_rule as _check
-
-DOMESTIC_MAX_AMOUNT = Decimal("9999999999.99")
-DOMESTIC_MIN_AMOUNT = Decimal("0.01")
 
 
 class DomesticQrHandler(PaymentTypeHandler):
@@ -19,7 +16,11 @@ class DomesticQrHandler(PaymentTypeHandler):
     def payment_type(self) -> PaymentType:
         return PaymentType.DOMESTIC_QR
 
-    def get_service_level(self) -> Optional[str]:
+    def get_default_currency(self, factory: DataFactory) -> str:
+        return "CHF"
+
+    def build_remittance_from_input(self, ustrd: Optional[str]) -> Optional[Dict[str, str]]:
+        # QR-Zahlungen: User-Input als USTRD ignorieren, immer QRR generieren
         return None
 
     def validate(
@@ -28,13 +29,11 @@ class DomesticQrHandler(PaymentTypeHandler):
         results = []
 
         for tx in transactions:
-            # BR-QR-004: Währung CHF/EUR
             results.append(_check(
                 "BR-QR-004", tx.currency in ("CHF", "EUR"),
-                f"Währung ist '{tx.currency}'" if tx.currency not in ("CHF", "EUR") else None,
+                f"Waehrung ist '{tx.currency}'" if tx.currency not in ("CHF", "EUR") else None,
             ))
 
-        # BR-QR-005: SvcLvl ≠ SEPA
         svc_lvl = testcase.overrides.get("SvcLvl.Cd", "")
         results.append(_check(
             "BR-QR-005", svc_lvl != "SEPA",
@@ -42,20 +41,17 @@ class DomesticQrHandler(PaymentTypeHandler):
         ))
 
         for tx in transactions:
-            # BR-QR-001: QR-IBAN Pflicht
             results.append(_check(
                 "BR-QR-001", is_qr_iban(tx.creditor_iban),
                 f"IBAN '{tx.creditor_iban}' ist keine QR-IBAN" if not is_qr_iban(tx.creditor_iban) else None,
             ))
 
-            # BR-QR-007: QR-IBAN muss CH oder LI sein
             iban_country = tx.creditor_iban[:2].upper() if len(tx.creditor_iban) >= 2 else ""
             results.append(_check(
                 "BR-QR-007", iban_country in ("CH", "LI"),
-                f"QR-IBAN Länderkennzeichen '{iban_country}' ist nicht CH/LI" if iban_country not in ("CH", "LI") else None,
+                f"QR-IBAN Laenderkennzeichen '{iban_country}' ist nicht CH/LI" if iban_country not in ("CH", "LI") else None,
             ))
 
-            # BR-QR-002 & BR-QR-006: QRR Pflicht und Format
             ref_info = tx.remittance_info or {}
             ref_type = ref_info.get("type", "")
             ref_value = ref_info.get("value", "")
@@ -68,57 +64,12 @@ class DomesticQrHandler(PaymentTypeHandler):
             if ref_type == "QRR":
                 results.append(_check(
                     "BR-QR-006", validate_qrr(ref_value),
-                    f"QRR '{ref_value}' ist ungültig" if not validate_qrr(ref_value) else None,
+                    f"QRR '{ref_value}' ist ungueltig" if not validate_qrr(ref_value) else None,
                 ))
 
-            # BR-QR-003: Keine SCOR bei QR-IBAN
             results.append(_check(
                 "BR-QR-003", ref_type != "SCOR",
                 "SCOR-Referenz bei QR-IBAN gefunden" if ref_type == "SCOR" else None,
             ))
 
         return results
-
-    def generate_transactions(
-        self, testcase: TestCase, factory: DataFactory
-    ) -> List[Transaction]:
-        transactions = []
-        tx_inputs = testcase.transaction_inputs or [None]
-
-        for tx_input in tx_inputs:
-            creditor_iban = (
-                (tx_input.creditor_iban if tx_input else None)
-                or testcase.overrides.get("CdtrAcct.IBAN")
-                or factory.generate_creditor_iban(PaymentType.DOMESTIC_QR)
-            )
-            creditor_name = (
-                (tx_input.creditor_name if tx_input else None)
-                or testcase.overrides.get("Cdtr.Nm")
-                or factory.generate_creditor_name()
-            )
-            amount = (
-                (tx_input.amount if tx_input else None)
-                or testcase.amount
-                or factory.generate_amount(PaymentType.DOMESTIC_QR)
-            )
-            currency = (
-                (tx_input.currency if tx_input else None)
-                or testcase.currency
-                or "CHF"
-            )
-
-            address = factory.generate_creditor_address("CH")
-            ref = factory.generate_reference(PaymentType.DOMESTIC_QR)
-
-            tx = Transaction(
-                end_to_end_id=factory.generate_end_to_end_id(),
-                amount=amount,
-                currency=currency,
-                creditor_name=creditor_name,
-                creditor_iban=creditor_iban,
-                creditor_address=address,
-                remittance_info=ref,
-                overrides=testcase.overrides,
-            )
-            transactions.append(tx)
-        return transactions
