@@ -16,6 +16,7 @@ from src.models.testcase import (
     Pain001Document,
     PaymentInstruction,
     PaymentType,
+    Standard,
     TestCase,
     TestCaseResult,
 )
@@ -175,16 +176,16 @@ def _process_single_testcase(
     if error_result:
         return error_result
 
-    # XML generieren (Einzel-Payment)
-    xml_doc = build_pain001_xml(instruction)
+    # XML generieren (standard-abhaengig)
+    xml_doc = build_pain001_xml(instruction, standard=testcase.standard)
 
-    # XSD-Validierung
-    xsd_valid, xsd_errors = xsd_validator.validate(xml_doc)
+    # XSD-Validierung (gegen zum Standard passendes Schema)
+    xsd_valid, xsd_errors = xsd_validator.validate(xml_doc, standard=testcase.standard)
     if not xsd_valid:
         error_detail = "\n".join(f"  - {err}" for err in xsd_errors)
         raise RuntimeError(
             f"XSD-Validierung fehlgeschlagen für {testcase.testcase_id} "
-            f"({testcase.payment_type.value}). "
+            f"({testcase.payment_type.value}, {testcase.standard.value}). "
             f"Dies deutet auf einen Bug im XML-Generator hin.\n"
             f"XSD-Fehler:\n{error_detail}"
         )
@@ -232,11 +233,14 @@ def _process_group(
         payment_instructions=all_instructions,
     )
 
-    # XML generieren (Multi-Payment)
-    xml_doc = build_pain001_document(document)
+    # Standard: Gruppen verwenden den Standard des ersten Testfalls
+    group_standard = testcases[0].standard
+
+    # XML generieren (Multi-Payment, standard-abhaengig)
+    xml_doc = build_pain001_document(document, standard=group_standard)
 
     # XSD-Validierung
-    xsd_valid, xsd_errors = xsd_validator.validate(xml_doc)
+    xsd_valid, xsd_errors = xsd_validator.validate(xml_doc, standard=group_standard)
     if not xsd_valid:
         tc_ids = ", ".join(tc.testcase_id for tc, _ in instructions)
         error_detail = "\n".join(f"  - {err}" for err in xsd_errors)
@@ -345,7 +349,7 @@ def run(
 
     # 3. XSD-Validator laden
     try:
-        xsd_validator = XsdValidator(config.xsd_path)
+        xsd_validator = XsdValidator(config.xsd_path, cbpr_xsd_path=config.cbpr_xsd_path)
     except Exception as e:
         print(f"Fehler beim Laden des XSD-Schemas '{config.xsd_path}': {e}")
         sys.exit(1)
@@ -431,7 +435,7 @@ def run_roundtrip_mode(xml_paths: List[str], config: AppConfig, verbose: bool = 
 
     xsd_validator = None
     try:
-        xsd_validator = XsdValidator(config.xsd_path)
+        xsd_validator = XsdValidator(config.xsd_path, cbpr_xsd_path=config.cbpr_xsd_path)
     except Exception as e:
         print(f"Warnung: XSD-Schema konnte nicht geladen werden: {e}")
 

@@ -10,6 +10,7 @@ from src.models.testcase import (
     DebtorInfo,
     ExpectedResult,
     PaymentType,
+    Standard,
     TestCase,
     TransactionInput,
 )
@@ -191,6 +192,22 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
                 if "GroupId" in overrides:
                     group_id = overrides.pop("GroupId")
 
+            # Standard (optional)
+            standard_raw = _str_or_none(cell_val(row, "Standard"))
+            standard = Standard.SPS_2025
+            if standard_raw:
+                standard_lower = standard_raw.lower().strip()
+                valid_standards = {s.value: s for s in Standard}
+                if standard_lower in valid_standards:
+                    standard = valid_standards[standard_lower]
+                else:
+                    errors.append(
+                        f"Testfall '{testcase_id}': Ungueltiger Standard '{standard_raw}'. "
+                        f"Gueltig: {', '.join(valid_standards.keys())}"
+                    )
+                    current_tc = None
+                    continue
+
             first_tx = _parse_transaction_input(row, col_index)
 
             current_tc = TestCase(
@@ -206,6 +223,7 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
                 violate_rule=violate_rule,
                 tx_count=1,
                 transaction_inputs=[first_tx],
+                standard=standard,
                 group_id=group_id,
                 expected_api_response=_str_or_none(cell_val(row, "Erwartete API-Antwort")) or "",
                 remarks=_str_or_none(cell_val(row, "Bemerkungen")) or "",
