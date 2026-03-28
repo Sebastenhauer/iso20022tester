@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-7fd238c33ee8</MsgId>
+      <CreDtTm>2026-03-28T18:02:53.588435</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>25000</CtrlSum>
+      <InitgPty>
+        <Nm>Zbinden Meili  Partner</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-af521b94f186</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>25000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Zbinden Meili  Partner</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-613d2de93ae2</EndToEndId>
+          <UETR>0b0df36f-830a-4722-9857-2d7909a4e22d</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="USD">25000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>ABNANL2AXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Lutz Schaer GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Lindsay Expressway</StrtNm>
+            <BldgNb>40</BldgNb>
+            <PstCd>39323</PstCd>
+            <TwnNm>Lake Michaelport</TwnNm>
+            <Ctry>KZ</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>KZ505355609320489964</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

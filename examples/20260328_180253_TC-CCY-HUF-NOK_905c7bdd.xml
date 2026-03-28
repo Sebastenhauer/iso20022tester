@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-720b274b82a7</MsgId>
+      <CreDtTm>2026-03-28T18:02:53.579859</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <InitgPty>
+        <Nm>Zbinden Meili  Partner</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-21c71aa37414</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Zbinden Meili  Partner</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-7d23d4799549</EndToEndId>
+          <UETR>bab91a24-25e3-4442-b3f7-522459885a31</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="HUF">5000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Lutz Schaer GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>David Summit</StrtNm>
+            <BldgNb>175</BldgNb>
+            <PstCd>22676</PstCd>
+            <TwnNm>Port Lauraport</TwnNm>
+            <Ctry>TR</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>TR813918785191088398225871</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-332618879058</MsgId>
+      <CreDtTm>2026-03-28T18:02:53.600135</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>8000</CtrlSum>
+      <InitgPty>
+        <Nm>Eichenberger Schenk AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-2e0fb5b38bae</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>8000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Eichenberger Schenk AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-5d71a8986497</EndToEndId>
+          <UETR>4a6e6e78-0234-470c-9dcf-085053384f6c</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="USD">8000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>CHASUS33XXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>ABC Trading Co. (Int'l)</Nm>
+          <PstlAdr>
+            <StrtNm>Sampson Manor</StrtNm>
+            <BldgNb>72</BldgNb>
+            <PstCd>74279</PstCd>
+            <TwnNm>Port Heidishire</TwnNm>
+            <Ctry>BA</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>BA902459375265479356</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

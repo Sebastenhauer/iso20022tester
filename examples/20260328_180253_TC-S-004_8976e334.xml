@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-dc5c0eed8da0</MsgId>
+      <CreDtTm>2026-03-28T18:02:53.487801</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>100</CtrlSum>
+      <InitgPty>
+        <Nm>Ferrari Hess GmbH</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-b88139b9ae27</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>100</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Ferrari Hess GmbH</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SLEV</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-877409a977d2</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">100</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Nm>
+          <PstlAdr>
+            <StrtNm>Williams Locks</StrtNm>
+            <BldgNb>98</BldgNb>
+            <PstCd>94937</PstCd>
+            <TwnNm>Saraburgh</TwnNm>
+            <Ctry>CY</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CY46423884969653287101226916</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

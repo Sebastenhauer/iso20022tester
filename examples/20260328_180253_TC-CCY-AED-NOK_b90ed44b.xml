@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-3c4b1eec6231</MsgId>
+      <CreDtTm>2026-03-28T18:02:53.577519</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <InitgPty>
+        <Nm>Zbinden  Partner</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-f43ba0524459</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Zbinden  Partner</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-3f800385ef92</EndToEndId>
+          <UETR>b3f64c67-8c5b-4715-983b-23213abea788</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="AED">5000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Pfister Christen  Soehne</Nm>
+          <PstlAdr>
+            <StrtNm>Kendra Track</StrtNm>
+            <BldgNb>36</BldgNb>
+            <PstCd>84317</PstCd>
+            <TwnNm>Brownville</TwnNm>
+            <Ctry>XK</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>XK762054932966851612</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

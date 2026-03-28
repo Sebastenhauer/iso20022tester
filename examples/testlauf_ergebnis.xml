@@ -1,68 +1,115 @@
 <?xml version='1.0' encoding='utf-8'?>
-<testsuite name="pain001-testgenerator" tests="65" failures="0">
-  <testcase name="TC-SEPA-001: SEPA Standardzahlung" classname="SEPA" />
-  <testcase name="TC-SEPA-002: SEPA falsche Waehrung" classname="SEPA" />
-  <testcase name="TC-SEPA-003: SEPA mit Creditor-Override" classname="SEPA" />
-  <testcase name="TC-QR-001: QR-Zahlung Standard CHF" classname="Domestic-QR" />
-  <testcase name="TC-QR-002: QR-Zahlung ohne Referenz" classname="Domestic-QR" />
-  <testcase name="TC-IBAN-001: Domestic IBAN Standard" classname="Domestic-IBAN" />
-  <testcase name="TC-IBAN-002: Domestic IBAN falsche Waehrung" classname="Domestic-IBAN" />
-  <testcase name="TC-CBPR-001: CBPR+ USD-Zahlung" classname="CBPR+" />
-  <testcase name="TC-CBPR-002: CBPR+ ohne Agent" classname="CBPR+" />
-  <testcase name="TC-CBPR-003: CBPR+ JPY-Zahlung" classname="CBPR+" />
-  <testcase name="TC-MULTI-001: SEPA Sammelzahlung 3 Tx" classname="SEPA" />
-  <testcase name="TC-MULTI-002: QR-Sammelzahlung 2 Tx" classname="Domestic-QR" />
-  <testcase name="TC-MULTI-003: Domestic-IBAN Sammelzahlung 2 Tx" classname="Domestic-IBAN" />
-  <testcase name="TC-MULTI-004: CBPR+ Sammelzahlung 2 Tx" classname="CBPR+" />
-  <testcase name="TC-MULTI-005: SEPA Sammelzahlung NOK Name" classname="SEPA" />
-  <testcase name="TC-MULTI-006: QR-Sammelzahlung NOK SCOR" classname="Domestic-QR" />
-  <testcase name="TC-SEPA-004: SEPA falsche Gebuehrenregelung" classname="SEPA" />
-  <testcase name="TC-SEPA-005: SEPA zu langer Creditor-Name" classname="SEPA" />
-  <testcase name="TC-QR-003: QR-Zahlung falsche Waehrung" classname="Domestic-QR" />
-  <testcase name="TC-IBAN-003: Domestic-IBAN mit QR-IBAN" classname="Domestic-IBAN" />
-  <testcase name="TC-IBAN-005: Domestic-IBAN mit QRR-Referenz" classname="Domestic-IBAN" />
-  <testcase name="TC-SEPA-006: SEPA Kleinstbetrag" classname="SEPA" />
-  <testcase name="TC-SEPA-007: SEPA Grossbetrag" classname="SEPA" />
-  <testcase name="TC-SEPA-008: SEPA Grenzwert Creditor-Name 70 Zeichen" classname="SEPA" />
-  <testcase name="TC-SEPA-009: SEPA mit vollem Creditor-Override" classname="SEPA" />
-  <testcase name="TC-SEPA-010: SEPA SEPA-Maxbetrag" classname="SEPA" />
-  <testcase name="TC-QR-004: QR-Zahlung EUR" classname="Domestic-QR" />
-  <testcase name="TC-QR-005: QR-Zahlung Kleinstbetrag" classname="Domestic-QR" />
-  <testcase name="TC-IBAN-006: Domestic-IBAN Kleinstbetrag" classname="Domestic-IBAN" />
-  <testcase name="TC-IBAN-007: Domestic-IBAN Grossbetrag" classname="Domestic-IBAN" />
-  <testcase name="TC-CBPR-004: CBPR+ EUR-Zahlung" classname="CBPR+" />
-  <testcase name="TC-CBPR-005: CBPR+ GBP-Zahlung" classname="CBPR+" />
-  <testcase name="TC-CBPR-006: CBPR+ CHF-Zahlung" classname="CBPR+" />
-  <testcase name="TC-DBT-001: Minimaler Debtor" classname="SEPA" />
-  <testcase name="TC-DBT-002: Alternativer Debtor" classname="Domestic-QR" />
-  <testcase name="TC-DBT-003: Alternativer Debtor Domestic" classname="Domestic-IBAN" />
-  <testcase name="TC-NOK-001: SEPA 3 Tx falsche Waehrung" classname="SEPA" />
-  <testcase name="TC-NOK-002: QR 3 Tx ohne Referenz" classname="Domestic-QR" />
-  <testcase name="TC-NOK-003: IBAN 2 Tx mit QR-IBAN" classname="Domestic-IBAN" />
-  <testcase name="TC-NOK-004: CBPR+ 2 Tx ohne Agent" classname="CBPR+" />
-  <testcase name="TC-NOK-005: IBAN 2 Tx mit QRR" classname="Domestic-IBAN" />
-  <testcase name="TC-NOK-007: SEPA falsche Gebuehr anderer Debtor" classname="SEPA" />
-  <testcase name="TC-NOK-008: QR falsche Waehrung anderer Debtor" classname="Domestic-QR" />
-  <testcase name="TC-VAL-001: Betrag mit 2 Dezimalstellen" classname="SEPA" />
-  <testcase name="TC-VAL-002: BIC 8 Zeichen" classname="CBPR+" />
-  <testcase name="TC-VAL-003: BIC 11 Zeichen" classname="CBPR+" />
-  <testcase name="TC-VAL-004: Country-Code DE" classname="SEPA" />
-  <testcase name="TC-VAL-005: Vollstaendige Creditor-Adresse" classname="Domestic-IBAN" />
-  <testcase name="TC-VAL-006: Creditor-Name 140 Zeichen non-SEPA" classname="Domestic-IBAN" />
-  <testcase name="TC-VAL-007: QR-IBAN CH-Laenderkennzeichen" classname="Domestic-QR" />
-  <testcase name="TC-VAL-008: Domestic-IBAN CH-Laenderkennzeichen" classname="Domestic-IBAN" />
-  <testcase name="TC-VAL-009: SCOR-Referenz valide" classname="Domestic-IBAN" />
-  <testcase name="TC-VAL-010: Betrag ganzzahlig" classname="SEPA" />
-  <testcase name="TC-MULTI-007: Batch-A: SEPA-Teil" classname="SEPA" />
-  <testcase name="TC-MULTI-008: Batch-A: Domestic-IBAN-Teil" classname="Domestic-IBAN" />
-  <testcase name="TC-MULTI-009: Batch-B: CBPR+-Teil" classname="CBPR+" />
-  <testcase name="TC-MULTI-010: Batch-B: SEPA-Teil" classname="SEPA" />
-  <testcase name="TC-BATCH-C-001: Batch-C: SEPA-Teil" classname="SEPA" />
-  <testcase name="TC-BATCH-C-002: Batch-C: QR-Teil" classname="Domestic-QR" />
-  <testcase name="TC-BATCH-C-003: Batch-C: IBAN-Teil" classname="Domestic-IBAN" />
-  <testcase name="TC-BATCH-D-001: Batch-D: SEPA OK-Teil" classname="SEPA" />
-  <testcase name="TC-BATCH-D-002: Batch-D: SEPA NOK-Teil" classname="SEPA" />
-  <testcase name="TC-BATCH-E-001: Batch-E: SEPA OK" classname="SEPA" />
-  <testcase name="TC-BATCH-E-002: Batch-E: QR NOK ohne Ref" classname="Domestic-QR" />
-  <testcase name="TC-BATCH-E-003: Batch-E: CBPR+ NOK ohne BIC" classname="CBPR+" />
+<testsuite name="pain001-testgenerator" tests="112" failures="0">
+  <testcase name="TC-S-001: SEPA Standard EUR" classname="SEPA" />
+  <testcase name="TC-S-002: SEPA falsche Waehrung" classname="SEPA" />
+  <testcase name="TC-S-003: SEPA falscher ChrgBr" classname="SEPA" />
+  <testcase name="TC-S-004: SEPA Name zu lang" classname="SEPA" />
+  <testcase name="TC-QR-001: QR Standard CHF" classname="Domestic-QR" />
+  <testcase name="TC-QR-002: QR ohne Referenz" classname="Domestic-QR" />
+  <testcase name="TC-QR-003: QR mit SCOR" classname="Domestic-QR" />
+  <testcase name="TC-QR-004: QR falsche Waehrung" classname="Domestic-QR" />
+  <testcase name="TC-DI-001: Domestic IBAN Standard" classname="Domestic-IBAN" />
+  <testcase name="TC-DI-002: Domestic IBAN QR-IBAN" classname="Domestic-IBAN" />
+  <testcase name="TC-DI-003: Domestic IBAN mit QRR" classname="Domestic-IBAN" />
+  <testcase name="TC-DI-004: Domestic IBAN falsche Waehrung" classname="Domestic-IBAN" />
+  <testcase name="TC-CB-DEBT: CBPR+ ChrgBr DEBT" classname="CBPR+" />
+  <testcase name="TC-CB-CRED: CBPR+ ChrgBr CRED" classname="CBPR+" />
+  <testcase name="TC-CB-SHAR: CBPR+ ChrgBr SHAR" classname="CBPR+" />
+  <testcase name="TC-CB-INV: CBPR+ ungueltiger ChrgBr" classname="CBPR+" />
+  <testcase name="TC-CB-NOAGT: CBPR+ ohne Agent" classname="CBPR+" />
+  <testcase name="TC-RMT-001: CBPR+ mit Verwendungszweck" classname="CBPR+" />
+  <testcase name="TC-RMT-002: USTRD max 140 Zeichen" classname="CBPR+" />
+  <testcase name="TC-CCY-OK: Exotische Waehrung KWD" classname="CBPR+" />
+  <testcase name="TC-CCY-USD: CBPR+ USD (US-Dollar)" classname="CBPR+" />
+  <testcase name="TC-CCY-JPY: CBPR+ JPY (Japanischer Yen)" classname="CBPR+" />
+  <testcase name="TC-CCY-GBP: CBPR+ GBP (Britisches Pfund)" classname="CBPR+" />
+  <testcase name="TC-CCY-CNY: CBPR+ CNY (Chinesischer Yuan)" classname="CBPR+" />
+  <testcase name="TC-CCY-AUD: CBPR+ AUD (Australischer Dollar)" classname="CBPR+" />
+  <testcase name="TC-CCY-CAD: CBPR+ CAD (Kanadischer Dollar)" classname="CBPR+" />
+  <testcase name="TC-CCY-HKD: CBPR+ HKD (Hongkong-Dollar)" classname="CBPR+" />
+  <testcase name="TC-CCY-SGD: CBPR+ SGD (Singapur-Dollar)" classname="CBPR+" />
+  <testcase name="TC-CCY-SEK: CBPR+ SEK (Schwedische Krone)" classname="CBPR+" />
+  <testcase name="TC-CCY-KRW: CBPR+ KRW (Suedkoreanischer Won)" classname="CBPR+" />
+  <testcase name="TC-CCY-NOK: CBPR+ NOK (Norwegische Krone)" classname="CBPR+" />
+  <testcase name="TC-CCY-NZD: CBPR+ NZD (Neuseeland-Dollar)" classname="CBPR+" />
+  <testcase name="TC-CCY-INR: CBPR+ INR (Indische Rupie)" classname="CBPR+" />
+  <testcase name="TC-CCY-MXN: CBPR+ MXN (Mexikanischer Peso)" classname="CBPR+" />
+  <testcase name="TC-CCY-TWD: CBPR+ TWD (Taiwan-Dollar)" classname="CBPR+" />
+  <testcase name="TC-CCY-ZAR: CBPR+ ZAR (Suedafrikanischer Rand)" classname="CBPR+" />
+  <testcase name="TC-CCY-BRL: CBPR+ BRL (Brasilianischer Real)" classname="CBPR+" />
+  <testcase name="TC-CCY-DKK: CBPR+ DKK (Daenische Krone)" classname="CBPR+" />
+  <testcase name="TC-CCY-PLN: CBPR+ PLN (Polnischer Zloty)" classname="CBPR+" />
+  <testcase name="TC-CCY-THB: CBPR+ THB (Thailaendischer Baht)" classname="CBPR+" />
+  <testcase name="TC-CCY-ILS: CBPR+ ILS (Israelischer Schekel)" classname="CBPR+" />
+  <testcase name="TC-CCY-IDR: CBPR+ IDR (Indonesische Rupiah)" classname="CBPR+" />
+  <testcase name="TC-CCY-CZK: CBPR+ CZK (Tschechische Krone)" classname="CBPR+" />
+  <testcase name="TC-CCY-AED: CBPR+ AED (VAE-Dirham)" classname="CBPR+" />
+  <testcase name="TC-CCY-TRY: CBPR+ TRY (Tuerkische Lira)" classname="CBPR+" />
+  <testcase name="TC-CCY-HUF: CBPR+ HUF (Ungarischer Forint)" classname="CBPR+" />
+  <testcase name="TC-CCY-SAR: CBPR+ SAR (Saudi-Riyal)" classname="CBPR+" />
+  <testcase name="TC-CCY-PHP: CBPR+ PHP (Philippinischer Peso)" classname="CBPR+" />
+  <testcase name="TC-CCY-USD-NOK: CBPR+ USD ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-JPY-NOK: CBPR+ JPY ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-GBP-NOK: CBPR+ GBP ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-CNY-NOK: CBPR+ CNY ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-AUD-NOK: CBPR+ AUD ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-CAD-NOK: CBPR+ CAD ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-HKD-NOK: CBPR+ HKD ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-SGD-NOK: CBPR+ SGD ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-SEK-NOK: CBPR+ SEK ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-KRW-NOK: CBPR+ KRW ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-NOK-NOK: CBPR+ NOK ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-NZD-NOK: CBPR+ NZD ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-INR-NOK: CBPR+ INR ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-MXN-NOK: CBPR+ MXN ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-TWD-NOK: CBPR+ TWD ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-ZAR-NOK: CBPR+ ZAR ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-BRL-NOK: CBPR+ BRL ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-DKK-NOK: CBPR+ DKK ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-PLN-NOK: CBPR+ PLN ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-THB-NOK: CBPR+ THB ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-ILS-NOK: CBPR+ ILS ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-IDR-NOK: CBPR+ IDR ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-CZK-NOK: CBPR+ CZK ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-AED-NOK: CBPR+ AED ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-TRY-NOK: CBPR+ TRY ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-HUF-NOK: CBPR+ HUF ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-SAR-NOK: CBPR+ SAR ohne Agent" classname="CBPR+" />
+  <testcase name="TC-CCY-PHP-NOK: CBPR+ PHP ohne Agent" classname="CBPR+" />
+  <testcase name="TC-XC-DE-USD: CBPR+ DE in USD" classname="CBPR+" />
+  <testcase name="TC-XC-FR-GBP: CBPR+ FR in GBP" classname="CBPR+" />
+  <testcase name="TC-XC-IT-JPY: CBPR+ IT in JPY" classname="CBPR+" />
+  <testcase name="TC-XC-ES-CHF: CBPR+ ES in CHF" classname="CBPR+" />
+  <testcase name="TC-XC-NL-USD: CBPR+ NL in USD" classname="CBPR+" />
+  <testcase name="TC-XC-BE-CAD: CBPR+ BE in CAD" classname="CBPR+" />
+  <testcase name="TC-XC-AT-AUD: CBPR+ AT in AUD" classname="CBPR+" />
+  <testcase name="TC-XC-PT-BRL: CBPR+ PT in BRL" classname="CBPR+" />
+  <testcase name="TC-ADDR-001: Strukturierte Adresse OK" classname="CBPR+" />
+  <testcase name="TC-ADDR-002: Unvollstaendige Adresse" classname="CBPR+" />
+  <testcase name="TC-ADDR-003: SEPA strukturierte Adresse" classname="SEPA" />
+  <testcase name="TC-ADDR-004: Domestic QR strukturierte Adresse" classname="Domestic-QR" />
+  <testcase name="TC-CHAR-001: SPS-Zeichensatz OK" classname="CBPR+" />
+  <testcase name="TC-CHAR-002: SPS-Zeichensatz Sonderzeichen" classname="SEPA" />
+  <testcase name="TC-ADDR-005: Domestic-IBAN ohne Creditor-Adresse" classname="Domestic-IBAN" />
+  <testcase name="TC-CB-CHINA: CBPR+ CHF nach UAE mit Purpose TAXS" classname="CBPR+" />
+  <testcase name="TC-CB-FULL: CBPR+ Maximal alle optionalen Felder" classname="CBPR+" />
+  <testcase name="TC-CB-SLEV: CBPR+ mit SLEV (verboten)" classname="CBPR+" />
+  <testcase name="TC-CB-SALA: CBPR+ Gehaltszahlung GBP" classname="CBPR+" />
+  <testcase name="TC-REM-140: SEPA Verwendungszweck 140 Zeichen" classname="SEPA" />
+  <testcase name="TC-CB-JPY: CBPR+ SAR nach Saudi-Arabien" classname="CBPR+" />
+  <testcase name="TC-ADDR-006: Domestic Creditor nur Country" classname="Domestic-IBAN" />
+  <testcase name="TC-CB-INVEST: CBPR+ AED Investment Dubai" classname="CBPR+" />
+  <testcase name="TC-SEPA-BATCH: SEPA Batch 3 Transaktionen" classname="SEPA" />
+  <testcase name="TC-QR-EUR: QR-Zahlung EUR mit explizitem Creditor" classname="Domestic-QR" />
+  <testcase name="TC-IBAN-MAX: Domestic-IBAN Grossbetrag mit SCOR" classname="Domestic-IBAN" />
+  <testcase name="TC-CBPR-STD-001: CBPR+ Standard USD-Zahlung" classname="CBPR+" />
+  <testcase name="TC-CBPR-STD-002: CBPR+ Standard GBP-Zahlung" classname="CBPR+" />
+  <testcase name="TC-CBPR-STD-003: CBPR+ Standard EUR-Zahlung" classname="CBPR+" />
+  <testcase name="TC-CBPR-STD-004: CBPR+ CHF nach Saudi-Arabien" classname="CBPR+" />
+  <testcase name="TC-CBPR-STD-005: CBPR+ Maximal optionale Felder" classname="CBPR+" />
+  <testcase name="TC-CBPR-STD-006: CBPR+ AED Investment" classname="CBPR+" />
+  <testcase name="TC-CBPR-STD-007: CBPR+ Gehaltszahlung" classname="CBPR+" />
+  <testcase name="TC-CBPR-STD-NOK1: CBPR+ mit SLEV verboten" classname="CBPR+" />
+  <testcase name="TC-CB-MULTI1: CBPR+ Multi-Currency Gruppe 1" classname="CBPR+" />
+  <testcase name="TC-CB-MULTI2: CBPR+ Multi-Currency Gruppe 2" classname="CBPR+" />
 </testsuite>

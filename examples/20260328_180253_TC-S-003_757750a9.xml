@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-508ebad7b7c9</MsgId>
+      <CreDtTm>2026-03-28T18:02:53.486443</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>500</CtrlSum>
+      <InitgPty>
+        <Nm>Rueegg Schaller AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-654821d07fcd</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>500</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Rueegg Schaller AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>DEBT</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-f16287e4e9c3</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">500</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Hirt Gerber AG</Nm>
+          <PstlAdr>
+            <StrtNm>Davidson Plain</StrtNm>
+            <BldgNb>69</BldgNb>
+            <PstCd>83324</PstCd>
+            <TwnNm>New Paul</TwnNm>
+            <Ctry>IT</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>IT7952553419283276483503056</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

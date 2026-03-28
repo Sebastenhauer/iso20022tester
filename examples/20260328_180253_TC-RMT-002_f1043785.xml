@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-edcb8cb60692</MsgId>
+      <CreDtTm>2026-03-28T18:02:53.508187</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>3000</CtrlSum>
+      <InitgPty>
+        <Nm>Scheidegger  Soehne</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-e87466d7ad66</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>3000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Scheidegger  Soehne</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-4fa03f26f6f7</EndToEndId>
+          <UETR>becab0ad-13be-420c-b3c4-baeb39740e9c</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">3000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>DEUTDEFFXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Betschart Steiner AG</Nm>
+          <PstlAdr>
+            <StrtNm>Horne Shores</StrtNm>
+            <BldgNb>200</BldgNb>
+            <PstCd>53293</PstCd>
+            <TwnNm>Port Ryan</TwnNm>
+            <Ctry>AE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>AE270330923271937452991</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

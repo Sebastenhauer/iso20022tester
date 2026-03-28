@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-3a43b2badf0f</MsgId>
+      <CreDtTm>2026-03-28T18:02:53.497092</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>1200</CtrlSum>
+      <InitgPty>
+        <Nm>Eichenberger Schenk AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-3170f437a8f7</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>1200</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Eichenberger Schenk AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-4e20fd1a5983</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">1200</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Gloor Stalder AG</Nm>
+          <PstlAdr>
+            <StrtNm>Baettigstrasse</StrtNm>
+            <BldgNb>57</BldgNb>
+            <PstCd>7861</PstCd>
+            <TwnNm>Martigny</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CH2523206602563421607</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <Tp>
+                <CdOrPrtry>
+                  <Prtry>QRR</Prtry>
+                </CdOrPrtry>
+              </Tp>
+              <Ref>104332181960013389083863795</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>
