@@ -7,5 +7,6 @@ output/
 dist/
 *.egg-info/
 
-# Proprietaere SWIFT CBPR+ Spezifikationen (nicht oeffentlich)
+# Proprietaere SWIFT Spezifikationen (nicht oeffentlich)
 docs/specs/cbpr+nonpublic/
+docs/specs/cgi_nonpublic/
