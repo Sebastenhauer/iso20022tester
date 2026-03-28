@@ -1,9 +1,10 @@
 """XML-Generator: Baut pain.001.001.09 XML-Struktur mit lxml.
 
-Unterstützt SPS 2025 und CBPR+ SR2026 mit standard-abhängiger Struktur.
+Unterstützt SPS 2025 und CBPR+ SR2026 via Strategy-Pattern.
+Neue Standards (z.B. EPC SEPA) können durch Hinzufügen einer
+StandardStrategy implementiert werden.
 """
 
-from datetime import datetime, timezone
 from typing import List
 
 from lxml import etree
@@ -24,6 +25,7 @@ from src.xml_generator.builders import (
     el,
 )
 from src.xml_generator.namespace import NSMAP, PAIN001_NS
+from src.xml_generator.standard_strategy import StandardStrategy, get_strategy
 
 
 def _build_transaction(parent: etree._Element, tx: Transaction) -> None:
@@ -50,20 +52,22 @@ def _build_transaction(parent: etree._Element, tx: Transaction) -> None:
 def _build_pmt_inf(
     parent: etree._Element,
     instr: PaymentInstruction,
-    standard: Standard = Standard.SPS_2025,
+    strategy: StandardStrategy,
 ) -> None:
     """Baut einen PmtInf-Block (B-Level) mit allen Transaktionen (C-Level)."""
     pmt_inf = el(parent, "PmtInf")
 
-    el(pmt_inf, "PmtInfId", instr.pmt_inf_id)
+    pmt_inf_id = strategy.prepare_pmt_inf_id(instr.pmt_inf_id, instr.msg_id)
+    el(pmt_inf, "PmtInfId", pmt_inf_id)
     el(pmt_inf, "PmtMtd", instr.pmt_mtd)
 
-    # SPS: NbOfTxs + CtrlSum auf B-Level; CBPR+: entfaellt
-    if standard == Standard.SPS_2025:
-        nb_of_txs = str(len(instr.transactions))
-        ctrl_sum = sum(tx.amount for tx in instr.transactions)
-        el(pmt_inf, "NbOfTxs", nb_of_txs)
-        el(pmt_inf, "CtrlSum", str(ctrl_sum))
+    nb = strategy.pmt_inf_nb_of_txs(instr.transactions)
+    if nb is not None:
+        el(pmt_inf, "NbOfTxs", nb)
+
+    cs = strategy.pmt_inf_ctrl_sum(instr.transactions)
+    if cs is not None:
+        el(pmt_inf, "CtrlSum", cs)
 
     # PmtTpInf
     build_payment_type_info(
@@ -94,15 +98,8 @@ def build_pain001_xml(
     standard: Standard = Standard.SPS_2025,
 ) -> etree._Element:
     """Baut ein pain.001-Dokument mit einem PmtInf-Block (Einzel-Payment)."""
-    cre_dt_tm = instruction.cre_dt_tm
-
-    # CBPR+: CreDtTm muss UTC-Offset haben
-    if standard == Standard.CBPR_PLUS_2026 and "+" not in cre_dt_tm and "Z" not in cre_dt_tm:
-        cre_dt_tm = datetime.now(timezone.utc).astimezone().isoformat()
-
-    # CBPR+: PmtInfId muss MsgId entsprechen (Rule R8)
-    if standard == Standard.CBPR_PLUS_2026:
-        instruction = instruction.model_copy(update={"pmt_inf_id": instruction.msg_id})
+    strategy = get_strategy(standard)
+    cre_dt_tm = strategy.prepare_cre_dt_tm(instruction.cre_dt_tm)
 
     doc = Pain001Document(
         msg_id=instruction.msg_id,
@@ -119,10 +116,11 @@ def build_pain001_document(
 ) -> etree._Element:
     """Baut ein komplettes pain.001.001.09 XML-Dokument.
 
-    SPS 2025: 1..n PmtInf mit NbOfTxs/CtrlSum auf allen Levels.
-    CBPR+ SR2026: Genau 1 PmtInf, kein CtrlSum auf GrpHdr/PmtInf Level,
-                  NbOfTxs immer "1", PmtInfId = MsgId.
+    Standard-abhängiges Verhalten (NbOfTxs, CtrlSum, PmtInfId, CreDtTm)
+    wird über die StandardStrategy gesteuert.
     """
+    strategy = get_strategy(standard)
+
     all_txs = [
         tx
         for instr in document.payment_instructions
@@ -137,20 +135,17 @@ def build_pain001_document(
     grp_hdr = el(cstmr, "GrpHdr")
     el(grp_hdr, "MsgId", document.msg_id)
     el(grp_hdr, "CreDtTm", document.cre_dt_tm)
+    el(grp_hdr, "NbOfTxs", strategy.grp_hdr_nb_of_txs(all_txs))
 
-    if standard == Standard.CBPR_PLUS_2026:
-        # CBPR+: NbOfTxs immer "1", kein CtrlSum
-        el(grp_hdr, "NbOfTxs", "1")
-    else:
-        # SPS: Aggregiert ueber alle PmtInf
-        el(grp_hdr, "NbOfTxs", str(len(all_txs)))
-        el(grp_hdr, "CtrlSum", str(sum(tx.amount for tx in all_txs)))
+    ctrl_sum = strategy.grp_hdr_ctrl_sum(all_txs)
+    if ctrl_sum is not None:
+        el(grp_hdr, "CtrlSum", ctrl_sum)
 
     build_initiating_party(grp_hdr, document.initiating_party_name)
 
-    # === B-Level: PmtInf (1..n für SPS, genau 1 für CBPR+) ===
+    # === B-Level: PmtInf (1..n) ===
     for instr in document.payment_instructions:
-        _build_pmt_inf(cstmr, instr, standard=standard)
+        _build_pmt_inf(cstmr, instr, strategy)
 
     return doc
 
