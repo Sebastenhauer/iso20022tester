@@ -28,14 +28,27 @@ VALID_PAYMENT_TYPES = {pt.value for pt in PaymentType}
 VALID_EXPECTED_RESULTS = {er.value for er in ExpectedResult}
 
 
-def _parse_amount(raw) -> Optional[Decimal]:
-    """Parst einen Betrag, gibt None bei leerem Input zurueck."""
+def _parse_amount(raw, testcase_id: str = "", errors: list = None) -> Optional[Decimal]:
+    """Parst einen Betrag, gibt None bei leerem Input zurueck.
+
+    Negative/Null-Betraege erzeugen eine Warnung statt stiller None-Rueckgabe.
+    """
     if raw is None or str(raw).strip() == "":
         return None
     try:
         val = Decimal(str(raw))
-        return val if val > 0 else None
+        if val <= 0:
+            if errors is not None:
+                errors.append(
+                    f"Testfall '{testcase_id}': Betrag '{raw}' ist nicht positiv."
+                )
+            return None
+        return val
     except (InvalidOperation, TypeError, ValueError):
+        if errors is not None:
+            errors.append(
+                f"Testfall '{testcase_id}': Betrag '{raw}' ist keine gueltige Zahl."
+            )
         return None
 
 
@@ -115,6 +128,7 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
     # Datenzeilen verarbeiten
     testcases = []
     current_tc = None
+    seen_ids = set()
 
     for row in rows[1:]:
         testcase_id = _str_or_none(cell_val(row, "TestcaseID"))
@@ -125,6 +139,13 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
                 testcases.append(current_tc)
 
             row_errors = []
+
+            # Duplikat-Erkennung
+            if testcase_id in seen_ids:
+                row_errors.append(
+                    f"Testfall '{testcase_id}': TestcaseID ist doppelt vorhanden."
+                )
+            seen_ids.add(testcase_id)
 
             titel = _str_or_none(cell_val(row, "Titel"))
             if not titel:

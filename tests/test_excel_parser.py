@@ -123,3 +123,22 @@ def test_parse_multiple_transactions():
     assert testcases[0].tx_count == 2
     assert len(testcases[0].transaction_inputs) == 2
     os.unlink(path)
+
+
+def test_parse_duplicate_testcase_id():
+    """Doppelte TestcaseIDs erzeugen einen Fehler."""
+    row1 = [
+        "TC-001", "Test1", "Ziel1", "OK", "SEPA",
+        100, "EUR", "Test AG", "CH9300762011623852957", None,
+        None, None, None, None, None, None, None, None,
+    ]
+    row2 = [
+        "TC-001", "Test2", "Ziel2", "OK", "SEPA",
+        200, "EUR", "Test AG", "CH9300762011623852957", None,
+        None, None, None, None, None, None, None, None,
+    ]
+    path = _create_test_excel([V2_HEADERS, row1, row2])
+    testcases, errors = parse_excel(path)
+    assert len(errors) > 0
+    assert "doppelt" in errors[0].lower()
+    os.unlink(path)
