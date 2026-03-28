@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-91fdfa4f0d18</MsgId>
+      <CreDtTm>2026-03-28T18:02:53.567098</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <InitgPty>
+        <Nm>Hug Friedli GmbH</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-8da004955cce</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Hug Friedli GmbH</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-5dae1201673b</EndToEndId>
+          <UETR>707177ac-10e5-479e-82db-8d662c7c6b5b</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="ZAR">5000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Luethi Mayer AG</Nm>
+          <PstlAdr>
+            <StrtNm>Reed Lakes</StrtNm>
+            <BldgNb>187</BldgNb>
+            <PstCd>51395</PstCd>
+            <TwnNm>Jonesshire</TwnNm>
+            <Ctry>GE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>GE71733950047974801624</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>
