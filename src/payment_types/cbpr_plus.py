@@ -42,7 +42,7 @@ class CbprPlusHandler(PaymentTypeHandler):
         for tx in transactions:
             results.append(_check(
                 "BR-CBPR-001", bool(tx.currency),
-                "Keine Waehrung angegeben" if not tx.currency else None,
+                "Keine Währung angegeben" if not tx.currency else None,
             ))
 
             results.append(_check(
@@ -55,7 +55,7 @@ class CbprPlusHandler(PaymentTypeHandler):
 
             results.append(_check(
                 "BR-CBPR-006", bool(tx.uetr),
-                "UETR fehlt (UUIDv4 ist Pflicht fuer CBPR+)" if not tx.uetr else None,
+                "UETR fehlt (UUIDv4 ist Pflicht für CBPR+)" if not tx.uetr else None,
             ))
 
         return results

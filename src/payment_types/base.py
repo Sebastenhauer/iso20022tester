@@ -1,4 +1,4 @@
-"""Abstrakte Basisklasse und TransactionBuilder fuer Zahlungstyp-Module."""
+"""Abstrakte Basisklasse und TransactionBuilder für Zahlungstyp-Module."""
 
 import uuid
 from abc import ABC, abstractmethod
@@ -15,11 +15,11 @@ from src.models.testcase import (
 
 
 class PaymentTypeHandler(ABC):
-    """Basisklasse fuer zahlungstypspezifische Logik.
+    """Basisklasse für zahlungstypspezifische Logik.
 
     Subklassen muessen payment_type und validate() implementieren.
     generate_transactions() nutzt den TransactionBuilder und kann
-    ueberschrieben werden fuer typ-spezifische Anpassungen.
+    ueberschrieben werden für typ-spezifische Anpassungen.
     """
 
     @property
@@ -41,11 +41,11 @@ class PaymentTypeHandler(ABC):
         return None
 
     def get_default_currency(self, factory: DataFactory) -> str:
-        """Default-Waehrung fuer diesen Zahlungstyp."""
+        """Default-Währung für diesen Zahlungstyp."""
         return "CHF"
 
     def get_address_country(self, creditor_iban: str) -> str:
-        """Land fuer die generierte Creditor-Adresse."""
+        """Land für die generierte Creditor-Adresse."""
         return "CH"
 
     def get_max_creditor_name_length(self) -> Optional[int]:

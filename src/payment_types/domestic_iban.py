@@ -1,4 +1,4 @@
-"""Domestic IBAN-Zahlung (Typ D mit regulaerer IBAN)."""
+"""Domestic IBAN-Zahlung (Typ D mit regulärer IBAN)."""
 
 from decimal import Decimal
 from typing import Dict, List, Optional
@@ -27,7 +27,7 @@ class DomesticIbanHandler(PaymentTypeHandler):
         for tx in transactions:
             results.append(_check(
                 "BR-IBAN-004", tx.currency == "CHF",
-                f"Waehrung ist '{tx.currency}'" if tx.currency != "CHF" else None,
+                f"Währung ist '{tx.currency}'" if tx.currency != "CHF" else None,
             ))
 
         svc_lvl = testcase.overrides.get("SvcLvl.Cd", "")
@@ -40,7 +40,7 @@ class DomesticIbanHandler(PaymentTypeHandler):
             iban_country = tx.creditor_iban[:2].upper() if len(tx.creditor_iban) >= 2 else ""
             results.append(_check(
                 "BR-IBAN-006", iban_country in ("CH", "LI"),
-                f"IBAN Laenderkennzeichen '{iban_country}' ist nicht CH/LI" if iban_country not in ("CH", "LI") else None,
+                f"IBAN Länderkennzeichen '{iban_country}' ist nicht CH/LI" if iban_country not in ("CH", "LI") else None,
             ))
 
             results.append(_check(
@@ -52,14 +52,14 @@ class DomesticIbanHandler(PaymentTypeHandler):
             ref_type = ref_info.get("type", "")
             results.append(_check(
                 "BR-IBAN-002", ref_type != "QRR",
-                "QRR-Referenz bei regulaerer IBAN gefunden" if ref_type == "QRR" else None,
+                "QRR-Referenz bei regulärer IBAN gefunden" if ref_type == "QRR" else None,
             ))
 
             ref_value = ref_info.get("value", "")
             if ref_type == "SCOR":
                 results.append(_check(
                     "BR-IBAN-003", validate_scor(ref_value),
-                    f"SCOR '{ref_value}' ist ungueltig" if not validate_scor(ref_value) else None,
+                    f"SCOR '{ref_value}' ist ungültig" if not validate_scor(ref_value) else None,
                 ))
 
         return results

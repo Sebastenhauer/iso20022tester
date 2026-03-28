@@ -22,7 +22,7 @@ def run(
     """Hauptlogik: Liest Excel, generiert XMLs, validiert, erzeugt Reports."""
 
     # 1. Excel parsen
-    print(f"Lese Testfaelle aus: {input_file}")
+    print(f"Lese Testfälle aus: {input_file}")
     testcases, errors = parse_excel(input_file)
     if errors:
         print("Fehler beim Einlesen der Excel-Datei:")
@@ -30,7 +30,7 @@ def run(
             print(f"  {e}")
         sys.exit(1)
 
-    print(f"{len(testcases)} Testfaelle eingelesen.")
+    print(f"{len(testcases)} Testfälle eingelesen.")
 
     # 2. Pipeline initialisieren
     seed = seed_override if seed_override is not None else config.seed
@@ -48,7 +48,7 @@ def run(
     os.makedirs(run_dir, exist_ok=True)
     print(f"Output-Verzeichnis: {run_dir}")
 
-    # 4. Testfaelle verarbeiten
+    # 4. Testfälle verarbeiten
     results = pipeline.process(testcases, run_dir, verbose=verbose)
 
     for r in results:
@@ -65,14 +65,14 @@ def run(
     pass_count = sum(1 for r in results if r.overall_pass)
     fail_count = len(results) - pass_count
     print(f"\n{'=' * 50}")
-    print(f"Ergebnis: {pass_count} Pass, {fail_count} Fail von {len(results)} Testfaellen")
+    print(f"Ergebnis: {pass_count} Pass, {fail_count} Fail von {len(results)} Testfällen")
     print(f"{'=' * 50}")
 
     return results
 
 
 def run_roundtrip_mode(xml_paths: List[str], config: AppConfig, verbose: bool = False):
-    """Round-Trip-Modus: Parst XMLs zurueck und prueft Konsistenz."""
+    """Round-Trip-Modus: Parst XMLs zurück und prueft Konsistenz."""
     from src.validation.roundtrip import run_roundtrip
     from src.validation.xsd_validator import XsdValidator
 
@@ -82,7 +82,7 @@ def run_roundtrip_mode(xml_paths: List[str], config: AppConfig, verbose: bool = 
     except Exception as e:
         print(f"Warnung: XSD-Schema konnte nicht geladen werden: {e}")
 
-    print(f"Round-Trip-Validierung fuer {len(xml_paths)} XML-Datei(en)...")
+    print(f"Round-Trip-Validierung für {len(xml_paths)} XML-Datei(en)...")
     results = run_roundtrip(xml_paths, xsd_validator, verbose)
 
     pass_count = sum(1 for r in results if r.passed)
@@ -112,7 +112,7 @@ def main():
     rt_parser.add_argument("--config", required=True, help="Pfad zur config.yaml")
     rt_parser.add_argument("--verbose", action="store_true", help="Verbose")
 
-    # Abwaertskompatibilitaet: --input ohne Subcommand
+    # Abwärtskompatibilität: --input ohne Subcommand
     parser.add_argument("--input", help="Pfad zur Excel-Datei")
     parser.add_argument("--config", help="Pfad zur config.yaml")
     parser.add_argument("--seed", type=int, default=None, help="Seed")

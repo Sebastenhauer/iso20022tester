@@ -44,7 +44,7 @@ class SepaHandler(PaymentTypeHandler):
         for tx in transactions:
             results.append(_check(
                 "BR-SEPA-001", tx.currency == "EUR",
-                f"Waehrung ist '{tx.currency}'" if tx.currency != "EUR" else None,
+                f"Währung ist '{tx.currency}'" if tx.currency != "EUR" else None,
             ))
 
             in_range = SEPA_MIN_AMOUNT <= tx.amount <= SEPA_MAX_AMOUNT
@@ -60,7 +60,7 @@ class SepaHandler(PaymentTypeHandler):
 
             results.append(_check(
                 "BR-SEPA-005", validate_iban(tx.creditor_iban),
-                f"IBAN '{tx.creditor_iban}' ist ungueltig" if not validate_iban(tx.creditor_iban) else None,
+                f"IBAN '{tx.creditor_iban}' ist ungültig" if not validate_iban(tx.creditor_iban) else None,
             ))
 
         return results

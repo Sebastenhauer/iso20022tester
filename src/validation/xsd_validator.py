@@ -33,7 +33,7 @@ class XsdValidator:
                 raise RuntimeError(
                     "CBPR+ XSD nicht konfiguriert. Bitte 'cbpr_xsd_path' in "
                     "config.yaml setzen. Das XSD ist ueber SWIFT MyStandards "
-                    "(kostenloser Login) verfuegbar."
+                    "(kostenloser Login) verfügbar."
                 )
             schema = self.cbpr_schema
         else:

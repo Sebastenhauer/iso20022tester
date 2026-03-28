@@ -1,6 +1,6 @@
 """Round-Trip-Validierung: XML parsen und gegen Datenmodell vergleichen.
 
-Parst generierte pain.001-XMLs zurueck in eine Datenstruktur und
+Parst generierte pain.001-XMLs zurück in eine Datenstruktur und
 vergleicht Schluesselfelder. Erkennt Serialisierungs-Bugs.
 """
 
@@ -28,7 +28,7 @@ class RoundtripDiff:
 
 
 class RoundtripResult:
-    """Ergebnis der Round-Trip-Validierung fuer eine XML-Datei."""
+    """Ergebnis der Round-Trip-Validierung für eine XML-Datei."""
 
     def __init__(self, file_path: str):
         self.file_path = file_path
@@ -124,7 +124,7 @@ def parse_pain001_xml(file_path: str) -> Tuple[Optional[Dict], Optional[str]]:
 
 
 def validate_roundtrip(file_path: str, xsd_validator=None) -> RoundtripResult:
-    """Fuehrt eine Round-Trip-Validierung fuer eine XML-Datei durch.
+    """Fuehrt eine Round-Trip-Validierung für eine XML-Datei durch.
 
     Prueft:
     1. XML ist parsbar
@@ -230,7 +230,7 @@ def validate_roundtrip(file_path: str, xsd_validator=None) -> RoundtripResult:
                     if Decimal(tx["amount"]) <= 0:
                         result.add_diff(f"{tx_prefix}/amount", "> 0", tx["amount"])
                 except Exception:
-                    result.add_diff(f"{tx_prefix}/amount", "gueltige Zahl", tx["amount"])
+                    result.add_diff(f"{tx_prefix}/amount", "gültige Zahl", tx["amount"])
 
     # 5. GrpHdr NbOfTxs / CtrlSum Konsistenz
     if parsed.get("nb_of_txs") and parsed["nb_of_txs"] != str(total_txs):
@@ -252,7 +252,7 @@ def run_roundtrip(
     xsd_validator=None,
     verbose: bool = False,
 ) -> List[RoundtripResult]:
-    """Fuehrt Round-Trip-Validierung fuer mehrere XML-Dateien durch."""
+    """Fuehrt Round-Trip-Validierung für mehrere XML-Dateien durch."""
     results = []
 
     for path in xml_paths:

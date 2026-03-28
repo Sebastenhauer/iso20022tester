@@ -103,7 +103,7 @@ class DataFactory:
             country = self.rng.choice([c for c in SEPA_COUNTRIES if c != "CH"])
             return generate_iban(self.rng, country)
         elif payment_type == PaymentType.CBPR_PLUS:
-            # CBPR+: Zufaelliges Land mit IBAN-Support ausserhalb SEPA
+            # CBPR+: Zufälliges Land mit IBAN-Support außerhalb SEPA
             cbpr_iban_countries = [
                 c for c, l in IBAN_LENGTHS.items()
                 if l > 0 and c not in SEPA_COUNTRIES and c not in ("CH", "LI")
@@ -131,7 +131,7 @@ class DataFactory:
         return sanitize_sps_charset(name)
 
     def generate_currency(self, payment_type: PaymentType) -> str:
-        """Gibt die Default-Waehrung fuer einen Zahlungstyp zurueck."""
+        """Gibt die Default-Währung für einen Zahlungstyp zurück."""
         if payment_type == PaymentType.SEPA:
             return "EUR"
         elif payment_type in (PaymentType.DOMESTIC_QR, PaymentType.DOMESTIC_IBAN):

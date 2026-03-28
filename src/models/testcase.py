@@ -51,7 +51,7 @@ class TransactionInput(BaseModel):
 class TestCase(BaseModel):
     """Testfall aus dem Excel.
 
-    Vorrang fuer amount/currency:
+    Vorrang für amount/currency:
       TransactionInput > TestCase > Auto-Generierung (DataFactory)
     """
 

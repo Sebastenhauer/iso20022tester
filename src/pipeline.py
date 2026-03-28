@@ -1,7 +1,7 @@
 """Pipeline: Orchestriert den gesamten Testlauf.
 
 Trennt die Verarbeitungslogik vom CLI (main.py).
-Kann unabhaengig von der Kommandozeile verwendet und getestet werden.
+Kann unabhängig von der Kommandozeile verwendet und getestet werden.
 """
 
 import os
@@ -36,7 +36,7 @@ from src.xml_generator.pain001_builder import (
 
 
 class PaymentTestPipeline:
-    """Verarbeitet Testfaelle und generiert XMLs, Validierungen und Reports.
+    """Verarbeitet Testfälle und generiert XMLs, Validierungen und Reports.
 
     Verwendung:
         pipeline = PaymentTestPipeline(config, seed=42)
@@ -57,7 +57,7 @@ class PaymentTestPipeline:
         output_dir: str,
         verbose: bool = False,
     ) -> List[TestCaseResult]:
-        """Verarbeitet alle Testfaelle (einzeln oder gruppiert)."""
+        """Verarbeitet alle Testfälle (einzeln oder gruppiert)."""
         results = []
         groups = self._group_testcases(testcases)
 
@@ -82,7 +82,7 @@ class PaymentTestPipeline:
         input_file: str,
         output_dir: str,
     ) -> Dict[str, str]:
-        """Erzeugt alle Reports und gibt die Dateipfade zurueck."""
+        """Erzeugt alle Reports und gibt die Dateipfade zurück."""
         paths = {}
 
         paths["json"] = generate_json_report(results, input_file, output_dir)
@@ -165,7 +165,7 @@ class PaymentTestPipeline:
     def _process_group(
         self, testcases: List[TestCase], output_dir: str, verbose: bool
     ) -> List[TestCaseResult]:
-        """Verarbeitet eine Gruppe (N Testfaelle → 1 XML mit N PmtInf)."""
+        """Verarbeitet eine Gruppe (N Testfälle → 1 XML mit N PmtInf)."""
         built: List[Tuple[TestCase, PaymentInstruction]] = []
         results: List[TestCaseResult] = []
 
@@ -198,8 +198,8 @@ class PaymentTestPipeline:
             tc_ids = ", ".join(tc.testcase_id for tc, _ in built)
             error_detail = "\n".join(f"  - {err}" for err in xsd_errors)
             raise RuntimeError(
-                f"XSD-Validierung fehlgeschlagen fuer Gruppe '{group_id}' "
-                f"(Testfaelle: {tc_ids}).\n{error_detail}"
+                f"XSD-Validierung fehlgeschlagen für Gruppe '{group_id}' "
+                f"(Testfälle: {tc_ids}).\n{error_detail}"
             )
 
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -308,7 +308,7 @@ class PaymentTestPipeline:
         if not valid:
             detail = "\n".join(f"  - {e}" for e in errors)
             raise RuntimeError(
-                f"XSD-Validierung fehlgeschlagen fuer {testcase.testcase_id} "
+                f"XSD-Validierung fehlgeschlagen für {testcase.testcase_id} "
                 f"({testcase.payment_type.value}, {testcase.standard.value}). "
                 f"Bug im XML-Generator.\n{detail}"
             )

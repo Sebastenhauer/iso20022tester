@@ -35,7 +35,7 @@ IBAN_LENGTHS = {
     "SI": 19,
     "GR": 27,
     "IS": 26,
-    # Aussereuropaeische Laender (fuer CBPR+)
+    # Außereuropäische Länder (fuer CBPR+)
     "SA": 24,  # Saudi-Arabien
     "AE": 23,  # VAE
     "QA": 29,  # Katar
@@ -59,7 +59,7 @@ IBAN_LENGTHS = {
     "ME": 22,  # Montenegro
     "MK": 19,  # Nordmazedonien
     "XK": 20,  # Kosovo
-    # Laender ohne IBAN (Kontonummer-basiert fuer CBPR+)
+    # Länder ohne IBAN (Kontonummer-basiert für CBPR+)
     "US": 0,
     "JP": 0,
     "CN": 0,

@@ -1,4 +1,4 @@
-"""Excel-Parser v2: Liest Testfaelle mit separaten Transaktionszeilen."""
+"""Excel-Parser v2: Liest Testfälle mit separaten Transaktionszeilen."""
 
 from decimal import Decimal, InvalidOperation
 from typing import List, Optional, Tuple
@@ -29,7 +29,7 @@ VALID_EXPECTED_RESULTS = {er.value for er in ExpectedResult}
 
 
 def _parse_amount(raw, testcase_id: str = "", errors: list = None) -> Optional[Decimal]:
-    """Parst einen Betrag, gibt None bei leerem Input zurueck.
+    """Parst einen Betrag, gibt None bei leerem Input zurück.
 
     Negative/Null-Betraege erzeugen eine Warnung statt stiller None-Rueckgabe.
     """
@@ -47,13 +47,13 @@ def _parse_amount(raw, testcase_id: str = "", errors: list = None) -> Optional[D
     except (InvalidOperation, TypeError, ValueError):
         if errors is not None:
             errors.append(
-                f"Testfall '{testcase_id}': Betrag '{raw}' ist keine gueltige Zahl."
+                f"Testfall '{testcase_id}': Betrag '{raw}' ist keine gültige Zahl."
             )
         return None
 
 
 def _str_or_none(val) -> Optional[str]:
-    """Gibt einen getrimmten String oder None zurueck."""
+    """Gibt einen getrimmten String oder None zurück."""
     if val is None:
         return None
     s = str(val).strip()
@@ -76,7 +76,7 @@ def _parse_transaction_input(row, col_index) -> TransactionInput:
 
     return TransactionInput(
         amount=_parse_amount(cell("Betrag")),
-        currency=_str_or_none(cell("Waehrung")),
+        currency=_str_or_none(cell("Währung")),
         creditor_name=_str_or_none(cell("Creditor Name")),
         creditor_iban=_str_or_none(cell("Creditor IBAN")),
         creditor_bic=_str_or_none(cell("Creditor BIC")),
@@ -86,7 +86,7 @@ def _parse_transaction_input(row, col_index) -> TransactionInput:
 
 
 def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
-    """Liest und validiert eine Excel-Datei mit Testfaellen (v2-Format).
+    """Liest und validiert eine Excel-Datei mit Testfällen (v2-Format).
 
     Zeilen mit TestcaseID = neuer Testfall.
     Zeilen ohne TestcaseID = zusaetzliche Transaktion zum vorherigen Testfall.
@@ -99,7 +99,7 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
     try:
         wb = load_workbook(file_path, read_only=True, data_only=True)
     except Exception as e:
-        return [], [f"Excel-Datei konnte nicht geoeffnet werden: {e}"]
+        return [], [f"Excel-Datei konnte nicht geöffnet werden: {e}"]
 
     ws = wb.active
     rows = list(ws.iter_rows(values_only=True))
@@ -186,8 +186,8 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
                     payment_type = PaymentType(payment_type_raw)
                 else:
                     errors.append(
-                        f"Testfall '{testcase_id}': Ungueltiger Zahlungstyp '{payment_type_raw}'. "
-                        f"Gueltig: {', '.join(VALID_PAYMENT_TYPES)}"
+                        f"Testfall '{testcase_id}': Ungültiger Zahlungstyp '{payment_type_raw}'. "
+                        f"Gültig: {', '.join(VALID_PAYMENT_TYPES)}"
                     )
                     current_tc = None
                     continue
@@ -223,8 +223,8 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
                     standard = valid_standards[standard_lower]
                 else:
                     errors.append(
-                        f"Testfall '{testcase_id}': Ungueltiger Standard '{standard_raw}'. "
-                        f"Gueltig: {', '.join(valid_standards.keys())}"
+                        f"Testfall '{testcase_id}': Ungültiger Standard '{standard_raw}'. "
+                        f"Gültig: {', '.join(valid_standards.keys())}"
                     )
                     current_tc = None
                     continue

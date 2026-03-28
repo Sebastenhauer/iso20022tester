@@ -148,7 +148,7 @@ def build_pain001_document(
 
     build_initiating_party(grp_hdr, document.initiating_party_name)
 
-    # === B-Level: PmtInf (1..n fuer SPS, genau 1 fuer CBPR+) ===
+    # === B-Level: PmtInf (1..n für SPS, genau 1 für CBPR+) ===
     for instr in document.payment_instructions:
         _build_pmt_inf(cstmr, instr, standard=standard)
 

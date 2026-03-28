@@ -31,7 +31,7 @@ class DomesticQrHandler(PaymentTypeHandler):
         for tx in transactions:
             results.append(_check(
                 "BR-QR-004", tx.currency in ("CHF", "EUR"),
-                f"Waehrung ist '{tx.currency}'" if tx.currency not in ("CHF", "EUR") else None,
+                f"Währung ist '{tx.currency}'" if tx.currency not in ("CHF", "EUR") else None,
             ))
 
         svc_lvl = testcase.overrides.get("SvcLvl.Cd", "")
@@ -49,7 +49,7 @@ class DomesticQrHandler(PaymentTypeHandler):
             iban_country = tx.creditor_iban[:2].upper() if len(tx.creditor_iban) >= 2 else ""
             results.append(_check(
                 "BR-QR-007", iban_country in ("CH", "LI"),
-                f"QR-IBAN Laenderkennzeichen '{iban_country}' ist nicht CH/LI" if iban_country not in ("CH", "LI") else None,
+                f"QR-IBAN Länderkennzeichen '{iban_country}' ist nicht CH/LI" if iban_country not in ("CH", "LI") else None,
             ))
 
             ref_info = tx.remittance_info or {}
@@ -64,7 +64,7 @@ class DomesticQrHandler(PaymentTypeHandler):
             if ref_type == "QRR":
                 results.append(_check(
                     "BR-QR-006", validate_qrr(ref_value),
-                    f"QRR '{ref_value}' ist ungueltig" if not validate_qrr(ref_value) else None,
+                    f"QRR '{ref_value}' ist ungültig" if not validate_qrr(ref_value) else None,
                 ))
 
             results.append(_check(

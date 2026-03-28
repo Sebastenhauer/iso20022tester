@@ -152,7 +152,7 @@ BR_GEN_006 = _r(
 
 BR_GEN_007 = _r(
     "BR-GEN-007", "GEN",
-    "Country-Code muss 2 Grossbuchstaben sein (ISO 3166-1)",
+    "Country-Code muss 2 Großbuchstaben sein (ISO 3166-1)",
     None,
     "IG CT SPS 2025 §3.11, SwissQRBill",
 )
@@ -385,7 +385,7 @@ BR_REM_002 = _r(
 
 BR_CCY_001 = _r(
     "BR-CCY-001", "CCY",
-    "Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+    "Währungscode muss gültig sein (ISO 4217, 3 Großbuchstaben)",
     None,
     "IG CT SPS 2025, ISO 4217",
     violatable=True,
@@ -454,7 +454,7 @@ _CATEGORY_NAMES = {
     "QR": "QR-IBAN-spezifisch (Typ D/QR)",
     "IBAN": "Domestic-IBAN-spezifisch (Typ D/IBAN)",
     "REM": "Remittance Information",
-    "CCY": "Waehrung",
+    "CCY": "Währung",
     "CBPR": "CBPR+-spezifisch (Typ X)",
 }
 

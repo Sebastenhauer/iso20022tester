@@ -17,11 +17,11 @@ def generate_json_report(
         "testlauf": {
             "datum": datetime.now().isoformat(),
             "input_datei": excel_file,
-            "anzahl_testfaelle": len(results),
+            "anzahl_testfälle": len(results),
             "anzahl_pass": sum(1 for r in results if r.overall_pass),
             "anzahl_fail": sum(1 for r in results if not r.overall_pass),
         },
-        "testfaelle": [],
+        "testfälle": [],
     }
 
     for r in results:
@@ -45,7 +45,7 @@ def generate_json_report(
             "xml_datei": r.xml_file_path,
             "bemerkungen": r.remarks,
         }
-        report["testfaelle"].append(tc)
+        report["testfälle"].append(tc)
 
     report_path = f"{output_path}/testlauf_ergebnis.json"
     with open(report_path, "w", encoding="utf-8") as f:

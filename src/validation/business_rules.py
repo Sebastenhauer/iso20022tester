@@ -119,8 +119,8 @@ def validate_general_rules(
         if value and not validate_sps_charset(value):
             results.append(_check(
                 "BR-GEN-012", False,
-                f"{field_name}: '{value[:50]}...' enthaelt ungueltige Zeichen" if len(value) > 50
-                else f"{field_name}: '{value}' enthaelt ungueltige Zeichen",
+                f"{field_name}: '{value[:50]}...' enthält ungültige Zeichen" if len(value) > 50
+                else f"{field_name}: '{value}' enthält ungültige Zeichen",
             ))
 
     # BR-IBAN-V01 / V02: IBAN-Validierung
@@ -154,7 +154,7 @@ def validate_general_rules(
             f"{field_name} '{bic}' hat ungültiges Format" if not valid else None,
         ))
 
-    # BR-GEN-007: Country-Code 2 Grossbuchstaben
+    # BR-GEN-007: Country-Code 2 Großbuchstaben
     country_pattern = re.compile(r'^[A-Z]{2}$')
     country_fields = []
     if instruction.debtor.country:
@@ -195,7 +195,7 @@ def validate_general_rules(
             structured = has_strt and has_town and has_ctry
             results.append(_check(
                 "BR-ADDR-002", structured,
-                f"Creditor-Adresse nicht vollstaendig strukturiert" if not structured else None,
+                f"Creditor-Adresse nicht vollständig strukturiert" if not structured else None,
             ))
         else:
             results.append(_check(
@@ -263,7 +263,7 @@ def validate_all_business_rules(
         valid_cb = cb in ("DEBT", "CRED", "SHAR")
         results.append(_check(
             "BR-CBPR-003", valid_cb,
-            f"ChrgBr '{cb}' ist ungueltig fuer CBPR+ (SLEV nicht erlaubt)" if not valid_cb else None,
+            f"ChrgBr '{cb}' ist ungültig für CBPR+ (SLEV nicht erlaubt)" if not valid_cb else None,
         ))
 
     # BR-REM-002: USTRD max 140 Zeichen
@@ -275,13 +275,13 @@ def validate_all_business_rules(
                 f"Ustrd hat {len(val)} Zeichen (max 140)" if len(val) > 140 else None,
             ))
 
-    # BR-CCY-001: Waehrungscode 3 Grossbuchstaben
+    # BR-CCY-001: Währungscode 3 Großbuchstaben
     ccy_pattern = re.compile(r'^[A-Z]{3}$')
     for tx in instruction.transactions:
         valid_ccy = bool(ccy_pattern.match(tx.currency))
         results.append(_check(
             "BR-CCY-001", valid_ccy,
-            f"Waehrung '{tx.currency}' ist kein gueltiger ISO 4217 Code" if not valid_ccy else None,
+            f"Währung '{tx.currency}' ist kein gültiger ISO 4217 Code" if not valid_ccy else None,
         ))
 
     handler = get_handler(testcase.payment_type)
@@ -404,7 +404,7 @@ def _violate_cbpr_agent(instr: PaymentInstruction) -> PaymentInstruction:
 
 
 def _violate_cbpr_charge_bearer(instr: PaymentInstruction) -> PaymentInstruction:
-    """BR-CBPR-003: Entfernt ChrgBr (leerer String wird als ungueltig erkannt)."""
+    """BR-CBPR-003: Entfernt ChrgBr (leerer String wird als ungültig erkannt)."""
     return instr.model_copy(update={"charge_bearer": ""})
 
 
@@ -416,12 +416,12 @@ def _violate_ustrd_length(instr: PaymentInstruction) -> PaymentInstruction:
 
 
 def _violate_currency_code(instr: PaymentInstruction) -> PaymentInstruction:
-    """BR-CCY-001: Setzt ungueltigen Waehrungscode (kleinbuchstaben - Pattern-Fehler)."""
+    """BR-CCY-001: Setzt ungültigen Währungscode (kleinbuchstaben - Pattern-Fehler)."""
     return _update_all_transactions(instr, currency="usd")
 
 
 def _violate_unstructured_address(instr: PaymentInstruction) -> PaymentInstruction:
-    """BR-ADDR-002: Entfernt StrtNm aus Creditor-Adresse (unvollstaendig strukturiert)."""
+    """BR-ADDR-002: Entfernt StrtNm aus Creditor-Adresse (unvollständig strukturiert)."""
     updated_txs = []
     for tx in instr.transactions:
         addr = dict(tx.creditor_address or {})
