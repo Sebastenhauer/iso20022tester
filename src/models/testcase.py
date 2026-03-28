@@ -12,6 +12,11 @@ class PaymentType(str, Enum):
     CBPR_PLUS = "CBPR+"
 
 
+class Standard(str, Enum):
+    SPS_2025 = "sps2025"
+    CBPR_PLUS_2026 = "cbpr+2026"
+
+
 class ExpectedResult(str, Enum):
     OK = "OK"
     NOK = "NOK"
@@ -56,6 +61,7 @@ class TestCase(BaseModel):
     violate_rule: Optional[str] = None
     tx_count: int = 1
     transaction_inputs: List[TransactionInput] = []
+    standard: Standard = Standard.SPS_2025
     group_id: Optional[str] = None
     expected_api_response: Optional[str] = None
     remarks: Optional[str] = None

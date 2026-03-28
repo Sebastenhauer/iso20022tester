@@ -378,7 +378,7 @@ BR_REM_002 = _r(
     "Unstrukturierte Remittance Info darf maximal 140 Zeichen lang sein",
     None,
     "IG CT SPS 2025 §3.2.2",
-    violatable=True,
+    violatable=False,  # XSD-geschuetzt: maxLength=140 auf Ustrd-Element
 )
 
 # --- Currency ---

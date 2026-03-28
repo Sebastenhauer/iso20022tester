@@ -1,14 +1,19 @@
 """XML-Generator: Baut pain.001.001.09 XML-Struktur mit lxml.
 
-Unterstützt sowohl einzelne als auch mehrere PmtInf-Blöcke
-(Multi-Payment) pro Dokument.
+Unterstützt SPS 2025 und CBPR+ SR2026 mit standard-abhängiger Struktur.
 """
 
+from datetime import datetime, timezone
 from typing import List
 
 from lxml import etree
 
-from src.models.testcase import Pain001Document, PaymentInstruction, Transaction
+from src.models.testcase import (
+    Pain001Document,
+    PaymentInstruction,
+    Standard,
+    Transaction,
+)
 from src.xml_generator.builders import (
     build_amount,
     build_creditor_elements,
@@ -42,17 +47,23 @@ def _build_transaction(parent: etree._Element, tx: Transaction) -> None:
         build_remittance_info(cdt_trf, tx.remittance_info)
 
 
-def _build_pmt_inf(parent: etree._Element, instr: PaymentInstruction) -> None:
+def _build_pmt_inf(
+    parent: etree._Element,
+    instr: PaymentInstruction,
+    standard: Standard = Standard.SPS_2025,
+) -> None:
     """Baut einen PmtInf-Block (B-Level) mit allen Transaktionen (C-Level)."""
     pmt_inf = el(parent, "PmtInf")
 
-    nb_of_txs = str(len(instr.transactions))
-    ctrl_sum = sum(tx.amount for tx in instr.transactions)
-
     el(pmt_inf, "PmtInfId", instr.pmt_inf_id)
     el(pmt_inf, "PmtMtd", instr.pmt_mtd)
-    el(pmt_inf, "NbOfTxs", nb_of_txs)
-    el(pmt_inf, "CtrlSum", str(ctrl_sum))
+
+    # SPS: NbOfTxs + CtrlSum auf B-Level; CBPR+: entfaellt
+    if standard == Standard.SPS_2025:
+        nb_of_txs = str(len(instr.transactions))
+        ctrl_sum = sum(tx.amount for tx in instr.transactions)
+        el(pmt_inf, "NbOfTxs", nb_of_txs)
+        el(pmt_inf, "CtrlSum", str(ctrl_sum))
 
     # PmtTpInf
     build_payment_type_info(
@@ -78,31 +89,39 @@ def _build_pmt_inf(parent: etree._Element, instr: PaymentInstruction) -> None:
         _build_transaction(pmt_inf, tx)
 
 
-def build_pain001_xml(instruction: PaymentInstruction) -> etree._Element:
-    """Baut ein pain.001-Dokument mit einem PmtInf-Block (Einzel-Payment).
+def build_pain001_xml(
+    instruction: PaymentInstruction,
+    standard: Standard = Standard.SPS_2025,
+) -> etree._Element:
+    """Baut ein pain.001-Dokument mit einem PmtInf-Block (Einzel-Payment)."""
+    cre_dt_tm = instruction.cre_dt_tm
 
-    Convenience-Wrapper für Abwärtskompatibilität.
-    """
+    # CBPR+: CreDtTm muss UTC-Offset haben
+    if standard == Standard.CBPR_PLUS_2026 and "+" not in cre_dt_tm and "Z" not in cre_dt_tm:
+        cre_dt_tm = datetime.now(timezone.utc).astimezone().isoformat()
+
+    # CBPR+: PmtInfId muss MsgId entsprechen (Rule R8)
+    if standard == Standard.CBPR_PLUS_2026:
+        instruction = instruction.model_copy(update={"pmt_inf_id": instruction.msg_id})
+
     doc = Pain001Document(
         msg_id=instruction.msg_id,
-        cre_dt_tm=instruction.cre_dt_tm,
+        cre_dt_tm=cre_dt_tm,
         initiating_party_name=instruction.debtor.name,
         payment_instructions=[instruction],
     )
-    return build_pain001_document(doc)
+    return build_pain001_document(doc, standard=standard)
 
 
-def build_pain001_document(document: Pain001Document) -> etree._Element:
+def build_pain001_document(
+    document: Pain001Document,
+    standard: Standard = Standard.SPS_2025,
+) -> etree._Element:
     """Baut ein komplettes pain.001.001.09 XML-Dokument.
 
-    Unterstützt 1..n PmtInf-Blöcke (Multi-Payment). GrpHdr aggregiert
-    NbOfTxs und CtrlSum über alle PmtInf-Blöcke.
-
-    Args:
-        document: Das Dokument mit Message-Metadaten und PaymentInstructions.
-
-    Returns:
-        lxml Element-Tree des Dokuments.
+    SPS 2025: 1..n PmtInf mit NbOfTxs/CtrlSum auf allen Levels.
+    CBPR+ SR2026: Genau 1 PmtInf, kein CtrlSum auf GrpHdr/PmtInf Level,
+                  NbOfTxs immer "1", PmtInfId = MsgId.
     """
     all_txs = [
         tx
@@ -118,13 +137,20 @@ def build_pain001_document(document: Pain001Document) -> etree._Element:
     grp_hdr = el(cstmr, "GrpHdr")
     el(grp_hdr, "MsgId", document.msg_id)
     el(grp_hdr, "CreDtTm", document.cre_dt_tm)
-    el(grp_hdr, "NbOfTxs", str(len(all_txs)))
-    el(grp_hdr, "CtrlSum", str(sum(tx.amount for tx in all_txs)))
+
+    if standard == Standard.CBPR_PLUS_2026:
+        # CBPR+: NbOfTxs immer "1", kein CtrlSum
+        el(grp_hdr, "NbOfTxs", "1")
+    else:
+        # SPS: Aggregiert ueber alle PmtInf
+        el(grp_hdr, "NbOfTxs", str(len(all_txs)))
+        el(grp_hdr, "CtrlSum", str(sum(tx.amount for tx in all_txs)))
+
     build_initiating_party(grp_hdr, document.initiating_party_name)
 
-    # === B-Level: PmtInf (1..n) ===
+    # === B-Level: PmtInf (1..n fuer SPS, genau 1 fuer CBPR+) ===
     for instr in document.payment_instructions:
-        _build_pmt_inf(cstmr, instr)
+        _build_pmt_inf(cstmr, instr, standard=standard)
 
     return doc
 

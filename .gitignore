@@ -6,3 +6,6 @@ output/
 .venv/
 dist/
 *.egg-info/
+
+# Proprietaere SWIFT CBPR+ Spezifikationen (nicht oeffentlich)
+docs/specs/cbpr+nonpublic/
