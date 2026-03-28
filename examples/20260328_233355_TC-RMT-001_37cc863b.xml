@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-2702878b9f0f</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.804978</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>7500</CtrlSum>
+      <InitgPty>
+        <Nm>Albrecht  Co.</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-ab61a7b1793b</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>7500</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Albrecht  Co.</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-33094d353f4d</EndToEndId>
+          <UETR>fff16095-0957-4ba5-be18-7992591c8627</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="USD">7500</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>CHASUS33XXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Zbinden Bieri GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Jackson Ports</StrtNm>
+            <BldgNb>194</BldgNb>
+            <PstCd>72218</PstCd>
+            <TwnNm>West Brianville</TwnNm>
+            <Ctry>QA</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>QA356272046537556464170805310</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Invoice INV-2026-042 Payment for services</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

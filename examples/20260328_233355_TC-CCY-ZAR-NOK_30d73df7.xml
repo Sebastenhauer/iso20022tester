@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-d25864f225d4</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.872982</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <InitgPty>
+        <Nm>Mueller Ackermann AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-9293f7050815</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Mueller Ackermann AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-c64c96479ea7</EndToEndId>
+          <UETR>f562a79a-94d2-4ba3-ad50-2042bd0947fb</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="JPY">5000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Wirth Wettstein GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Mary Isle</StrtNm>
+            <BldgNb>135</BldgNb>
+            <PstCd>18548</PstCd>
+            <TwnNm>East Ambertown</TwnNm>
+            <Ctry>MK</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>MK90169409749930972</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

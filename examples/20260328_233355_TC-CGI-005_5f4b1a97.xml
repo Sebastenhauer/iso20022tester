@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-d49347fc0fc9</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.967572</CreDtTm>
+      <NbOfTxs>3</NbOfTxs>
+      <CtrlSum>45000</CtrlSum>
+      <InitgPty>
+        <Nm>Muster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-21768dd738e7</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>3</NbOfTxs>
+      <CtrlSum>45000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Muster AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>CRESCHZZ80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-73c374a6dac7</EndToEndId>
+          <UETR>d780c025-abb2-4055-8d57-f6760735db7c</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="GBP">10000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>DEUTDEFF</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Firma Alpha GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Kunibert-Adler-Allee</StrtNm>
+            <BldgNb>8</BldgNb>
+            <PstCd>99429</PstCd>
+            <TwnNm>Buesingen am Hochrhein</TwnNm>
+            <Ctry>DE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>DE89370400440532013000</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Batch payment 1/3</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-183fea703ff6</EndToEndId>
+          <UETR>3b292d29-2f2d-4000-9edd-967129d20cf4</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="GBP">15000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BNPAFRPP</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Societe Beta SA</Nm>
+          <PstlAdr>
+            <StrtNm>rue de Pierre</StrtNm>
+            <BldgNb>143</BldgNb>
+            <PstCd>20292</PstCd>
+            <TwnNm>Pierre-les-Bains</TwnNm>
+            <Ctry>FR</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>FR7630006000011234567890189</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Batch payment 2/3</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-23c97a1ecb37</EndToEndId>
+          <UETR>44cf8c7e-8089-45a6-b25d-1a5b0f08481e</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="GBP">20000</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>NWBKGB2L</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>British Gamma Ltd</Nm>
+          <PstlAdr>
+            <StrtNm>Camacho Turnpike</StrtNm>
+            <BldgNb>119</BldgNb>
+            <PstCd>83562</PstCd>
+            <TwnNm>Port Paulhaven</TwnNm>
+            <Ctry>GB</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>GB29NWBK60161331926819</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Batch payment 3/3</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

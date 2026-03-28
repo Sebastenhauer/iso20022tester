@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-b0946d2a2aa9</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.861589</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <InitgPty>
+        <Nm>Kaeser Sigrist  Co.</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-0ad7c9a27277</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Kaeser Sigrist  Co.</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-9a45693d7227</EndToEndId>
+          <UETR>daa82e6b-dbc8-4d70-a984-ba915df7cc04</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">5000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Kaelin GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Pitts Roads</StrtNm>
+            <BldgNb>170</BldgNb>
+            <PstCd>53052</PstCd>
+            <TwnNm>New Jonathanview</TwnNm>
+            <Ctry>PK</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>PK7365277584161692845115</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

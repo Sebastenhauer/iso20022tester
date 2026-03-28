@@ -15,6 +15,7 @@ class PaymentType(str, Enum):
 class Standard(str, Enum):
     SPS_2025 = "sps2025"
     CBPR_PLUS_2026 = "cbpr+2026"
+    CGI_MP = "cgi-mp"
 
 
 class ExpectedResult(str, Enum):

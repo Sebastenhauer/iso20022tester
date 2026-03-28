@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-757b6b29bb2a</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.879098</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <InitgPty>
+        <Nm>Eugster AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-2faabe0bb7f6</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Eugster AG</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId/>
+      </DbtrAgt>
+      <ChrgBr>SHAR</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-1cd66b09cf0e</EndToEndId>
+          <UETR>dc953198-4b24-4a48-bb59-43a8bcd83591</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">5000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Hunziker Steiner  Co.</Nm>
+          <PstlAdr>
+            <StrtNm>Anthony Parkways</StrtNm>
+            <BldgNb>120</BldgNb>
+            <PstCd>41288</PstCd>
+            <TwnNm>Burchland</TwnNm>
+            <Ctry>KZ</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>KZ282400499154788728</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-4f2da2330e16</MsgId>
+      <CreDtTm>2026-03-28T23:33:55.945296</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000000</CtrlSum>
+      <InitgPty>
+        <Nm>Schweizerische Nationalbank</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-bd9bc648a876</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>5000000</CtrlSum>
+      <ReqdExctnDt>
+        <Dt>2026-03-30</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Schweizerische Nationalbank</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>SNBZCHZZXXX</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-74102d5d1db1</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">5000000</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Kantonsspital Zuerich</Nm>
+          <PstlAdr>
+            <StrtNm>Winklerstrasse</StrtNm>
+            <BldgNb>53</BldgNb>
+            <PstCd>1240</PstCd>
+            <TwnNm>Kloten</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>CH3956451661889241418</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <Tp>
+                <CdOrPrtry>
+                  <Cd>SCOR</Cd>
+                </CdOrPrtry>
+              </Tp>
+              <Ref>RF23YKP4JRF3F5</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>
