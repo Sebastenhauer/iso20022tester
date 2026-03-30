@@ -73,11 +73,18 @@ def build_debtor_elements(parent: etree._Element, debtor: DebtorInfo) -> None:
     dbtr_acct_id = el(dbtr_acct, "Id")
     el(dbtr_acct_id, "IBAN", debtor.iban.replace(" ", ""))
 
-    # DbtrAgt
+    # DbtrAgt — FinInstnId darf nicht leer sein (SPS CH21)
     dbtr_agt = el(parent, "DbtrAgt")
     fin_instn_id = el(dbtr_agt, "FinInstnId")
     if debtor.bic:
         el(fin_instn_id, "BICFI", debtor.bic)
+    else:
+        # Kein BIC: IID aus CH/LI-IBAN ableiten (Stellen 5-9)
+        iban_clean = debtor.iban.replace(" ", "")
+        if len(iban_clean) >= 9 and iban_clean[:2] in ("CH", "LI"):
+            iid = iban_clean[4:9]
+            clr_sys = el(fin_instn_id, "ClrSysMmbId")
+            el(clr_sys, "MmbId", iid)
 
 
 def build_creditor_elements(
