@@ -8,6 +8,8 @@ import os
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 
+from lxml import etree
+
 from src.data_factory.generator import DataFactory
 from src.mapping.field_mapper import validate_and_map_overrides
 from src.models.config import AppConfig
@@ -16,6 +18,7 @@ from src.models.testcase import (
     Pain001Document,
     PaymentInstruction,
     PaymentType,
+    Standard,
     TestCase,
     TestCaseResult,
 )
@@ -28,6 +31,7 @@ from src.validation.business_rules import (
     validate_all_business_rules,
 )
 from src.validation.xsd_validator import XsdValidator
+from src.xml_generator.bah_builder import wrap_with_bah
 from src.xml_generator.pain001_builder import (
     build_pain001_document,
     build_pain001_xml,
@@ -156,7 +160,12 @@ class PaymentTestPipeline:
         xml_doc = build_pain001_xml(instruction, standard=testcase.standard)
         self._assert_xsd_valid(xml_doc, testcase)
 
-        xml_path = self._save_xml(xml_doc, testcase.testcase_id, output_dir)
+        # CBPR+: BAH (Business Application Header) hinzufuegen
+        save_doc = xml_doc
+        if testcase.standard == Standard.CBPR_PLUS_2026:
+            save_doc = self._wrap_cbpr_with_bah(xml_doc, instruction)
+
+        xml_path = self._save_xml(save_doc, testcase.testcase_id, output_dir)
         if verbose:
             print(f"  XML gespeichert: {xml_path}")
 
@@ -312,6 +321,21 @@ class PaymentTestPipeline:
                 f"({testcase.payment_type.value}, {testcase.standard.value}). "
                 f"Bug im XML-Generator.\n{detail}"
             )
+
+    @staticmethod
+    def _wrap_cbpr_with_bah(
+        xml_doc: etree._Element, instruction: PaymentInstruction
+    ) -> etree._Element:
+        """Wraps a CBPR+ pain.001 Document with a Business Application Header."""
+        from_bic = instruction.debtor.bic or "NOTPROVIDED"
+        to_bic = instruction.transactions[0].creditor_bic if instruction.transactions else "NOTPROVIDED"
+        return wrap_with_bah(
+            pain001_doc=xml_doc,
+            from_bic=from_bic,
+            to_bic=to_bic or "NOTPROVIDED",
+            msg_id=instruction.msg_id,
+            cre_dt=instruction.cre_dt_tm,
+        )
 
     def _save_xml(self, xml_doc, testcase_id: str, output_dir: str) -> str:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
