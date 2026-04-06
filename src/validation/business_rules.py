@@ -550,6 +550,54 @@ def validate_all_business_rules(
                     "TaxRmt: Mtd (Berechnungsmethode) fehlt" if not has_mtd else None,
                 ))
 
+    # --- CGI-MP Infrastructure Rules (xmldation.com/cgi-mp) ---
+    if testcase.standard == Standard.CGI_MP:
+        # BR-CGI-PMTMTD-01: PmtMtd muss TRF sein (Non-Cheque)
+        pmt_mtd = instruction.pmt_mtd or ""
+        results.append(_check(
+            "BR-CGI-PMTMTD-01", pmt_mtd == "TRF",
+            f"PmtMtd ist '{pmt_mtd}' (muss 'TRF' sein fuer Non-Cheque)"
+            if pmt_mtd != "TRF" else None,
+        ))
+
+        # BR-CGI-PTI-01: Wenn PmtTpInf emittiert wird (eines von
+        # SvcLvl/LclInstrm/CtgyPurp gesetzt), muss SvcLvl vorhanden sein.
+        # Die B-vs-C-Level-Exklusivitaet ist strukturell garantiert, da
+        # unser PaymentInstruction-Modell PmtTpInf ausschliesslich auf
+        # B-Level (PmtInf) haelt.
+        svc = instruction.service_level or ""
+        lcl = instruction.local_instrument or ""
+        cat = instruction.category_purpose or ""
+        pti_emitted = bool(svc or lcl or cat)
+        if pti_emitted:
+            results.append(_check(
+                "BR-CGI-PTI-01", bool(svc),
+                "PmtTpInf wird emittiert (LclInstrm oder CtgyPurp gesetzt), "
+                "aber SvcLvl fehlt (CGI-MP Pflicht)" if not svc else None,
+            ))
+
+        # BR-CGI-SEPA-SVC-01: SEPA unter CGI-MP verlangt SvcLvl/Cd=SEPA
+        # (strenger als EPC). Greift nur wenn payment_type=SEPA.
+        if testcase.payment_type == PaymentType.SEPA:
+            results.append(_check(
+                "BR-CGI-SEPA-SVC-01", svc == "SEPA",
+                f"CGI-MP SEPA: SvcLvl/Cd ist '{svc}' (muss 'SEPA' sein)"
+                if svc != "SEPA" else None,
+            ))
+
+        # BR-CGI-ORG-01: Wenn Debtor-LEI gesetzt, ISO-17442-Format validieren
+        # (20 alphanumerische Zeichen). Die strukturelle Einbettung als
+        # Othr/SchmeNm/Cd=LEI ist durch den Builder (src/xml_generator/
+        # builders.py:build_org_id) garantiert.
+        lei = instruction.debtor.lei or ""
+        if lei:
+            lei_valid = bool(re.match(r"^[A-Z0-9]{20}$", lei))
+            results.append(_check(
+                "BR-CGI-ORG-01", lei_valid,
+                f"LEI '{lei}' ist kein gueltiges ISO-17442-Format (20 alphanum.)"
+                if not lei_valid else None,
+            ))
+
     # --- CGI-MP Structured Address Enforcement (BR-CGI-ADDR-03) ---
     if testcase.standard == Standard.CGI_MP:
         _STRUCTURED_FIELDS = ("StrtNm", "PstCd", "TwnNm", "Ctry")

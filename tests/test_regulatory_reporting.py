@@ -418,6 +418,107 @@ class TestRegulatoryReportingBusinessRules:
 
 
 # =========================================================================
+# CGI-MP Infrastructure Rules (xmldation.com/cgi-mp)
+# =========================================================================
+
+class TestCgiMpInfrastructureRules:
+    """BR-CGI-PMTMTD-01, BR-CGI-ORG-01, BR-CGI-PTI-01, BR-CGI-SEPA-SVC-01."""
+
+    def _cgi_testcase(self, payment_type="CBPR+"):
+        from src.models.testcase import TestCase, ExpectedResult, PaymentType, Standard
+        return TestCase(
+            testcase_id="TC-CGI-TEST",
+            titel="CGI-MP Infra Test",
+            ziel="Test",
+            expected_result=ExpectedResult.OK,
+            payment_type=PaymentType(payment_type),
+            debtor=DEBTOR,
+            standard=Standard.CGI_MP,
+            amount=Decimal("1000.00"),
+            currency="USD",
+        )
+
+    # --- BR-CGI-PMTMTD-01 ---
+
+    def test_pmtmtd_trf_valid(self):
+        tc = self._cgi_testcase()
+        instr = _instr(pmt_mtd="TRF", charge_bearer="SHAR")
+        res = [r for r in validate_all_business_rules(instr, tc) if r.rule_id == "BR-CGI-PMTMTD-01"]
+        assert len(res) == 1 and res[0].passed
+
+    def test_pmtmtd_chk_fails(self):
+        tc = self._cgi_testcase()
+        instr = _instr(pmt_mtd="CHK", charge_bearer="SHAR")
+        res = [r for r in validate_all_business_rules(instr, tc) if r.rule_id == "BR-CGI-PMTMTD-01"]
+        assert len(res) == 1 and not res[0].passed
+
+    # --- BR-CGI-PTI-01 ---
+
+    def test_pti_no_pmttpinf_no_rule(self):
+        """Kein PmtTpInf emittiert → Regel feuert nicht."""
+        tc = self._cgi_testcase()
+        instr = _instr(charge_bearer="SHAR")  # no svc_lvl, lcl_instrm, cat_purp
+        res = [r for r in validate_all_business_rules(instr, tc) if r.rule_id == "BR-CGI-PTI-01"]
+        assert len(res) == 0
+
+    def test_pti_catpurp_without_svclvl_fails(self):
+        """CtgyPurp gesetzt, SvcLvl fehlt → Fehler."""
+        tc = self._cgi_testcase()
+        instr = _instr(charge_bearer="SHAR", category_purpose="SALA")
+        res = [r for r in validate_all_business_rules(instr, tc) if r.rule_id == "BR-CGI-PTI-01"]
+        assert len(res) == 1 and not res[0].passed
+
+    def test_pti_svclvl_present_ok(self):
+        tc = self._cgi_testcase()
+        instr = _instr(charge_bearer="SHAR", service_level="URGP", category_purpose="SUPP")
+        res = [r for r in validate_all_business_rules(instr, tc) if r.rule_id == "BR-CGI-PTI-01"]
+        assert len(res) == 1 and res[0].passed
+
+    # --- BR-CGI-SEPA-SVC-01 ---
+
+    def test_sepa_svclvl_sepa_ok(self):
+        tc = self._cgi_testcase(payment_type="SEPA")
+        instr = _instr(charge_bearer="SLEV", service_level="SEPA")
+        res = [r for r in validate_all_business_rules(instr, tc) if r.rule_id == "BR-CGI-SEPA-SVC-01"]
+        assert len(res) == 1 and res[0].passed
+
+    def test_sepa_wrong_svclvl_fails(self):
+        tc = self._cgi_testcase(payment_type="SEPA")
+        instr = _instr(charge_bearer="SLEV", service_level="URGP")
+        res = [r for r in validate_all_business_rules(instr, tc) if r.rule_id == "BR-CGI-SEPA-SVC-01"]
+        assert len(res) == 1 and not res[0].passed
+
+    def test_sepa_rule_inactive_for_cbpr(self):
+        """BR-CGI-SEPA-SVC-01 greift nur bei payment_type=SEPA."""
+        tc = self._cgi_testcase(payment_type="CBPR+")
+        instr = _instr(charge_bearer="SHAR", service_level="URGP")
+        res = [r for r in validate_all_business_rules(instr, tc) if r.rule_id == "BR-CGI-SEPA-SVC-01"]
+        assert len(res) == 0
+
+    # --- BR-CGI-ORG-01 ---
+
+    def test_org_lei_valid(self):
+        tc = self._cgi_testcase()
+        dbtr = DebtorInfo(name="T", iban="CH9300762011623852957", lei="506700GE1G29325QX363")
+        instr = _instr(debtor=dbtr, charge_bearer="SHAR")
+        res = [r for r in validate_all_business_rules(instr, tc) if r.rule_id == "BR-CGI-ORG-01"]
+        assert len(res) == 1 and res[0].passed
+
+    def test_org_lei_invalid_format(self):
+        tc = self._cgi_testcase()
+        dbtr = DebtorInfo(name="T", iban="CH9300762011623852957", lei="too-short")
+        instr = _instr(debtor=dbtr, charge_bearer="SHAR")
+        res = [r for r in validate_all_business_rules(instr, tc) if r.rule_id == "BR-CGI-ORG-01"]
+        assert len(res) == 1 and not res[0].passed
+
+    def test_org_no_lei_no_rule(self):
+        tc = self._cgi_testcase()
+        instr = _instr(charge_bearer="SHAR")
+        res = [r for r in validate_all_business_rules(instr, tc) if r.rule_id == "BR-CGI-ORG-01"]
+        assert len(res) == 0
+
+
+# =========================================================================
 # Pipeline Integration (E2E via Overrides)
 # =========================================================================
 

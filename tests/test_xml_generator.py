@@ -476,13 +476,19 @@ class TestXsdValidation:
 
 class TestLeiElements:
     def test_creditor_lei_in_xml(self):
-        """Creditor LEI wird als Cdtr/Id/OrgId/LEI abgebildet."""
+        """Creditor LEI wird SPS-konform als Cdtr/Id/OrgId/Othr mit
+        SchmeNm/Cd=LEI abgebildet (CH21: AnyBIC oder Othr)."""
         tx = _tx(creditor_lei="5493001KJTIIGC8Y1R12")
         xml = build_pain001_xml(_instr(transactions=[tx]))
         lei = xml.findtext(
-            f".//p:CdtTrfTxInf/p:Cdtr/p:Id/p:OrgId/p:LEI", namespaces=NS
+            f".//p:CdtTrfTxInf/p:Cdtr/p:Id/p:OrgId/p:Othr/p:Id", namespaces=NS
+        )
+        scheme = xml.findtext(
+            f".//p:CdtTrfTxInf/p:Cdtr/p:Id/p:OrgId/p:Othr/p:SchmeNm/p:Cd",
+            namespaces=NS,
         )
         assert lei == "5493001KJTIIGC8Y1R12"
+        assert scheme == "LEI"
 
     def test_creditor_no_lei_element_when_none(self):
         """Kein Id/OrgId-Element wenn kein LEI gesetzt."""
@@ -492,16 +498,22 @@ class TestLeiElements:
         assert org_id is None
 
     def test_debtor_lei_in_xml(self):
-        """Debtor LEI wird als Dbtr/Id/OrgId/LEI abgebildet."""
+        """Debtor LEI wird SPS-konform als Dbtr/Id/OrgId/Othr mit
+        SchmeNm/Cd=LEI abgebildet (CH21: AnyBIC oder Othr)."""
         debtor = DebtorInfo(
             name="Test AG", iban="CH9300762011623852957",
             bic="CRESCHZZ80A", lei="5493001KJTIIGC8Y1R12",
         )
         xml = build_pain001_xml(_instr(debtor=debtor))
         lei = xml.findtext(
-            f".//p:PmtInf/p:Dbtr/p:Id/p:OrgId/p:LEI", namespaces=NS
+            f".//p:PmtInf/p:Dbtr/p:Id/p:OrgId/p:Othr/p:Id", namespaces=NS
+        )
+        scheme = xml.findtext(
+            f".//p:PmtInf/p:Dbtr/p:Id/p:OrgId/p:Othr/p:SchmeNm/p:Cd",
+            namespaces=NS,
         )
         assert lei == "5493001KJTIIGC8Y1R12"
+        assert scheme == "LEI"
 
     def test_debtor_no_lei_element_when_none(self):
         """Kein Id/OrgId-Element beim Debtor wenn kein LEI gesetzt."""

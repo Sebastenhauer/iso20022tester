@@ -644,6 +644,34 @@ BR_CH21_RGRP_CD_CTRY = _r(
     "GEFEG CH21 / SPS 2025",
 )
 
+BR_CGI_PMTMTD_01 = _r(
+    "BR-CGI-PMTMTD-01", "CGI",
+    "CGI-MP: PmtMtd muss 'TRF' sein (Non-Cheque)",
+    None,
+    "xmldation.com/cgi-mp /pmtmtd",
+)
+
+BR_CGI_ORG_01 = _r(
+    "BR-CGI-ORG-01", "CGI",
+    "CGI-MP: OrgId/Othr/SchmeNm nur per Cd (nicht Prtry); LEI muss ISO 17442 (20 alphanum.) entsprechen",
+    None,
+    "xmldation.com/cgi-mp /schmenm_in_orgid",
+)
+
+BR_CGI_PTI_01 = _r(
+    "BR-CGI-PTI-01", "CGI",
+    "CGI-MP: PmtTpInf Pflicht inkl. SvcLvl (entweder B- oder C-Level, nicht beides)",
+    None,
+    "xmldation.com/cgi-mp /pmttpinf",
+)
+
+BR_CGI_SEPA_SVC_01 = _r(
+    "BR-CGI-SEPA-SVC-01", "CGI",
+    "CGI-MP SEPA: SvcLvl/Cd muss 'SEPA' sein (strenger als EPC)",
+    None,
+    "xmldation.com/cgi-mp /sepa_-_svclvl",
+)
+
 # --- Batch Booking ---
 
 BR_BTCH_001 = _r(
