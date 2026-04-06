@@ -1,6 +1,39 @@
-# ISO 20022 pain.001 Test Generator
+# ISO 20022 Payment Test Generator
 
-Automatisierte Erstellung von ISO 20022-konformen **pain.001.001.09** Zahlungsdateien auf Basis von Excel-Testfalldefinitionen. Tri-Standard-Validierung gegen **Swiss Payment Standards (SPS) 2025**, **CGI-MP** (globaler C2B-Standard) und **SWIFT CBPR+ SR2026** (B2B Relay).
+Automatisierte Erstellung von ISO 20022-konformen Zahlungsnachrichten auf Basis von Excel-Testfalldefinitionen. Unterstuetzt zwei Message-Familien parallel:
+
+- **pain.001.001.09** (Customer Credit Transfer Initiation) — C2B-Messages fuer **Swiss Payment Standards (SPS) 2025**, **CGI-MP** und **SWIFT CBPR+ SR2026**
+- **pacs.008.001.08** (FI-to-FI Customer Credit Transfer) — Interbank-Messages fuer **CBPR+ SR2026**, ermoeglicht **Inflow-Testing** (eingehende Zahlungen simulieren) und **Outflow-Testing** (ausgehende Zahlungen generieren). TARGET2/SEPA/SIC-Flavors sind im Datenmodell vorbereitet fuer V2.
+
+Die CLI erkennt den Message-Type automatisch anhand des Excel-Headers; beide Pipelines laufen mit derselben `src.main`-Entry.
+
+## Quick Start
+
+```bash
+poetry install
+
+# pain.001 run
+poetry run python -m src.main \
+    --input templates/testfaelle_comprehensive.xlsx \
+    --config config.yaml
+
+# pacs.008 run (Message-Type wird automatisch erkannt)
+poetry run python -m src.main \
+    --input templates/testfaelle_pacs008_comprehensive.xlsx \
+    --config config.yaml
+
+# pacs.008 mit externer FINaplo Validation (benoetigt API-Key)
+poetry run python -m src.main \
+    --input templates/testfaelle_pacs008_comprehensive.xlsx \
+    --config config.yaml \
+    --finaplo
+```
+
+Output landet in `output/<timestamp>/pain.001/` bzw. `output/<timestamp>/pacs.008/` (getrennt pro Message-Type) und enthaelt die generierten XML-Files plus Reports (`testlauf_ergebnis.json` + `Testlauf_Zusammenfassung.docx`).
+
+---
+
+## pain.001 Test Generator
 
 ### Drei Standards -- Drei Use Cases
 
@@ -309,6 +342,136 @@ iso20022tester/
 | `docs/roadmap/REQ_tri_standard_sps_cbpr_cgimp.md` | Requirements Tri-Standard (SPS + CGI-MP + CBPR+) |
 | `docs/specs/vergleich-sps-epc-sepa-2025.md` | SPS vs. EPC SEPA Vergleich |
 | `docs/specs/vergleich-sps-cbprplus-2025.md` | SPS vs. CBPR+ Vergleich |
+
+---
+
+## pacs.008 Test Generator (FI-to-FI Interbank)
+
+Der pacs.008-Generator erzeugt **Financial Institution to Financial Institution Credit Transfer** Nachrichten fuer den **CBPR+ SR2026** Flavor. Hauptnutzen ist das Testen von **Inflows** (eingehende pacs.008 gegen die eigenen Systeme) und **Outflows** (ausgehende pacs.008 an Partner-FIs).
+
+### Inflow vs Outflow
+
+Das Excel kennt keinen dedizierten Richtungs-Flag. Die Richtung ergibt sich implizit aus den Agenten-BICs:
+
+- **Outflow testen:** `InstgAgt BIC = eigener FI`, `InstdAgt BIC = Partner-FI`
+- **Inflow testen:** `InstgAgt BIC = Partner-FI`, `InstdAgt BIC = eigener FI`
+
+Das erzeugte XML (BAH + Document in einem BusinessMessage-Envelope) kann dann in die eigene Inbound-Pipeline eingespeist oder an den Partner-FI geschickt werden.
+
+### Excel Template
+
+`templates/testfaelle_pacs008_comprehensive.xlsx` enthaelt 50 Testcases (30 positive + 20 negative), die folgende Szenarien abdecken:
+
+| Gruppe | Cases | Coverage |
+|---|---|---|
+| A — Basis-Positiv | TC-PCS-001..010 | 10 Waehrungen/Korridore (EUR, USD, GBP, JPY, CHF, CNY, SGD, AUD, CAD, HKD) |
+| B — Intermediary Agents | TC-PCS-011..015 | 1-Hop, 2-Hop, 3-Hop Chains; Fedwire ClrSysMmbId statt BIC |
+| C — Ultimate Parties + LEI | TC-PCS-016..020 | UltmtDbtr, UltmtCdtr, Dbtr/Cdtr LEI, Intercompany-Chain |
+| D — Purpose / Charges | TC-PCS-021..025 | PurposeCode, CategoryPurpose (SALA, SUPP, TRAD), ChrgBr (DEBT, CRED, SHAR) |
+| E — Clearing / Settlement | TC-PCS-026..030 | CdtrAgt via Fedwire ABA, SttlmMtd INGA, T+2 Settlement, High-value |
+| F — Negative Tests | TC-PCS-N01..N20 | ViolateRule pro Regel, gestreut ueber mehrere Korridore |
+
+Neue Cases koennen mit dem Generator-Script `scripts/generate_pacs008_testcases.py` deterministisch erzeugt werden.
+
+### Excel-Spalten (Auszug)
+
+```
+TestcaseID, Titel, Ziel, Erwartetes Ergebnis, Flavor,
+BAH From BIC, BAH To BIC,
+InstgAgt BIC, InstdAgt BIC,
+Debtor Name, Debtor {Strasse,Hausnummer,PLZ,Ort,Land}, Debtor IBAN, DbtrAgt BIC, DbtrAgt ClrSysMmbId,
+IntrmyAgt1 BIC, IntrmyAgt1 ClrSysMmbId, IntrmyAgt2 BIC, IntrmyAgt3 BIC,
+Creditor Name, Creditor {Strasse,Hausnummer,PLZ,Ort,Land}, Creditor IBAN, Creditor Kontonummer, Creditor Kontoschema, CdtrAgt BIC, CdtrAgt ClrSysMmbId,
+IntrBkSttlmAmt, Waehrung, IntrBkSttlmDt, SttlmMtd,
+ChrgBr, UETR,
+PurposeCode, CategoryPurpose, Verwendungszweck,
+ViolateRule, Weitere Testdaten, Bemerkungen
+```
+
+`Weitere Testdaten` akzeptiert Dot-Notation-Overrides wie `IntrmyAgt1.FinInstnId.BICFI=CHASUS33XXX` oder `UltmtDbtr.Nm=Muster Holding AG`.
+
+### BusinessMessage-Envelope
+
+Jedes generierte pacs.008-File enthaelt BAH + Document in einem einzigen XML-Wrapper (der Form, die auch SWIFT MyStandards + FINaplo erwarten):
+
+```xml
+<BusinessMessage>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>...</Fr>
+    <To>...</To>
+    <BizMsgIdr>MSG...</BizMsgIdr>
+    <MsgDefIdr>pacs.008.001.08</MsgDefIdr>
+    <BizSvc>swift.cbprplus.02</BizSvc>
+    <CreDt>2026-04-06T14:30:00+00:00</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+    <FIToFICstmrCdtTrf>
+      <GrpHdr>...</GrpHdr>
+      <CdtTrfTxInf>...</CdtTrfTxInf>
+    </FIToFICstmrCdtTrf>
+  </Document>
+</BusinessMessage>
+```
+
+### Business Rules BR-CBPR-PACS-\*
+
+15 Business Rules spezifisch fuer CBPR+ pacs.008 (Kategorie `CBPR-PACS` im Rule-Katalog):
+
+| ID | Beschreibung |
+|---|---|
+| BR-CBPR-PACS-001 | UETR (ISO 17442) ist Pflicht auf PmtId |
+| BR-CBPR-PACS-002 | InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId) |
+| BR-CBPR-PACS-003 | InstdAgt muss identifiziert sein |
+| BR-CBPR-PACS-004 | SttlmMtd muss INDA oder INGA sein (COVE out of scope, CLRG nicht in CBPR+) |
+| BR-CBPR-PACS-005 | Creditor-Adresse muss strukturiert sein |
+| BR-CBPR-PACS-006 | Debtor-Adresse muss strukturiert sein |
+| BR-CBPR-PACS-007 | BAH MsgDefIdr muss 'pacs.008.001.08' sein |
+| BR-CBPR-PACS-008 | BAH BizSvc muss 'swift.cbprplus.02' sein |
+| BR-CBPR-PACS-009 | IntrBkSttlmDt muss ein Banktag sein |
+| BR-CBPR-PACS-010 | ChrgBr muss DEBT/CRED/SHAR sein |
+| BR-CBPR-PACS-011 | Waehrung muss ISO 4217 sein |
+| BR-CBPR-PACS-012 | ChrgsInf: jeder Eintrag braucht Agt |
+| BR-CBPR-PACS-013 | NbOfTxs muss der Anzahl CdtTrfTxInf entsprechen |
+| BR-CBPR-PACS-014 | CtrlSum muss Summe der IntrBkSttlmAmt sein |
+| BR-CBPR-PACS-015 | UETR muss UUIDv4-Format haben |
+
+### FINaplo External Validation
+
+Optionale externe Validation gegen die [FINaplo Financial Messaging API](https://finaplo-apis.paymentcomponents.com) von Payment Components.
+
+**Setup:**
+
+1. Account auf [finaplo.paymentcomponents.com](https://finaplo.paymentcomponents.com) erstellen (7-Tage-Trial oder Paid-Tier)
+2. API-Key in den gitignored Ordner `finaplo/` im Repo-Root legen:
+   - `finaplo/api-key-<datum>.txt` — Bearer-Token (eine Zeile)
+   - `finaplo/base-url-<datum>.txt` — Base-URL (`https://finaplo-apis.paymentcomponents.com` fuer LIVE)
+   - Alternativ: Environment-Variablen `FINAPLO_API_KEY` und `FINAPLO_BASE_URL`
+3. Run mit `--finaplo` Flag:
+   ```bash
+   poetry run python -m src.main \
+       --input templates/testfaelle_pacs008_comprehensive.xlsx \
+       --config config.yaml \
+       --finaplo
+   ```
+
+Die Pipeline ruft pro positivem Testcase den Endpoint `/cbpr/validate` auf und integriert das Ergebnis als dritte Validation-Spalte im Report (XSD + Business Rules + FINaplo). Negative Testcases werden geskippt, um Quota zu sparen.
+
+Bei erschoepfter Quota (HTTP 412 `subscription.expired`) wechselt die Pipeline in den Skip-Mode: alle verbleibenden Testcases laufen mit `finaplo_valid=None` weiter, der Run bricht nicht ab.
+
+**Per-Flavor-Endpoint-Dispatch** (R1 aus dem Planning):
+
+| Flavor | Endpoint |
+|---|---|
+| CBPR+ | `POST /cbpr/validate` ✅ aktiv |
+| TARGET2 | `POST /target2/validate` (vorbereitet, V2) |
+| SEPA | `POST /sepa/{scheme}/validate` (vorbereitet, V2) |
+
+### Weiterfuehrende Dokumentation
+
+- `docs/roadmap/2026-04-06_pacs008_implementation_plan.md` — V1-Implementation-Plan mit 13 Work Packages
+- `docs/roadmap/2026-04-06_pacs008_finaplo_auto_repair_log.md` — WP-12 Auto-Repair-Session-Log
+- `docs/roadmap/2026-04-06_pain001_pacs008_chain_analysis.md` — Deep-Dive fuer pain.001→pacs.008 Chain-Derivation (V2 Idee)
+- `docs/roadmap/2026-04-06_correspondent_lookup_map.md` — Deep-Dive fuer statische Correspondent-Bank-Map (V2 Idee)
 
 ---
 
