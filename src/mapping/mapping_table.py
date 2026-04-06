@@ -54,6 +54,7 @@ FIELD_MAPPINGS = {
     "RgltryRptg.Authrty.Nm": {"xpath": "RgltryRptg/Authrty/Nm", "level": "C"},
     "RgltryRptg.Authrty.Ctry": {"xpath": "RgltryRptg/Authrty/Ctry", "level": "C"},
     "RgltryRptg.Dtls.Tp": {"xpath": "RgltryRptg/Dtls/Tp", "level": "C"},
+    "RgltryRptg.Dtls.Ctry": {"xpath": "RgltryRptg/Dtls/Ctry", "level": "C"},
     "RgltryRptg.Dtls.Cd": {"xpath": "RgltryRptg/Dtls/Cd", "level": "C"},
     "RgltryRptg.Dtls.Inf": {"xpath": "RgltryRptg/Dtls/Inf", "level": "C"},
 

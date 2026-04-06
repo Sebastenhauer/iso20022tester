@@ -66,6 +66,7 @@ class TestBuildRegulatoryReporting:
             "Authrty.Nm": "Bundesbank",
             "Authrty.Ctry": "DE",
             "Dtls.Tp": "BALANCE_OF_PAYMENTS",
+            "Dtls.Ctry": "DE",
             "Dtls.Cd": "100",
             "Dtls.Inf": "Cross-border payment",
         }
@@ -84,11 +85,29 @@ class TestBuildRegulatoryReporting:
         tp = root.findtext(f".//p:RgltryRptg/p:Dtls/p:Tp", namespaces=NS)
         assert tp == "BALANCE_OF_PAYMENTS"
 
+        dtls_ctry = root.findtext(f".//p:RgltryRptg/p:Dtls/p:Ctry", namespaces=NS)
+        assert dtls_ctry == "DE"
+
         cd = root.findtext(f".//p:RgltryRptg/p:Dtls/p:Cd", namespaces=NS)
         assert cd == "100"
 
         inf = root.findtext(f".//p:RgltryRptg/p:Dtls/p:Inf", namespaces=NS)
         assert inf == "Cross-border payment"
+
+    def test_dtls_element_order(self):
+        """XSD-Reihenfolge in Dtls: Tp, Ctry, Cd, Inf."""
+        root = etree.Element(f"{{{PAIN001_NS}}}CdtTrfTxInf")
+        reg_data = {
+            "DbtCdtRptgInd": "CRED",
+            "Dtls.Tp": "BOP",
+            "Dtls.Ctry": "CH",
+            "Dtls.Cd": "100",
+            "Dtls.Inf": "Info",
+        }
+        build_regulatory_reporting(root, reg_data)
+        dtls = root.find(f".//p:RgltryRptg/p:Dtls", NS)
+        tags = [child.tag.split("}")[-1] for child in dtls]
+        assert tags == ["Tp", "Ctry", "Cd", "Inf"]
 
     def test_minimal_regulatory_reporting(self):
         """Minimale RgltryRptg-Struktur: nur DbtCdtRptgInd."""
@@ -120,13 +139,15 @@ class TestBuildRegulatoryReporting:
     def test_dtls_only(self):
         """Nur Dtls ohne DbtCdtRptgInd."""
         root = etree.Element(f"{{{PAIN001_NS}}}CdtTrfTxInf")
-        reg_data = {"Dtls.Tp": "TAX", "Dtls.Cd": "TAX001"}
+        reg_data = {"Dtls.Tp": "TAX", "Dtls.Ctry": "CH", "Dtls.Cd": "TAX001"}
         build_regulatory_reporting(root, reg_data)
 
         tp = root.findtext(f".//p:RgltryRptg/p:Dtls/p:Tp", namespaces=NS)
         assert tp == "TAX"
         cd = root.findtext(f".//p:RgltryRptg/p:Dtls/p:Cd", namespaces=NS)
         assert cd == "TAX001"
+        ctry = root.findtext(f".//p:RgltryRptg/p:Dtls/p:Ctry", namespaces=NS)
+        assert ctry == "CH"
 
 
 # =========================================================================
@@ -139,6 +160,7 @@ class TestPain001WithRegulatoryReporting:
         tx = _tx(regulatory_reporting={
             "DbtCdtRptgInd": "CRED",
             "Dtls.Tp": "BALANCE_OF_PAYMENTS",
+            "Dtls.Ctry": "CH",
             "Dtls.Cd": "100",
         })
         xml = build_pain001_xml(_instr(transactions=[tx]))
@@ -188,6 +210,7 @@ class TestRegulatoryReportingXsd:
             "Authrty.Nm": "Test Authority",
             "Authrty.Ctry": "CH",
             "Dtls.Tp": "BALANCE_OF_PAYMENTS",
+            "Dtls.Ctry": "CH",
             "Dtls.Cd": "100",
             "Dtls.Inf": "Payment info",
         })
@@ -206,7 +229,7 @@ class TestRegulatoryReportingXsd:
         """RgltryRptg zusammen mit Purp und RmtInf ist XSD-valide."""
         tx = _tx(
             purpose_code="SALA",
-            regulatory_reporting={"DbtCdtRptgInd": "BOTH", "Dtls.Cd": "200"},
+            regulatory_reporting={"DbtCdtRptgInd": "BOTH", "Dtls.Ctry": "CH", "Dtls.Cd": "200"},
             remittance_info={"type": "USTRD", "value": "Lohnzahlung"},
         )
         xml = build_pain001_xml(_instr(transactions=[tx]))
@@ -220,6 +243,7 @@ class TestRegulatoryReportingXsd:
             regulatory_reporting={
                 "DbtCdtRptgInd": "CRED",
                 "Dtls.Tp": "CROSS_BORDER",
+                "Dtls.Ctry": "FR",
                 "Dtls.Cd": "500",
             },
         )
@@ -256,14 +280,16 @@ class TestRegulatoryReportingBusinessRules:
             regulatory_reporting={
                 "DbtCdtRptgInd": "CRED",
                 "Dtls.Tp": "BALANCE_OF_PAYMENTS",
+                "Dtls.Ctry": "US",
                 "Dtls.Cd": "100",
             },
         )
         instr = _instr(transactions=[tx], charge_bearer="SHAR")
         results = validate_all_business_rules(instr, tc)
 
-        rgrp_rules = {r.rule_id: r for r in results if r.rule_id.startswith("BR-CGI-")}
-        for rule_id in ("BR-CGI-PURP-02", "BR-CGI-RGRP-01", "BR-CGI-RGRP-02"):
+        rgrp_rules = {r.rule_id: r for r in results
+                      if r.rule_id.startswith("BR-CGI-") or r.rule_id.startswith("BR-CH21-")}
+        for rule_id in ("BR-CGI-PURP-02", "BR-CGI-RGRP-01", "BR-CGI-RGRP-02", "BR-CH21-RGRP-CD-CTRY"):
             if rule_id in rgrp_rules:
                 assert rgrp_rules[rule_id].passed, f"{rule_id} fehlgeschlagen: {rgrp_rules[rule_id].details}"
 
@@ -275,6 +301,7 @@ class TestRegulatoryReportingBusinessRules:
             currency="USD",
             regulatory_reporting={
                 "Dtls.Tp": "BALANCE_OF_PAYMENTS",
+                "Dtls.Ctry": "US",
                 "Dtls.Cd": "100",
             },
         )
@@ -293,6 +320,7 @@ class TestRegulatoryReportingBusinessRules:
             currency="USD",
             regulatory_reporting={
                 "DbtCdtRptgInd": "DEBT",
+                "Dtls.Ctry": "US",
                 "Dtls.Cd": "100",
             },
         )
@@ -312,6 +340,7 @@ class TestRegulatoryReportingBusinessRules:
             regulatory_reporting={
                 "DbtCdtRptgInd": "CRED",
                 "Dtls.Tp": "BALANCE_OF_PAYMENTS",
+                "Dtls.Ctry": "US",
                 "Dtls.Cd": "12345678901",  # 11 Zeichen
             },
         )
@@ -331,6 +360,46 @@ class TestRegulatoryReportingBusinessRules:
 
         rgrp_rules = [r for r in results if r.rule_id.startswith("BR-CGI-RGRP")]
         assert len(rgrp_rules) == 0
+
+    def test_ch21_cd_without_ctry(self):
+        """BR-CH21-RGRP-CD-CTRY: Cd ohne Ctry → Fehler."""
+        tc = self._make_testcase()
+        tx = _tx(
+            creditor_bic="BNPAFRPP",
+            currency="USD",
+            regulatory_reporting={
+                "DbtCdtRptgInd": "CRED",
+                "Dtls.Tp": "BALANCE_OF_PAYMENTS",
+                "Dtls.Cd": "100",
+                # Dtls.Ctry fehlt absichtlich
+            },
+        )
+        instr = _instr(transactions=[tx], charge_bearer="SHAR")
+        results = validate_all_business_rules(instr, tc)
+
+        ch21 = [r for r in results if r.rule_id == "BR-CH21-RGRP-CD-CTRY"]
+        assert len(ch21) == 1
+        assert ch21[0].passed is False
+
+    def test_ch21_cd_with_ctry_valid(self):
+        """BR-CH21-RGRP-CD-CTRY: Cd mit Ctry → OK."""
+        tc = self._make_testcase()
+        tx = _tx(
+            creditor_bic="BNPAFRPP",
+            currency="USD",
+            regulatory_reporting={
+                "DbtCdtRptgInd": "CRED",
+                "Dtls.Tp": "BALANCE_OF_PAYMENTS",
+                "Dtls.Ctry": "US",
+                "Dtls.Cd": "100",
+            },
+        )
+        instr = _instr(transactions=[tx], charge_bearer="SHAR")
+        results = validate_all_business_rules(instr, tc)
+
+        ch21 = [r for r in results if r.rule_id == "BR-CH21-RGRP-CD-CTRY"]
+        assert len(ch21) == 1
+        assert ch21[0].passed is True
 
     def test_both_indicator_valid(self):
         """DbtCdtRptgInd=BOTH ist gueltig."""
@@ -389,6 +458,7 @@ class TestRegulatoryReportingE2E:
             "CdtrAgt.BICFI=BNPAFRPP; "
             "RgltryRptg.DbtCdtRptgInd=CRED; "
             "RgltryRptg.Dtls.Tp=BALANCE_OF_PAYMENTS; "
+            "RgltryRptg.Dtls.Ctry=US; "
             "RgltryRptg.Dtls.Cd=100"
         )
         row = [
@@ -419,6 +489,7 @@ class TestRegulatoryReportingE2E:
         overrides = (
             "CdtrAgt.BICFI=BNPAFRPP; "
             "RgltryRptg.Dtls.Tp=BALANCE_OF_PAYMENTS; "
+            "RgltryRptg.Dtls.Ctry=US; "
             "RgltryRptg.Dtls.Cd=100"
         )
         row = [

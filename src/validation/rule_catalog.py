@@ -637,6 +637,13 @@ BR_CGI_RGRP_02 = _r(
     "CGI-MP Handbook Slide 17",
 )
 
+BR_CH21_RGRP_CD_CTRY = _r(
+    "BR-CH21-RGRP-CD-CTRY", "SPS",
+    "CH21: RgltryRptg/Dtls/Cd darf nur zusammen mit Dtls/Ctry verwendet werden",
+    None,
+    "GEFEG CH21 / SPS 2025",
+)
+
 # --- Batch Booking ---
 
 BR_BTCH_001 = _r(

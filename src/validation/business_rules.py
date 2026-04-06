@@ -503,6 +503,16 @@ def validate_all_business_rules(
                     if len(cd) > 10 else None,
                 ))
 
+            # BR-CH21-RGRP-CD-CTRY: Cd darf nur mit Ctry verwendet werden
+            has_cd = bool(reg.get("Dtls.Cd"))
+            has_ctry = bool(reg.get("Dtls.Ctry"))
+            if has_cd:
+                results.append(_check(
+                    "BR-CH21-RGRP-CD-CTRY", has_ctry,
+                    "RgltryRptg: Dtls/Cd ist vorhanden aber Dtls/Ctry fehlt (CH21)"
+                    if not has_ctry else None,
+                ))
+
     # --- CGI-MP Tax Remittance Validation (BR-CGI-TAX-*) ---
     if testcase.standard == Standard.CGI_MP:
         for tx in instruction.transactions:

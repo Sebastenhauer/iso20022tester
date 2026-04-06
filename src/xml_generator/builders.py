@@ -168,10 +168,18 @@ def build_creditor_agent(parent: etree._Element, bic: str) -> etree._Element:
 
 
 def build_org_id(parent: etree._Element, lei: str) -> etree._Element:
-    """Baut ein Id/OrgId/LEI-Element für Party Identification (ISO 17442)."""
+    """Baut ein Id/OrgId-Element mit LEI als Othr-Identifikation.
+
+    SPS CH21 verlangt innerhalb OrgId <AnyBIC> oder <Othr>; ein
+    direktes <LEI>-Element (XSD-valide in .09) ist nicht SPS-konform.
+    Wir mappen LEI daher auf Othr/Id + SchmeNm/Cd=LEI.
+    """
     party_id = el(parent, "Id")
     org_id = el(party_id, "OrgId")
-    el(org_id, "LEI", lei)
+    othr = el(org_id, "Othr")
+    el(othr, "Id", lei)
+    schme_nm = el(othr, "SchmeNm")
+    el(schme_nm, "Cd", "LEI")
     return party_id
 
 
@@ -257,6 +265,7 @@ def build_regulatory_reporting(
     - Authrty.Nm: Name der Regulierungsbehörde
     - Authrty.Ctry: Land der Regulierungsbehörde
     - Dtls.Tp: Typ (z.B. BALANCE_OF_PAYMENTS)
+    - Dtls.Ctry: Land (CH21: Pflicht wenn Cd vorhanden)
     - Dtls.Cd: Code (max 10 Zeichen)
     - Dtls.Inf: Zusatzinformation
 
@@ -280,14 +289,21 @@ def build_regulatory_reporting(
         if authrty_ctry:
             el(authrty, "Ctry", authrty_ctry)
 
-    # Dtls (optional)
+    # Dtls (optional) — XSD-Reihenfolge: Tp, Dt, Ctry, Cd, Amt, Inf
     dtls_tp = reg_data.get("Dtls.Tp")
+    dtls_ctry = reg_data.get("Dtls.Ctry")
     dtls_cd = reg_data.get("Dtls.Cd")
     dtls_inf = reg_data.get("Dtls.Inf")
-    if dtls_tp or dtls_cd or dtls_inf:
+    # SPS CH21: Dtls/Cd darf nur zusammen mit Dtls/Ctry verwendet werden.
+    # Wenn Cd gesetzt, aber Ctry fehlt, von Authrty.Ctry ableiten.
+    if dtls_cd and not dtls_ctry and authrty_ctry:
+        dtls_ctry = authrty_ctry
+    if dtls_tp or dtls_ctry or dtls_cd or dtls_inf:
         dtls = el(rgltry_rptg, "Dtls")
         if dtls_tp:
             el(dtls, "Tp", dtls_tp)
+        if dtls_ctry:
+            el(dtls, "Ctry", dtls_ctry)
         if dtls_cd:
             el(dtls, "Cd", dtls_cd)
         if dtls_inf:
