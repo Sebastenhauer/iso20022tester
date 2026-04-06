@@ -15,12 +15,14 @@ python-docx = "^1.1"
 pyyaml = "^6.0"
 pydantic = "^2.0"
 workalendar = "^17.0"
+requests = "^2.33.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=8.0,<10.0"
 pytest-cov = ">=6.0,<8.0"
 xmlschema = "^4.3.1"
 hypothesis = "^6.151.11"
+responses = "^0.26.0"
 
 [tool.poetry.scripts]
 pain001-generator = "src.main:main"
