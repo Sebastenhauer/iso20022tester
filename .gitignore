@@ -18,5 +18,5 @@ docs/archive/
 .automaker/
 .hypothesis/
 
-# FINaplo API credentials + Swagger (nicht oeffentlich)
-finaplo/
+# FINaplo API credentials + Swagger (nicht oeffentlich, nur root-level)
+/finaplo/

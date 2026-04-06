@@ -28,6 +28,64 @@ VALID_PAYMENT_TYPES = {pt.value for pt in PaymentType}
 VALID_EXPECTED_RESULTS = {er.value for er in ExpectedResult}
 
 
+# Spalten, die eindeutig auf pacs.008-Format hindeuten.
+_PACS008_MARKER_COLUMNS = {
+    "InstgAgt BIC",
+    "InstdAgt BIC",
+    "IntrBkSttlmDt",
+    "IntrBkSttlmAmt",
+    "SttlmMtd",
+    "BAH From BIC",
+}
+
+# Spalten, die eindeutig pain.001 sind. "Debtor IBAN" ist kein
+# Marker, weil pacs.008 den Debtor-Kontoinhaber ebenfalls ueber
+# IBAN identifiziert. "Zahlungstyp" mit seinen Werten SEPA/
+# Domestic-QR/Domestic-IBAN/CBPR+ ist pain.001-spezifisch.
+_PAIN001_MARKER_COLUMNS = {
+    "Zahlungstyp",
+}
+
+
+def detect_message_type(header: List[str]) -> str:
+    """Erkennt den Message-Type aus dem Excel-Header.
+
+    Returns:
+        "pacs.008" wenn charakteristische pacs.008-Spalten vorhanden sind,
+        "pain.001" wenn pain.001-Spalten dominieren.
+        Bei Ambiguitaet (beide vorhanden) wird ein ValueError geworfen.
+        Wenn gar nichts passt, ebenfalls ValueError.
+    """
+    header_set = {h for h in header if h}
+    pacs_hits = len(_PACS008_MARKER_COLUMNS & header_set)
+    pain_hits = len(_PAIN001_MARKER_COLUMNS & header_set)
+
+    if pacs_hits >= 2 and pain_hits == 0:
+        return "pacs.008"
+    if pain_hits >= 1 and pacs_hits == 0:
+        return "pain.001"
+    if pacs_hits >= 2 and pain_hits >= 1:
+        raise ValueError(
+            "Excel-Header enthaelt sowohl pain.001- als auch pacs.008-Spalten. "
+            "Bitte verwende --message pain.001|pacs.008 um explizit zu waehlen."
+        )
+    raise ValueError(
+        "Message-Type konnte nicht erkannt werden. Erforderlich sind entweder "
+        f"mindestens eine pain.001-Spalte ({', '.join(sorted(_PAIN001_MARKER_COLUMNS))}) "
+        f"oder mindestens zwei pacs.008-Spalten ({', '.join(sorted(_PACS008_MARKER_COLUMNS))})."
+    )
+
+
+def detect_message_type_from_file(file_path: str) -> str:
+    """Liest den Header eines Excel-Files und erkennt den Message-Type."""
+    wb = load_workbook(file_path, read_only=True, data_only=True)
+    ws = wb.active
+    header_row = next(ws.iter_rows(min_row=1, max_row=1, values_only=True))
+    wb.close()
+    header = [str(c).strip() if c else "" for c in header_row]
+    return detect_message_type(header)
+
+
 def _parse_amount(raw, testcase_id: str = "", errors: list = None) -> Optional[Decimal]:
     """Parst einen Betrag, gibt None bei leerem Input zurück.
 

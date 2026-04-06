@@ -7,10 +7,15 @@ from datetime import datetime
 from typing import List
 
 from src.config import load_config
-from src.input_handler.excel_parser import parse_excel
+from src.input_handler.excel_parser import (
+    detect_message_type_from_file,
+    parse_excel,
+)
 from src.models.config import AppConfig
 from src.models.testcase import TestCaseResult
 from src.pipeline import PaymentTestPipeline
+
+VALID_MESSAGE_TYPES = ("pain.001", "pacs.008")
 
 
 def run(
@@ -145,6 +150,43 @@ def run_parse_response(
     return results
 
 
+def run_pacs008(
+    input_file: str,
+    config: AppConfig,
+    seed_override: int = None,
+    verbose: bool = False,
+) -> List[TestCaseResult]:
+    """Pacs.008 Pipeline Entry.
+
+    WP-01 Scaffold Stub: erkennt nur den Message-Type und meldet
+    "noch nicht implementiert". Ab WP-02 wird hier sukzessive die
+    echte Pipeline eingesetzt.
+    """
+    print(f"[pacs.008] Lese Testfaelle aus: {input_file}")
+    print(
+        "[pacs.008] Pipeline noch nicht implementiert (siehe "
+        "docs/roadmap/2026-04-06_pacs008_implementation_plan.md, WP-02..WP-13)."
+    )
+    sys.exit(2)
+
+
+def _resolve_message_type(input_file: str, flag: str = None) -> str:
+    """Bestimmt den Message-Type aus Flag (falls gesetzt) oder Excel-Header."""
+    if flag:
+        if flag not in VALID_MESSAGE_TYPES:
+            print(
+                f"Ungueltiger --message Wert '{flag}'. "
+                f"Erlaubt: {', '.join(VALID_MESSAGE_TYPES)}"
+            )
+            sys.exit(1)
+        return flag
+    try:
+        return detect_message_type_from_file(input_file)
+    except ValueError as e:
+        print(f"Auto-Detection fehlgeschlagen: {e}")
+        sys.exit(1)
+
+
 def run_roundtrip_mode(xml_paths: List[str], config: AppConfig, verbose: bool = False):
     """Round-Trip-Modus: Parst XMLs zurück und prueft Konsistenz."""
     from src.validation.roundtrip import run_roundtrip
@@ -180,6 +222,13 @@ def main():
     gen_parser.add_argument("--config", required=True, help="Pfad zur config.yaml")
     gen_parser.add_argument("--seed", type=int, default=None, help="Seed")
     gen_parser.add_argument("--verbose", action="store_true", help="Verbose")
+    gen_parser.add_argument(
+        "--message",
+        choices=VALID_MESSAGE_TYPES,
+        default=None,
+        help="Message-Type explizit setzen (pain.001 oder pacs.008). "
+             "Wenn nicht gesetzt, wird automatisch aus dem Excel-Header erkannt.",
+    )
 
     rt_parser = subparsers.add_parser("roundtrip", help="Round-Trip-Validierung")
     rt_parser.add_argument("xml_files", nargs="+", help="XML-Dateien oder Verzeichnis")
@@ -200,6 +249,12 @@ def main():
     parser.add_argument("--config", help="Pfad zur config.yaml")
     parser.add_argument("--seed", type=int, default=None, help="Seed")
     parser.add_argument("--verbose", action="store_true", help="Verbose")
+    parser.add_argument(
+        "--message",
+        choices=VALID_MESSAGE_TYPES,
+        default=None,
+        help="Message-Type explizit (pain.001|pacs.008); sonst Auto-Detection",
+    )
 
     args = parser.parse_args()
 
@@ -239,7 +294,14 @@ def main():
         config = load_config(config_file)
         seed = getattr(args, "seed", None)
         verbose = getattr(args, "verbose", False)
-        run(input_file, config, seed_override=seed, verbose=verbose)
+        message_flag = getattr(args, "message", None)
+        message_type = _resolve_message_type(input_file, message_flag)
+        if verbose:
+            print(f"[dispatcher] Message-Type: {message_type}")
+        if message_type == "pacs.008":
+            run_pacs008(input_file, config, seed_override=seed, verbose=verbose)
+        else:
+            run(input_file, config, seed_override=seed, verbose=verbose)
 
     else:
         parser.print_help()
