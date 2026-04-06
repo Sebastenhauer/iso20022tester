@@ -107,7 +107,18 @@ class DataFactory:
         if self.seed is not None:
             Faker.seed(self.seed + hash(country) % 10000)
 
-        postcode = fake.postcode()
+        # Fallback-Faker (Latin-1 sicher) fuer Laender deren Locale
+        # Strings produziert, die nach SPS-Charset-Sanitize leer werden.
+        fake_fallback = Faker("en_US")
+
+        def _safe(raw: str, gen_fallback, max_len: int = 70) -> str:
+            """Sanitized + truncated; falls leer, Fallback aus en_US Faker."""
+            val = sanitize_sps_charset(raw or "")
+            if not val:
+                val = sanitize_sps_charset(gen_fallback()) or "N/A"
+            return val[:max_len]
+
+        postcode = fake.postcode() or ""
 
         # PLZ gegen Länderformat validieren; bei Mismatch generische PLZ erzeugen
         from src.validation.address_validator import COUNTRY_FORMATS, enrich_address
@@ -118,12 +129,14 @@ class DataFactory:
                 postcode = fmt.postal_code_example
 
         address = {
-            "StrtNm": sanitize_sps_charset(fake.street_name()),
+            "StrtNm": _safe(fake.street_name(), fake_fallback.street_name, 70),
             "BldgNb": str(self.rng.randint(1, 200)),
-            "PstCd": postcode,
-            "TwnNm": sanitize_sps_charset(fake.city()),
+            "TwnNm": _safe(fake.city(), fake_fallback.city, 35),
             "Ctry": country,
         }
+        # Nur setzen wenn nicht-leer: Laender wie HK/AE haben keine PLZ
+        if postcode:
+            address["PstCd"] = postcode
 
         address, _ = enrich_address(address)
         return address
@@ -139,9 +152,13 @@ class DataFactory:
             return generate_iban(self.rng, country)
         elif payment_type == PaymentType.CBPR_PLUS:
             # CBPR+: Zufälliges Land mit IBAN-Support außerhalb SEPA
+            # Länder ohne Postleitzahlensystem (HK, AE) ausschliessen,
+            # da CBPR+/CGI-MP strukturierte Adresse inkl. PstCd verlangen.
             cbpr_iban_countries = [
                 c for c, l in IBAN_LENGTHS.items()
-                if l > 0 and c not in SEPA_COUNTRIES and c not in ("CH", "LI")
+                if l > 0
+                and c not in SEPA_COUNTRIES
+                and c not in ("CH", "LI", "HK", "AE")
             ]
             if cbpr_iban_countries:
                 country = self.rng.choice(cbpr_iban_countries)

@@ -224,6 +224,11 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
                 name=debtor_name,
                 iban=debtor_iban,
                 bic=debtor_bic,
+                street=_str_or_none(cell_val(row, "Debtor Strasse")),
+                building=_str_or_none(cell_val(row, "Debtor Hausnummer")),
+                postal_code=_str_or_none(cell_val(row, "Debtor PLZ")),
+                town=_str_or_none(cell_val(row, "Debtor Ort")),
+                country=_str_or_none(cell_val(row, "Debtor Land")) or "CH",
             )
 
             violate_rule = _str_or_none(cell_val(row, "ViolateRule"))
