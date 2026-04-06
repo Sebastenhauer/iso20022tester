@@ -17,3 +17,6 @@ docs/archive/
 # AutoMaker metadata
 .automaker/
 .hypothesis/
+
+# FINaplo API credentials + Swagger (nicht oeffentlich)
+finaplo/
