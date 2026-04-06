@@ -421,7 +421,7 @@ class TestPipelineIntegration:
         # 2. Pipeline: pain.001 generieren
         config = AppConfig(
             output_path=str(tmp_path),
-            xsd_path="schemas/pain.001.001.09.ch.03.xsd",
+            xsd_path="schemas/pain.001/pain.001.001.09.ch.03.xsd",
             seed=42,
             report_format="txt",
         )

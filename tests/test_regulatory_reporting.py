@@ -201,7 +201,7 @@ class TestPain001WithRegulatoryReporting:
 class TestRegulatoryReportingXsd:
     @pytest.fixture
     def xsd_validator(self):
-        return XsdValidator("schemas/pain.001.001.09.ch.03.xsd")
+        return XsdValidator("schemas/pain.001/pain.001.001.09.ch.03.xsd")
 
     def test_full_rgltry_rptg_xsd_valid(self, xsd_validator):
         """Vollstaendige RgltryRptg-Struktur ist XSD-valide."""
@@ -546,7 +546,7 @@ class TestRegulatoryReportingE2E:
         from src.models.config import AppConfig
         return AppConfig(
             output_path=tmpdir,
-            xsd_path="schemas/pain.001.001.09.ch.03.xsd",
+            xsd_path="schemas/pain.001/pain.001.001.09.ch.03.xsd",
             seed=42,
             report_format="txt",
         )

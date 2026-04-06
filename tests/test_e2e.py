@@ -38,7 +38,7 @@ def _create_excel(rows, tmpdir):
 def _config(tmpdir):
     return AppConfig(
         output_path=tmpdir,
-        xsd_path="schemas/pain.001.001.09.ch.03.xsd",
+        xsd_path="schemas/pain.001/pain.001.001.09.ch.03.xsd",
         seed=42,
         report_format="txt",
     )

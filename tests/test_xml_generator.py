@@ -372,7 +372,7 @@ class TestSerialization:
 class TestXsdValidation:
     @pytest.fixture
     def xsd_validator(self):
-        return XsdValidator("schemas/pain.001.001.09.ch.03.xsd")
+        return XsdValidator("schemas/pain.001/pain.001.001.09.ch.03.xsd")
 
     def test_simple_valid_xml(self, xsd_validator):
         xml = build_pain001_xml(_instr())
@@ -659,7 +659,7 @@ class TestTaxRemittance:
 class TestTaxRemittanceXsdValidation:
     @pytest.fixture
     def xsd_validator(self):
-        return XsdValidator("schemas/pain.001.001.09.ch.03.xsd")
+        return XsdValidator("schemas/pain.001/pain.001.001.09.ch.03.xsd")
 
     def test_tax_remittance_xsd_valid(self, xsd_validator):
         """TaxRmt-Block muss XSD-valide sein."""
@@ -817,7 +817,7 @@ class TestUltimateCreditor:
 class TestUltimatePartiesXsdValidation:
     @pytest.fixture
     def xsd_validator(self):
-        return XsdValidator("schemas/pain.001.001.09.ch.03.xsd")
+        return XsdValidator("schemas/pain.001/pain.001.001.09.ch.03.xsd")
 
     def test_b_level_ultmt_dbtr_xsd_valid(self, xsd_validator):
         """UltmtDbtr auf B-Level muss XSD-valide sein."""
@@ -919,7 +919,7 @@ class TestBatchBooking:
 class TestBatchBookingXsdValidation:
     @pytest.fixture
     def xsd_validator(self):
-        return XsdValidator("schemas/pain.001.001.09.ch.03.xsd")
+        return XsdValidator("schemas/pain.001/pain.001.001.09.ch.03.xsd")
 
     def test_batch_booking_true_xsd_valid(self, xsd_validator):
         """BtchBookg=true muss XSD-valide sein."""

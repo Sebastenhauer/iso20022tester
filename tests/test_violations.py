@@ -68,7 +68,7 @@ def _make_instr(tc, factory=None):
 
 @pytest.fixture
 def xsd_validator():
-    return XsdValidator("schemas/pain.001.001.09.ch.03.xsd")
+    return XsdValidator("schemas/pain.001/pain.001.001.09.ch.03.xsd")
 
 
 # =========================================================================
