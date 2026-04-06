@@ -287,10 +287,108 @@ class TestCbprPlusHandler:
         handler = CbprPlusHandler()
         assert handler.get_charge_bearer() == "SHAR"
 
+    def test_validate_non_iban_account_ok(self):
+        """Non-IBAN Account mit BIC sollte CBPR+ Validierung bestehen."""
+        handler = CbprPlusHandler()
+        tc = _tc(PaymentType.CBPR_PLUS, currency="USD")
+        tx = Transaction(
+            end_to_end_id="E2E-1", amount=Decimal("100.00"), currency="USD",
+            creditor_name="US Corp", creditor_iban=None,
+            creditor_account_id="123456789012",
+            creditor_bic="CHASUS33XXX",
+            uetr="550e8400-e29b-41d4-a716-446655440000",
+        )
+        results = handler.validate(tc, [tx])
+        failed = [r for r in results if not r.passed]
+        assert len(failed) == 0
+
+    def test_validate_no_account_at_all(self):
+        """Weder IBAN noch Kontonummer sollte BR-CBPR-007 verletzen."""
+        handler = CbprPlusHandler()
+        tc = _tc(PaymentType.CBPR_PLUS, currency="USD")
+        tx = Transaction(
+            end_to_end_id="E2E-1", amount=Decimal("100.00"), currency="USD",
+            creditor_name="Test", creditor_iban=None,
+            creditor_account_id=None,
+            creditor_bic="CHASUS33XXX",
+            uetr="550e8400-e29b-41d4-a716-446655440000",
+        )
+        results = handler.validate(tc, [tx])
+        failed_ids = [r.rule_id for r in results if not r.passed]
+        assert "BR-CBPR-007" in failed_ids
+
+    def test_override_non_iban_account(self):
+        """Non-IBAN Account via Override CdtrAcct.Othr.Id."""
+        handler = CbprPlusHandler()
+        tc = _tc(PaymentType.CBPR_PLUS, currency="USD",
+                 overrides={"CdtrAcct.Othr.Id": "987654321", "CdtrAgt.BICFI": "CHASUS33"})
+        txs = handler.generate_transactions(tc, DataFactory(seed=1))
+        assert len(txs) == 1
+        assert txs[0].creditor_account_id == "987654321"
+        assert txs[0].creditor_iban is None
+
+    def test_address_country_from_non_iban(self):
+        """get_address_country mit 2-Buchstaben Country-Code (Non-IBAN)."""
+        handler = CbprPlusHandler()
+        assert handler.get_address_country("US") == "US"
+        assert handler.get_address_country("AU") == "AU"
+        # Standard IBAN-basiertes Land
+        assert handler.get_address_country("GB29NWBK60161331926819") == "GB"
+
 
 # =========================================================================
 # Registry
 # =========================================================================
+
+# =========================================================================
+# Purpose Code (alle Zahlungstypen)
+# =========================================================================
+
+class TestPurposeCode:
+    def test_purpose_code_from_transaction_input(self):
+        """Purpose Code aus TransactionInput wird übernommen."""
+        handler = DomesticIbanHandler()
+        tx_input = TransactionInput(
+            amount=Decimal("100.00"),
+            currency="CHF",
+            creditor_name="Test",
+            purpose_code="SALA",
+        )
+        tc = _tc(PaymentType.DOMESTIC_IBAN, currency="CHF", tx_inputs=[tx_input])
+        txs = handler.generate_transactions(tc, DataFactory(seed=1))
+        assert txs[0].purpose_code == "SALA"
+
+    def test_purpose_code_from_override(self):
+        """Purpose Code aus Override wird übernommen."""
+        handler = DomesticIbanHandler()
+        tc = _tc(PaymentType.DOMESTIC_IBAN, currency="CHF",
+                 overrides={"Purp.Cd": "PENS"})
+        txs = handler.generate_transactions(tc, DataFactory(seed=1))
+        assert txs[0].purpose_code == "PENS"
+
+    def test_purpose_code_none_by_default(self):
+        """Ohne Angabe ist purpose_code None."""
+        handler = DomesticIbanHandler()
+        tc = _tc(PaymentType.DOMESTIC_IBAN, currency="CHF")
+        txs = handler.generate_transactions(tc, DataFactory(seed=1))
+        assert txs[0].purpose_code is None
+
+    def test_purpose_code_sepa(self):
+        """Purpose Code funktioniert auch bei SEPA."""
+        handler = SepaHandler()
+        tc = _tc(PaymentType.SEPA, currency="EUR",
+                 overrides={"Purp.Cd": "SALA"})
+        txs = handler.generate_transactions(tc, DataFactory(seed=1))
+        assert txs[0].purpose_code == "SALA"
+
+    def test_purpose_code_cbpr_plus(self):
+        """Purpose Code funktioniert auch bei CBPR+."""
+        handler = CbprPlusHandler()
+        tc = _tc(PaymentType.CBPR_PLUS, currency="USD",
+                 overrides={"CdtrAgt.BICFI": "BNPAFRPP", "Purp.Cd": "TRAD"})
+        txs = handler.generate_transactions(tc, DataFactory(seed=1))
+        assert txs[0].purpose_code == "TRAD"
+
 
 class TestHandlerRegistry:
     def test_get_handler_all_types(self):

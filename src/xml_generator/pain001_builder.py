@@ -21,7 +21,12 @@ from src.xml_generator.builders import (
     build_debtor_elements,
     build_initiating_party,
     build_payment_type_info,
+    build_purpose,
+    build_regulatory_reporting,
     build_remittance_info,
+    build_tax_remittance,
+    build_ultimate_creditor,
+    build_ultimate_debtor,
     el,
 )
 from src.xml_generator.namespace import NSMAP, PAIN001_NS
@@ -41,12 +46,37 @@ def _build_transaction(parent: etree._Element, tx: Transaction) -> None:
     # Amt
     build_amount(cdt_trf, tx.amount, tx.currency)
 
+    # UltmtDbtr (C-Level, optional — XSD: nach Amt, vor CdtrAgt)
+    if tx.ultimate_debtor:
+        build_ultimate_debtor(cdt_trf, tx.ultimate_debtor)
+
     # Creditor: CdtrAgt + Cdtr + CdtrAcct
     build_creditor_elements(cdt_trf, tx)
 
-    # RmtInf
-    if tx.remittance_info:
-        build_remittance_info(cdt_trf, tx.remittance_info)
+    # UltmtCdtr (C-Level, optional — XSD: nach CdtrAcct, vor Purp)
+    if tx.ultimate_creditor:
+        build_ultimate_creditor(cdt_trf, tx.ultimate_creditor)
+
+    # Purp (C-Level, optional)
+    build_purpose(cdt_trf, tx.purpose_code)
+
+    # RgltryRptg (C-Level, optional)
+    if tx.regulatory_reporting:
+        build_regulatory_reporting(cdt_trf, tx.regulatory_reporting)
+
+    # RmtInf (mit optionalem TaxRmt innerhalb Strd)
+    if tx.remittance_info or tx.tax_remittance:
+        rmt_inf = None
+        if tx.remittance_info:
+            rmt_inf = build_remittance_info(cdt_trf, tx.remittance_info)
+        if tx.tax_remittance:
+            if rmt_inf is None:
+                rmt_inf = el(cdt_trf, "RmtInf")
+            # TaxRmt lebt in Strd — finde oder erstelle Strd-Element
+            strd = rmt_inf.find(f"{{{PAIN001_NS}}}Strd")
+            if strd is None:
+                strd = el(rmt_inf, "Strd")
+            build_tax_remittance(strd, tx.tax_remittance)
 
 
 def _build_pmt_inf(
@@ -60,6 +90,10 @@ def _build_pmt_inf(
     pmt_inf_id = strategy.prepare_pmt_inf_id(instr.pmt_inf_id, instr.msg_id)
     el(pmt_inf, "PmtInfId", pmt_inf_id)
     el(pmt_inf, "PmtMtd", instr.pmt_mtd)
+
+    # BtchBookg (optional, XSD-Position: nach PmtMtd, vor NbOfTxs)
+    if instr.batch_booking is not None:
+        el(pmt_inf, "BtchBookg", str(instr.batch_booking).lower())
 
     nb = strategy.pmt_inf_nb_of_txs(instr.transactions)
     if nb is not None:
@@ -83,6 +117,10 @@ def _build_pmt_inf(
 
     # Debtor
     build_debtor_elements(pmt_inf, instr.debtor)
+
+    # UltmtDbtr (B-Level, optional — XSD: nach DbtrAgt, vor ChrgBr)
+    if instr.ultimate_debtor:
+        build_ultimate_debtor(pmt_inf, instr.ultimate_debtor)
 
     # ChrgBr (B-Level)
     if instr.charge_bearer:

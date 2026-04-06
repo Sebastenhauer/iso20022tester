@@ -67,6 +67,8 @@ def build_debtor_elements(parent: etree._Element, debtor: DebtorInfo) -> None:
             address["TwnNm"] = debtor.town
         address["Ctry"] = debtor.country
         build_postal_address(dbtr, address)
+    if debtor.lei:
+        build_org_id(dbtr, debtor.lei)
 
     # DbtrAcct
     dbtr_acct = el(parent, "DbtrAcct")
@@ -93,6 +95,7 @@ def build_creditor_elements(
     """Baut die Creditor-Elemente: CdtrAgt (optional), Cdtr, CdtrAcct.
 
     Wird im C-Level (CdtTrfTxInf) verwendet.
+    Unterstützt IBAN-Konten und Non-IBAN-Konten (Othr) für CBPR+.
     """
     # CdtrAgt (optional, z.B. bei CBPR+)
     if tx.creditor_bic:
@@ -103,11 +106,57 @@ def build_creditor_elements(
     el(cdtr, "Nm", tx.creditor_name)
     if tx.creditor_address:
         build_postal_address(cdtr, tx.creditor_address)
+    if tx.creditor_lei:
+        build_org_id(cdtr, tx.creditor_lei)
 
-    # CdtrAcct
+    # CdtrAcct — IBAN oder Othr (Non-IBAN)
     cdtr_acct = el(parent, "CdtrAcct")
     cdtr_acct_id = el(cdtr_acct, "Id")
-    el(cdtr_acct_id, "IBAN", tx.creditor_iban.replace(" ", ""))
+
+    if tx.creditor_account_id:
+        # Non-IBAN: Othr/Id (SPS CH XSD erlaubt nur Id, kein SchmeNm)
+        othr = el(cdtr_acct_id, "Othr")
+        el(othr, "Id", tx.creditor_account_id)
+    elif tx.creditor_iban:
+        el(cdtr_acct_id, "IBAN", tx.creditor_iban.replace(" ", ""))
+
+
+def build_ultimate_debtor(
+    parent: etree._Element, data: Dict[str, str]
+) -> Optional[etree._Element]:
+    """Baut ein UltmtDbtr-Element (B-Level oder C-Level).
+
+    Unterstützte Keys: Nm, StrtNm, TwnNm, Ctry.
+    Gibt None zurück wenn keine Daten vorhanden.
+    """
+    if not data or not data.get("Nm"):
+        return None
+
+    ultmt_dbtr = el(parent, "UltmtDbtr")
+    el(ultmt_dbtr, "Nm", data["Nm"])
+    addr_keys = {k: v for k, v in data.items() if k != "Nm"}
+    if addr_keys:
+        build_postal_address(ultmt_dbtr, addr_keys)
+    return ultmt_dbtr
+
+
+def build_ultimate_creditor(
+    parent: etree._Element, data: Dict[str, str]
+) -> Optional[etree._Element]:
+    """Baut ein UltmtCdtr-Element (C-Level).
+
+    Unterstützte Keys: Nm, StrtNm, TwnNm, Ctry.
+    Gibt None zurück wenn keine Daten vorhanden.
+    """
+    if not data or not data.get("Nm"):
+        return None
+
+    ultmt_cdtr = el(parent, "UltmtCdtr")
+    el(ultmt_cdtr, "Nm", data["Nm"])
+    addr_keys = {k: v for k, v in data.items() if k != "Nm"}
+    if addr_keys:
+        build_postal_address(ultmt_cdtr, addr_keys)
+    return ultmt_cdtr
 
 
 def build_creditor_agent(parent: etree._Element, bic: str) -> etree._Element:
@@ -116,6 +165,14 @@ def build_creditor_agent(parent: etree._Element, bic: str) -> etree._Element:
     fin_instn = el(cdtr_agt, "FinInstnId")
     el(fin_instn, "BICFI", bic)
     return cdtr_agt
+
+
+def build_org_id(parent: etree._Element, lei: str) -> etree._Element:
+    """Baut ein Id/OrgId/LEI-Element für Party Identification (ISO 17442)."""
+    party_id = el(parent, "Id")
+    org_id = el(party_id, "OrgId")
+    el(org_id, "LEI", lei)
+    return party_id
 
 
 def build_initiating_party(parent: etree._Element, name: str) -> etree._Element:
@@ -183,6 +240,163 @@ def _build_structured_ref(
     cd_or_prtry = el(tp, "CdOrPrtry")
     el(cd_or_prtry, code_tag, code_value)
     el(cdtr_ref_inf, "Ref", ref_value)
+
+
+# ---------------------------------------------------------------------------
+# Regulatory Reporting Builder
+# ---------------------------------------------------------------------------
+
+def build_regulatory_reporting(
+    parent: etree._Element,
+    reg_data: Dict[str, str],
+) -> Optional[etree._Element]:
+    """Baut ein RgltryRptg-Element (C-Level).
+
+    Unterstützte Keys:
+    - DbtCdtRptgInd: DEBT oder CRED
+    - Authrty.Nm: Name der Regulierungsbehörde
+    - Authrty.Ctry: Land der Regulierungsbehörde
+    - Dtls.Tp: Typ (z.B. BALANCE_OF_PAYMENTS)
+    - Dtls.Cd: Code (max 10 Zeichen)
+    - Dtls.Inf: Zusatzinformation
+
+    Gibt None zurück wenn keine Daten vorhanden sind.
+    """
+    if not reg_data:
+        return None
+
+    rgltry_rptg = el(parent, "RgltryRptg")
+
+    if "DbtCdtRptgInd" in reg_data:
+        el(rgltry_rptg, "DbtCdtRptgInd", reg_data["DbtCdtRptgInd"])
+
+    # Authrty (optional)
+    authrty_nm = reg_data.get("Authrty.Nm")
+    authrty_ctry = reg_data.get("Authrty.Ctry")
+    if authrty_nm or authrty_ctry:
+        authrty = el(rgltry_rptg, "Authrty")
+        if authrty_nm:
+            el(authrty, "Nm", authrty_nm)
+        if authrty_ctry:
+            el(authrty, "Ctry", authrty_ctry)
+
+    # Dtls (optional)
+    dtls_tp = reg_data.get("Dtls.Tp")
+    dtls_cd = reg_data.get("Dtls.Cd")
+    dtls_inf = reg_data.get("Dtls.Inf")
+    if dtls_tp or dtls_cd or dtls_inf:
+        dtls = el(rgltry_rptg, "Dtls")
+        if dtls_tp:
+            el(dtls, "Tp", dtls_tp)
+        if dtls_cd:
+            el(dtls, "Cd", dtls_cd)
+        if dtls_inf:
+            el(dtls, "Inf", dtls_inf)
+
+    return rgltry_rptg
+
+
+# ---------------------------------------------------------------------------
+# Tax Remittance Builder
+# ---------------------------------------------------------------------------
+
+def build_tax_remittance(
+    parent: etree._Element,
+    tax_data: Dict[str, str],
+) -> Optional[etree._Element]:
+    """Baut ein TaxRmt-Element innerhalb von RmtInf/Strd (C-Level).
+
+    Unterstützte Keys:
+    - Cdtr.TaxId: Steuer-ID des Gläubigers (Steuerbehörde)
+    - Cdtr.RegnId: Registrierungs-ID des Gläubigers
+    - Cdtr.TaxTp: Steuertyp des Gläubigers
+    - Dbtr.TaxId: Steuer-ID des Schuldners (Steuerzahler)
+    - Dbtr.RegnId: Registrierungs-ID des Schuldners
+    - Dbtr.TaxTp: Steuertyp des Schuldners
+    - AdmstnZone: Verwaltungszone
+    - RefNb: Steuer-Referenznummer
+    - Mtd: Berechnungsmethode
+    - TtlTaxAmt: Gesamtsteuerbetrag
+    - TtlTaxAmt.Ccy: Währung des Steuerbetrags
+    - Dt: Steuerdatum (ISODate)
+
+    Gibt None zurück wenn keine Daten vorhanden sind.
+    """
+    if not tax_data:
+        return None
+
+    tax_rmt = el(parent, "TaxRmt")
+
+    # Cdtr (TaxParty1: TaxId, RegnId, TaxTp)
+    cdtr_tax_id = tax_data.get("Cdtr.TaxId")
+    cdtr_regn_id = tax_data.get("Cdtr.RegnId")
+    cdtr_tax_tp = tax_data.get("Cdtr.TaxTp")
+    if cdtr_tax_id or cdtr_regn_id or cdtr_tax_tp:
+        cdtr = el(tax_rmt, "Cdtr")
+        if cdtr_tax_id:
+            el(cdtr, "TaxId", cdtr_tax_id)
+        if cdtr_regn_id:
+            el(cdtr, "RegnId", cdtr_regn_id)
+        if cdtr_tax_tp:
+            el(cdtr, "TaxTp", cdtr_tax_tp)
+
+    # Dbtr (TaxParty2: TaxId, RegnId, TaxTp)
+    dbtr_tax_id = tax_data.get("Dbtr.TaxId")
+    dbtr_regn_id = tax_data.get("Dbtr.RegnId")
+    dbtr_tax_tp = tax_data.get("Dbtr.TaxTp")
+    if dbtr_tax_id or dbtr_regn_id or dbtr_tax_tp:
+        dbtr = el(tax_rmt, "Dbtr")
+        if dbtr_tax_id:
+            el(dbtr, "TaxId", dbtr_tax_id)
+        if dbtr_regn_id:
+            el(dbtr, "RegnId", dbtr_regn_id)
+        if dbtr_tax_tp:
+            el(dbtr, "TaxTp", dbtr_tax_tp)
+
+    # AdmstnZone
+    if "AdmstnZone" in tax_data:
+        el(tax_rmt, "AdmstnZone", tax_data["AdmstnZone"])
+
+    # RefNb
+    if "RefNb" in tax_data:
+        el(tax_rmt, "RefNb", tax_data["RefNb"])
+
+    # Mtd
+    if "Mtd" in tax_data:
+        el(tax_rmt, "Mtd", tax_data["Mtd"])
+
+    # TtlTaxAmt (ActiveOrHistoricCurrencyAndAmount)
+    ttl_tax_amt = tax_data.get("TtlTaxAmt")
+    if ttl_tax_amt:
+        ttl_elem = el(tax_rmt, "TtlTaxAmt", ttl_tax_amt)
+        ccy = tax_data.get("TtlTaxAmt.Ccy", "CHF")
+        ttl_elem.set("Ccy", ccy)
+
+    # Dt
+    if "Dt" in tax_data:
+        el(tax_rmt, "Dt", tax_data["Dt"])
+
+    return tax_rmt
+
+
+# ---------------------------------------------------------------------------
+# Purpose Builder
+# ---------------------------------------------------------------------------
+
+def build_purpose(
+    parent: etree._Element,
+    purpose_code: Optional[str] = None,
+) -> Optional[etree._Element]:
+    """Baut ein Purp/Cd-Element (C-Level).
+
+    Gibt None zurück wenn kein Purpose Code gesetzt ist.
+    """
+    if not purpose_code:
+        return None
+
+    purp = el(parent, "Purp")
+    el(purp, "Cd", purpose_code)
+    return purp
 
 
 # ---------------------------------------------------------------------------

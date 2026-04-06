@@ -34,6 +34,7 @@ class DebtorInfo(BaseModel):
     postal_code: Optional[str] = None
     town: Optional[str] = None
     country: str = "CH"
+    lei: Optional[str] = None
 
 
 class TransactionInput(BaseModel):
@@ -44,8 +45,11 @@ class TransactionInput(BaseModel):
     creditor_name: Optional[str] = None
     creditor_iban: Optional[str] = None
     creditor_bic: Optional[str] = None
+    creditor_account_id: Optional[str] = None
+    creditor_account_scheme: Optional[str] = None
     creditor_address: Optional[str] = None
     remittance_info: Optional[str] = None
+    purpose_code: Optional[str] = None
     overrides: Dict[str, str] = {}
 
 
@@ -64,6 +68,8 @@ class TestCase(BaseModel):
     amount: Optional[Decimal] = Field(None, decimal_places=2)
     currency: Optional[str] = None
     debtor: DebtorInfo
+    instant: bool = False
+    batch_booking: Optional[bool] = None
     overrides: Dict[str, str] = {}
     violate_rule: Optional[str] = None
     transaction_inputs: List[TransactionInput] = []
@@ -84,11 +90,20 @@ class Transaction(BaseModel):
     amount: Decimal = Field(..., decimal_places=2)
     currency: str
     creditor_name: str
-    creditor_iban: str
+    creditor_iban: Optional[str] = None
+    creditor_account_id: Optional[str] = None
+    creditor_account_scheme: Optional[str] = None
     creditor_address: Optional[Dict[str, str]] = None
     creditor_bic: Optional[str] = None
+    creditor_lei: Optional[str] = None
+    debtor_lei: Optional[str] = None
     charge_bearer: Optional[str] = None
     remittance_info: Optional[Dict[str, str]] = None
+    purpose_code: Optional[str] = None
+    ultimate_debtor: Optional[Dict[str, str]] = None
+    ultimate_creditor: Optional[Dict[str, str]] = None
+    regulatory_reporting: Optional[Dict[str, str]] = None
+    tax_remittance: Optional[Dict[str, str]] = None
     overrides: Dict[str, str] = {}
 
 
@@ -102,6 +117,8 @@ class PaymentInstruction(BaseModel):
     service_level: Optional[str] = None
     local_instrument: Optional[str] = None
     category_purpose: Optional[str] = None
+    batch_booking: Optional[bool] = None
+    ultimate_debtor: Optional[Dict[str, str]] = None
     charge_bearer: Optional[str] = None
     transactions: List[Transaction]
 
@@ -122,6 +139,27 @@ class ValidationResult(BaseModel):
     details: Optional[str] = None
 
 
+class TransactionStatusInfo(BaseModel):
+    """Status einer einzelnen Transaktion aus pain.002."""
+
+    end_to_end_id: str
+    status: str  # ACTC, ACCP, ACSP, ACSC, RJCT, PDNG, etc.
+    reason_code: Optional[str] = None
+    reason_additional: Optional[str] = None
+
+
+class Pain002Result(BaseModel):
+    """Ergebnis aus einer pain.002-Antwort, korreliert mit einem Testfall."""
+
+    pain002_msg_id: str
+    original_msg_id: str
+    original_pmt_inf_id: Optional[str] = None
+    group_status: Optional[str] = None
+    payment_status: Optional[str] = None
+    transaction_statuses: List[TransactionStatusInfo] = []
+    pain002_file_path: Optional[str] = None
+
+
 class TestCaseResult(BaseModel):
     testcase_id: str
     titel: str
@@ -133,3 +171,4 @@ class TestCaseResult(BaseModel):
     overall_pass: bool
     xml_file_path: Optional[str] = None
     remarks: Optional[str] = None
+    pain002_result: Optional[Pain002Result] = None

@@ -10,3 +10,10 @@ dist/
 # Proprietaere SWIFT Spezifikationen (nicht oeffentlich)
 docs/specs/cbpr+nonpublic/
 docs/specs/cgi_nonpublic/
+
+# Archivierte Dokumente (nicht versioniert)
+docs/archive/
+
+# AutoMaker metadata
+.automaker/
+.hypothesis/

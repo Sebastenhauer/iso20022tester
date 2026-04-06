@@ -90,10 +90,38 @@ class TransactionBuilder:
         return [self._build_one(tx_input) for tx_input in tx_inputs]
 
     def _build_one(self, tx_input: Optional[TransactionInput]) -> Transaction:
-        creditor_iban = self._resolve_str(
-            tx_input, "creditor_iban", "CdtrAcct.IBAN",
-            lambda: self.factory.generate_creditor_iban(self.handler.payment_type),
+        # Creditor-Konto: IBAN vs. Non-IBAN (Othr)
+        creditor_account_id = self._resolve_str(
+            tx_input, "creditor_account_id", "CdtrAcct.Othr.Id", lambda: None,
         )
+        creditor_account_scheme = self._resolve_str(
+            tx_input, "creditor_account_scheme", "CdtrAcct.Othr.SchmeNm", lambda: None,
+        )
+
+        if creditor_account_id:
+            # Non-IBAN: User hat explizit eine Kontonummer angegeben
+            creditor_iban = None
+            country = self._resolve_str(
+                tx_input, None, "Cdtr.PstlAdr.Ctry", lambda: "US",
+            )
+        else:
+            # Standard: IBAN-basiert oder auto-generiert
+            creditor_iban_input = self._resolve_str(
+                tx_input, "creditor_iban", "CdtrAcct.IBAN", lambda: None,
+            )
+
+            if creditor_iban_input:
+                # User hat IBAN angegeben
+                creditor_iban = creditor_iban_input
+                country = creditor_iban[:2] if len(creditor_iban) >= 2 else "CH"
+            else:
+                # Auto-Generierung via DataFactory
+                acct = self.factory.generate_creditor_account(self.handler.payment_type)
+                creditor_iban = acct["iban"]
+                creditor_account_id = acct["account_id"]
+                creditor_account_scheme = acct["account_scheme"]
+                country = acct["country"]
+
         creditor_name = self._resolve_str(
             tx_input, "creditor_name", "Cdtr.Nm",
             self.factory.generate_creditor_name,
@@ -108,10 +136,21 @@ class TransactionBuilder:
         amount = self._resolve_amount(tx_input)
         currency = self._resolve_currency(tx_input)
 
-        country = self.handler.get_address_country(creditor_iban)
-        address = self.factory.generate_creditor_address(country)
+        address_country = self.handler.get_address_country(
+            creditor_iban or country or "CH"
+        )
+        address = self.factory.generate_creditor_address(address_country)
 
         remittance = self._resolve_remittance(tx_input)
+
+        purpose_code = self._resolve_str(
+            tx_input, "purpose_code", "Purp.Cd", lambda: None,
+        )
+
+        creditor_lei = self._resolve_str(
+            tx_input, None, "Cdtr.Id.OrgId.LEI", lambda: None,
+        )
+        debtor_lei = self.testcase.overrides.get("Dbtr.Id.OrgId.LEI") or self.testcase.debtor.lei
 
         return Transaction(
             end_to_end_id=self.factory.generate_end_to_end_id(),
@@ -120,22 +159,27 @@ class TransactionBuilder:
             currency=currency,
             creditor_name=creditor_name,
             creditor_iban=creditor_iban,
+            creditor_account_id=creditor_account_id,
+            creditor_account_scheme=creditor_account_scheme,
             creditor_address=address,
             creditor_bic=creditor_bic,
+            creditor_lei=creditor_lei,
+            debtor_lei=debtor_lei,
             charge_bearer=self.handler.get_charge_bearer(),
             remittance_info=remittance,
+            purpose_code=purpose_code,
             overrides=self.testcase.overrides,
         )
 
     def _resolve_str(
         self,
         tx_input: Optional[TransactionInput],
-        field: str,
+        field: Optional[str],
         override_key: str,
         generator,
     ) -> Optional[str]:
         """Resolve: tx_input.field > testcase.overrides[key] > generator()"""
-        val = getattr(tx_input, field, None) if tx_input else None
+        val = getattr(tx_input, field, None) if tx_input and field else None
         return val or self.testcase.overrides.get(override_key) or generator()
 
     def _resolve_amount(self, tx_input: Optional[TransactionInput]):

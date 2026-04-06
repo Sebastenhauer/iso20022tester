@@ -9,3 +9,4 @@ class AppConfig(BaseModel):
     cbpr_xsd_path: Optional[str] = None
     seed: Optional[int] = None
     report_format: str = "docx"
+    bic_directory_path: Optional[str] = None

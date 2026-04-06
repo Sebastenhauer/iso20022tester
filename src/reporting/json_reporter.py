@@ -45,6 +45,24 @@ def generate_json_report(
             "xml_datei": r.xml_file_path,
             "bemerkungen": r.remarks,
         }
+        if r.pain002_result:
+            p = r.pain002_result
+            tc["pain002"] = {
+                "pain002_msg_id": p.pain002_msg_id,
+                "original_msg_id": p.original_msg_id,
+                "gruppen_status": p.group_status,
+                "zahlungs_status": p.payment_status,
+                "transaktionen": [
+                    {
+                        "end_to_end_id": t.end_to_end_id,
+                        "status": t.status,
+                        "grund_code": t.reason_code,
+                        "zusatzinfo": t.reason_additional,
+                    }
+                    for t in p.transaction_statuses
+                ],
+                "pain002_datei": p.pain002_file_path,
+            }
         report["testfälle"].append(tc)
 
     report_path = f"{output_path}/testlauf_ergebnis.json"

@@ -12,3 +12,7 @@ seed: null
 
 # Report-Format: "docx" oder "txt"
 report_format: "docx"
+
+# Pfad zum SWIFT BIC Directory (CSV oder JSON, optional)
+# Wenn gesetzt, werden BICs gegen dieses Verzeichnis validiert (BR-BIC-001)
+# bic_directory_path: "data/swift_bic_directory.csv"

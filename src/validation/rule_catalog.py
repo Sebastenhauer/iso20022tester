@@ -119,6 +119,31 @@ BR_GEN_012 = _r(
     "IG CT SPS 2025 §3.1",
 )
 
+BR_GEN_013 = _r(
+    "BR-GEN-013", "GEN",
+    "LEI muss 20 Zeichen lang sein: 18 alphanumerisch + 2 Prüfziffern (ISO 17442)",
+    None,
+    "ISO 17442, pain.001.001.09 Schema",
+)
+
+# --- Purpose ---
+
+BR_PURP_001 = _r(
+    "BR-PURP-001", "PURP",
+    "Purpose/Cd muss ein gültiger ExternalPurpose1Code sein (1–4 Zeichen)",
+    None,
+    "ISO 20022 External Code Lists, pain.001.001.09 Schema",
+)
+
+# --- Category Purpose ---
+
+BR_CTGP_001 = _r(
+    "BR-CTGP-001", "CTGP",
+    "CtgyPurp/Cd muss ein gültiger ExternalCategoryPurpose1Code sein (1–4 Zeichen)",
+    None,
+    "ISO 20022 External Code Lists, pain.001.001.09 Schema",
+)
+
 # --- Adress-Regeln ---
 
 BR_ADDR_001 = _r(
@@ -143,6 +168,27 @@ BR_ADDR_003 = _r(
     "IG CT SPS 2025 §4.2.6",
 )
 
+BR_ADDR_010 = _r(
+    "BR-ADDR-010", "ADDR",
+    "PLZ muss dem laenderspezifischen Format entsprechen",
+    None,
+    "IG CT SPS 2025 §3.11, ISO 20022 PstlAdr",
+)
+
+BR_ADDR_011 = _r(
+    "BR-ADDR-011", "ADDR",
+    "Adressfelder duerfen maximale Feldlaenge nicht ueberschreiten",
+    None,
+    "IG CT SPS 2025 §3.11, pain.001.001.09 Schema",
+)
+
+BR_ADDR_012 = _r(
+    "BR-ADDR-012", "ADDR",
+    "PLZ ist Pflicht fuer Laender mit PLZ-System",
+    None,
+    "IG CT SPS 2025 §3.11",
+)
+
 BR_GEN_006 = _r(
     "BR-GEN-006", "GEN",
     "Creditor-Name darf maximal 140 Zeichen lang sein (non-SEPA)",
@@ -155,6 +201,13 @@ BR_GEN_007 = _r(
     "Country-Code muss 2 Großbuchstaben sein (ISO 3166-1)",
     None,
     "IG CT SPS 2025 §3.11, SwissQRBill",
+)
+
+BR_BIC_001 = _r(
+    "BR-BIC-001", "BIC",
+    "BIC muss im SWIFT BIC Directory existieren und aktiv sein",
+    None,
+    "SWIFT BIC Directory, ISO 9362",
 )
 
 # --- IBAN-Validierung ---
@@ -329,6 +382,16 @@ BR_IBAN_006 = _r(
     "Business Rules SPS 2025 Tabelle 3, SwissQRBill",
 )
 
+_DOM = (PaymentType.DOMESTIC_QR, PaymentType.DOMESTIC_IBAN)
+
+BR_DOM_001 = _r(
+    "BR-DOM-001", "DOM",
+    "ChrgBr darf bei Domestic-Zahlungen (Typ D) nicht gesetzt sein",
+    _DOM,
+    "Business Rules SPS 2025 Tabelle 3, Typ D",
+    violatable=True,
+)
+
 # --- CBPR+-spezifisch (Typ X) ---
 
 _CBPR = (PaymentType.CBPR_PLUS,)
@@ -371,6 +434,88 @@ BR_CBPR_006 = _r(
     "CBPR+ SR2025 Usage Guideline p.133",
 )
 
+BR_CBPR_007 = _r(
+    "BR-CBPR-007", "CBPR",
+    "Creditor muss entweder IBAN oder Kontonummer (Othr/Id) haben",
+    _CBPR,
+    "pain.001.001.09 Schema, CdtrAcct/Id Choice",
+)
+
+# --- SIC5 Instant-spezifisch ---
+
+_INSTANT = (PaymentType.DOMESTIC_IBAN,)
+
+BR_SIC5_001 = _r(
+    "BR-SIC5-001", "SIC5",
+    "Instant-Zahlung: Währung muss CHF sein",
+    _INSTANT,
+    "SPS 2025 SIC5 Instant Payment",
+    violatable=True,
+)
+
+BR_SIC5_002 = _r(
+    "BR-SIC5-002", "SIC5",
+    "Instant-Zahlung: Creditor-IBAN muss CH oder LI sein",
+    _INSTANT,
+    "SPS 2025 SIC5 Instant Payment",
+    violatable=True,
+)
+
+BR_SIC5_003 = _r(
+    "BR-SIC5-003", "SIC5",
+    "Instant-Zahlung: ServiceLevel muss 'INST' sein",
+    _INSTANT,
+    "SPS 2025 SIC5 Instant Payment",
+)
+
+BR_SIC5_004 = _r(
+    "BR-SIC5-004", "SIC5",
+    "Instant-Zahlung: LocalInstrument muss 'INST' sein",
+    _INSTANT,
+    "SPS 2025 SIC5 Instant Payment",
+)
+
+# --- SCT Inst (SEPA Instant Credit Transfer) ---
+
+_SCT_INST = (PaymentType.SEPA,)
+
+BR_SCT_INST_001 = _r(
+    "BR-SCT-INST-001", "SCT-INST",
+    "SCT Inst: Währung muss EUR sein",
+    _SCT_INST,
+    "EPC SCT Inst Rulebook",
+    violatable=True,
+)
+
+BR_SCT_INST_002 = _r(
+    "BR-SCT-INST-002", "SCT-INST",
+    "SCT Inst: Betrag darf maximal 100'000 EUR betragen",
+    _SCT_INST,
+    "EPC SCT Inst Rulebook, RT1/TIPS Limit",
+    violatable=True,
+)
+
+BR_SCT_INST_003 = _r(
+    "BR-SCT-INST-003", "SCT-INST",
+    "SCT Inst: ServiceLevel muss 'INST' sein",
+    _SCT_INST,
+    "EPC SCT Inst Rulebook",
+)
+
+BR_SCT_INST_004 = _r(
+    "BR-SCT-INST-004", "SCT-INST",
+    "SCT Inst: LocalInstrument muss 'INST' sein",
+    _SCT_INST,
+    "EPC SCT Inst Rulebook",
+)
+
+BR_SCT_INST_005 = _r(
+    "BR-SCT-INST-005", "SCT-INST",
+    "SCT Inst: ChrgBr muss SLEV sein",
+    _SCT_INST,
+    "EPC SCT Inst Rulebook",
+)
+
 # --- Remittance Information ---
 
 BR_REM_002 = _r(
@@ -405,6 +550,14 @@ BR_CGI_ADDR_02 = _r(
     "Unstructured Adresse verboten fuer UltmtDbtr, UltmtCdtr, InitgPty",
     None,
     "CGI-MP Handbook Slide 8",
+)
+
+BR_CGI_ADDR_03 = _r(
+    "BR-CGI-ADDR-03", "CGI",
+    "CGI-MP: Adresse muss strukturiert sein (StrtNm + BldgNb + PstCd + TwnNm + Ctry, kein AdrLine)",
+    None,
+    "CGI-MP Handbook Slide 11",
+    violatable=True,
 )
 
 BR_CGI_RMT_01 = _r(
@@ -484,6 +637,15 @@ BR_CGI_RGRP_02 = _r(
     "CGI-MP Handbook Slide 17",
 )
 
+# --- Batch Booking ---
+
+BR_BTCH_001 = _r(
+    "BR-BTCH-001", "GEN",
+    "BtchBookg=true ist nur sinnvoll bei NbOfTxs > 1 (Sammelauftrag mit nur einer Transaktion)",
+    None,
+    "Business Rules SPS 2025 §2.1.8",
+)
+
 
 # ---------------------------------------------------------------------------
 # Katalog-Zugriff
@@ -546,13 +708,19 @@ _CATEGORY_NAMES = {
     "SEPA": "SEPA-spezifisch (Typ S)",
     "QR": "QR-IBAN-spezifisch (Typ D/QR)",
     "IBAN": "Domestic-IBAN-spezifisch (Typ D/IBAN)",
+    "DOM": "Domestic-übergreifend (Typ D)",
+    "PURP": "Purpose (Verwendungszweck-Code)",
+    "CTGP": "Category Purpose (Kategorie-Zweck)",
     "REM": "Remittance Information",
     "CCY": "Währung",
+    "SIC5": "SIC5 Instant-spezifisch (CHF Sofortzahlung)",
+    "SCT-INST": "SCT Inst-spezifisch (SEPA Instant Credit Transfer)",
     "CBPR": "CBPR+-spezifisch (Typ X)",
     "CGI": "CGI-MP-spezifisch (C2B global)",
+    "BIC": "BIC-Verzeichnis-Validierung",
 }
 
-_CATEGORY_ORDER = ["HDR", "GEN", "ADDR", "IBAN-V", "REF-V", "REM", "CCY", "SEPA", "QR", "IBAN", "CBPR", "CGI"]
+_CATEGORY_ORDER = ["HDR", "GEN", "ADDR", "IBAN-V", "REF-V", "PURP", "CTGP", "REM", "CCY", "BIC", "SEPA", "QR", "IBAN", "DOM", "SIC5", "SCT-INST", "CBPR", "CGI"]
 
 
 def rules_to_markdown() -> str:

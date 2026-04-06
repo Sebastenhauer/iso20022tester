@@ -1,0 +1,25 @@
+Erweiterungen
+
+nach urgency sortiert:
+
+high:
+pain.001 sepa instant
+pain.001 Swiss sps chf instant
+pain.001 Spensenoptionen OUR BEN SHA wobei OUR = DEBT, BEN = CRED, SHA = SHAR, im code wird konsistent die variante mit 3 buchstaben verwendet, falls nötig fürs das File übersetzt.
+Zahlungsempfänger Angabe IBAN und BIC + Kontonummer (je nach Jurisdiktion und Schema: Schweiz und EWR: IBAN-only, andere Länder benötigen meist den BIC
+Erweiterung des testfall-excel: neuer boolean: "instant" mit true or false. True + CHF + Creditor Account = CH... => SIC5 Instant. True + Sepa-Kriterien erfüllt => Sepa-Instant. Sonst bewirkt das flag nichts.
+Korrektur des Testfall-Excel: das Feld "Weitere Testdaten" wird automatisch interpretiert nach dem Muster {XML-tag}={content};{XML-tag}={content} usw. also z.B. ChrgBr=OUR. Bei ambiguität (z.B. weil tag mehrfach im xml vorkommt), wird der input geskippt und der user informiert.
+
+medium:
+modul um (optional) xml dateien mit header zu versehen basierend auf swagger file
+modul um das um header erweiterte file via api endpoint hochzuladen
+
+
+low:
+Zahlungseingänge mit pacs.008 simulieren --> ebenso SPS Standard (instant und RTGS), SEPA (EPC) und CBPR+
+
+
+
+
+
+

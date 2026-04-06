@@ -125,6 +125,55 @@ def test_parse_multiple_transactions():
     os.unlink(path)
 
 
+def test_parse_instant_flag_true():
+    """Instant-Spalte wird als Boolean geparst."""
+    headers_with_instant = V2_HEADERS + ["Instant"]
+    data = [
+        "TC-001", "Test", "Ziel", "OK", "Domestic-IBAN",
+        100.00, "CHF", "Test AG", "CH9300762011623852957", "CRESCHZZ80A",
+        None, None, None, None,
+        None, None, None, None,
+        True,
+    ]
+    path = _create_test_excel([headers_with_instant, data])
+    testcases, errors = parse_excel(path)
+    assert len(errors) == 0
+    assert testcases[0].instant is True
+    os.unlink(path)
+
+
+def test_parse_instant_flag_false():
+    """Instant=False oder fehlend bleibt False."""
+    headers_with_instant = V2_HEADERS + ["Instant"]
+    data = [
+        "TC-001", "Test", "Ziel", "OK", "Domestic-IBAN",
+        100.00, "CHF", "Test AG", "CH9300762011623852957", None,
+        None, None, None, None,
+        None, None, None, None,
+        False,
+    ]
+    path = _create_test_excel([headers_with_instant, data])
+    testcases, errors = parse_excel(path)
+    assert len(errors) == 0
+    assert testcases[0].instant is False
+    os.unlink(path)
+
+
+def test_parse_instant_missing_column():
+    """Ohne Instant-Spalte ist instant=False."""
+    data = [
+        "TC-001", "Test", "Ziel", "OK", "Domestic-IBAN",
+        100.00, "CHF", "Test AG", "CH9300762011623852957", None,
+        None, None, None, None,
+        None, None, None, None,
+    ]
+    path = _create_test_excel([V2_HEADERS, data])
+    testcases, errors = parse_excel(path)
+    assert len(errors) == 0
+    assert testcases[0].instant is False
+    os.unlink(path)
+
+
 def test_parse_duplicate_testcase_id():
     """Doppelte TestcaseIDs erzeugen einen Fehler."""
     row1 = [
@@ -141,4 +190,70 @@ def test_parse_duplicate_testcase_id():
     testcases, errors = parse_excel(path)
     assert len(errors) > 0
     assert "doppelt" in errors[0].lower()
+    os.unlink(path)
+
+
+def test_parse_sammelauftrag_true():
+    """Sammelauftrag=True wird als batch_booking=True geparst."""
+    headers = V2_HEADERS + ["Sammelauftrag"]
+    data = [
+        "TC-001", "Test", "Ziel", "OK", "Domestic-IBAN",
+        100.00, "CHF", "Test AG", "CH9300762011623852957", None,
+        None, None, None, None,
+        None, None, None, None,
+        True,
+    ]
+    path = _create_test_excel([headers, data])
+    testcases, errors = parse_excel(path)
+    assert len(errors) == 0
+    assert testcases[0].batch_booking is True
+    os.unlink(path)
+
+
+def test_parse_sammelauftrag_false():
+    """Sammelauftrag=False wird als batch_booking=False geparst."""
+    headers = V2_HEADERS + ["Sammelauftrag"]
+    data = [
+        "TC-001", "Test", "Ziel", "OK", "Domestic-IBAN",
+        100.00, "CHF", "Test AG", "CH9300762011623852957", None,
+        None, None, None, None,
+        None, None, None, None,
+        False,
+    ]
+    path = _create_test_excel([headers, data])
+    testcases, errors = parse_excel(path)
+    assert len(errors) == 0
+    assert testcases[0].batch_booking is False
+    os.unlink(path)
+
+
+def test_parse_sammelauftrag_missing_column():
+    """Ohne Sammelauftrag-Spalte ist batch_booking=None."""
+    data = [
+        "TC-001", "Test", "Ziel", "OK", "Domestic-IBAN",
+        100.00, "CHF", "Test AG", "CH9300762011623852957", None,
+        None, None, None, None,
+        None, None, None, None,
+    ]
+    path = _create_test_excel([V2_HEADERS, data])
+    testcases, errors = parse_excel(path)
+    assert len(errors) == 0
+    assert testcases[0].batch_booking is None
+    os.unlink(path)
+
+
+def test_parse_sammelauftrag_ja():
+    """Sammelauftrag='Ja' wird als batch_booking=True geparst."""
+    headers = V2_HEADERS + ["Sammelauftrag"]
+    data = [
+        "TC-001", "Test", "Ziel", "OK", "Domestic-IBAN",
+        100.00, "CHF", "Test AG", "CH9300762011623852957", None,
+        None, None, None, None,
+        None, None, None, None,
+        "Ja",
+    ]
+    path = _create_test_excel([headers, data])
+    testcases, errors = parse_excel(path)
+    assert len(errors) == 0
+    assert testcases[0].batch_booking is True
     os.unlink(path)

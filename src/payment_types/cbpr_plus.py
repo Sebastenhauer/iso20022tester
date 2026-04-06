@@ -20,6 +20,9 @@ class CbprPlusHandler(PaymentTypeHandler):
         return factory.generate_currency(PaymentType.CBPR_PLUS)
 
     def get_address_country(self, creditor_iban: str) -> str:
+        # creditor_iban kann auch ein Country-Code sein bei Non-IBAN
+        if len(creditor_iban) == 2 and creditor_iban.isalpha():
+            return creditor_iban.upper()
         return creditor_iban[:2] if len(creditor_iban) >= 2 else "GB"
 
     def should_generate_uetr(self) -> bool:
@@ -56,6 +59,14 @@ class CbprPlusHandler(PaymentTypeHandler):
             results.append(_check(
                 "BR-CBPR-006", bool(tx.uetr),
                 "UETR fehlt (UUIDv4 ist Pflicht für CBPR+)" if not tx.uetr else None,
+            ))
+
+            # BR-CBPR-007: Creditor muss entweder IBAN oder Kontonummer haben
+            has_account = bool(tx.creditor_iban) or bool(tx.creditor_account_id)
+            results.append(_check(
+                "BR-CBPR-007", has_account,
+                "Weder IBAN noch Kontonummer für Creditor vorhanden"
+                if not has_account else None,
             ))
 
         return results

@@ -60,6 +60,28 @@ def _str_or_none(val) -> Optional[str]:
     return s if s else None
 
 
+def _parse_bool(val) -> bool:
+    """Parst einen Boolean-Wert aus Excel (True/False/Ja/Nein/1/0)."""
+    if val is None:
+        return False
+    if isinstance(val, bool):
+        return val
+    s = str(val).strip().lower()
+    return s in ("true", "ja", "1", "yes", "wahr")
+
+
+def _parse_optional_bool(val) -> Optional[bool]:
+    """Parst einen optionalen Boolean-Wert. None bei leerem Input."""
+    if val is None:
+        return None
+    if isinstance(val, bool):
+        return val
+    s = str(val).strip()
+    if not s:
+        return None
+    return s.lower() in ("true", "ja", "1", "yes", "wahr")
+
+
 def _parse_transaction_input(row, col_index) -> TransactionInput:
     """Liest Transaktions-Daten aus einer Zeile."""
 
@@ -80,7 +102,10 @@ def _parse_transaction_input(row, col_index) -> TransactionInput:
         creditor_name=_str_or_none(cell("Creditor Name")),
         creditor_iban=_str_or_none(cell("Creditor IBAN")),
         creditor_bic=_str_or_none(cell("Creditor BIC")),
+        creditor_account_id=_str_or_none(cell("Creditor Kontonummer")),
+        creditor_account_scheme=_str_or_none(cell("Creditor Kontoschema")),
         remittance_info=_str_or_none(cell("Verwendungszweck")),
+        purpose_code=_str_or_none(cell("Verwendungszweck-Code")),
         overrides=overrides,
     )
 
@@ -231,6 +256,12 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
 
             first_tx = _parse_transaction_input(row, col_index)
 
+            # Instant-Flag (optional)
+            instant = _parse_bool(cell_val(row, "Instant"))
+
+            # Sammelauftrag / Batch Booking (optional)
+            batch_booking = _parse_optional_bool(cell_val(row, "Sammelauftrag"))
+
             current_tc = TestCase(
                 testcase_id=testcase_id,
                 titel=titel,
@@ -240,6 +271,8 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
                 amount=first_tx.amount,
                 currency=first_tx.currency,
                 debtor=debtor,
+                instant=instant,
+                batch_booking=batch_booking,
                 overrides=overrides,
                 violate_rule=violate_rule,
                 transaction_inputs=[first_tx],

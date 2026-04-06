@@ -7,7 +7,14 @@ from typing import Dict, Optional
 
 from faker import Faker
 
-from src.data_factory.iban import generate_ch_iban, generate_iban, IBAN_LENGTHS, SEPA_COUNTRIES
+from src.data_factory.iban import (
+    generate_ch_iban,
+    generate_iban,
+    generate_non_iban_account,
+    is_non_iban_country,
+    IBAN_LENGTHS,
+    SEPA_COUNTRIES,
+)
 from src.data_factory.reference import generate_qrr, generate_scor
 from src.models.testcase import PaymentType
 
@@ -72,26 +79,54 @@ class DataFactory:
         name = self.faker.company()
         return sanitize_sps_charset(name)
 
+    # Faker-Locale-Mapping für länderspezifische Adressdaten
+    _FAKER_LOCALES = {
+        "CH": "de_CH", "DE": "de_DE", "AT": "de_AT", "FR": "fr_FR",
+        "IT": "it_IT", "ES": "es_ES", "PT": "pt_PT", "NL": "nl_NL",
+        "BE": "nl_BE", "GB": "en_GB", "IE": "en_IE", "DK": "da_DK",
+        "SE": "sv_SE", "NO": "no_NO", "FI": "fi_FI", "PL": "pl_PL",
+        "CZ": "cs_CZ", "HU": "hu_HU", "RO": "ro_RO", "BG": "bg_BG",
+        "HR": "hr_HR", "SI": "sl_SI", "EE": "et_EE", "LV": "lv_LV",
+        "LT": "lt_LT", "GR": "el_GR", "TR": "tr_TR",
+        "US": "en_US", "CA": "en_CA", "JP": "ja_JP", "AU": "en_AU",
+        "NZ": "en_NZ", "BR": "pt_BR", "MX": "es_MX", "IN": "en_IN",
+        "CN": "zh_CN", "SG": "en_US", "ZA": "en_US",
+    }
+
     def generate_creditor_address(self, country: str = "CH") -> Dict[str, str]:
-        """Generiert eine strukturierte Creditor-Adresse."""
-        if country == "CH":
-            fake = Faker("de_CH")
-        elif country == "DE":
-            fake = Faker("de_DE")
-        elif country == "FR":
-            fake = Faker("fr_FR")
-        else:
+        """Generiert eine strukturierte Creditor-Adresse.
+
+        Verwendet länderspezifische Faker-Locales und validiert die
+        generierte PLZ gegen das Länderformat. Wendet Adress-Anreicherung an.
+        """
+        locale = self._FAKER_LOCALES.get(country, "en_US")
+        try:
+            fake = Faker(locale)
+        except AttributeError:
             fake = Faker("en_US")
         if self.seed is not None:
             Faker.seed(self.seed + hash(country) % 10000)
 
-        return {
+        postcode = fake.postcode()
+
+        # PLZ gegen Länderformat validieren; bei Mismatch generische PLZ erzeugen
+        from src.validation.address_validator import COUNTRY_FORMATS, enrich_address
+        fmt = COUNTRY_FORMATS.get(country)
+        if fmt and fmt.postal_code_regex:
+            import re as _re
+            if not _re.match(fmt.postal_code_regex, postcode):
+                postcode = fmt.postal_code_example
+
+        address = {
             "StrtNm": sanitize_sps_charset(fake.street_name()),
             "BldgNb": str(self.rng.randint(1, 200)),
-            "PstCd": fake.postcode(),
+            "PstCd": postcode,
             "TwnNm": sanitize_sps_charset(fake.city()),
             "Ctry": country,
         }
+
+        address, _ = enrich_address(address)
+        return address
 
     def generate_creditor_iban(self, payment_type: PaymentType) -> str:
         """Generiert eine passende Creditor-IBAN je nach Zahlungstyp."""
@@ -113,6 +148,41 @@ class DataFactory:
                 return generate_iban(self.rng, country)
             return generate_iban(self.rng, "GB")
         return generate_ch_iban(self.rng, qr=False)
+
+    def generate_creditor_account(
+        self, payment_type: PaymentType
+    ) -> Dict[str, Optional[str]]:
+        """Generiert Creditor-Kontodaten: IBAN oder Non-IBAN je nach Zahlungstyp.
+
+        Returns:
+            Dict mit Keys: iban, account_id, account_scheme, country
+        """
+        if payment_type == PaymentType.CBPR_PLUS:
+            # 30% Wahrscheinlichkeit für Non-IBAN-Land bei CBPR+
+            non_iban_countries = [
+                c for c, l in IBAN_LENGTHS.items() if l == 0
+            ]
+            use_non_iban = self.rng.random() < 0.3 and non_iban_countries
+
+            if use_non_iban:
+                country = self.rng.choice(non_iban_countries)
+                account_id = generate_non_iban_account(self.rng, country)
+                return {
+                    "iban": None,
+                    "account_id": account_id,
+                    "account_scheme": "BBAN",
+                    "country": country,
+                }
+
+        # Standard: IBAN generieren
+        iban = self.generate_creditor_iban(payment_type)
+        country = iban[:2] if len(iban) >= 2 else "CH"
+        return {
+            "iban": iban,
+            "account_id": None,
+            "account_scheme": None,
+            "country": country,
+        }
 
     def generate_reference(self, payment_type: PaymentType) -> Optional[Dict[str, str]]:
         """Generiert eine Zahlungsreferenz je nach Zahlungstyp."""
@@ -140,10 +210,13 @@ class DataFactory:
             return self.rng.choice(["USD", "GBP", "JPY", "EUR"])
         return "CHF"
 
-    def generate_amount(self, payment_type: PaymentType) -> Decimal:
+    def generate_amount(self, payment_type: PaymentType, instant: bool = False) -> Decimal:
         """Generiert einen gültigen Betrag je nach Zahlungstyp."""
         if payment_type == PaymentType.SEPA:
-            max_amount = Decimal("999999999.99")
+            if instant:
+                max_amount = Decimal("100000")
+            else:
+                max_amount = Decimal("999999999.99")
         else:
             max_amount = Decimal("9999999999.99")
 
