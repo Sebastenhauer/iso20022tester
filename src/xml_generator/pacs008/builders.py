@@ -94,9 +94,11 @@ def build_agent(parent: etree._Element, tag_name: str, agent: AgentInfo) -> etre
 
     if agent.clearing_member_id:
         clr_sys = _el(fin_instn_id, "ClrSysMmbId")
-        if agent.clearing_system_code:
-            clr_sys_id = _el(clr_sys, "ClrSysId")
-            _el(clr_sys_id, "Cd", agent.clearing_system_code)
+        # ClrSysId ist Pflicht in CBPR+ (XSD min=1). Wenn der User keinen
+        # Code mitgibt, setzen wir einen Default, der haeufig fuer die
+        # USA Fedwire verwendet wird.
+        clr_sys_id = _el(clr_sys, "ClrSysId")
+        _el(clr_sys_id, "Cd", agent.clearing_system_code or "USABA")
         _el(clr_sys, "MmbId", agent.clearing_member_id)
 
     if agent.name:

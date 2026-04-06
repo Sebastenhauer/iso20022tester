@@ -155,19 +155,53 @@ def run_pacs008(
     config: AppConfig,
     seed_override: int = None,
     verbose: bool = False,
-) -> List[TestCaseResult]:
-    """Pacs.008 Pipeline Entry.
+):
+    """pacs.008 Pipeline Entry (CBPR+ Flavor V1).
 
-    WP-01 Scaffold Stub: erkennt nur den Message-Type und meldet
-    "noch nicht implementiert". Ab WP-02 wird hier sukzessive die
-    echte Pipeline eingesetzt.
+    Parst das Excel mit ``parse_pacs008_excel``, baut pro Testcase
+    ein ``Pacs008BusinessMessage``, validiert XSD + Business Rules
+    und schreibt die Files unter ``output/<ts>/pacs.008/``.
     """
+    from src.input_handler.excel_parser import parse_pacs008_excel
+    from src.pacs008_pipeline import Pacs008TestPipeline
+
     print(f"[pacs.008] Lese Testfaelle aus: {input_file}")
-    print(
-        "[pacs.008] Pipeline noch nicht implementiert (siehe "
-        "docs/roadmap/2026-04-06_pacs008_implementation_plan.md, WP-02..WP-13)."
+    testcases, errors = parse_pacs008_excel(input_file)
+    if errors:
+        print("Fehler beim Einlesen der Excel-Datei:")
+        for e in errors:
+            print(f"  {e}")
+        sys.exit(1)
+
+    print(f"[pacs.008] {len(testcases)} Testfaelle eingelesen.")
+
+    pipeline = Pacs008TestPipeline(config)
+
+    run_dir = os.path.join(
+        config.output_path,
+        datetime.now().strftime("%Y-%m-%d_%H%M%S"),
     )
-    sys.exit(2)
+    os.makedirs(run_dir, exist_ok=True)
+    print(f"[pacs.008] Output-Verzeichnis: {run_dir}/pacs.008/")
+
+    results = pipeline.process(testcases, run_dir, verbose=verbose)
+
+    for r in results:
+        status = "Pass" if r.overall_pass else "Fail"
+        print(f"  {r.testcase_id}: {status}")
+
+    print(f"\n[pacs.008] Erstelle Report...")
+    paths = pipeline.generate_reports(results, input_file, run_dir)
+    for fmt, path in paths.items():
+        print(f"  {fmt.upper()}: {path}")
+
+    pass_count = sum(1 for r in results if r.overall_pass)
+    fail_count = len(results) - pass_count
+    print(f"\n{'=' * 50}")
+    print(f"[pacs.008] Ergebnis: {pass_count} Pass, {fail_count} Fail von {len(results)} Testfaellen")
+    print(f"{'=' * 50}")
+
+    return results
 
 
 def _resolve_message_type(input_file: str, flag: str = None) -> str:
