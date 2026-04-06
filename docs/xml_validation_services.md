@@ -1,349 +1,186 @@
-# Validierungsmöglichkeiten für pain.001 XML-Dateien
+# Externe Validierungsservices für ISO 20022 Payment-XML
 
-**Datum:** 21. März 2026
-**Zweck:** Übersicht über Services und Tools zur externen Validierung der generierten pain.001.001.09 XML-Dateien
+> **Hinweis:** Dieses Dokument liefert einen kuratierten Überblick über externe Tools zur unabhängigen Validierung von pain.001- und (perspektivisch) pacs.008-Nachrichten gegen die Implementation Guidelines **SPS 2025**, **CBPR+** und **CGI-MP**. Alle Angaben wurden am Recherchedatum (siehe Footer) direkt von den jeweiligen Websites gezogen; wo das nicht möglich war, ist dies explizit vermerkt.
 
----
+## Zusammenfassung / Kurzübersicht
 
-> **Hinweis:** Dieses Dokument dient als Entscheidungsgrundlage für die Auswahl externer Validierungsdienste.
-> Unser Tool führt bereits intern eine zweistufige Validierung durch (XSD-Schema + 30+ Business Rules).
-> Die hier aufgeführten Services ermöglichen eine **unabhängige Gegenprüfung** durch Dritte — insbesondere
-> durch das offizielle SIX Validation Portal — um sicherzustellen, dass die generierten XML-Dateien
-> auch ausserhalb unserer eigenen Implementierung als konform erkannt werden.
-
----
-
-## Zusammenfassung
-
-Unsere generierten XML-Dateien werden bereits intern gegen das XSD-Schema und 30+ Business Rules validiert. Für eine **unabhängige, externe Validierung** gibt es mehrere Optionen — von kostenlosen Online-Tools bis hin zu professionellen Enterprise-Plattformen. Die wichtigste Erkenntnis: **das offizielle SIX Validation Portal ist kostenlos und sollte die primäre Validierungsquelle sein.**
-
----
-
-## 1. Offizielle Plattformen
-
-### 1.1 SIX Validation Portal (⭐ Empfehlung #1)
-
-| Eigenschaft | Details |
-|------------|---------|
-| **URL** | [validation.iso-payments.ch/SPS](https://validation.iso-payments.ch/sps/account/logon) |
-| **Anbieter** | SIX Interbank Clearing AG |
-| **Preis** | **Kostenlos** |
-| **Registrierung** | Ja, mit geschäftlicher E-Mail (keine Freemail-Adressen wie Gmail/GMX) |
-| **Format** | pain.001.001.09 (SPS 2025) ✅ |
-| **Validierung** | XSD + SPS Implementation Guidelines |
-| **Output** | Testbericht als Text und HTML (Download möglich) |
-
-**Was wird geprüft:**
-- XSD-Schema-Validität
-- Konformität mit den Swiss Payment Standards Implementation Guidelines
-- Strukturelle Korrektheit der Nachricht
-
-**Was wird NICHT geprüft:**
-- Veränderbare Parameter oder Werte aus externen Code-Listen
-- Gültige Partei-Identifikationen
-- Währungscodes oder ISO 20022 External Code Sets
-
-**Vorteile:**
-- Offizielle Referenz-Validierung der Schweizer Finanzbranche
-- Kostenlos für Software-Anbieter und Finanzinstitute
-- Unterstützt die aktuelle SPS 2025 Version
-- Upload via Web-Interface
-
-**Nachteile:**
-- Keine API-Integration (nur manueller Upload)
-- Geschäftliche E-Mail für Registrierung erforderlich
-- Kein automatisierter Batch-Betrieb möglich
-
-**Bewertung:** ★★★★★ — Die offizielle Referenz. Jede generierte Datei sollte mindestens einmal hierüber validiert werden.
+| # | Tool | Messages | Versionen | IGs | Preis | Nutzung | Bewertung |
+|---|------|----------|-----------|-----|-------|---------|-----------|
+| 1 | SIX Validation Portal | pain.001, pain.002, camt.05x | pain.001.001.09.ch.03, .03.ch.02 | **SPS 2025** | kostenlos (Registrierung) | Web-UI | 5/5 |
+| 2 | SWIFT MyStandards Readiness Portal | pain.001, pacs.008, pacs.009, camt | alle aktuellen CBPR+-Versionen (pacs.008.001.08) | **CBPR+**, MI-spezifisch | Free Tier vorhanden; Readiness Portal via Bank | Web-UI | 5/5 (CBPR+) |
+| 3 | XMLdation Validator | pain, pacs, camt | nicht öffentlich gelistet | SEPA, CGI-MP, nordische IGs, bankspezifisch | Freemium/B2B (keine Liste) | Web-UI + API | 3/5 |
+| 4 | Truugo ISO 20022 Validator | pain.001, pain.002, camt.053, camt.054 | **nur V02/V03** der Basisschemas | generisch ISO 20022 | Free-Account limitiert; Essential 99 EUR/Mo | Web-UI + API | 1/5 (zu alt) |
+| 5 | 20022Labs Sandbox | diverse | Sandbox im Aufbau, Fokus CA RTP | nicht spezifiziert | auf Website nicht angegeben | Web | 1/5 |
+| 6 | TreasuryHost PAINP | pain.001 | pain.001.001.03 und **.09** | nur XSD (keine IG) | Free Demo + kostenpflichtige API | Web-UI + API | 3/5 |
+| 7 | Mobilefish SEPA Validator | pain.001, pain.008 | **.02/.03** | XSD-only | kostenlos, ohne Registrierung | Web-UI | 1/5 (zu alt) |
+| 8 | SEPAViewer (kibervarnost.si) | pain.001 | **.03 (SEPA)** | SEPA Viewer | kostenlos, lokal im Browser | Web-UI (Client) | 2/5 |
+| 9 | Danske Bank File Validation | pain.001 | von Bank abhängig | Danske-IG | kostenlos (Kundenzugang) | Web-UI | n/a (bankspezifisch) |
+| 10 | SEB Developer Portal Tools | pain.001 | nicht dokumentierbar (JS-SPA) | SEB-IG | kostenlos | Web-UI | n/a |
+| 11 | FINaplo (Payment Components) | pain, pacs, camt | u.a. pain.001.001.09, pacs.008.001.08 | **CBPR+, SEPA, Fed, TARGET2** | Freemium + kostenpflichtig | Web-UI + REST-API + Java/.NET lib | 4/5 |
+| 12 | Prowide ISO 20022 (OSS) | alle MX | generisch (XSD-basiert) | keine IG-Regeln | Open Source (Apache 2.0) | Java-Library | 3/5 (Baukasten) |
+| 13 | pyiso20022 (OSS) | PAIN/PACS/CAMT/HEAD | generisch | keine | Open Source | Python-Library | 3/5 |
 
 ---
 
-### 1.2 SIX QR-Rechnung Validation Portal
+## 1. Offizielle Validatoren
 
-| Eigenschaft | Details |
-|------------|---------|
-| **URL** | [validation.iso-payments.ch/qrrechnung](https://validation.iso-payments.ch/qrrechnung/account/logon) |
-| **Preis** | **Kostenlos** |
-| **Scope** | QR-Rechnung spezifisch (nicht direkt pain.001) |
+### 1.1 SIX Validation Portal (Swiss Payment Standards)
+- **URL:** https://validation.iso-payments.ch/sps/account/logon
+- **Messages / Versionen:** pain.001.001.09.ch.03, pain.001.001.03.ch.02, pain.002, camt.05x (gemäss SPS-Katalog)
+- **IGs:** Swiss Payment Standards 2025 (primäre Referenz für CH)
+- **Preis:** kostenlos
+- **Nutzung:** Web-UI nach Registrierung
+- **Registrierung:** ja, Account notwendig (Business-Kontext; Gmail-Adressen werden akzeptiert, Profil muss gepflegt werden)
+- **Datenschutz:** gemäss SIX-Nutzungsbedingungen (Details nur nach Login einsehbar)
+- **Bewertung:** ★★★★★ — **Primärservice** für SPS-Validierung. Praktisch unverzichtbar als Goldstandard, weil Regeln 1:1 von SIX gepflegt werden.
 
-Relevant nur für die Validierung von QR-Referenzen und QR-IBANs als Ergänzung.
-
----
-
-## 2. Kommerzielle Plattformen
-
-### 2.1 XMLdation Validator
-
-| Eigenschaft | Details |
-|------------|---------|
-| **URL** | [xmldation.com/en/solutions/components/validator](https://www.xmldation.com/en/solutions/components/validator) |
-| **Anbieter** | XMLdation Ltd. (Finnland) |
-| **Preis** | **Auf Anfrage** (Enterprise-Lizenz, Demo verfügbar) |
-| **Format** | ISO 20022 (inkl. pain.001.001.09) ✅ |
-| **API** | Ja, REST-API für automatisierte Validierung |
-| **Support** | Support@XMLdation.com |
-
-**Was wird geprüft:**
-- XSD-Schema-Validität
-- Bankspezifische und Service-spezifische Regeln
-- Hunderte von Format-Varianten
-- Detaillierte Fehlerberichte mit exakter Fehlerposition
-
-**Vorteile:**
-- Marktführer für ISO 20022 Validierung
-- API-Integration möglich (automatisierbar)
-- Bankspezifische Regelwerke konfigurierbar
-- Detaillierte, verständliche Fehlerberichte
-
-**Nachteile:**
-- Preis nur auf Anfrage (typisch Enterprise-Preissegment)
-- Overkill für Einzelvalidierung
-- Keine kostenlose Testversion öffentlich verfügbar
-
-**Bewertung:** ★★★★☆ — Professionellste Lösung, aber erst relevant wenn automatisierte Validierung im CI/CD gebraucht wird.
+### 1.2 SWIFT MyStandards / Readiness Portal (CBPR+)
+- **URL:** https://www.swift.com/products/mystandards , https://www.swift.com/cbpr-self-attestation
+- **Messages / Versionen:** alle CBPR+-relevanten Nachrichten, insb. **pacs.008.001.08**, pacs.009, pacs.004, camt.05x, camt.029, camt.056
+- **IGs:** **CBPR+** Usage Guidelines, zahlreiche Market-Infrastructure-/Bank-spezifische Guidelines
+- **Preis:** **Free Tier** für Individuen/Corporates mit gültigem swift.com-Account (kein SWIFT-Kunde nötig). Erweiterte Funktionen (Premium+/Lite) sowie bankspezifische Readiness-Portals meist über die jeweilige Bank zugänglich, Pricing nicht öffentlich.
+- **Nutzung:** Web-UI; Nachrichten können per Drag&Drop gegen Usage Guideline getestet werden
+- **Registrierung:** ja, swift.com-Account
+- **Datenschutz:** Enterprise-grade (SWIFT), Uploads sind für User-Projekte persistent
+- **Bewertung:** ★★★★★ für **CBPR+**. Einziger echter Goldstandard für Cross-Border-Validierung gegen die offiziellen CBPR+ Usage Guidelines.
 
 ---
+
+## 2. Kommerzielle Services mit Free/Freemium
+
+### 2.1 XMLdation
+- **URL:** https://www.xmldation.com/
+- **Messages / Versionen:** breite Abdeckung (pain, pacs, camt); konkrete öffentliche Liste auf der Startseite **nicht angegeben** — detaillierte Matrix nur nach Kontakt / in der Knowledgebase
+- **IGs:** SEPA (EPC), nordische Banken, **CGI-MP** (historisch unterstützt), bankspezifische IGs; SPS 2025 nicht explizit beworben
+- **Preis:** Payments-Testing-as-a-Service für Banken/PSOs; öffentliche Preisliste nicht vorhanden (Sales-Prozess). Früher existierte ein kostenloser Community-Validator — Status aktuell **auf der Website nicht angegeben**.
+- **Nutzung:** Web-UI + REST-API (Simulatoren, Testprofile)
+- **Registrierung:** ja, Businesskontakt
+- **Bewertung:** ★★★☆☆ — Technisch stark, aber als Free-Second-Opinion kaum zugänglich. Relevant falls CGI-MP-Bankvarianten benötigt werden.
 
 ### 2.2 Truugo ISO 20022 Validator
+- **URL:** https://www.truugo.com/iso20022_validator/ , https://www.truugo.com/pricing/
+- **Messages / Versionen:** laut Toolseite nur **Credit Transfer Initiation V03, Payment Status Report V03, Account Statement V02, Debit/Credit Notification V02** — **kein** pain.001.001.09, **kein** pacs.008
+- **IGs:** generische ISO 20022 XSD-Validierung
+- **Preis:** Free-Account (stark limitiert); Essential 99 EUR/Monat, Advanced 259 EUR, Premium 499 EUR, Enterprise auf Anfrage; API-Lizenz 79–439 EUR/Monat
+- **Nutzung:** Web-UI + API
+- **Registrierung:** ja
+- **Bewertung:** ★☆☆☆☆ — **Für unseren Use Case ungeeignet**, da ausschliesslich V02/V03 angeboten wird. Siehe Ausschlussliste.
 
-| Eigenschaft | Details |
-|------------|---------|
-| **URL** | [truugo.com/iso20022_validator](https://www.truugo.com/iso20022_validator/) |
-| **Preis** | **Freemium** (kostenlose Testcredits bei Registrierung) |
-| **Format** | pain.001.001.03 (Basic-Profil) — pain.001.001.09 unklar |
-| **API** | Ja (kostenpflichtig) |
+### 2.3 20022Labs — Sandbox & Validation Tools
+- **URL:** https://20022labs.com/message-validation-tools/ , https://20022labs.com/sandbox/
+- **Messages / Versionen:** Tool-Seite ist eine *kuratierte Liste* fremder Tools (Trace Financial, Volante, XMLdation, NACHA, Unifits, Truugo) — **kein** eigener Validator. Sandbox derzeit im Aufbau (Fokus kanadische RTP).
+- **IGs:** keine eigene
+- **Preis / Registrierung:** auf Website nicht angegeben
+- **Bewertung:** ★☆☆☆☆ — Als Verzeichnis hilfreich, nicht als Validator.
 
-**Was wird geprüft:**
-- XSD-Schema-Validität (Basic-Profil)
-- Konfigurierbare Constraints (Pflichtfelder, Code-Listen, Längen, Integritätsregeln)
+### 2.4 TreasuryHost PAINP
+- **URL:** https://www.treasuryhost.eu/solutions/painp/
+- **Messages / Versionen:** pain.001.001.03 **und pain.001.001.09**
+- **IGs:** Validierung explizit nur gegen das **ISO 20022 XSD-Schema** — keine SPS/CBPR+/CGI-MP-Rules
+- **Preis:** kostenlose Demo (Web-Upload, Excel-Konvertierung); API kostenpflichtig, Preise auf Anfrage
+- **Nutzung:** Web-UI + REST-API
+- **Registrierung:** für Demo nicht zwingend, API ja
+- **Datenschutz:** auf Website nicht angegeben
+- **Bewertung:** ★★★☆☆ — Gut als zweite XSD-Meinung für pain.001.001.09. Taugt **nicht** als IG-Validator.
 
-**Vorteile:**
-- Kostenlose Testcredits
-- API für Automatisierung
-- No-Code UI für eigene Validierungsprofile
-
-**Nachteile:**
-- Basic-Profil nur Schema-Validierung
-- pain.001.001.09 Support nicht bestätigt
-- Kostenpflichtig für regelmässige Nutzung
-
-**Bewertung:** ★★★☆☆ — Interessant für Custom-Validierungsprofile, aber SPS-2025-Support unsicher.
-
----
-
-### 2.3 20022Labs
-
-| Eigenschaft | Details |
-|------------|---------|
-| **URL** | [20022labs.com/message-validation-tools](https://20022labs.com/message-validation-tools/) |
-| **Preis** | **Auf Anfrage** |
-| **Format** | ISO 20022 (Fokus auf MT→MX Migration) |
-| **Sandbox** | [20022labs.com/sandbox](https://20022labs.com/sandbox/) |
-
-**Was wird geprüft:**
-- ISO 20022 XML-Struktur
-- MT→ISO 20022 Transformation
-
-**Bewertung:** ★★☆☆☆ — Fokus auf SWIFT-Migration, weniger auf SPS-spezifische Validierung.
+### 2.5 FINaplo (Payment Components)
+- **URL:** https://finaplo.paymentcomponents.com/ , https://www.paymentcomponents.com/
+- **Messages / Versionen:** breite Abdeckung inkl. **pain.001.001.09**, **pacs.008.001.08**, camt-Familie
+- **IGs:** **CBPR+**, SEPA, TARGET2, FedNow; Demo-Projekt auf GitHub (Payment-Components/demo-iso20022)
+- **Preis:** Freemium-Online-Tool + kommerzielle Libraries (Java/.NET/REST). Preise auf Website nicht öffentlich gelistet.
+- **Nutzung:** Web-UI + REST-API + Library
+- **Registrierung:** ja für erweiterte Features
+- **Bewertung:** ★★★★☆ — Einer der wenigen kommerziellen Tools mit expliziter CBPR+- und pacs.008-Unterstützung, die auch für Tests öffentlich zugänglich sind.
 
 ---
 
-## 3. Kostenlose Online-Tools
+## 3. Kostenlose / Community-Tools
 
-### 3.1 TreasuryHost PAIN.001 Validator
+### 3.1 Mobilefish SEPA XML Validator
+- **URL:** https://www.mobilefish.com/services/sepa_xml_validation/
+- **Messages / Versionen:** pain.001.001.**02**, pain.001.001.**03**, pain.008.001.01/02 — **kein .09**
+- **IGs:** reine XSD-Validierung
+- **Preis:** kostenlos, keine Registrierung
+- **Bewertung:** ★☆☆☆☆ — Für pain.001.001.09 und pacs.008 **ungeeignet**, historische SEPA-Variante.
 
-| Eigenschaft | Details |
-|------------|---------|
-| **URL** | [treasuryhost.eu/solutions/painp](https://www.treasuryhost.eu/solutions/painp/) |
-| **Preis** | **Kostenlos** (Web), API kostenpflichtig |
-| **Format** | pain.001 (SEPA) |
-| **Registrierung** | Nein |
+### 3.2 SEPAViewer (kibervarnost.si)
+- **URL:** https://kibervarnost.si/sepaviewer/
+- **Messages / Versionen:** pain.001.001.03 (SEPA)
+- **IGs:** nur SEPA-Viewer, keine Regelvalidierung
+- **Preis:** kostenlos, anonym, lokal im Browser (keine Server-Uploads). Open Source (MIT, GitHub)
+- **Datenschutz:** ausgezeichnet (alles client-seitig)
+- **Bewertung:** ★★☆☆☆ — Gut für Inspektion, nicht für IG-Validierung.
 
-**Was wird geprüft:**
-- SEPA ISO 20022 Schema-Validierung
-- Tabellarische Anzeige aller Zahlungen
-
-**Vorteile:**
-- Sofort nutzbar, keine Registrierung
-- Übersichtliche Darstellung der Zahlungen
-- API für Automatisierung verfügbar
-
-**Nachteile:**
-- Fokus auf SEPA (pain.001.001.03), nicht SPS 2025
-- Keine Business-Rule-Validierung
-- Daten werden an externen Server gesendet
-
-**Bewertung:** ★★★☆☆ — Gut für schnelle SEPA-Prüfung, nicht für SPS-spezifische Validierung.
+### 3.3 Open-Source-Libraries (GitHub)
+- **Prowide ISO 20022** (Java, Apache 2.0) — https://github.com/prowide/prowide-iso20022 — Parser/Model für alle MX-Messages inkl. pain.001 und pacs.008. Keine eingebauten IG-Regeln, aber perfekte Basis, um eigene Validierung programmatisch gegenzuprüfen.
+- **pyiso20022** — https://github.com/phoughton/pyiso20022 — Python-Paket, PAIN/PACS/ADMI/COLR/CAMT/HEAD.
+- **prog-nov/iso20022-messages-for-go** — https://github.com/prog-nov/iso20022-messages-for-go — enthält u.a. die XSDs für `pain.001.001.09`, `pacs.008.001.08`, `head.001.001.02` — nützlich als Referenz-Schema-Set.
+- **Payment-Components/demo-iso20022** — https://github.com/Payment-Components/demo-iso20022 — Beispiel für die kommerzielle FINaplo-Library.
+- **Bewertung (gesamt):** ★★★☆☆ — Keine IG-Regeln out-of-the-box, aber ideal als *unabhängige Parser-/XSD-Meinung* in CI.
 
 ---
 
-### 3.2 Mobilefish.com SEPA XML Validator
-
-| Eigenschaft | Details |
-|------------|---------|
-| **URL** | [mobilefish.com/services/sepa_xml_validation](https://www.mobilefish.com/services/sepa_xml_validation/sepa_xml_validation.php) |
-| **Preis** | **Kostenlos** |
-| **Format** | SEPA pain.001.001.03 |
-| **Registrierung** | Nein |
-
-**Vorteile:**
-- Sofort nutzbar
-- Einfache Bedienung
-
-**Nachteile:**
-- Nur pain.001.001.03 (nicht .09)
-- Nur SEPA, keine SPS-Regeln
-- Daten werden hochgeladen
-
-**Bewertung:** ★★☆☆☆ — Nur für schnelle SEPA-Checks älterer Versionen.
-
----
-
-### 3.3 SEPAViewer (Kibervarnost)
-
-| Eigenschaft | Details |
-|------------|---------|
-| **URL** | [kibervarnost.si/sepaviewer](https://kibervarnost.si/sepaviewer/) |
-| **Preis** | **Kostenlos** |
-| **Format** | pain.001.001.03 |
-| **Datenschutz** | Client-side (Daten bleiben im Browser) |
-
-**Was wird geboten:**
-- XML-Viewer mit Bearbeitungsfunktion
-- IBAN-Validierung
-- CSV-Export
-- Kein Server-Upload (alles im Browser)
-
-**Vorteile:**
-- Datenschutzfreundlich (kein Upload)
-- Bearbeitung direkt im Browser
-- IBAN-Validierung eingebaut
-
-**Nachteile:**
-- Nur pain.001.001.03
-- Kein SPS-2025-Support
-- Viewer, kein vollständiger Validator
-
-**Bewertung:** ★★★☆☆ — Bester kostenloser Viewer für Datenschutz-bewusste Nutzung.
-
----
-
-## 4. Bank-spezifische Tools
+## 4. Bank-spezifische Portale
 
 ### 4.1 Danske Bank File Validation Tool
+- **URL:** über Danske Business Online
+- **Nutzung:** nur für Danske-Kunden, validiert gegen deren IG
+- **Bewertung:** n/a — nur bei Bankbeziehung nutzbar.
 
-| Eigenschaft | Details |
-|------------|---------|
-| **URL** | [danskeci.com/.../file-validation-tool](https://danskeci.com/ci/transaction-banking/instructions/integration-services/file-validation-tool) |
-| **Preis** | **Kostenlos** (für Danske-Bank-Kunden) |
-| **Format** | pain.001.001.03 |
-| **Datenaufbewahrung** | 24 Stunden, dann gelöscht |
-
-**Einschränkungen:**
-- Nur pain.001.001.03
-- Copyright-geschützt, nur für Bank-Kunden
-- Testkonten erforderlich für Payment-Details
-
-**Bewertung:** ★★☆☆☆ — Nur relevant für Danske-Bank-Kunden.
+### 4.2 SEB Developer Portal (Baltics)
+- **URL:** https://developer.baltics.sebgroup.com/tools/non-api-tools
+- **Status:** Die Seite ist eine JavaScript-SPA, HTML-Fetch liefert nur CSS — Inhalte **konnten nicht zuverlässig verifiziert werden**. Historisch existiert ein XML-Validator für ISO 20022-Messages, den SEB für baltische Kunden bereitstellt.
+- **Bewertung:** n/a für CH/CBPR+-Use Cases.
 
 ---
 
-### 4.2 SEB Developer Portal
+## 5. Empfehlungs-Matrix
 
-| Eigenschaft | Details |
-|------------|---------|
-| **URL** | [developer.baltics.sebgroup.com/tools/non-api-tools](https://developer.baltics.sebgroup.com/tools/non-api-tools) |
-| **Preis** | **Kostenlos** |
-| **Scope** | SEB-spezifische Formate |
-
-**Bewertung:** ★★☆☆☆ — Nur relevant für SEB-Kunden.
-
----
-
-## 5. Lokale / Eigene Validierung
-
-### 5.1 Eigene XSD-Validierung (bereits implementiert ✅)
-
-Unser Tool validiert bereits jede generierte XML-Datei gegen `pain.001.001.09.ch.03.xsd`. Dies deckt die Schema-Ebene vollständig ab.
-
-### 5.2 Python `xmlschema` Library
-
-| Eigenschaft | Details |
-|------------|---------|
-| **URL** | [pypi.org/project/xmlschema](https://pypi.org/project/xmlschema/) |
-| **Preis** | **Kostenlos** (Open Source) |
-| **Vorteil** | Strengere XSD-Validierung als lxml in manchen Fällen |
-
-Alternative zu lxml für XSD-Validierung. Kann als Second-Opinion-Validator eingesetzt werden.
-
-### 5.3 Pain001 Python Library
-
-| Eigenschaft | Details |
-|------------|---------|
-| **URL** | [github.com/sebastienrousseau/pain001](https://github.com/sebastienrousseau/pain001) |
-| **Preis** | **Kostenlos** (Open Source, MIT) |
-| **Format** | pain.001.001.03 bis .11 |
-
-Generiert und validiert pain.001-Dateien. Könnte als Referenz-Implementierung zum Vergleich dienen, ist aber primär ein Generator, kein Validator.
+| Message × IG | Primärer Validator | Sekundärer Check |
+|---|---|---|
+| pain.001.001.09 × **SPS 2025** | **SIX Validation Portal** | TreasuryHost PAINP (XSD-Zweitmeinung) + eigenes XSD aus `prog-nov/iso20022-messages-for-go` |
+| pain.001.001.09 × **CGI-MP** | XMLdation (falls Zugang) | FINaplo |
+| pain.001.001.09 × **SEPA/EPC** | SIX Validation Portal (deckt SEPA via SPS ab) | FINaplo, Mobilefish nur für .03-Altstände |
+| pacs.008.001.08 × **CBPR+** | **SWIFT MyStandards Readiness Portal** | FINaplo (CBPR+-Profil), Prowide (Parser-Check) |
+| pacs.008.001.08 × **CGI-MP** | XMLdation | FINaplo |
+| Struktur-/XSD-Only (alle) | Lokaler lxml-XSD-Check im Projekt | Prowide / pyiso20022 in CI |
 
 ---
 
-## 6. Empfehlung: Validierungsstrategie
+## 6. Ausschlussliste (für unseren Use Case nicht geeignet)
 
-### Sofort umsetzen (Phase 1)
-
-| Schritt | Tool | Aufwand | Kosten |
-|---------|------|---------|--------|
-| **1. Interne Validierung** | Eigene XSD + Business Rules | ✅ Bereits implementiert | Kostenlos |
-| **2. SIX Validation Portal** | validation.iso-payments.ch | Registrierung + manueller Upload | Kostenlos |
-| **3. TreasuryHost** | treasuryhost.eu | Kein Aufwand, sofort nutzbar | Kostenlos |
-
-### Empfohlener Workflow
-
-```
-1. XML generieren (unser Tool)
-        │
-        ▼
-2. Interne Validierung (XSD + Business Rules)
-        │ ✅ Pass
-        ▼
-3. Stichproben-Validierung auf SIX Portal
-   (mindestens 1x pro Zahlungstyp)
-        │ ✅ Pass
-        ▼
-4. Optional: TreasuryHost für schnelle SEPA-Checks
-        │
-        ▼
-5. Ergebnis dokumentieren
-```
-
-### Später (Phase 2 / CI/CD)
-
-Wenn automatisierte Validierung im CI/CD-Pipeline gebraucht wird:
-
-1. **XMLdation API** evaluieren (Demo anfordern: [xmldation.com/en/demo](https://www.xmldation.com/en/demo/))
-2. **TreasuryHost API** als günstigere Alternative prüfen
-3. **Second-Opinion-Validator** mit `xmlschema` Library als lokale Ergänzung
-
-### Nicht empfohlen
-
-- Mobilefish.com, Danske Bank, SEB → zu alt (nur .03), zu bank-spezifisch
-- 20022Labs → Fokus auf MT→MX Migration, nicht SPS
+- **Truugo ISO 20022 Validator** — unterstützt laut eigener Tool-Seite nur **V02/V03** der relevanten Messages; kein pain.001.001.09, kein pacs.008. **Nicht verwenden**.
+- **Mobilefish SEPA Validator** — nur pain.001.001.02/.03 und pain.008.001.01/.02. Kein .09, kein pacs.008.
+- **SEPAViewer (kibervarnost.si)** — nur pain.001.001.03-Viewer, keine Regelvalidierung.
+- **20022Labs Tool-Liste / Sandbox** — kein eigener Validator; Sandbox im Aufbau (Fokus Kanada-RTP).
+- **Danske File Validation / SEB Tools** — bankspezifisch, nicht für externe Tests nutzbar.
 
 ---
 
-## Quellen
+## 7. Quellen
 
-- [SIX Group — Tools & Validation Portals](https://www.six-group.com/en/products-services/banking-services/payment-standardization/expertise/tools.html)
-- [SIX Validation Portal Login](https://validation.iso-payments.ch/sps/account/logon)
-- [SIX Download Center](https://www.six-group.com/en/products-services/banking-services/payment-standardization/downloads-faq/download-center.html)
-- [XMLdation Validator](https://www.xmldation.com/en/solutions/components/validator)
-- [XMLdation pain.001 Wiki](https://knowledge.xmldation.com/iso_20022/pain.001)
-- [Truugo ISO 20022 Validator](https://www.truugo.com/iso20022_validator/)
-- [20022Labs Message Validation Tools](https://20022labs.com/message-validation-tools/)
-- [TreasuryHost PAIN.001 Validator](https://www.treasuryhost.eu/solutions/painp/)
-- [Mobilefish SEPA Validator](https://www.mobilefish.com/services/sepa_xml_validation/sepa_xml_validation.php)
-- [SEPAViewer (Kibervarnost)](https://kibervarnost.si/sepaviewer/)
-- [Danske Bank File Validation Tool](https://danskeci.com/ci/transaction-banking/instructions/integration-services/file-validation-tool)
-- [Pain001 Python Library](https://github.com/sebastienrousseau/pain001)
-- [lxml Validation Documentation](https://lxml.de/validation.html)
+- SIX Validation Portal: https://validation.iso-payments.ch/sps/account/logon
+- SIX Group SPS 2025: https://www.six-group.com/en/products-services/banking-services/payment-standardization/standards/iso-20022.html
+- SWIFT MyStandards: https://www.swift.com/products/mystandards
+- SWIFT CBPR+ Self-Attestation: https://www.swift.com/cbpr-self-attestation
+- ECB Dokument zum Readiness Portal: https://www.ecb.europa.eu/paym/pdf/consultations/Readiness_Portal_for_message_testing.pdf
+- XMLdation: https://www.xmldation.com/
+- Truugo Validator: https://www.truugo.com/iso20022_validator/
+- Truugo Pricing: https://www.truugo.com/pricing/
+- 20022Labs Tools: https://20022labs.com/message-validation-tools/
+- 20022Labs Sandbox: https://20022labs.com/sandbox/
+- TreasuryHost PAINP: https://www.treasuryhost.eu/solutions/painp/
+- Mobilefish: https://www.mobilefish.com/services/sepa_xml_validation/
+- SEPAViewer: https://kibervarnost.si/sepaviewer/
+- SEB Developer Portal: https://developer.baltics.sebgroup.com/tools/non-api-tools
+- FINaplo (Payment Components): https://finaplo.paymentcomponents.com/
+- Prowide ISO 20022 (GitHub): https://github.com/prowide/prowide-iso20022
+- pyiso20022 (GitHub): https://github.com/phoughton/pyiso20022
+- prog-nov/iso20022-messages-for-go: https://github.com/prog-nov/iso20022-messages-for-go
+- Payment-Components/demo-iso20022: https://github.com/Payment-Components/demo-iso20022
+- Clearstream CBPR+ pacs.008 Usage Guideline: https://www.clearstream.com/resource/blob/4151636/748b8c7bc59fe132742e3a15955d175d/pacs-008-2-data.pdf
+- JPMorgan ISO 20022 CBPR+ Testing Guide (2025): https://www.jpmorgan.com/content/dam/jpmorgan/documents/payments/jpmorgan-iso20022-client-testing-guide.pdf
+
+---
+
+*Recherchedatum: 2026-04-06. Einige Detail-Seiten (SIX-Portal hinter Login, XMLdation-Produktmatrix, SEB Developer Portal JS-SPA, FINaplo SPA) waren per HTTP-Fetch nicht vollständig lesbar; dort basieren die Aussagen auf öffentlicher Produktkommunikation und Suchergebnissen zum Stichtag. Bitte vor Beschaffungsentscheidungen konkrete Angebote und aktuelle Preislisten direkt einholen.*
