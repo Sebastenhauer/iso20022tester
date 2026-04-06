@@ -704,9 +704,10 @@ BR_CBPR_PACS_003 = _r(
 
 BR_CBPR_PACS_004 = _r(
     "BR-CBPR-PACS-004", "CBPR-PACS",
-    "CBPR+ pacs.008: SttlmMtd muss INDA, INGA oder CLRG sein (COVE in V1 unsupported)",
+    "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein "
+    "(XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
     None,
-    "CBPR+ Usage Guidelines SR2026",
+    "CBPR+ Usage Guidelines SR2026 Schema enumeration",
     violatable=True,
 )
 

@@ -32,7 +32,9 @@ _UUID4_PATTERN = re.compile(
 _ISO_CCY_PATTERN = re.compile(r"^[A-Z]{3}$")
 _ISO_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
-_VALID_SETTLEMENT_METHODS = {"INDA", "INGA", "CLRG"}  # COVE out of scope V1
+# CBPR+ XSD erlaubt nur INDA, INGA, COVE. COVE ist in V1 out of scope
+# (kein pacs.009 Generator), daher akzeptieren wir aktuell nur INDA + INGA.
+_VALID_SETTLEMENT_METHODS = {"INDA", "INGA"}
 _VALID_CHARGE_BEARER = {"DEBT", "CRED", "SHAR"}
 
 
