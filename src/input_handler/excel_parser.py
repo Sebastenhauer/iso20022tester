@@ -362,3 +362,235 @@ def parse_excel(file_path: str) -> Tuple[List[TestCase], List[str]]:
         return [], errors
 
     return testcases, []
+
+
+# ---------------------------------------------------------------------------
+# pacs.008 Excel Parser
+# ---------------------------------------------------------------------------
+
+# Pflicht-Spalten fuer pacs.008-Testfaelle.
+PACS008_REQUIRED_COLUMNS = [
+    "TestcaseID",
+    "Titel",
+    "Ziel",
+    "Erwartetes Ergebnis",
+]
+
+
+def _pacs008_postal_address(row, col_index, prefix: str):
+    """Baut eine PostalAddress aus Debtor-/Creditor-Spalten mit Prefix."""
+    from src.models.pacs008 import PostalAddress
+
+    def cell(col_name):
+        idx = col_index.get(col_name)
+        if idx is None or idx >= len(row):
+            return None
+        return row[idx]
+
+    street = _str_or_none(cell(f"{prefix} Strasse"))
+    bldg = _str_or_none(cell(f"{prefix} Hausnummer"))
+    plz = _str_or_none(cell(f"{prefix} PLZ"))
+    town = _str_or_none(cell(f"{prefix} Ort"))
+    ctry = _str_or_none(cell(f"{prefix} Land"))
+
+    if not any([street, bldg, plz, town, ctry]):
+        return None
+
+    return PostalAddress(
+        street_name=street,
+        building_number=bldg,
+        postal_code=plz,
+        town_name=town,
+        country=ctry,
+    )
+
+
+def parse_pacs008_excel(file_path: str):
+    """Parst ein pacs.008-Testfall-Excel.
+
+    Returns:
+        Tuple aus (List[Pacs008TestCase], List[str]). Bei Parser-Fehlern
+        ist die Testcase-Liste leer und die Error-Liste gefuellt.
+
+    Unterstuetzt alle Spalten aus dem Plan (WP-03 Spalten-Set). Alle
+    nicht-kritischen Spalten sind optional; fehlende Spalten erzeugen
+    keine Warnung. Uebersteuerbare Dot-Notation-Overrides werden aus
+    'Weitere Testdaten' gelesen.
+    """
+    from src.models.pacs008 import Pacs008Flavor, Pacs008TestCase, SettlementMethod
+    from src.models.testcase import ExpectedResult
+
+    errors: List[str] = []
+
+    try:
+        wb = load_workbook(file_path, read_only=True, data_only=True)
+    except Exception as e:
+        return [], [f"Excel-Datei konnte nicht geoeffnet werden: {e}"]
+
+    ws = wb.active
+    rows = list(ws.iter_rows(values_only=True))
+
+    if not rows:
+        return [], ["Die Excel-Datei ist leer."]
+
+    header = [str(c).strip() if c else "" for c in rows[0]]
+    missing = [c for c in PACS008_REQUIRED_COLUMNS if c not in header]
+    if missing:
+        return [], [
+            f"Fehlende Pflichtspalten: {', '.join(missing)}. "
+            f"Erwartet mindestens: {', '.join(PACS008_REQUIRED_COLUMNS)}"
+        ]
+
+    col_index = {name: i for i, name in enumerate(header)}
+
+    def cell_val(row, col_name):
+        idx = col_index.get(col_name)
+        if idx is None or idx >= len(row):
+            return None
+        return row[idx]
+
+    valid_expected = {er.value for er in ExpectedResult}
+    valid_flavors = {f.value for f in Pacs008Flavor}
+    valid_sttlm = {s.value for s in SettlementMethod}
+
+    testcases: List = []
+    seen_ids = set()
+
+    for row_idx, row in enumerate(rows[1:], start=2):
+        tc_id = _str_or_none(cell_val(row, "TestcaseID"))
+        if not tc_id:
+            # Continuation-Rows sind in V1 nicht unterstuetzt (Single-Tx-Fokus),
+            # leere Zeilen werden ignoriert.
+            continue
+
+        row_errors = []
+
+        if tc_id in seen_ids:
+            row_errors.append(f"Testfall '{tc_id}': TestcaseID ist doppelt vorhanden.")
+        seen_ids.add(tc_id)
+
+        titel = _str_or_none(cell_val(row, "Titel"))
+        if not titel:
+            row_errors.append(f"Testfall '{tc_id}': 'Titel' fehlt.")
+            titel = tc_id
+
+        ziel = _str_or_none(cell_val(row, "Ziel"))
+        if not ziel:
+            row_errors.append(f"Testfall '{tc_id}': 'Ziel' fehlt.")
+            ziel = ""
+
+        expected_raw = _str_or_none(cell_val(row, "Erwartetes Ergebnis"))
+        if not expected_raw or expected_raw not in valid_expected:
+            row_errors.append(
+                f"Testfall '{tc_id}': 'Erwartetes Ergebnis' muss OK/NOK sein, "
+                f"ist aber '{expected_raw}'."
+            )
+            errors.extend(row_errors)
+            continue
+        expected_result = ExpectedResult(expected_raw)
+
+        # Flavor
+        flavor_raw = _str_or_none(cell_val(row, "Flavor"))
+        flavor = Pacs008Flavor.CBPR_PLUS
+        if flavor_raw:
+            if flavor_raw in valid_flavors:
+                flavor = Pacs008Flavor(flavor_raw)
+            else:
+                row_errors.append(
+                    f"Testfall '{tc_id}': Ungueltiger Flavor '{flavor_raw}'. "
+                    f"Gueltig: {', '.join(sorted(valid_flavors))}"
+                )
+
+        # Settlement Method
+        sttlm_raw = _str_or_none(cell_val(row, "SttlmMtd"))
+        sttlm = SettlementMethod.INDA
+        if sttlm_raw:
+            if sttlm_raw in valid_sttlm:
+                sttlm = SettlementMethod(sttlm_raw)
+            else:
+                row_errors.append(
+                    f"Testfall '{tc_id}': Ungueltige SttlmMtd '{sttlm_raw}'. "
+                    f"Gueltig: {', '.join(sorted(valid_sttlm))}"
+                )
+
+        # Overrides
+        overrides_raw = _str_or_none(cell_val(row, "Weitere Testdaten"))
+        overrides = {}
+        if overrides_raw:
+            overrides = parse_key_value_pairs(overrides_raw)
+
+        violate_rule = _str_or_none(cell_val(row, "ViolateRule"))
+        if "ViolateRule" in overrides:
+            violate_rule = violate_rule or overrides.pop("ViolateRule")
+
+        # Addresses
+        debtor_addr = _pacs008_postal_address(row, col_index, "Debtor")
+        creditor_addr = _pacs008_postal_address(row, col_index, "Creditor")
+
+        # Amount (pacs.008 nutzt 'IntrBkSttlmAmt' als Hauptbetrag; wir akzeptieren
+        # auch 'Betrag' als Alias fuer Komfort)
+        amount_raw = cell_val(row, "IntrBkSttlmAmt")
+        if amount_raw is None:
+            amount_raw = cell_val(row, "Betrag")
+        amount = _parse_amount(amount_raw, tc_id, errors=row_errors) if amount_raw is not None else None
+
+        currency = _str_or_none(cell_val(row, "Währung"))
+        if not currency:
+            currency = _str_or_none(cell_val(row, "Waehrung"))
+
+        if row_errors:
+            errors.extend(row_errors)
+            continue
+
+        tc = Pacs008TestCase(
+            testcase_id=tc_id,
+            titel=titel,
+            ziel=ziel,
+            expected_result=expected_result,
+            flavor=flavor,
+            bah_from_bic=_str_or_none(cell_val(row, "BAH From BIC")),
+            bah_to_bic=_str_or_none(cell_val(row, "BAH To BIC")),
+            instructing_agent_bic=_str_or_none(cell_val(row, "InstgAgt BIC")),
+            instructing_agent_clr_sys_mmb_id=_str_or_none(cell_val(row, "InstgAgt ClrSysMmbId")),
+            instructed_agent_bic=_str_or_none(cell_val(row, "InstdAgt BIC")),
+            instructed_agent_clr_sys_mmb_id=_str_or_none(cell_val(row, "InstdAgt ClrSysMmbId")),
+            settlement_method=sttlm,
+            interbank_settlement_date=_str_or_none(cell_val(row, "IntrBkSttlmDt")),
+            charge_bearer=_str_or_none(cell_val(row, "ChrgBr")),
+            debtor_name=_str_or_none(cell_val(row, "Debtor Name")),
+            debtor_address=debtor_addr,
+            debtor_iban=_str_or_none(cell_val(row, "Debtor IBAN")),
+            debtor_account_other_id=_str_or_none(cell_val(row, "Debtor Kontonummer")),
+            debtor_account_other_scheme=_str_or_none(cell_val(row, "Debtor Kontoschema")),
+            debtor_agent_bic=_str_or_none(cell_val(row, "DbtrAgt BIC")),
+            debtor_agent_clr_sys_mmb_id=_str_or_none(cell_val(row, "DbtrAgt ClrSysMmbId")),
+            creditor_name=_str_or_none(cell_val(row, "Creditor Name")),
+            creditor_address=creditor_addr,
+            creditor_iban=_str_or_none(cell_val(row, "Creditor IBAN")),
+            creditor_account_other_id=_str_or_none(cell_val(row, "Creditor Kontonummer")),
+            creditor_account_other_scheme=_str_or_none(cell_val(row, "Creditor Kontoschema")),
+            creditor_agent_bic=_str_or_none(cell_val(row, "CdtrAgt BIC")),
+            creditor_agent_clr_sys_mmb_id=_str_or_none(cell_val(row, "CdtrAgt ClrSysMmbId")),
+            intermediary_agent_1_bic=_str_or_none(cell_val(row, "IntrmyAgt1 BIC")),
+            intermediary_agent_1_clr_sys_mmb_id=_str_or_none(cell_val(row, "IntrmyAgt1 ClrSysMmbId")),
+            intermediary_agent_2_bic=_str_or_none(cell_val(row, "IntrmyAgt2 BIC")),
+            intermediary_agent_3_bic=_str_or_none(cell_val(row, "IntrmyAgt3 BIC")),
+            amount=amount,
+            currency=currency,
+            purpose_code=_str_or_none(cell_val(row, "PurposeCode")),
+            category_purpose=_str_or_none(cell_val(row, "CategoryPurpose")),
+            remittance_info=_str_or_none(cell_val(row, "Verwendungszweck")),
+            uetr=_str_or_none(cell_val(row, "UETR")),
+            violate_rule=violate_rule,
+            overrides=overrides,
+            expected_api_response=_str_or_none(cell_val(row, "Erwartete API-Antwort")),
+            remarks=_str_or_none(cell_val(row, "Bemerkungen")),
+        )
+        testcases.append(tc)
+
+    wb.close()
+
+    if errors:
+        return [], errors
+
+    return testcases, []
