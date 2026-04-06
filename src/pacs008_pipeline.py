@@ -71,6 +71,7 @@ class Pacs008TestPipeline:
         self._xsd_path = self._resolve_xsd_path()
         self.use_finaplo = use_finaplo
         self._finaplo_client = None
+        self._finaplo_quota_exhausted = False
         if use_finaplo:
             try:
                 from src.finaplo.client import FinaploClient, FinaploConfigError
@@ -178,16 +179,37 @@ class Pacs008TestPipeline:
         br_results = validate_pacs008(bm)
         br_lite: List[BusinessRuleResultLite] = list(br_results)
 
-        # FINaplo External Validation (optional)
+        # FINaplo External Validation (optional).
+        # Negative Testcases (ViolateRule + expected NOK) werden geskippt --
+        # sie haben bereits eine interne Erwartung + muessen lokal fehlschlagen,
+        # ein externer FINaplo-Call dafuer verbraucht nur Quota ohne Nutzen.
         finaplo_valid: Optional[bool] = None
         finaplo_errors: List[str] = []
-        if self.use_finaplo and self._finaplo_client is not None:
+        is_negative_test = (
+            tc.expected_result == ExpectedResult.NOK and bool(tc.violate_rule)
+        )
+        if (
+            self.use_finaplo
+            and self._finaplo_client is not None
+            and not self._finaplo_quota_exhausted
+            and not is_negative_test
+        ):
+            from src.finaplo.client import FinaploQuotaExceeded
             try:
                 finaplo_result = self._finaplo_client.validate(
                     xml_bytes, flavor=tc.flavor,
                 )
                 finaplo_valid = finaplo_result.valid
                 finaplo_errors = finaplo_result.errors
+            except FinaploQuotaExceeded as e:
+                self._finaplo_quota_exhausted = True
+                print(
+                    f"[pacs.008] FINaplo quota exhausted, skipping remaining. "
+                    f"({tc.testcase_id} and onwards)"
+                )
+                # Dieser Testcase wird auch geskippt (None=neutral)
+                finaplo_valid = None
+                finaplo_errors = []
             except Exception as e:
                 finaplo_valid = False
                 finaplo_errors = [f"FINaplo-Call fehlgeschlagen: {e}"]

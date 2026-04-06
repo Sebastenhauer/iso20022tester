@@ -59,6 +59,10 @@ class FinaploConfigError(FinaploError):
     """Credentials oder Config fehlen."""
 
 
+class FinaploQuotaExceeded(FinaploError):
+    """Trial-Quota aufgebraucht (subscription.expired)."""
+
+
 # ---------------------------------------------------------------------------
 # Validation Result
 # ---------------------------------------------------------------------------
@@ -238,6 +242,15 @@ class FinaploClient:
                 errors=[],
                 flavor=flavor.value,
                 endpoint=endpoint,
+            )
+
+        # Subscription / Quota aufgebraucht ist in FINaplo ein 400 mit Body
+        # 'subscription.expired' (kein JSON). Das ist kein Validation-Fehler,
+        # sondern ein Konto-Limit -- wir signalisieren es separat.
+        if "subscription.expired" in (raw or "").lower():
+            raise FinaploQuotaExceeded(
+                "FINaplo Trial-Quota ist aufgebraucht (subscription.expired). "
+                "Weitere Calls in diesem Run skippen."
             )
 
         # 400-499 => Validation-Fehler

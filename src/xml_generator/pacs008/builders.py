@@ -184,7 +184,11 @@ def build_charges_info(
     XSD-Reihenfolge: Amt, Agt.
     """
     ci = _el(parent, "ChrgsInf")
-    _el_with_attr(ci, "Amt", _fmt_amount(charges.amount), {"Ccy": charges.currency})
+    _el_with_attr(
+        ci, "Amt",
+        _fmt_amount(charges.amount, charges.currency),
+        {"Ccy": charges.currency},
+    )
     build_agent(ci, "Agt", charges.agent)
     return ci
 
@@ -321,7 +325,11 @@ def build_cdt_trf_tx_inf(
     # IntrBkSttlmAmt
     sttlm_amt = tx.interbank_settlement_amount or tx.instructed_amount
     sttlm_ccy = tx.interbank_settlement_currency or tx.instructed_currency
-    _el_with_attr(cdt_tx, "IntrBkSttlmAmt", _fmt_amount(sttlm_amt), {"Ccy": sttlm_ccy})
+    _el_with_attr(
+        cdt_tx, "IntrBkSttlmAmt",
+        _fmt_amount(sttlm_amt, sttlm_ccy),
+        {"Ccy": sttlm_ccy},
+    )
 
     # IntrBkSttlmDt wird auf Instruction-Ebene gehalten und vom Message-
     # Builder vorher in die Transaction gespiegelt. Hier direkt setzen
@@ -341,7 +349,7 @@ def build_cdt_trf_tx_inf(
     # InstdAmt
     _el_with_attr(
         cdt_tx, "InstdAmt",
-        _fmt_amount(tx.instructed_amount),
+        _fmt_amount(tx.instructed_amount, tx.instructed_currency),
         {"Ccy": tx.instructed_currency},
     )
 
@@ -412,8 +420,33 @@ def build_cdt_trf_tx_inf(
 # Utility
 # ---------------------------------------------------------------------------
 
-def _fmt_amount(amt: Decimal) -> str:
-    """Formatiert einen Decimal-Betrag ohne unnoetige Trailing-Zeros,
-    aber mit mindestens 2 Nachkommastellen (ISO 20022 Convention)."""
-    q = amt.quantize(Decimal("0.01"))
-    return str(q)
+def _fmt_amount(amt: Decimal, currency: Optional[str] = None) -> str:
+    """Formatiert einen Decimal-Betrag entsprechend der ISO 4217 Dezimalstellen.
+
+    Die meisten Waehrungen haben 2 Dezimalstellen. Zero-Decimal-Waehrungen
+    (JPY, KRW, ISK, ...) muessen ohne Dezimalstellen serialisiert werden,
+    sonst schlaegt die CBPR+-Validation mit 'too many decimal digits' fehl.
+    Drei-Dezimal-Waehrungen (BHD, JOD, KWD, OMR, TND, LYD) verwenden 3.
+    """
+    decimals = _decimals_for_currency(currency)
+    quantizer = Decimal("1") if decimals == 0 else Decimal("0." + "0" * decimals)
+    return str(amt.quantize(quantizer))
+
+
+_ZERO_DECIMAL_CURRENCIES = {
+    "BIF", "CLP", "DJF", "GNF", "ISK", "JPY", "KMF", "KRW",
+    "PYG", "RWF", "UGX", "UYI", "VND", "VUV", "XAF", "XOF", "XPF",
+}
+_THREE_DECIMAL_CURRENCIES = {"BHD", "IQD", "JOD", "KWD", "LYD", "OMR", "TND"}
+
+
+def _decimals_for_currency(currency: Optional[str]) -> int:
+    """Liefert die Anzahl Dezimalstellen fuer eine ISO 4217 Waehrung."""
+    if not currency:
+        return 2
+    ccy = currency.upper()
+    if ccy in _ZERO_DECIMAL_CURRENCIES:
+        return 0
+    if ccy in _THREE_DECIMAL_CURRENCIES:
+        return 3
+    return 2
