@@ -672,6 +672,126 @@ BR_CGI_SEPA_SVC_01 = _r(
     "xmldation.com/cgi-mp /sepa_-_svclvl",
 )
 
+# ---------------------------------------------------------------------------
+# CBPR+ pacs.008.001.08 Rules (Kategorie CBPR-PACS)
+# Quellen: SWIFT CBPR+ Usage Guidelines SR2026, Schema constraints aus
+# CBPRPlus_..._pacs_008_001_08_FIToFICustomerCreditTransfer_..._iso15enriched.xsd
+# ---------------------------------------------------------------------------
+
+BR_CBPR_PACS_001 = _r(
+    "BR-CBPR-PACS-001", "CBPR-PACS",
+    "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+    None,
+    "CBPR+ Usage Guidelines SR2026",
+    violatable=True,
+)
+
+BR_CBPR_PACS_002 = _r(
+    "BR-CBPR-PACS-002", "CBPR-PACS",
+    "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+    None,
+    "CBPR+ Usage Guidelines SR2026",
+    violatable=True,
+)
+
+BR_CBPR_PACS_003 = _r(
+    "BR-CBPR-PACS-003", "CBPR-PACS",
+    "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+    None,
+    "CBPR+ Usage Guidelines SR2026",
+    violatable=True,
+)
+
+BR_CBPR_PACS_004 = _r(
+    "BR-CBPR-PACS-004", "CBPR-PACS",
+    "CBPR+ pacs.008: SttlmMtd muss INDA, INGA oder CLRG sein (COVE in V1 unsupported)",
+    None,
+    "CBPR+ Usage Guidelines SR2026",
+    violatable=True,
+)
+
+BR_CBPR_PACS_005 = _r(
+    "BR-CBPR-PACS-005", "CBPR-PACS",
+    "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+    None,
+    "CBPR+ Usage Guidelines SR2026",
+)
+
+BR_CBPR_PACS_006 = _r(
+    "BR-CBPR-PACS-006", "CBPR-PACS",
+    "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+    None,
+    "CBPR+ Usage Guidelines SR2026",
+)
+
+BR_CBPR_PACS_007 = _r(
+    "BR-CBPR-PACS-007", "CBPR-PACS",
+    "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+    None,
+    "CBPR+ BAH Usage Guidelines",
+    violatable=True,
+)
+
+BR_CBPR_PACS_008 = _r(
+    "BR-CBPR-PACS-008", "CBPR-PACS",
+    "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+    None,
+    "CBPR+ BAH Usage Guidelines",
+    violatable=True,
+)
+
+BR_CBPR_PACS_009 = _r(
+    "BR-CBPR-PACS-009", "CBPR-PACS",
+    "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+    None,
+    "CBPR+ Usage Guidelines SR2026",
+)
+
+BR_CBPR_PACS_010 = _r(
+    "BR-CBPR-PACS-010", "CBPR-PACS",
+    "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+    None,
+    "CBPR+ Usage Guidelines SR2026",
+    violatable=True,
+)
+
+BR_CBPR_PACS_011 = _r(
+    "BR-CBPR-PACS-011", "CBPR-PACS",
+    "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+    None,
+    "ISO 4217",
+    violatable=True,
+)
+
+BR_CBPR_PACS_012 = _r(
+    "BR-CBPR-PACS-012", "CBPR-PACS",
+    "CBPR+ pacs.008: Wenn ChrgsInf vorhanden, muss jede Instanz Amt+Agt enthalten",
+    None,
+    "CBPR+ Usage Guidelines SR2026",
+)
+
+BR_CBPR_PACS_013 = _r(
+    "BR-CBPR-PACS-013", "CBPR-PACS",
+    "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+    None,
+    "CBPR+ Usage Guidelines SR2026",
+)
+
+BR_CBPR_PACS_014 = _r(
+    "BR-CBPR-PACS-014", "CBPR-PACS",
+    "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+    None,
+    "CBPR+ Usage Guidelines SR2026",
+)
+
+BR_CBPR_PACS_015 = _r(
+    "BR-CBPR-PACS-015", "CBPR-PACS",
+    "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+    None,
+    "ISO 17442 / CBPR+ Rulebook",
+    violatable=True,
+)
+
 # --- Batch Booking ---
 
 BR_BTCH_001 = _r(
@@ -752,10 +872,11 @@ _CATEGORY_NAMES = {
     "SCT-INST": "SCT Inst-spezifisch (SEPA Instant Credit Transfer)",
     "CBPR": "CBPR+-spezifisch (Typ X)",
     "CGI": "CGI-MP-spezifisch (C2B global)",
+    "CBPR-PACS": "CBPR+ pacs.008 (FI-to-FI Credit Transfer, SR2026)",
     "BIC": "BIC-Verzeichnis-Validierung",
 }
 
-_CATEGORY_ORDER = ["HDR", "GEN", "ADDR", "IBAN-V", "REF-V", "PURP", "CTGP", "REM", "CCY", "BIC", "SEPA", "QR", "IBAN", "DOM", "SIC5", "SCT-INST", "CBPR", "CGI"]
+_CATEGORY_ORDER = ["HDR", "GEN", "ADDR", "IBAN-V", "REF-V", "PURP", "CTGP", "REM", "CCY", "BIC", "SEPA", "QR", "IBAN", "DOM", "SIC5", "SCT-INST", "CBPR", "CGI", "CBPR-PACS"]
 
 
 def rules_to_markdown() -> str:
