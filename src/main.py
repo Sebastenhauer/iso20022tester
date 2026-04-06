@@ -155,12 +155,14 @@ def run_pacs008(
     config: AppConfig,
     seed_override: int = None,
     verbose: bool = False,
+    use_finaplo: bool = False,
 ):
     """pacs.008 Pipeline Entry (CBPR+ Flavor V1).
 
     Parst das Excel mit ``parse_pacs008_excel``, baut pro Testcase
     ein ``Pacs008BusinessMessage``, validiert XSD + Business Rules
-    und schreibt die Files unter ``output/<ts>/pacs.008/``.
+    (+ optional FINaplo) und schreibt die Files unter
+    ``output/<ts>/pacs.008/``.
     """
     from src.input_handler.excel_parser import parse_pacs008_excel
     from src.pacs008_pipeline import Pacs008TestPipeline
@@ -175,7 +177,9 @@ def run_pacs008(
 
     print(f"[pacs.008] {len(testcases)} Testfaelle eingelesen.")
 
-    pipeline = Pacs008TestPipeline(config)
+    pipeline = Pacs008TestPipeline(config, use_finaplo=use_finaplo)
+    if use_finaplo and pipeline.use_finaplo:
+        print("[pacs.008] FINaplo external validation: ENABLED")
 
     run_dir = os.path.join(
         config.output_path,
@@ -263,6 +267,12 @@ def main():
         help="Message-Type explizit setzen (pain.001 oder pacs.008). "
              "Wenn nicht gesetzt, wird automatisch aus dem Excel-Header erkannt.",
     )
+    gen_parser.add_argument(
+        "--finaplo",
+        action="store_true",
+        help="Externe Validation via FINaplo API fuer pacs.008 Testcases. "
+             "Erfordert API-Key in finaplo/api-key-*.txt.",
+    )
 
     rt_parser = subparsers.add_parser("roundtrip", help="Round-Trip-Validierung")
     rt_parser.add_argument("xml_files", nargs="+", help="XML-Dateien oder Verzeichnis")
@@ -288,6 +298,11 @@ def main():
         choices=VALID_MESSAGE_TYPES,
         default=None,
         help="Message-Type explizit (pain.001|pacs.008); sonst Auto-Detection",
+    )
+    parser.add_argument(
+        "--finaplo",
+        action="store_true",
+        help="Externe Validation via FINaplo API fuer pacs.008",
     )
 
     args = parser.parse_args()
@@ -329,12 +344,19 @@ def main():
         seed = getattr(args, "seed", None)
         verbose = getattr(args, "verbose", False)
         message_flag = getattr(args, "message", None)
+        use_finaplo = getattr(args, "finaplo", False)
         message_type = _resolve_message_type(input_file, message_flag)
         if verbose:
             print(f"[dispatcher] Message-Type: {message_type}")
         if message_type == "pacs.008":
-            run_pacs008(input_file, config, seed_override=seed, verbose=verbose)
+            run_pacs008(
+                input_file, config,
+                seed_override=seed, verbose=verbose,
+                use_finaplo=use_finaplo,
+            )
         else:
+            if use_finaplo:
+                print("[dispatcher] --finaplo wird fuer pain.001 ignoriert")
             run(input_file, config, seed_override=seed, verbose=verbose)
 
     else:

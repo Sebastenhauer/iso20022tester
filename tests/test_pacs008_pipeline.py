@@ -135,3 +135,105 @@ class TestPipelineEndToEnd:
         r = results[0]
         # Ohne Agenten faellt XSD oder Business Rules
         assert not r.overall_pass or not r.xsd_valid
+
+
+# ---------------------------------------------------------------------------
+# FINaplo Integration (WP-11)
+# ---------------------------------------------------------------------------
+
+class TestFinaploIntegration:
+    def test_finaplo_disabled_by_default(self, tmp_path):
+        tc = _minimal_testcase()
+        pipeline = Pacs008TestPipeline(_config(tmp_path))
+        assert pipeline.use_finaplo is False
+        results = pipeline.process([tc], str(tmp_path))
+        assert results[0].finaplo_valid is None
+        assert results[0].finaplo_errors == []
+
+    def test_finaplo_enabled_with_mock_success(self, tmp_path, monkeypatch):
+        import responses
+        monkeypatch.setenv("FINAPLO_API_KEY", "test-key")
+        monkeypatch.setenv("FINAPLO_BASE_URL", "https://api.test")
+        tc = _minimal_testcase(testcase_id="TC-FINAPLO-OK")
+        with responses.RequestsMock() as rm:
+            rm.add(
+                responses.POST,
+                "https://api.test/cbpr/validate",
+                body="Message is valid",
+                status=200,
+            )
+            pipeline = Pacs008TestPipeline(_config(tmp_path), use_finaplo=True)
+            assert pipeline.use_finaplo is True
+            results = pipeline.process([tc], str(tmp_path))
+        r = results[0]
+        assert r.finaplo_valid is True
+        assert r.finaplo_errors == []
+        assert r.overall_pass
+
+    def test_finaplo_enabled_with_mock_400(self, tmp_path, monkeypatch):
+        import responses
+        monkeypatch.setenv("FINAPLO_API_KEY", "test-key")
+        monkeypatch.setenv("FINAPLO_BASE_URL", "https://api.test")
+        tc = _minimal_testcase(testcase_id="TC-FINAPLO-400")
+        with responses.RequestsMock() as rm:
+            rm.add(
+                responses.POST,
+                "https://api.test/cbpr/validate",
+                body='{"errors": ["BAH issue"]}',
+                status=400,
+            )
+            pipeline = Pacs008TestPipeline(_config(tmp_path), use_finaplo=True)
+            results = pipeline.process([tc], str(tmp_path))
+        r = results[0]
+        assert r.finaplo_valid is False
+        assert r.finaplo_errors == ["BAH issue"]
+        assert not r.overall_pass  # finaplo failure propagates
+
+    def test_finaplo_401_captured_in_report(self, tmp_path, monkeypatch):
+        import responses
+        monkeypatch.setenv("FINAPLO_API_KEY", "bogus")
+        monkeypatch.setenv("FINAPLO_BASE_URL", "https://api.test")
+        tc = _minimal_testcase(testcase_id="TC-FINAPLO-401")
+        with responses.RequestsMock() as rm:
+            rm.add(
+                responses.POST,
+                "https://api.test/cbpr/validate",
+                body="Unauthorized",
+                status=401,
+            )
+            pipeline = Pacs008TestPipeline(_config(tmp_path), use_finaplo=True)
+            results = pipeline.process([tc], str(tmp_path))
+        r = results[0]
+        assert r.finaplo_valid is False
+        assert any("401" in err or "Unauthorized" in err for err in r.finaplo_errors)
+
+    def test_finaplo_report_counters(self, tmp_path, monkeypatch):
+        import responses
+        monkeypatch.setenv("FINAPLO_API_KEY", "test-key")
+        monkeypatch.setenv("FINAPLO_BASE_URL", "https://api.test")
+        tc = _minimal_testcase()
+        with responses.RequestsMock() as rm:
+            rm.add(
+                responses.POST,
+                "https://api.test/cbpr/validate",
+                body="Message is valid",
+                status=200,
+            )
+            pipeline = Pacs008TestPipeline(_config(tmp_path), use_finaplo=True)
+            results = pipeline.process([tc], str(tmp_path))
+            paths = pipeline.generate_reports(results, "dummy.xlsx", str(tmp_path))
+
+        import json
+        with open(paths["json"]) as f:
+            report = json.load(f)
+        assert report["testlauf"]["finaplo_enabled"] is True
+        assert report["testlauf"]["finaplo_checked"] == 1
+        assert report["testlauf"]["finaplo_valid"] == 1
+
+    def test_finaplo_disabled_via_missing_credentials(self, tmp_path, monkeypatch):
+        """Wenn kein Key verfuegbar ist, wird FINaplo deaktiviert ohne Crash."""
+        monkeypatch.delenv("FINAPLO_API_KEY", raising=False)
+        monkeypatch.delenv("FINAPLO_BASE_URL", raising=False)
+        monkeypatch.setenv("FINAPLO_DIR", str(tmp_path / "nonexistent"))
+        pipeline = Pacs008TestPipeline(_config(tmp_path), use_finaplo=True)
+        assert pipeline.use_finaplo is False  # auto-disabled

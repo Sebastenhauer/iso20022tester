@@ -59,16 +59,29 @@ class Pacs008TestPipeline:
     """Verarbeitet pacs.008 Testcases end-to-end.
 
     Verwendung:
-        pipeline = Pacs008TestPipeline(config)
+        pipeline = Pacs008TestPipeline(config, use_finaplo=True)
         results = pipeline.process(testcases, output_dir)
         pipeline.generate_reports(results, input_file, output_dir)
     """
 
-    def __init__(self, config: AppConfig):
+    def __init__(self, config: AppConfig, use_finaplo: bool = False):
         self.config = config
         # Lazy init XSD Validator (damit Tests ohne Schema weiterhin laufen)
         self._xsd_schema: Optional[etree.XMLSchema] = None
         self._xsd_path = self._resolve_xsd_path()
+        self.use_finaplo = use_finaplo
+        self._finaplo_client = None
+        if use_finaplo:
+            try:
+                from src.finaplo.client import FinaploClient, FinaploConfigError
+                try:
+                    self._finaplo_client = FinaploClient()
+                except FinaploConfigError as e:
+                    print(f"[pacs.008] FINaplo-Integration deaktiviert: {e}")
+                    self.use_finaplo = False
+            except ImportError:
+                print("[pacs.008] FINaplo-Modul nicht verfuegbar.")
+                self.use_finaplo = False
 
     def _resolve_xsd_path(self) -> Optional[str]:
         """Findet das CBPR+ pacs.008 XSD im schemas/pacs.008/ Ordner."""
@@ -165,9 +178,24 @@ class Pacs008TestPipeline:
         br_results = validate_pacs008(bm)
         br_lite: List[BusinessRuleResultLite] = list(br_results)
 
+        # FINaplo External Validation (optional)
+        finaplo_valid: Optional[bool] = None
+        finaplo_errors: List[str] = []
+        if self.use_finaplo and self._finaplo_client is not None:
+            try:
+                finaplo_result = self._finaplo_client.validate(
+                    xml_bytes, flavor=tc.flavor,
+                )
+                finaplo_valid = finaplo_result.valid
+                finaplo_errors = finaplo_result.errors
+            except Exception as e:
+                finaplo_valid = False
+                finaplo_errors = [f"FINaplo-Call fehlgeschlagen: {e}"]
+
         # Overall-Pass Logik
         all_br_pass = all(r.passed for r in br_lite)
-        overall_ok = xsd_valid and all_br_pass
+        finaplo_ok = finaplo_valid is None or finaplo_valid is True
+        overall_ok = xsd_valid and all_br_pass and finaplo_ok
 
         # Expected NOK -> invertiere (wenn wir erwarten, dass es failt, ist
         # "failen" ein Pass)
@@ -184,6 +212,8 @@ class Pacs008TestPipeline:
             xsd_valid=xsd_valid,
             xsd_errors=xsd_errors,
             business_rule_results=br_lite,
+            finaplo_valid=finaplo_valid,
+            finaplo_errors=finaplo_errors,
             overall_pass=overall_pass,
             xml_file_path=file_path,
             remarks=tc.remarks,
@@ -351,6 +381,10 @@ class Pacs008TestPipeline:
         pass_count = sum(1 for r in results if r.overall_pass)
         fail_count = len(results) - pass_count
 
+        finaplo_enabled = self.use_finaplo
+        finaplo_checked = sum(1 for r in results if r.finaplo_valid is not None)
+        finaplo_valid_count = sum(1 for r in results if r.finaplo_valid is True)
+
         report = {
             "testlauf": {
                 "datum": datetime.now().isoformat(),
@@ -360,6 +394,9 @@ class Pacs008TestPipeline:
                 "total": len(results),
                 "pass": pass_count,
                 "fail": fail_count,
+                "finaplo_enabled": finaplo_enabled,
+                "finaplo_checked": finaplo_checked,
+                "finaplo_valid": finaplo_valid_count,
             },
             "testfaelle": [
                 {
@@ -378,6 +415,8 @@ class Pacs008TestPipeline:
                         }
                         for br in r.business_rule_results
                     ],
+                    "finaplo_valide": r.finaplo_valid,
+                    "finaplo_fehler": r.finaplo_errors,
                     "ergebnis": "Pass" if r.overall_pass else "Fail",
                     "xml_datei": r.xml_file_path,
                     "bemerkungen": r.remarks,
