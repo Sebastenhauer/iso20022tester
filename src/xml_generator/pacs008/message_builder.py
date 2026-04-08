@@ -5,7 +5,7 @@ Baut aus einer Pacs008BusinessMessage eine komplette
 
 Die eigentliche Envelope-Form fuer CBPR+ ist ein Wrapper-Element,
 das sowohl den BAH (head.001.001.02) als auch das Document
-(pacs.008.001.08) als Geschwister enthaelt. FINaplo `/cbpr/validate`
+(pacs.008.001.08) als Geschwister enthaelt. Der externe XML-Validator-Service unter `/cbpr/validate`
 akzeptiert diese Form direkt als plain-text XML-String.
 """
 
@@ -136,7 +136,7 @@ def build_business_message(bm: Pacs008BusinessMessage) -> etree._Element:
 
     Der BusinessMessage-Wrapper ist selbst NICHT in einem Namespace; AppHdr
     und Document haben jeweils ihre eigenen Default-Namespaces. Diese Form
-    ist das, was FINaplo `/cbpr/validate` als Plain-Text-Body erwartet.
+    ist das, was der externe XML-Validator-Service unter `/cbpr/validate` als Plain-Text-Body erwartet.
     """
     document = build_document(bm.instruction)
     bah = build_bah(

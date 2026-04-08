@@ -2,7 +2,7 @@
 
 **Erstellt:** 2026-04-06
 **Status:** Ready to Execute
-**Abnahme-Prinzip:** Nach jedem grösseren Work Package (WP) → `pytest` grün + Sanity-Run + FINaplo-Validation der relevanten Outputs.
+**Abnahme-Prinzip:** Nach jedem grösseren Work Package (WP) → `pytest` grün + Sanity-Run + External-Validation der relevanten Outputs.
 
 ---
 
@@ -43,10 +43,10 @@
     input_handler/
       excel_parser.py              # bestehend, Auto-Detection + pacs.008-Branch
     pipeline.py                    # bestehend, Dispatch auf Message-Type
-    finaplo/                       # neu
+    xml_validator/                       # neu
       __init__.py
       client.py                    # REST Client mit Bearer Auth, per-flavor endpoint
-      validator.py                 # High-Level: XML → FINaplo → ValidationResult
+      validator.py                 # High-Level: XML → external XML Validator service → ValidationResult
   ```
 - **Output-Struktur:**
   ```
@@ -58,11 +58,11 @@
       *.xml                        # BAH + Document in einem File (BusinessMessage-Wrapper)
       testlauf_ergebnis.{json,xml,docx}
   ```
-- **FINaplo-Endpoint je Flavor (R1):**
+- **external XML Validator service-Endpoint je Flavor (R1):**
   - `CBPR+` → `POST /cbpr/validate`
   - `TARGET2` → `POST /target2/validate` (später)
   - `SEPA` → `POST /sepa/{sepaScheme}/validate` (später)
-- **FINaplo-Auto-Repair (R3 = 3b + 4a):** nach Fertigstellung läuft ein Subagent-Loop: pipeline run → FINaplo validate → bei Fehlern die Errors interpretieren → Builder/Rule/Testdaten anpassen → rerun → bis alle 50 Testcases grün sind.
+- **External Validator Audit (R3 = 3b + 4a):** nach Fertigstellung läuft ein Subagent-Loop: pipeline run → external XML Validator service validate → bei Fehlern die Errors interpretieren → Builder/Rule/Testdaten anpassen → rerun → bis alle 50 Testcases grün sind.
 
 ---
 
@@ -283,22 +283,22 @@ Erwartete API-Antwort, Bemerkungen
 
 ---
 
-### WP-09: FINaplo API Client
+### WP-09: XML Validator API Client
 
 **Ziel:** Thin REST Client mit Bearer Auth, Per-Flavor-Endpoint-Dispatch, Retry-Logik.
 
 **Tasks:**
-- `src/finaplo/__init__.py`
-- `src/finaplo/client.py`:
-  - Liest API-Key aus `finaplo/api-key-<date>.txt` (konfigurierbar via env var `FINAPLO_KEY_PATH`)
-  - Liest Base-URL aus `finaplo/base-url-<date>.txt`
-  - `FinaploClient.validate(xml: bytes, flavor: str) -> FinaploResult`:
+- `src/xml_validator_service/__init__.py`
+- `src/xml_validator_service/client.py`:
+  - Liest API-Key aus `xml_validator/api-key-<date>.txt` (konfigurierbar via env var `XML_VALIDATOR_API_KEY`)
+  - Liest Base-URL aus `xml_validator/base-url-<date>.txt`
+  - `XmlValidatorClient.validate(xml: bytes, flavor: str) -> ExternalValidationResult`:
     - Flavor → Endpoint-Mapping: `CBPR+` → `/cbpr/validate`, zukünftig `TARGET2` → `/target2/validate`, `SEPA` → `/sepa/{scheme}/validate` (R1)
     - POST mit `Content-Type: text/plain`, `Authorization: Bearer <key>`
     - Response parsing: 200 → valid, 400 → parse errors, 401 → auth error, 500 → server error
-  - Exceptions: `FinaploAuthError`, `FinaploValidationError`, `FinaploServerError`
-- `src/finaplo/validator.py`:
-  - `validate_xml_file(path: Path, flavor: str) -> FinaploResult` als High-Level-Wrapper
+  - Exceptions: `XmlValidatorAuthError`, `external XML Validator serviceValidationError`, `XmlValidatorServerError`
+- `src/xml_validator_service/validator.py`:
+  - `validate_xml_file(path: Path, flavor: str) -> ExternalValidationResult` als High-Level-Wrapper
 - Unit Tests mit `responses` library (HTTP mocks)
 
 **Abnahme:**
@@ -336,19 +336,19 @@ Erwartete API-Antwort, Bemerkungen
 
 ---
 
-### WP-11: Full-Run & FINaplo-Integration im Pipeline
+### WP-11: Full-Run & XML-Validator-Integration im Pipeline
 
-**Ziel:** Nach jedem Run werden alle pacs.008 XMLs automatisch via FINaplo validiert und Ergebnisse in den Report aufgenommen.
+**Ziel:** Nach jedem Run werden alle pacs.008 XMLs automatisch via external XML Validator service validiert und Ergebnisse in den Report aufgenommen.
 
 **Tasks:**
-- `src/pipeline.py` (pacs.008 branch): nach XSD + Business Rules ruft die Pipeline optional `FinaploClient.validate()` auf
-- CLI-Flag `--finaplo` (default: off, explizit aktivieren)
-- Report-Integration: FINaplo-Ergebnis als dritte Validierungs-Spalte neben XSD und Business Rules
+- `src/pipeline.py` (pacs.008 branch): nach XSD + Business Rules ruft die Pipeline optional `XmlValidatorClient.validate()` auf
+- CLI-Flag `--external-validate` (default: off, explizit aktivieren)
+- Report-Integration: external XML Validator service-Ergebnis als dritte Validierungs-Spalte neben XSD und Business Rules
 - Rate-Limit-Aware (auch wenn kein Limit bekannt, defensive Retry + Backoff)
 
 **Abnahme:**
-- `python -m src.main --input testfaelle_pacs008_comprehensive.xlsx --finaplo` läuft durch alle 50 Testcases
-- Report zeigt XSD, BR, FINaplo Status pro Testcase
+- `python -m src.main --input testfaelle_pacs008_comprehensive.xlsx --external-validate` läuft durch alle 50 Testcases
+- Report zeigt XSD, BR, external XML Validator service Status pro Testcase
 - Bei API-Fehlern wird Testcase als Fail markiert, Run bricht nicht ab
 
 **Dependencies:** WP-08, WP-09
@@ -356,22 +356,22 @@ Erwartete API-Antwort, Bemerkungen
 
 ---
 
-### WP-12: FINaplo Auto-Repair Loop (R3=3b + R4=4a)
+### WP-12: External Validator Audit Loop (R3=3b + R4=4a)
 
 **Ziel:** Subagent-gesteuerter Loop, der nach dem ersten Full-Run fehlschlagende Cases analysiert und iterativ Code/Rules/Testdaten fixt, bis alle 50 grün sind.
 
 **Tasks:**
 - Nicht als permanenter Code, sondern als **Ad-hoc Claude-Subagent-Task** im Agent-Mode:
-  1. Lese alle FINaplo-Fehler aus dem Report
+  1. Lese alle external XML Validator service-Fehler aus dem Report
   2. Gruppe ähnliche Fehler
   3. Pro Gruppe: identifiziere Root Cause (Builder-Bug, falsche Rule, falsche Testdaten)
   4. Patch anwenden
   5. Re-run
   6. Repeat bis grün oder bis 3 Iterationen erfolglos (dann eskalieren)
-- Logging aller Iterationen in `output/<timestamp>/finaplo_repair_log.md`
+- Logging aller Iterationen in `output/<timestamp>/xml_validator_repair_log.md`
 
 **Abnahme:**
-- Am Ende: 50/50 grün gegen FINaplo (Sandbox oder Live)
+- Am Ende: 50/50 grün gegen external XML Validator service (Sandbox oder Live)
 - Repair-Log dokumentiert alle gefundenen Issues und Fixes
 
 **Dependencies:** WP-11, komplette V1 steht
@@ -385,9 +385,9 @@ Erwartete API-Antwort, Bemerkungen
 
 **Tasks:**
 - `README.md`: pacs.008 Sektion hinzufügen (Usage, Excel-Format, Flavors)
-- `CLAUDE.md`: neue Konventionen für pacs.008 (Flavor-Modell, Charges-Handling, BAH Wrapping, FINaplo-Integration)
+- `CLAUDE.md`: neue Konventionen für pacs.008 (Flavor-Modell, Charges-Handling, BAH Wrapping, XML-Validator-Integration)
 - `docs/pacs008_implementation.md`: technisches Deep-Dive, Field-Mapping, Override-Keys
-- `docs/finaplo_integration.md`: wie Key konfigurieren, wie API testen
+- `docs/xml_validator_integration.md`: wie Key konfigurieren, wie API testen
 
 **Abnahme:**
 - Alle neuen Docs vorhanden, Code-Beispiele getestet
@@ -410,11 +410,11 @@ WP-01 (Scaffold)
        ├─ WP-07 (Violations) ← WP-05,06  │
        └─ WP-08 (Pipeline) ← WP-03,05,06,07
                                          │
-WP-09 (FINaplo Client) ──────────────────┤
+WP-09 (XML Validator Client) ──────────────────┤
                                          │
 WP-10 (Test Data) ← WP-03                │
                                          │
-WP-11 (FINaplo Pipeline Integration) ← WP-08, WP-09
+WP-11 (External validator pipeline Integration) ← WP-08, WP-09
                                          │
 WP-12 (Auto-Repair Loop) ← WP-11, WP-10
                                          │
@@ -424,7 +424,7 @@ WP-13 (Dokumentation) ← WP-12
 **Parallelisierungs-Möglichkeiten:**
 - WP-04 + WP-06 + WP-09 können parallel zu WP-03 laufen
 - WP-10 (Test-Daten-Extraktion) kann sehr früh starten, sobald WP-03 (Parser) steht
-- WP-09 (FINaplo Client) komplett entkoppelt, jederzeit machbar
+- WP-09 (XML Validator Client) komplett entkoppelt, jederzeit machbar
 
 ## Abnahmeprotokoll (nach jedem WP)
 
@@ -432,7 +432,7 @@ Nach jedem abgeschlossenen WP:
 1. `pytest` → **alle** Tests grün (nicht nur die neuen)
 2. Regression-Smoke-Test pain.001: `python -m src.main --input templates/testfaelle_comprehensive.xlsx --config config.yaml` → 137/137 Pass
 3. Falls WP XML-Generierung betrifft: XSD-Validation des Outputs muss grün sein
-4. Ab WP-11: zusätzlich FINaplo-Validation der relevanten Outputs muss grün sein
+4. Ab WP-11: zusätzlich External-Validation der relevanten Outputs muss grün sein
 5. Commit mit klarer Message nach Template: `pacs.008: WP-XX <title>` + Body mit Acceptance-Kriterien erfüllt
 6. Push nach jedem abgeschlossenen WP (oder nach Gruppe aus 2–3 eng verwandten kleinen WPs)
 
@@ -448,9 +448,9 @@ Nach jedem abgeschlossenen WP:
 | WP-06 Business Rules | M (5h) |
 | WP-07 Violations | M (4h) |
 | WP-08 Pipeline | L (1 Tag) |
-| WP-09 FINaplo Client | M (4h) |
+| WP-09 XML Validator Client | M (4h) |
 | WP-10 Test-Daten | L (1–1.5 Tage) |
-| WP-11 FINaplo Pipeline | M (4h) |
+| WP-11 External validator pipeline | M (4h) |
 | WP-12 Auto-Repair | Variabel (1–3 Tage) |
 | WP-13 Dokumentation | S (2h) |
 | **Total** | **~8–12 Personen-Tage** |
@@ -458,5 +458,5 @@ Nach jedem abgeschlossenen WP:
 ## Offene Punkte
 
 - **R3 = "a":** unklar welcher Frage das zugeordnet ist; ich frage gleich zurück.
-- **FINaplo Sandbox vs Live:** im Swagger stehen beide. Starten wir mit Sandbox (Default) und schalten auf Live um, sobald Credentials funktionieren?
+- **validator sandbox vs Live:** im Swagger stehen beide. Starten wir mit Sandbox (Default) und schalten auf Live um, sobald Credentials funktionieren?
 - **`Content-Type: text/plain` vs `application/xml`:** Swagger sagt text/plain. Ich verwende das, falls es nicht geht probieren wir application/xml.

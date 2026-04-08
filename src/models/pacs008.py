@@ -11,7 +11,7 @@ Design-Entscheidungen (siehe docs/roadmap/2026-04-06_pacs008_implementation_plan
 - Agenten-Kette via ``intermediary_agents: List[AgentInfo]`` (bis zu 3 Hops).
 - Charges-Info explizit pro Hop als Liste von ``ChargesInfo``-Objekten;
   *keine* Default-Werte wenn der User nichts mitgibt.
-- ``pacs008_flavor`` bestimmt spaeter den FINaplo-Endpoint
+- ``pacs008_flavor`` bestimmt spaeter den XML-Validator-Endpoint
   (``CBPR_PLUS`` -> ``/cbpr/validate``).
 - Felder im BAH (AppHdr) werden separat am TestCase gehalten
   (``bah_from_bic`` / ``bah_to_bic``), da sie logisch nicht zur
@@ -36,7 +36,7 @@ class Pacs008Flavor(str, Enum):
 
     In V1 wird nur ``CBPR_PLUS`` implementiert. Die anderen Werte sind
     vorbereitet fuer spaetere Implementationen und dienen schon jetzt
-    der FINaplo-Endpoint-Auswahl (`/cbpr/validate` vs `/target2/validate`
+    der XML-Validator-Endpoint-Auswahl (`/cbpr/validate` vs `/target2/validate`
     vs `/sepa/{scheme}/validate`).
     """
 
@@ -328,8 +328,8 @@ class Pacs008TestCaseResult(BaseModel):
 
     business_rule_results: List["BusinessRuleResultLite"] = []
 
-    finaplo_valid: Optional[bool] = None  # None = FINaplo nicht aufgerufen
-    finaplo_errors: List[str] = []
+    external_valid: Optional[bool] = None  # None = external validator not called
+    external_errors: List[str] = []
 
     overall_pass: bool
     xml_file_path: Optional[str] = None

@@ -16,7 +16,7 @@
 | 8 | SEPAViewer (kibervarnost.si) | pain.001 | **.03 (SEPA)** | SEPA Viewer | kostenlos, lokal im Browser | Web-UI (Client) | 2/5 |
 | 9 | Danske Bank File Validation | pain.001 | von Bank abhängig | Danske-IG | kostenlos (Kundenzugang) | Web-UI | n/a (bankspezifisch) |
 | 10 | SEB Developer Portal Tools | pain.001 | nicht dokumentierbar (JS-SPA) | SEB-IG | kostenlos | Web-UI | n/a |
-| 11 | FINaplo (Payment Components) | pain, pacs, camt | u.a. pain.001.001.09, pacs.008.001.08 | **CBPR+, SEPA, Fed, TARGET2** | Freemium + kostenpflichtig | Web-UI + REST-API + Java/.NET lib | 4/5 |
+| 11 | external XML Validator service (the XML Validator service provider) | pain, pacs, camt | u.a. pain.001.001.09, pacs.008.001.08 | **CBPR+, SEPA, Fed, TARGET2** | Freemium + kostenpflichtig | Web-UI + REST-API + Java/.NET lib | 4/5 |
 | 12 | Prowide ISO 20022 (OSS) | alle MX | generisch (XSD-basiert) | keine IG-Regeln | Open Source (Apache 2.0) | Java-Library | 3/5 (Baukasten) |
 | 13 | pyiso20022 (OSS) | PAIN/PACS/CAMT/HEAD | generisch | keine | Open Source | Python-Library | 3/5 |
 
@@ -83,10 +83,10 @@
 - **Datenschutz:** auf Website nicht angegeben
 - **Bewertung:** ★★★☆☆ — Gut als zweite XSD-Meinung für pain.001.001.09. Taugt **nicht** als IG-Validator.
 
-### 2.5 FINaplo (Payment Components)
-- **URL:** https://finaplo.paymentcomponents.com/ , https://www.paymentcomponents.com/
+### 2.5 external XML Validator service (the XML Validator service provider)
+- **URL:** <XML_VALIDATOR_PROVIDER_PORTAL>/ , https://www.<XML_VALIDATOR_PROVIDER>/
 - **Messages / Versionen:** breite Abdeckung inkl. **pain.001.001.09**, **pacs.008.001.08**, camt-Familie
-- **IGs:** **CBPR+**, SEPA, TARGET2, FedNow; Demo-Projekt auf GitHub (Payment-Components/demo-iso20022)
+- **IGs:** **CBPR+**, SEPA, TARGET2, FedNow; Demo-Projekt auf GitHub (demo-iso20022 by the validator provider)
 - **Preis:** Freemium-Online-Tool + kommerzielle Libraries (Java/.NET/REST). Preise auf Website nicht öffentlich gelistet.
 - **Nutzung:** Web-UI + REST-API + Library
 - **Registrierung:** ja für erweiterte Features
@@ -115,7 +115,7 @@
 - **Prowide ISO 20022** (Java, Apache 2.0) — https://github.com/prowide/prowide-iso20022 — Parser/Model für alle MX-Messages inkl. pain.001 und pacs.008. Keine eingebauten IG-Regeln, aber perfekte Basis, um eigene Validierung programmatisch gegenzuprüfen.
 - **pyiso20022** — https://github.com/phoughton/pyiso20022 — Python-Paket, PAIN/PACS/ADMI/COLR/CAMT/HEAD.
 - **prog-nov/iso20022-messages-for-go** — https://github.com/prog-nov/iso20022-messages-for-go — enthält u.a. die XSDs für `pain.001.001.09`, `pacs.008.001.08`, `head.001.001.02` — nützlich als Referenz-Schema-Set.
-- **Payment-Components/demo-iso20022** — https://github.com/Payment-Components/demo-iso20022 — Beispiel für die kommerzielle FINaplo-Library.
+- **demo-iso20022 by the validator provider** — https://github.com/demo-iso20022 by the validator provider — Beispiel für die kommerzielle external XML Validator service-Library.
 - **Bewertung (gesamt):** ★★★☆☆ — Keine IG-Regeln out-of-the-box, aber ideal als *unabhängige Parser-/XSD-Meinung* in CI.
 
 ---
@@ -139,10 +139,10 @@
 | Message × IG | Primärer Validator | Sekundärer Check |
 |---|---|---|
 | pain.001.001.09 × **SPS 2025** | **SIX Validation Portal** | TreasuryHost PAINP (XSD-Zweitmeinung) + eigenes XSD aus `prog-nov/iso20022-messages-for-go` |
-| pain.001.001.09 × **CGI-MP** | XMLdation (falls Zugang) | FINaplo |
-| pain.001.001.09 × **SEPA/EPC** | SIX Validation Portal (deckt SEPA via SPS ab) | FINaplo, Mobilefish nur für .03-Altstände |
-| pacs.008.001.08 × **CBPR+** | **SWIFT MyStandards Readiness Portal** | FINaplo (CBPR+-Profil), Prowide (Parser-Check) |
-| pacs.008.001.08 × **CGI-MP** | XMLdation | FINaplo |
+| pain.001.001.09 × **CGI-MP** | XMLdation (falls Zugang) | external XML Validator service |
+| pain.001.001.09 × **SEPA/EPC** | SIX Validation Portal (deckt SEPA via SPS ab) | external XML Validator service, Mobilefish nur für .03-Altstände |
+| pacs.008.001.08 × **CBPR+** | **SWIFT MyStandards Readiness Portal** | external XML Validator service (CBPR+-Profil), Prowide (Parser-Check) |
+| pacs.008.001.08 × **CGI-MP** | XMLdation | external XML Validator service |
 | Struktur-/XSD-Only (alle) | Lokaler lxml-XSD-Check im Projekt | Prowide / pyiso20022 in CI |
 
 ---
@@ -173,14 +173,14 @@
 - Mobilefish: https://www.mobilefish.com/services/sepa_xml_validation/
 - SEPAViewer: https://kibervarnost.si/sepaviewer/
 - SEB Developer Portal: https://developer.baltics.sebgroup.com/tools/non-api-tools
-- FINaplo (Payment Components): https://finaplo.paymentcomponents.com/
+- external XML Validator service (the XML Validator service provider): <XML_VALIDATOR_PROVIDER_PORTAL>/
 - Prowide ISO 20022 (GitHub): https://github.com/prowide/prowide-iso20022
 - pyiso20022 (GitHub): https://github.com/phoughton/pyiso20022
 - prog-nov/iso20022-messages-for-go: https://github.com/prog-nov/iso20022-messages-for-go
-- Payment-Components/demo-iso20022: https://github.com/Payment-Components/demo-iso20022
+- demo-iso20022 by the validator provider: https://github.com/demo-iso20022 by the validator provider
 - Clearstream CBPR+ pacs.008 Usage Guideline: https://www.clearstream.com/resource/blob/4151636/748b8c7bc59fe132742e3a15955d175d/pacs-008-2-data.pdf
 - JPMorgan ISO 20022 CBPR+ Testing Guide (2025): https://www.jpmorgan.com/content/dam/jpmorgan/documents/payments/jpmorgan-iso20022-client-testing-guide.pdf
 
 ---
 
-*Recherchedatum: 2026-04-06. Einige Detail-Seiten (SIX-Portal hinter Login, XMLdation-Produktmatrix, SEB Developer Portal JS-SPA, FINaplo SPA) waren per HTTP-Fetch nicht vollständig lesbar; dort basieren die Aussagen auf öffentlicher Produktkommunikation und Suchergebnissen zum Stichtag. Bitte vor Beschaffungsentscheidungen konkrete Angebote und aktuelle Preislisten direkt einholen.*
+*Recherchedatum: 2026-04-06. Einige Detail-Seiten (SIX-Portal hinter Login, XMLdation-Produktmatrix, SEB Developer Portal JS-SPA, external XML Validator service SPA) waren per HTTP-Fetch nicht vollständig lesbar; dort basieren die Aussagen auf öffentlicher Produktkommunikation und Suchergebnissen zum Stichtag. Bitte vor Beschaffungsentscheidungen konkrete Angebote und aktuelle Preislisten direkt einholen.*

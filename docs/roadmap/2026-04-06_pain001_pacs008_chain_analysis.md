@@ -13,7 +13,7 @@ Das Repo soll in V1 pacs.008 unabhängig von pain.001 generieren (eigene Test-Ca
 
 - pain.001 und pacs.008 haben unterschiedliche Pflichtfelder; eine 1:1-Ableitung ist unvollständig und verlangt Zusatz-Annahmen (Instructing Agent, Instructed Agent, Intermediary-Kette, Settlement-Method).
 - Default-Mapping-Logik muss ausführlich mit Domain-Experten abgestimmt werden (welche Felder der DebtorAgent aus pain.001 welche in pacs.008 befüllen, speziell bei Cover vs Serial, IntrBkSttlmDt-Ableitung aus ReqdExctnDt minus Cut-Off, Charges-Propagation SHAR→DEBT/CRED, etc.).
-- Erst sinnvoll wenn V1 pacs.008 stabil läuft und Business-Rules gegen FINaplo verifiziert sind.
+- Erst sinnvoll wenn V1 pacs.008 stabil läuft und Business-Rules gegen external XML Validator service verifiziert sind.
 
 ## Zu klärende Fragen (Deep-Dive)
 
@@ -43,8 +43,8 @@ Das Repo soll in V1 pacs.008 unabhängig von pain.001 generieren (eigene Test-Ca
 15. Soll es einen Snapshot-Test pro Chain-Rule geben?
 
 ### Tooling
-16. Gibt es Open-Source-Implementierungen von pain.001→pacs.008-Mapping, die wir als Referenz nutzen können? (Payment Components, Prowide, XMLdation?)
-17. Bietet FINaplo eine Chain-Derivation-API oder nur Validation?
+16. Gibt es Open-Source-Implementierungen von pain.001→pacs.008-Mapping, die wir als Referenz nutzen können? (the XML Validator service provider, Prowide, XMLdation?)
+17. Bietet external XML Validator service eine Chain-Derivation-API oder nur Validation?
 
 ## Nächste Schritte (wenn Task aufgegriffen wird)
 

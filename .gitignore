@@ -18,5 +18,14 @@ docs/archive/
 .automaker/
 .hypothesis/
 
-# FINaplo API credentials + Swagger (nicht oeffentlich, nur root-level)
+# Externer XML-Validator-Service: API Credentials, Swagger, Audit-Logs
+# Alle Files im credential-Ordner und alle finaplo-bezogenen Pfade werden
+# nie versioniert -- weder am Repo-Root noch irgendwo sonst.
+/xml_validator/
 /finaplo/
+finaplo
+*finaplo*
+*FINaplo*
+*FINAPLO*
+api-key*.txt
+base-url*.txt

@@ -59,30 +59,33 @@ class Pacs008TestPipeline:
     """Verarbeitet pacs.008 Testcases end-to-end.
 
     Verwendung:
-        pipeline = Pacs008TestPipeline(config, use_finaplo=True)
+        pipeline = Pacs008TestPipeline(config, use_external_validator=True)
         results = pipeline.process(testcases, output_dir)
         pipeline.generate_reports(results, input_file, output_dir)
     """
 
-    def __init__(self, config: AppConfig, use_finaplo: bool = False):
+    def __init__(self, config: AppConfig, use_external_validator: bool = False):
         self.config = config
         # Lazy init XSD Validator (damit Tests ohne Schema weiterhin laufen)
         self._xsd_schema: Optional[etree.XMLSchema] = None
         self._xsd_path = self._resolve_xsd_path()
-        self.use_finaplo = use_finaplo
-        self._finaplo_client = None
-        self._finaplo_quota_exhausted = False
-        if use_finaplo:
+        self.use_external_validator = use_external_validator
+        self._validator_client = None
+        self._validator_quota_exhausted = False
+        if use_external_validator:
             try:
-                from src.finaplo.client import FinaploClient, FinaploConfigError
+                from src.xml_validator_service.client import (
+                    XmlValidatorClient,
+                    XmlValidatorConfigError,
+                )
                 try:
-                    self._finaplo_client = FinaploClient()
-                except FinaploConfigError as e:
-                    print(f"[pacs.008] FINaplo-Integration deaktiviert: {e}")
-                    self.use_finaplo = False
+                    self._validator_client = XmlValidatorClient()
+                except XmlValidatorConfigError as e:
+                    print(f"[pacs.008] External validator disabled: {e}")
+                    self.use_external_validator = False
             except ImportError:
-                print("[pacs.008] FINaplo-Modul nicht verfuegbar.")
-                self.use_finaplo = False
+                print("[pacs.008] External validator module not available.")
+                self.use_external_validator = False
 
     def _resolve_xsd_path(self) -> Optional[str]:
         """Findet das CBPR+ pacs.008 XSD im schemas/pacs.008/ Ordner."""
@@ -179,48 +182,47 @@ class Pacs008TestPipeline:
         br_results = validate_pacs008(bm)
         br_lite: List[BusinessRuleResultLite] = list(br_results)
 
-        # FINaplo External Validation (optional).
-        # Negative Testcases (ViolateRule + expected NOK) werden geskippt --
-        # sie haben bereits eine interne Erwartung + muessen lokal fehlschlagen,
-        # ein externer FINaplo-Call dafuer verbraucht nur Quota ohne Nutzen.
-        finaplo_valid: Optional[bool] = None
-        finaplo_errors: List[str] = []
+        # External XML Validator Service (optional).
+        # Negative testcases (ViolateRule + expected NOK) are skipped --
+        # they already have an internal failure expectation, so calling
+        # the external service for them just burns quota.
+        external_valid: Optional[bool] = None
+        external_errors: List[str] = []
         is_negative_test = (
             tc.expected_result == ExpectedResult.NOK and bool(tc.violate_rule)
         )
         if (
-            self.use_finaplo
-            and self._finaplo_client is not None
-            and not self._finaplo_quota_exhausted
+            self.use_external_validator
+            and self._validator_client is not None
+            and not self._validator_quota_exhausted
             and not is_negative_test
         ):
-            from src.finaplo.client import FinaploQuotaExceeded
+            from src.xml_validator_service.client import XmlValidatorQuotaExceeded
             try:
-                finaplo_result = self._finaplo_client.validate(
+                external_result = self._validator_client.validate(
                     xml_bytes, flavor=tc.flavor,
                 )
-                finaplo_valid = finaplo_result.valid
-                finaplo_errors = finaplo_result.errors
-            except FinaploQuotaExceeded as e:
-                self._finaplo_quota_exhausted = True
+                external_valid = external_result.valid
+                external_errors = external_result.errors
+            except XmlValidatorQuotaExceeded as e:
+                self._validator_quota_exhausted = True
                 print(
-                    f"[pacs.008] FINaplo quota exhausted, skipping remaining. "
-                    f"({tc.testcase_id} and onwards)"
+                    f"[pacs.008] External validator quota exhausted, "
+                    f"skipping remaining. ({tc.testcase_id} and onwards)"
                 )
-                # Dieser Testcase wird auch geskippt (None=neutral)
-                finaplo_valid = None
-                finaplo_errors = []
+                # This testcase is also skipped (None = neutral)
+                external_valid = None
+                external_errors = []
             except Exception as e:
-                finaplo_valid = False
-                finaplo_errors = [f"FINaplo-Call fehlgeschlagen: {e}"]
+                external_valid = False
+                external_errors = [f"External validator call failed: {e}"]
 
         # Overall-Pass Logik
         all_br_pass = all(r.passed for r in br_lite)
-        finaplo_ok = finaplo_valid is None or finaplo_valid is True
-        overall_ok = xsd_valid and all_br_pass and finaplo_ok
+        external_ok = external_valid is None or external_valid is True
+        overall_ok = xsd_valid and all_br_pass and external_ok
 
-        # Expected NOK -> invertiere (wenn wir erwarten, dass es failt, ist
-        # "failen" ein Pass)
+        # Expected NOK -> invert (if we expect it to fail, "failing" is a pass)
         if tc.expected_result == ExpectedResult.NOK:
             overall_pass = not overall_ok
         else:
@@ -234,8 +236,8 @@ class Pacs008TestPipeline:
             xsd_valid=xsd_valid,
             xsd_errors=xsd_errors,
             business_rule_results=br_lite,
-            finaplo_valid=finaplo_valid,
-            finaplo_errors=finaplo_errors,
+            external_valid=external_valid,
+            external_errors=external_errors,
             overall_pass=overall_pass,
             xml_file_path=file_path,
             remarks=tc.remarks,
@@ -403,9 +405,13 @@ class Pacs008TestPipeline:
         pass_count = sum(1 for r in results if r.overall_pass)
         fail_count = len(results) - pass_count
 
-        finaplo_enabled = self.use_finaplo
-        finaplo_checked = sum(1 for r in results if r.finaplo_valid is not None)
-        finaplo_valid_count = sum(1 for r in results if r.finaplo_valid is True)
+        external_validation_enabled = self.use_external_validator
+        external_validation_checked = sum(
+            1 for r in results if r.external_valid is not None
+        )
+        external_validation_passed = sum(
+            1 for r in results if r.external_valid is True
+        )
 
         report = {
             "testlauf": {
@@ -416,9 +422,9 @@ class Pacs008TestPipeline:
                 "total": len(results),
                 "pass": pass_count,
                 "fail": fail_count,
-                "finaplo_enabled": finaplo_enabled,
-                "finaplo_checked": finaplo_checked,
-                "finaplo_valid": finaplo_valid_count,
+                "external_validation_enabled": external_validation_enabled,
+                "external_validation_checked": external_validation_checked,
+                "external_validation_passed": external_validation_passed,
             },
             "testfaelle": [
                 {
@@ -437,8 +443,8 @@ class Pacs008TestPipeline:
                         }
                         for br in r.business_rule_results
                     ],
-                    "finaplo_valide": r.finaplo_valid,
-                    "finaplo_fehler": r.finaplo_errors,
+                    "external_valide": r.external_valid,
+                    "external_fehler": r.external_errors,
                     "ergebnis": "Pass" if r.overall_pass else "Fail",
                     "xml_datei": r.xml_file_path,
                     "bemerkungen": r.remarks,

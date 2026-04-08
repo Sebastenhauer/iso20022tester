@@ -1,6 +1,6 @@
 """Tests fuer currency-aware Amount-Formatierung (WP-12 Regression-Guard).
 
-Aus der FINaplo-Validation (WP-12 Runde 1) kam der Fehlercode D00007
+Aus der externen XML-Validator-Service-Audit-Runde (WP-12) kam der Fehlercode D00007
 'Invalid currency code or too many decimal digits' fuer TC-PCS-004
 (JPY). Root Cause: _fmt_amount quantisierte immer auf 0.01.
 

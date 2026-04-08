@@ -22,11 +22,11 @@ poetry run python -m src.main \
     --input templates/testfaelle_pacs008_comprehensive.xlsx \
     --config config.yaml
 
-# pacs.008 mit externer FINaplo Validation (benoetigt API-Key)
+# pacs.008 mit externer external validation (benoetigt API-Key)
 poetry run python -m src.main \
     --input templates/testfaelle_pacs008_comprehensive.xlsx \
     --config config.yaml \
-    --finaplo
+    --external-validate
 ```
 
 Output landet in `output/<timestamp>/pain.001/` bzw. `output/<timestamp>/pacs.008/` (getrennt pro Message-Type) und enthaelt die generierten XML-Files plus Reports (`testlauf_ergebnis.json` + `Testlauf_Zusammenfassung.docx`).
@@ -78,17 +78,17 @@ Detaillierte Vergleiche:
 - **75+ Business Rules** -- zentraler Rule-Katalog in 13 Kategorien (HDR/GEN/ADDR/SEPA/QR/IBAN/DOM/SIC5/SCT-INST/CGI/CBPR/CBPR-PACS/SPS-CH21/IBAN-V/REF-V/CCY/REM/PURP/CTGP/BIC)
 - **CGI-MP C2B-Konformitaet** -- globaler Corporate-to-Bank Standard mit Address-, Remittance-, Purpose-, Tax- und Infrastructure-Rules
 - **CBPR+ Relay-Konformitaet** -- UETR Pflicht, SLEV verboten, kein CtrlSum, PmtInfId=MsgId, UTC-Offset, FIN-X Charset
-- **CBPR+ pacs.008 SR2026** -- single-Tx, BAH-Envelope, currency-aware Amount-Formatting (Zero/Two/Three-Decimal), per-Flavor FINaplo Endpoint-Dispatch
+- **CBPR+ pacs.008 SR2026** -- single-Tx, BAH-Envelope, currency-aware Amount-Formatting (Zero/Two/Three-Decimal), per-Flavor external XML Validator service Endpoint-Dispatch
 - **Multi-Payment** -- mehrere Testfaelle in einer XML via `GroupId` (SPS und CGI-MP; CBPR+ pain.001 und pacs.008 jeweils nur Single-Tx)
 - **Negative Testing** -- violatable Rules fuer gezielte Regelverletzungen via `ViolateRule=<RuleID>` (eigene Registry pro Message-Familie)
-- **Externe Validation** -- optionaler **FINaplo API**-Aufruf fuer pacs.008 als Second-Opinion (CBPR+ -> `/cbpr/validate`, TARGET2/SEPA/SIC vorbereitet)
+- **Externe Validation** -- optionaler **XML Validator API**-Aufruf fuer pacs.008 als Second-Opinion (CBPR+ -> `/cbpr/validate`, TARGET2/SEPA/SIC vorbereitet)
 - **Reproduzierbare Testdaten** -- Seed-basierte Generierung von IBANs (Mod-97), QR-Referenzen (Mod-10), SCOR (ISO 11649)
 - **Minimale Pflichtfelder** -- nur TestcaseID, Titel, Ziel, Erwartetes Ergebnis und (pain.001) Debtor-IBAN bzw. (pacs.008) Agent-BICs
 - **Second-Opinion + Round-Trip-Validierung** -- `xmlschema`-Gegenpruefung und XML-Roundtrip-Konsistenzcheck
 - **50+ Laender IBAN-Generierung** -- Europa, Naher Osten, Asien, Amerika, Afrika
 - **Reporting** -- Word (.docx), JSON und JUnit-XML Reports pro Testlauf
 - **187 Beispiel-Testfaelle** -- 137 pain.001 (`testfaelle_comprehensive.xlsx`) + 50 pacs.008 (`testfaelle_pacs008_comprehensive.xlsx`)
-- **800+ Unit Tests** -- alle pytest gruen, separate Coverage fuer Builders, Rules, Violations, Pipeline, Excel-Parser, FINaplo-Client
+- **800+ Unit Tests** -- alle pytest gruen, separate Coverage fuer Builders, Rules, Violations, Pipeline, Excel-Parser, external XML Validator service-Client
 
 ---
 
@@ -144,8 +144,8 @@ flowchart TD
     G --> H
     H --> I[XSD validieren\n&#40;CBPR+ SR2026 Schema&#41;]
     I --> J[BR-CBPR-PACS-* pruefen]
-    J --> K{--finaplo aktiv?}
-    K -- Ja --> L["FINaplo /cbpr/validate"]
+    J --> K{--external-validate aktiv?}
+    K -- Ja --> L["external XML Validator service /cbpr/validate"]
     K -- Nein --> M[Pacs008TestCaseResult]
     L --> M
     M --> N[XML + JSON Report]
@@ -205,7 +205,7 @@ flowchart TD
 - **CBPR+ pacs.008:** XSD im Repo (`schemas/pacs.008/CBPRPlus_SR2026_..._iso15enriched.xsd`)
 - **CGI-MP pain.001:** Kein zusaetzliches XSD noetig (SPS XSD wird verwendet)
 - **CBPR+ pain.001 (optional):** SWIFT CBPR+ XSD von [MyStandards](https://www2.swift.com/mystandards/) (kostenloser Login, proprietaer, nicht im Repo)
-- **FINaplo (optional, fuer pacs.008 External Validation):** Account auf [finaplo.paymentcomponents.com](https://finaplo.paymentcomponents.com), 7-Tage Trial oder Paid-Tier
+- **external XML Validator service (optional, fuer pacs.008 External Validation):** Account auf [<XML_VALIDATOR_PROVIDER_PORTAL>](<XML_VALIDATOR_PROVIDER_PORTAL>), 7-Tage Trial oder Paid-Tier
 
 ## Installation
 
@@ -225,17 +225,17 @@ poetry install
    cbpr_xsd_path: "docs/specs/cbpr+nonpublic/<dateiname>.xsd"
    ```
 
-### FINaplo API Key einrichten (optional, fuer pacs.008 `--finaplo`)
+### XML Validator API Key einrichten (optional, fuer pacs.008 `--external-validate`)
 
-1. API-Key auf FINaplo Dashboard generieren
-2. Im gitignored Ordner `finaplo/` ablegen:
+1. API-Key auf validator service dashboard generieren
+2. Im gitignored Ordner `xml_validator/` ablegen:
    ```
-   finaplo/api-key-<datum>.txt    # Bearer-Token, eine Zeile
-   finaplo/base-url-<datum>.txt   # https://finaplo-apis.paymentcomponents.com
+   xml_validator/api-key-<date>.txt    # Bearer-Token, eine Zeile
+   xml_validator/base-url-<date>.txt   # <XML_VALIDATOR_BASE_URL>
    ```
-3. Alternativ: Environment-Variablen `FINAPLO_API_KEY` und `FINAPLO_BASE_URL`
+3. Alternativ: Environment-Variablen `XML_VALIDATOR_API_KEY` und `XML_VALIDATOR_BASE_URL`
 
-Details: `docs/finaplo_integration.md`.
+Details: `docs/xml_validator_integration.md`.
 
 ## Verwendung
 
@@ -247,8 +247,8 @@ poetry run python -m src.main --input <excel-datei> --config config.yaml [--seed
 poetry run python -m src.main --input <excel-datei> --config config.yaml --message pain.001
 poetry run python -m src.main --input <excel-datei> --config config.yaml --message pacs.008
 
-# pacs.008 mit externer FINaplo Validation
-poetry run python -m src.main --input <excel-datei> --config config.yaml --finaplo
+# pacs.008 mit externer external validation
+poetry run python -m src.main --input <excel-datei> --config config.yaml --external-validate
 
 # Round-Trip-Validierung (pain.001)
 poetry run python -m src.main roundtrip <xml-dateien-oder-verzeichnis> --config config.yaml [--verbose]
@@ -263,8 +263,8 @@ poetry run python -m src.main --input templates/testfaelle_comprehensive.xlsx --
 # 50 pacs.008 CBPR+ Testfaelle (auto-detected)
 poetry run python -m src.main --input templates/testfaelle_pacs008_comprehensive.xlsx --config config.yaml
 
-# Mit FINaplo (benoetigt API-Key in finaplo/api-key-*.txt)
-poetry run python -m src.main --input templates/testfaelle_pacs008_comprehensive.xlsx --config config.yaml --finaplo
+# Mit external XML Validator service (benoetigt API-Key in xml_validator/api-key-*.txt)
+poetry run python -m src.main --input templates/testfaelle_pacs008_comprehensive.xlsx --config config.yaml --external-validate
 ```
 
 ### Konfiguration (`config.yaml`)
@@ -386,7 +386,7 @@ Beide Pipelines koennen unabhaengig laufen; ein einzelner Run produziert immer n
 ```bash
 poetry run pytest                                                # 800+ Unit Tests
 poetry run pytest tests/test_pacs008_builders.py                 # Subset (Datei)
-poetry run pytest tests/test_pacs008_pipeline.py::TestFinaploIntegration  # Subset (Klasse)
+poetry run pytest tests/test_pacs008_pipeline.py::Testexternal XML Validator serviceIntegration  # Subset (Klasse)
 poetry run python scripts/validate_external.py examples/        # Second-Opinion
 ```
 
@@ -396,10 +396,10 @@ poetry run python scripts/validate_external.py examples/        # Second-Opinion
 |--------|------|-----|-------------|
 | **SIX Validation Portal** | SPS 2025 pain.001 | [validation.iso-payments.ch](https://validation.iso-payments.ch/sps/account/logon) | Manuell, Web-UI |
 | **SWIFT MyStandards** | CBPR+ pain.001 + pacs.008 SR2026 | [mystandards.swift.com](https://www2.swift.com/mystandards/) | Manuell, Web-UI (Free Tier) |
-| **FINaplo API** | CBPR+ pacs.008 (TARGET2/SEPA vorbereitet) | [finaplo.paymentcomponents.com](https://finaplo.paymentcomponents.com) | **Automatisiert** via `--finaplo` Flag |
+| **XML Validator API** | CBPR+ pacs.008 (TARGET2/SEPA vorbereitet) | [<XML_VALIDATOR_PROVIDER_PORTAL>](<XML_VALIDATOR_PROVIDER_PORTAL>) | **Automatisiert** via `--external-validate` Flag |
 | **TreasuryHost** | pain.001 allgemein (XSD) | [treasuryhost.eu](https://www.treasuryhost.eu/solutions/painp/) | Manuell |
 
-Details zu allen Validierungsdiensten und ihrer aktuellen Eignung: `docs/xml_validation_services.md`. FINaplo-Setup: `docs/finaplo_integration.md`.
+Details zu allen Validierungsdiensten und ihrer aktuellen Eignung: `docs/xml_validation_services.md`. external XML Validator service-Setup: `docs/xml_validator_integration.md`.
 
 ---
 
@@ -417,11 +417,11 @@ iso20022tester/
 ├── docs/
 │   ├── SDD_v2.md                              # Software Design Dokument (pain.001)
 │   ├── pacs008_implementation.md              # pacs.008 Architektur Deep-Dive
-│   ├── finaplo_integration.md                 # FINaplo Setup + Pipeline-Integration
+│   ├── xml_validator_integration.md                 # XML Validator Setup + Pipeline-Integration
 │   ├── xml_validation_services.md             # Landscape externer Validatoren
 │   ├── roadmap/
 │   │   ├── 2026-04-06_pacs008_implementation_plan.md
-│   │   ├── 2026-04-06_pacs008_finaplo_auto_repair_log.md
+│   │   ├── 2026-04-06_pacs008_xml_validator_auto_repair_log.md
 │   │   ├── 2026-04-06_pain001_pacs008_chain_analysis.md   # V2 Idee
 │   │   └── 2026-04-06_correspondent_lookup_map.md         # V2 Idee
 │   ├── archive/                               # Archivierte Dokumente
@@ -441,7 +441,7 @@ iso20022tester/
 │   ├── testfaelle_pacs008_comprehensive.xlsx  # 50 pacs.008 Testfaelle
 │   └── testfaelle_pacs008_minimal.xlsx        # pacs.008 Quick-Smoke (3 Cases)
 ├── examples/                                  # vorab generierte XML-Dateien
-├── finaplo/                                   # FINaplo API Credentials (.gitignore)
+├── xml_validator/                                   # XML Validator API Credentials (.gitignore)
 ├── scripts/
 │   ├── generate_pacs008_testcases.py          # 50-Case Generator
 │   └── validate_external.py                   # Second-Opinion-Validator
@@ -471,7 +471,7 @@ iso20022tester/
 │   │   ├── business_rules.py                  # pain.001 Rule Executor + Violations
 │   │   ├── pacs008_rules.py                   # pacs.008 Rule Executor
 │   │   └── pacs008_violations.py              # pacs.008 Violations Registry
-│   ├── finaplo/client.py                      # FINaplo REST Client (Bearer + Per-Flavor)
+│   ├── xml_validator/client.py                      # external XML Validator service REST Client (Bearer + Per-Flavor)
 │   └── reporting/                             # Word, JSON, JUnit
 └── tests/                                     # 800+ Unit Tests
 ```
@@ -486,8 +486,8 @@ iso20022tester/
 | `CLAUDE.md` | Top-Level Architektur-Guide (pain.001 + pacs.008), Domain-Regeln, Konventionen |
 | `docs/SDD_v2.md` | Software Design Dokument pain.001 — Architektur, Datenmodelle, Business Rules |
 | `docs/pacs008_implementation.md` | pacs.008 Architektur-Deep-Dive, XSD-Reihenfolge, Default-Module, Violations |
-| `docs/finaplo_integration.md` | FINaplo API Setup, Pipeline-Integration, Trial-Quota-Handling, Troubleshooting |
-| `docs/xml_validation_services.md` | Landscape externer Validierungs-Services (SIX, SWIFT, FINaplo, XMLdation, ...) |
+| `docs/xml_validator_integration.md` | XML Validator API Setup, Pipeline-Integration, Trial-Quota-Handling, Troubleshooting |
+| `docs/xml_validation_services.md` | Landscape externer Validierungs-Services (SIX, SWIFT, external XML Validator service, XMLdation, ...) |
 
 ### Standards-Vergleiche
 | Dokument | Beschreibung |
@@ -500,7 +500,7 @@ iso20022tester/
 | Dokument | Beschreibung |
 |----------|-------------|
 | `docs/roadmap/2026-04-06_pacs008_implementation_plan.md` | pacs.008 V1 Plan -- 13 abgeschlossene Work Packages |
-| `docs/roadmap/2026-04-06_pacs008_finaplo_auto_repair_log.md` | WP-12 FINaplo Auto-Repair Session-Log mit JPY-Bug-Fund |
+| `docs/roadmap/2026-04-06_pacs008_external_validator_audit_log.md` | WP-12 External Validator Audit Session-Log mit JPY-Bug-Fund |
 | `docs/roadmap/2026-04-06_pain001_pacs008_chain_analysis.md` | V2 Idee: pain.001→pacs.008 Chain-Derivation |
 | `docs/roadmap/2026-04-06_correspondent_lookup_map.md` | V2 Idee: statische Correspondent-Bank-Map |
 
@@ -553,7 +553,7 @@ ViolateRule, Weitere Testdaten, Bemerkungen
 
 ### BusinessMessage-Envelope
 
-Jedes generierte pacs.008-File enthaelt BAH + Document in einem einzigen XML-Wrapper (der Form, die auch SWIFT MyStandards + FINaplo erwarten):
+Jedes generierte pacs.008-File enthaelt BAH + Document in einem einzigen XML-Wrapper (der Form, die auch SWIFT MyStandards + external XML Validator service erwarten):
 
 ```xml
 <BusinessMessage>
@@ -596,28 +596,28 @@ Jedes generierte pacs.008-File enthaelt BAH + Document in einem einzigen XML-Wra
 | BR-CBPR-PACS-014 | CtrlSum muss Summe der IntrBkSttlmAmt sein |
 | BR-CBPR-PACS-015 | UETR muss UUIDv4-Format haben |
 
-### FINaplo External Validation
+### external XML Validator service External Validation
 
-Optionale externe Validation gegen die [FINaplo Financial Messaging API](https://finaplo-apis.paymentcomponents.com) von Payment Components.
+Optionale externe Validation gegen die [external XML Validator service Financial Messaging API](<XML_VALIDATOR_BASE_URL>) von the XML Validator service provider.
 
 **Setup:**
 
-1. Account auf [finaplo.paymentcomponents.com](https://finaplo.paymentcomponents.com) erstellen (7-Tage-Trial oder Paid-Tier)
-2. API-Key in den gitignored Ordner `finaplo/` im Repo-Root legen:
-   - `finaplo/api-key-<datum>.txt` — Bearer-Token (eine Zeile)
-   - `finaplo/base-url-<datum>.txt` — Base-URL (`https://finaplo-apis.paymentcomponents.com` fuer LIVE)
-   - Alternativ: Environment-Variablen `FINAPLO_API_KEY` und `FINAPLO_BASE_URL`
-3. Run mit `--finaplo` Flag:
+1. Account auf [<XML_VALIDATOR_PROVIDER_PORTAL>](<XML_VALIDATOR_PROVIDER_PORTAL>) erstellen (7-Tage-Trial oder Paid-Tier)
+2. API-Key in den gitignored Ordner `xml_validator/` im Repo-Root legen:
+   - `xml_validator/api-key-<date>.txt` — Bearer-Token (eine Zeile)
+   - `xml_validator/base-url-<date>.txt` — Base-URL (`<XML_VALIDATOR_BASE_URL>` fuer LIVE)
+   - Alternativ: Environment-Variablen `XML_VALIDATOR_API_KEY` und `XML_VALIDATOR_BASE_URL`
+3. Run mit `--external-validate` Flag:
    ```bash
    poetry run python -m src.main \
        --input templates/testfaelle_pacs008_comprehensive.xlsx \
        --config config.yaml \
-       --finaplo
+       --external-validate
    ```
 
-Die Pipeline ruft pro positivem Testcase den Endpoint `/cbpr/validate` auf und integriert das Ergebnis als dritte Validation-Spalte im Report (XSD + Business Rules + FINaplo). Negative Testcases werden geskippt, um Quota zu sparen.
+Die Pipeline ruft pro positivem Testcase den Endpoint `/cbpr/validate` auf und integriert das Ergebnis als dritte Validation-Spalte im Report (XSD + Business Rules + external XML Validator service). Negative Testcases werden geskippt, um Quota zu sparen.
 
-Bei erschoepfter Quota (HTTP 412 `subscription.expired`) wechselt die Pipeline in den Skip-Mode: alle verbleibenden Testcases laufen mit `finaplo_valid=None` weiter, der Run bricht nicht ab.
+Bei erschoepfter Quota (HTTP 412 `subscription.expired`) wechselt die Pipeline in den Skip-Mode: alle verbleibenden Testcases laufen mit `external_valid=None` weiter, der Run bricht nicht ab.
 
 **Per-Flavor-Endpoint-Dispatch** (R1 aus dem Planning):
 
@@ -630,7 +630,7 @@ Bei erschoepfter Quota (HTTP 412 `subscription.expired`) wechselt die Pipeline i
 ### Weiterfuehrende Dokumentation
 
 - `docs/roadmap/2026-04-06_pacs008_implementation_plan.md` — V1-Implementation-Plan mit 13 Work Packages
-- `docs/roadmap/2026-04-06_pacs008_finaplo_auto_repair_log.md` — WP-12 Auto-Repair-Session-Log
+- `docs/roadmap/2026-04-06_pacs008_external_validator_audit_log.md` — WP-12 Auto-Repair-Session-Log
 - `docs/roadmap/2026-04-06_pain001_pacs008_chain_analysis.md` — Deep-Dive fuer pain.001→pacs.008 Chain-Derivation (V2 Idee)
 - `docs/roadmap/2026-04-06_correspondent_lookup_map.md` — Deep-Dive fuer statische Correspondent-Bank-Map (V2 Idee)
 
@@ -646,6 +646,6 @@ Verwendete externe Spezifikationen / Schemata:
 - **CBPR+ pain.001 XSD** -- Copyright SWIFT, NICHT im Repo (proprietaer, ueber MyStandards)
 - **CBPR+ Usage Guidelines (Excel + Handbook)** -- Copyright SWIFT, NICHT im Repo (`.gitignore`)
 - **CGI-MP WG1 User Handbook** -- Copyright SWIFT, NICHT im Repo (`.gitignore`)
-- **FINaplo API** -- Payment Components SA, Trial- bzw. Paid-Subscription erforderlich
+- **XML Validator API** -- the XML Validator service provider, Trial- bzw. Paid-Subscription erforderlich
 
 Test-Daten in `templates/*.xlsx` und `examples/` enthalten **keine echten Kundendaten**. Verwendete BICs sind oeffentlich bekannte Identifikatoren bekannter Banken; sie werden ausschliesslich fuer die Generierung von synthetischen Test-Messages eingesetzt und sollten nicht in produktive Zahlungsverkehrs-Systeme uebernommen werden.

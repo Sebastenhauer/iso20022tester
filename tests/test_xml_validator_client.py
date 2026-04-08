@@ -1,4 +1,4 @@
-"""Tests fuer den FINaplo API Client (mit HTTP mocks)."""
+"""Tests for the external XML Validator service client (with HTTP mocks)."""
 
 import os
 from pathlib import Path
@@ -6,17 +6,16 @@ from pathlib import Path
 import pytest
 import responses
 
-from src.finaplo.client import (
-    DEFAULT_LIVE_BASE_URL,
-    FINAPLO_BASE_URL_ENV,
-    FINAPLO_DIR_ENV,
-    FINAPLO_KEY_ENV,
-    FinaploAuthError,
-    FinaploClient,
-    FinaploConfigError,
-    FinaploError,
-    FinaploResult,
-    FinaploServerError,
+from src.xml_validator_service.client import (
+    ENV_BASE_URL,
+    ENV_DIR,
+    ENV_KEY,
+    ExternalValidationResult,
+    XmlValidatorAuthError,
+    XmlValidatorClient,
+    XmlValidatorConfigError,
+    XmlValidatorError,
+    XmlValidatorServerError,
     _parse_error_body,
     endpoint_for_flavor,
     load_credentials,
@@ -33,32 +32,34 @@ SAMPLE_XML = b"<?xml version=\"1.0\"?><BusinessMessage><AppHdr/><Document/></Bus
 
 class TestLoadCredentials:
     def test_env_vars_priority(self, monkeypatch):
-        monkeypatch.setenv(FINAPLO_KEY_ENV, "env-key")
-        monkeypatch.setenv(FINAPLO_BASE_URL_ENV, "https://env.example")
-        monkeypatch.setenv(FINAPLO_DIR_ENV, "/nonexistent")
+        monkeypatch.setenv(ENV_KEY, "env-key")
+        monkeypatch.setenv(ENV_BASE_URL, "https://env.example")
+        monkeypatch.setenv(ENV_DIR, "/nonexistent")
         key, url = load_credentials()
         assert key == "env-key"
         assert url == "https://env.example"
 
     def test_from_file(self, tmp_path, monkeypatch):
-        monkeypatch.delenv(FINAPLO_KEY_ENV, raising=False)
-        monkeypatch.delenv(FINAPLO_BASE_URL_ENV, raising=False)
+        monkeypatch.delenv(ENV_KEY, raising=False)
+        monkeypatch.delenv(ENV_BASE_URL, raising=False)
         (tmp_path / "api-key-test.txt").write_text("file-key\n")
         (tmp_path / "base-url-test.txt").write_text("https://file.example\n")
         key, url = load_credentials(str(tmp_path))
         assert key == "file-key"
         assert url == "https://file.example"
 
-    def test_default_base_url_fallback(self, tmp_path, monkeypatch):
-        monkeypatch.delenv(FINAPLO_KEY_ENV, raising=False)
-        monkeypatch.delenv(FINAPLO_BASE_URL_ENV, raising=False)
+    def test_no_default_url_fallback(self, tmp_path, monkeypatch):
+        """The client must NOT silently default to any hardcoded URL."""
+        monkeypatch.delenv(ENV_KEY, raising=False)
+        monkeypatch.delenv(ENV_BASE_URL, raising=False)
         (tmp_path / "api-key-x.txt").write_text("k")
-        key, url = load_credentials(str(tmp_path))
-        assert url == DEFAULT_LIVE_BASE_URL
+        with pytest.raises(XmlValidatorConfigError, match="base URL"):
+            load_credentials(str(tmp_path))
 
     def test_missing_key_raises(self, tmp_path, monkeypatch):
-        monkeypatch.delenv(FINAPLO_KEY_ENV, raising=False)
-        with pytest.raises(FinaploConfigError, match="API-Key"):
+        monkeypatch.delenv(ENV_KEY, raising=False)
+        monkeypatch.delenv(ENV_BASE_URL, raising=False)
+        with pytest.raises(XmlValidatorConfigError, match="API key"):
             load_credentials(str(tmp_path))
 
 
@@ -77,7 +78,10 @@ class TestEndpointDispatch:
         assert endpoint_for_flavor(Pacs008Flavor.SEPA) == "/sepa/sct/validate"
 
     def test_sepa_custom_scheme(self):
-        assert endpoint_for_flavor(Pacs008Flavor.SEPA, sepa_scheme="inst") == "/sepa/inst/validate"
+        assert (
+            endpoint_for_flavor(Pacs008Flavor.SEPA, sepa_scheme="inst")
+            == "/sepa/inst/validate"
+        )
 
     def test_unknown_flavor_raises(self):
         with pytest.raises(NotImplementedError):
@@ -90,7 +94,7 @@ class TestEndpointDispatch:
 
 @pytest.fixture
 def client():
-    return FinaploClient(api_key="test-key", base_url="https://api.test")
+    return XmlValidatorClient(api_key="test-key", base_url="https://api.test")
 
 
 class TestClientSuccessPath:
@@ -122,7 +126,10 @@ class TestClientSuccessPath:
         call = responses.calls[0]
         assert call.request.headers["Authorization"] == "Bearer test-key"
         assert call.request.headers["Content-Type"] == "text/plain"
-        assert b"<BusinessMessage>" in call.request.body.encode() if isinstance(call.request.body, str) else b"<BusinessMessage>" in call.request.body
+        body = call.request.body
+        if isinstance(body, str):
+            body = body.encode()
+        assert b"<BusinessMessage>" in body
 
 
 class TestClientErrorPaths:
@@ -171,7 +178,7 @@ class TestClientErrorPaths:
             body="Unauthorized",
             status=401,
         )
-        with pytest.raises(FinaploAuthError):
+        with pytest.raises(XmlValidatorAuthError):
             client.validate(SAMPLE_XML)
 
     @responses.activate
@@ -182,7 +189,7 @@ class TestClientErrorPaths:
             body="Internal Server Error",
             status=500,
         )
-        with pytest.raises(FinaploServerError):
+        with pytest.raises(XmlValidatorServerError):
             client.validate(SAMPLE_XML)
 
 

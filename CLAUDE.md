@@ -30,16 +30,16 @@ poetry run python -m src.main \
     --input templates/testfaelle_pacs008_comprehensive.xlsx \
     --config config.yaml
 
-# pacs.008 with external FINaplo validation
+# pacs.008 with external external validation
 poetry run python -m src.main \
     --input templates/testfaelle_pacs008_comprehensive.xlsx \
     --config config.yaml \
-    --finaplo
+    --external-validate
 ```
 
 CLI flags:
 - `--message pain.001|pacs.008` — force message type (default: auto-detect from Excel header)
-- `--finaplo` — enable external FINaplo API validation for pacs.008 (requires `finaplo/api-key-*.txt`)
+- `--external-validate` — enable external XML Validator API validation for pacs.008 (requires `xml_validator/api-key-*.txt`)
 
 ## Architecture
 
@@ -62,7 +62,7 @@ Two parallel pipelines sharing common infrastructure:
            |                  |
          Business Rules Catalog (rule_catalog.py)
            |                  |
-         (optional) FINaplo External Validation  ---- pacs.008 only
+         (optional) external XML Validator service External Validation  ---- pacs.008 only
            |                  |
          Reports (JSON + DOCX/TXT)
                      |
@@ -76,7 +76,7 @@ Two parallel pipelines sharing common infrastructure:
 - `data_factory/` — IBAN (Mod-97), QRR (Mod-10), SCOR (ISO 11649), faker-based names/addresses, BIC directory
 - `validation/rule_catalog.py` — unified rule catalog across all standards
 - `validation/xsd_validator.py` — generic XSD validator
-- `finaplo/client.py` — REST wrapper for FINaplo external validation (Bearer auth, per-flavor endpoint dispatch)
+- `xml_validator/client.py` — REST wrapper for external XML validation (Bearer auth, per-flavor endpoint dispatch)
 - `models/config.py` — AppConfig (Pydantic)
 
 **pain.001-specific:**
@@ -140,22 +140,22 @@ Two parallel pipelines sharing common infrastructure:
   - `IntrBkSttlmDt = T+1` business day (TARGET2 for EUR, Switzerland otherwise)
   - For CBPR+ flavor: single default `IntrmyAgt1 = CHASUS33XXX` if all three intermediary slots are empty
 
-## FINaplo External Validation
+## external XML Validator service External Validation
 
-Optional external validation against [FINaplo](https://finaplo-apis.paymentcomponents.com). Credentials are read from the gitignored `finaplo/` directory at the repo root:
+Optional external validation against [external XML Validator service](<XML_VALIDATOR_BASE_URL>). Credentials are read from the gitignored `xml_validator/` directory at the repo root:
 
-- `finaplo/api-key-*.txt` — Bearer token (trial or paid subscription)
-- `finaplo/base-url-*.txt` — Base URL (LIVE: `https://finaplo-apis.paymentcomponents.com`, SANDBOX: `.../sandbox`)
-- Env vars `FINAPLO_API_KEY` and `FINAPLO_BASE_URL` override the files
+- `xml_validator/api-key-*.txt` — Bearer token (trial or paid subscription)
+- `xml_validator/base-url-*.txt` — Base URL (LIVE: `<XML_VALIDATOR_BASE_URL>`, SANDBOX: `.../sandbox`)
+- Env vars `XML_VALIDATOR_API_KEY` and `XML_VALIDATOR_BASE_URL` override the files
 
 Per-flavor endpoint dispatch:
 - **CBPR+** → `POST /cbpr/validate` (active in V1)
 - **TARGET2** → `POST /target2/validate` (prepared, not yet exercised)
 - **SEPA** → `POST /sepa/{scheme}/validate` (prepared)
 
-The pipeline skips FINaplo calls for negative testcases (saves quota) and gracefully handles trial quota exhaustion (`subscription.expired` HTTP 412 → `FinaploQuotaExceeded` → remaining testcases run with `finaplo_valid=None` and don't fail).
+The pipeline skips external XML Validator service calls for negative testcases (saves quota) and gracefully handles trial quota exhaustion (`subscription.expired` HTTP 412 → `XmlValidatorQuotaExceeded` → remaining testcases run with `external_valid=None` and don't fail).
 
-See `docs/roadmap/2026-04-06_pacs008_finaplo_auto_repair_log.md` for the WP-12 auto-repair session log.
+See `docs/roadmap/2026-04-06_pacs008_external_validator_audit_log.md` for the WP-12 auto-repair session log.
 
 ## Key Files
 
@@ -164,7 +164,7 @@ See `docs/roadmap/2026-04-06_pacs008_finaplo_auto_repair_log.md` for the WP-12 a
 - `pain001_generator_anforderungen.md` — requirements specification (FR-01 to FR-105)
 - `docs/xml_validation_services.md` — landscape of external validation services
 - `docs/roadmap/2026-04-06_pacs008_implementation_plan.md` — pacs.008 V1 plan (13 WPs, all completed)
-- `docs/roadmap/2026-04-06_pacs008_finaplo_auto_repair_log.md` — WP-12 auto-repair session log
+- `docs/roadmap/2026-04-06_pacs008_external_validator_audit_log.md` — WP-12 auto-repair session log
 - `docs/roadmap/2026-04-06_pain001_pacs008_chain_analysis.md` — deep-dive TODO for future chain derivation
 - `docs/roadmap/2026-04-06_correspondent_lookup_map.md` — deep-dive TODO for correspondent bank routing
 
@@ -187,4 +187,4 @@ See `docs/roadmap/2026-04-06_pacs008_finaplo_auto_repair_log.md` for the WP-12 a
 
 ### Runtime
 - `config.yaml` — runtime configuration (output path, XSD path, seed, report format)
-- `finaplo/` (gitignored) — FINaplo API credentials and swagger
+- `xml_validator/` (gitignored) — XML Validator API credentials and swagger

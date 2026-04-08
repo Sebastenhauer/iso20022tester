@@ -45,7 +45,7 @@ CORRESPONDENT_MAP = {
 
 - **Realistische Testcases** ohne dass der User pro Row einen BIC recherchieren muss
 - **Edukativer Wert**: zeigt welcher Korridor welche Routing-Bank nutzt
-- **FINaplo-Compliance**: realistische BIC-Kombinationen schlagen weniger Validation-Warnungen aus
+- **external XML Validator service-Compliance**: realistische BIC-Kombinationen schlagen weniger Validation-Warnungen aus
 - **Simulation von Multi-Hop**: wenn ein Korridor mehrere Intermediaries braucht (z.B. Exotic Currency über USD-Clearing), kann die Map das modellieren
 
 ## Fragen für Deep-Dive

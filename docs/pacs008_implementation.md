@@ -6,7 +6,7 @@
 
 ## Architektur-Ueberblick
 
-Zwei parallele Pipelines teilen sich gemeinsame Infrastruktur (DataFactory, IBAN-Generator, BIC-Directory, XSD-Validator, Reporter, Excel-Parser-Framework, FINaplo-Client). Der CLI-Dispatch auf den richtigen Pfad passiert per Header-Auto-Detection in `src/input_handler/excel_parser.py::detect_message_type`.
+Zwei parallele Pipelines teilen sich gemeinsame Infrastruktur (DataFactory, IBAN-Generator, BIC-Directory, XSD-Validator, Reporter, Excel-Parser-Framework, external XML Validator service-Client). Der CLI-Dispatch auf den richtigen Pfad passiert per Header-Auto-Detection in `src/input_handler/excel_parser.py::detect_message_type`.
 
 ```
 src/
@@ -41,8 +41,8 @@ src/
 ├── input_handler/
 │   └── excel_parser.py                 # Auto-Detection + parse_pacs008_excel (WP-03)
 │
-└── finaplo/
-    └── client.py                       # FINaplo API Client (WP-09)
+└── xml_validator/
+    └── client.py                       # XML Validator API Client (WP-09)
 ```
 
 ## Datenmodell (WP-02)
@@ -158,7 +158,7 @@ Die Funktion `_fmt_amount(amount, currency)` in `src/xml_generator/pacs008/build
 | 2 | EUR, USD, GBP, CHF, CAD, AUD, SGD, HKD, CNY, ... (default) |
 | 3 | BHD, IQD, JOD, KWD, LYD, OMR, TND |
 
-Dieser Check wurde durch eine FINaplo-Validation (WP-12 Runde 1, TC-PCS-004 JPY) aufgedeckt und ist per Unit Test (`tests/test_pacs008_amount_formatting.py`) gegen Regression geschuetzt.
+Dieser Check wurde durch eine External-Validation (WP-12 Runde 1, TC-PCS-004 JPY) aufgedeckt und ist per Unit Test (`tests/test_pacs008_amount_formatting.py`) gegen Regression geschuetzt.
 
 ## Default-Werte (WP-04)
 
@@ -190,9 +190,9 @@ Verfuegbar in `src/validation/pacs008_violations.py::get_pacs008_violations_regi
 - BR-CBPR-PACS-011 → Currency=X9X
 - BR-CBPR-PACS-015 → UETR auf Non-UUIDv4
 
-## FINaplo Integration (WP-09, WP-11)
+## XML Validator integration (WP-09, WP-11)
 
-Siehe [`docs/finaplo_integration.md`](finaplo_integration.md).
+Siehe [`docs/xml_validator_integration.md`](xml_validator_integration.md).
 
 ## Testing
 
@@ -208,4 +208,4 @@ Siehe [`docs/finaplo_integration.md`](finaplo_integration.md).
 - **Overrides anwenden:** die `Weitere Testdaten`-Column wird vom Parser gelesen und ins `overrides`-Dict uebertragen, aber der pacs.008-Pipeline-Builder wendet die Overrides derzeit nicht auf die generierte XML an. Das ist eine V1-Einschraenkung; gezielte Ueberschreibung von z.B. `UltmtDbtr.Nm` muss aktuell ueber erweiterte Excel-Spalten oder Codeaenderungen passieren.
 - **Chain-Derivation pain.001→pacs.008:** out of scope (siehe `docs/roadmap/2026-04-06_pain001_pacs008_chain_analysis.md`).
 - **Correspondent-Lookup-Map:** out of scope (siehe `docs/roadmap/2026-04-06_correspondent_lookup_map.md`).
-- **TARGET2/SEPA/SIC Flavors:** Datenmodell und FINaplo-Endpoint-Dispatch sind vorbereitet, aber keine spezifischen Builder oder Business Rules.
+- **TARGET2/SEPA/SIC Flavors:** Datenmodell und external XML Validator service-Endpoint-Dispatch sind vorbereitet, aber keine spezifischen Builder oder Business Rules.
