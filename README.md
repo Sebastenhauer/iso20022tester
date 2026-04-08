@@ -60,7 +60,7 @@ Output landet in `output/<timestamp>/pain.001/` bzw. `output/<timestamp>/pacs.00
 | ChrgBr | DEBT/CRED/SHAR/SLEV | DEBT/CRED/SHAR/SLEV | DEBT/CRED/SHAR (**kein SLEV**) |
 | Transaktionen/Msg | 1..n PmtInf, 1..n Tx | 1..n PmtInf, 1..n Tx | **Genau 1 PmtInf, 1 Tx** |
 | Zeichensatz | SPS Latin-1 Subset | UTF-8 (voll) | FIN-X Restricted |
-| Leere Tags | Erlaubt | **Verboten** | Verboten |
+| Leere Tags | **Verboten** (IG Kapitel 3.4) | **Verboten** (Best Practice) | Verboten |
 | Regulatory Reporting | Optional `0..10`, fuer Domestic V2 verboten, Pflicht z.B. fuer UAE | Optional `0..10`, `DbtCdtRptgInd` Pflicht wenn verwendet | Optional `0..10`, dieselbe CH21-Constraint fuer `Dtls/Cd`+`Dtls/Ctry` |
 | Structured Remittance | CdtrRefInf (SCOR, QRR) | Voll (RfrdDocInf, TaxRmt) | Wie CGI-MP |
 

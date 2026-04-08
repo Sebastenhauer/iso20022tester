@@ -42,11 +42,12 @@ Die zwei Standards sind weitgehend kompatibel auf der Schema-Ebene (beide nutzen
 
 | Aspekt | SPS 2025 | CGI-MP |
 |--------|----------|--------|
-| **Leere Tags ohne Wert** | Erlaubt, werden ignoriert | **Nicht zulaessig** (`empty tags must not be used`) |
-| **Tags nur mit Blanks** | Erlaubt | **Nicht zulaessig** |
-| **Identisch?** | **Nein** — CGI-MP ist hier strenger |
+| **Leere Tags ohne Wert** | **Nicht zulaessig** (IG Kapitel 3.4: "Verwendung leerer Elemente nicht zulaessig") | **Nicht zulaessig** (`empty tags must not be used`) |
+| **Tags nur mit Blanks** | **Nicht zulaessig** (IG Kapitel 3.4) | **Nicht zulaessig** |
+| **Gruppenelemente ohne Sub-Element** | **Nicht zulaessig** (IG Kapitel 3.4: "muessen immer mindestens ein Sub-element enthalten") | **Nicht zulaessig** |
+| **Identisch?** | **Ja** — beide Standards verbieten leere Elemente vollstaendig |
 
-**Konsequenz:** CGI-MP-Generatoren muessen Empty Tags aktiv unterdruecken; SPS-Generatoren koennen sie tolerieren. Best Practice: in beiden Faellen vermeiden.
+**Konsequenz:** Es gibt **kein SPS-vs-CGI-Delta** auf der Empty-Tag-Achse. Die fruehe Annahme, SPS sei hier permissiver, war falsch (durch externe SPS-Validation widerlegt: GEFEG.FX flaggt sowohl `<X/>` als auch `<X></X>` als "Empty element"-Fehler, und SPS IG Kapitel 3.4 ist hier eindeutig). Beide Generatoren muessen Empty Tags aktiv unterdruecken.
 
 ### 4. Transaktionen pro Nachricht
 
