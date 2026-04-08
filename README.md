@@ -33,7 +33,7 @@ Output landet in `output/<timestamp>/pain.001/` bzw. `output/<timestamp>/pacs.00
 
 ---
 
-## pain.001 Test Generator
+## pain.001 Standards-Vergleich (SPS / CGI-MP / CBPR+)
 
 ### Drei Standards -- Drei Use Cases
 
@@ -61,33 +61,54 @@ Output landet in `output/<timestamp>/pain.001/` bzw. `output/<timestamp>/pacs.00
 | Transaktionen/Msg | 1..n PmtInf, 1..n Tx | 1..n PmtInf, 1..n Tx | **Genau 1 PmtInf, 1 Tx** |
 | Zeichensatz | SPS Latin-1 Subset | UTF-8 (voll) | FIN-X Restricted |
 | Leere Tags | Erlaubt | **Verboten** | Verboten |
-| Regulatory Reporting | -- | Unterstuetzt | Wie CGI-MP |
+| Regulatory Reporting | Optional `0..10`, fuer Domestic V2 verboten, Pflicht z.B. fuer UAE | Optional `0..10`, `DbtCdtRptgInd` Pflicht wenn verwendet | Optional `0..10`, dieselbe CH21-Constraint fuer `Dtls/Cd`+`Dtls/Ctry` |
 | Structured Remittance | CdtrRefInf (SCOR, QRR) | Voll (RfrdDocInf, TaxRmt) | Wie CGI-MP |
 
-Detaillierte Vergleiche: `docs/specs/vergleich-sps-epc-sepa-2025.md`, `docs/specs/vergleich-sps-cbprplus-2025.md`
+Detaillierte Vergleiche:
+- `docs/specs/pain.001/vergleich-sps-cgi-2025.md` (SPS vs. CGI-MP)
+- `docs/specs/pain.001/vergleich-sps-cbprplus-2025.md` (SPS vs. CBPR+)
+- `docs/specs/pain.001/vergleich-sps-epc-sepa-2025.md` (SPS vs. EPC SEPA)
 
 ## Features
 
-- **Tri-Standard-Validierung** -- pro Testfall waehlbar: `sps2025` (Default), `cgi-mp` oder `cbpr+2026`, mit standard-spezifischer XML-Generierung und XSD-Validierung via Strategy Pattern
-- **Excel-basierte Testfalldefinition** -- ein Testfall pro Zeile, zusaetzliche Transaktionen als Folgezeilen ohne TestcaseID
-- **4 Zahlungstypen** -- SEPA, Domestic-QR, Domestic-IBAN, CBPR+ mit typ-spezifischen Regeln und automatischer Erkennung
-- **55+ Business Rules** -- zentraler Rule-Katalog in 12 Kategorien inkl. SPS, CGI-MP und CBPR+-spezifische Regeln
-- **CGI-MP C2B-Konformitaet** -- globaler Corporate-to-Bank Standard mit Address-, Remittance-, Purpose- und Tax-Rules
+- **Tri-Standard fuer pain.001** -- pro Testfall waehlbar: `sps2025` (Default), `cgi-mp` oder `cbpr+2026`, mit standard-spezifischer XML-Generierung und XSD-Validierung via Strategy Pattern
+- **CBPR+ fuer pacs.008** -- FI-zu-FI Interbank-Generator mit BAH (head.001.001.02) als BusinessMessage-Envelope
+- **Excel-basierte Testfalldefinition** -- ein Testfall pro Zeile, zusaetzliche Transaktionen als Folgezeilen ohne TestcaseID; Auto-Detection des Message-Typs aus dem Header
+- **4 pain.001-Zahlungstypen** -- SEPA, Domestic-QR, Domestic-IBAN, CBPR+ mit typ-spezifischen Regeln
+- **75+ Business Rules** -- zentraler Rule-Katalog in 13 Kategorien (HDR/GEN/ADDR/SEPA/QR/IBAN/DOM/SIC5/SCT-INST/CGI/CBPR/CBPR-PACS/SPS-CH21/IBAN-V/REF-V/CCY/REM/PURP/CTGP/BIC)
+- **CGI-MP C2B-Konformitaet** -- globaler Corporate-to-Bank Standard mit Address-, Remittance-, Purpose-, Tax- und Infrastructure-Rules
 - **CBPR+ Relay-Konformitaet** -- UETR Pflicht, SLEV verboten, kein CtrlSum, PmtInfId=MsgId, UTC-Offset, FIN-X Charset
-- **Multi-Payment** -- mehrere Testfaelle in einer XML via `GroupId` (SPS und CGI-MP; CBPR+ nur Single-Tx)
-- **Negative Testing** -- violatable Rules fuer gezielte Regelverletzungen via `ViolateRule=<RuleID>`
+- **CBPR+ pacs.008 SR2026** -- single-Tx, BAH-Envelope, currency-aware Amount-Formatting (Zero/Two/Three-Decimal), per-Flavor FINaplo Endpoint-Dispatch
+- **Multi-Payment** -- mehrere Testfaelle in einer XML via `GroupId` (SPS und CGI-MP; CBPR+ pain.001 und pacs.008 jeweils nur Single-Tx)
+- **Negative Testing** -- violatable Rules fuer gezielte Regelverletzungen via `ViolateRule=<RuleID>` (eigene Registry pro Message-Familie)
+- **Externe Validation** -- optionaler **FINaplo API**-Aufruf fuer pacs.008 als Second-Opinion (CBPR+ -> `/cbpr/validate`, TARGET2/SEPA/SIC vorbereitet)
 - **Reproduzierbare Testdaten** -- Seed-basierte Generierung von IBANs (Mod-97), QR-Referenzen (Mod-10), SCOR (ISO 11649)
-- **Minimale Pflichtfelder** -- nur TestcaseID, Titel, Ziel, Erwartetes Ergebnis und Debtor-IBAN
+- **Minimale Pflichtfelder** -- nur TestcaseID, Titel, Ziel, Erwartetes Ergebnis und (pain.001) Debtor-IBAN bzw. (pacs.008) Agent-BICs
 - **Second-Opinion + Round-Trip-Validierung** -- `xmlschema`-Gegenpruefung und XML-Roundtrip-Konsistenzcheck
 - **50+ Laender IBAN-Generierung** -- Europa, Naher Osten, Asien, Amerika, Afrika
 - **Reporting** -- Word (.docx), JSON und JUnit-XML Reports pro Testlauf
-- **122 Testfaelle** -- 104 SPS + 10 CGI-MP + 8 CBPR+, alle XSD-validiert
+- **187 Beispiel-Testfaelle** -- 137 pain.001 (`testfaelle_comprehensive.xlsx`) + 50 pacs.008 (`testfaelle_pacs008_comprehensive.xlsx`)
+- **800+ Unit Tests** -- alle pytest gruen, separate Coverage fuer Builders, Rules, Violations, Pipeline, Excel-Parser, FINaplo-Client
 
 ---
 
 ## Ablauf & Architektur
 
-### Pipeline
+### Unified Dispatch (pain.001 + pacs.008)
+
+```mermaid
+flowchart TD
+    A[CLI-Start] --> B[Config laden]
+    B --> C[Excel-Header lesen]
+    C --> D{"Auto-Detect:<br/>Marker-Spalten"}
+    D -- "Zahlungstyp"<br/>vorhanden --> P1[pain.001 Pipeline]
+    D -- "InstgAgt BIC,<br/>SttlmMtd, ..."<br/>vorhanden --> P2[pacs.008 Pipeline]
+    D -- ambig --> ER[ValueError -- --message Flag setzen]
+    P1 --> O1[output/&lt;ts&gt;/pain.001/]
+    P2 --> O2[output/&lt;ts&gt;/pacs.008/]
+```
+
+### pain.001 Pipeline
 
 ```mermaid
 flowchart TD
@@ -107,6 +128,27 @@ flowchart TD
     N --> O{Weitere Testfaelle?}
     O -- Ja --> G
     O -- Nein --> P[Reporting: Word + JSON + JUnit-XML]
+```
+
+### pacs.008 Pipeline
+
+```mermaid
+flowchart TD
+    A[Excel-Datei] --> B[parse_pacs008_excel]
+    B --> C[Pacs008TestCase]
+    C --> D["apply_defaults_to_testcase\n(SttlmMtd=INDA, ChrgBr=SHAR, T+1, IntrmyAgt1)"]
+    D --> E[Pacs008BusinessMessage bauen]
+    E --> F{ViolateRule\nim Excel?}
+    F -- Ja --> G[apply_pacs008_violation]
+    F -- Nein --> H[BAH + Document zusammenfuegen]
+    G --> H
+    H --> I[XSD validieren\n&#40;CBPR+ SR2026 Schema&#41;]
+    I --> J[BR-CBPR-PACS-* pruefen]
+    J --> K{--finaplo aktiv?}
+    K -- Ja --> L["FINaplo /cbpr/validate"]
+    K -- Nein --> M[Pacs008TestCaseResult]
+    L --> M
+    M --> N[XML + JSON Report]
 ```
 
 ### Validierungs- und Pass/Fail-Logik
@@ -159,8 +201,11 @@ flowchart TD
 
 - Python 3.10+
 - [Poetry](https://python-poetry.org/) (Paketmanagement)
-- **Fuer CBPR+:** SWIFT CBPR+ XSD von [MyStandards](https://www2.swift.com/mystandards/) (kostenloser Login, proprietaer, nicht im Repo)
-- **Fuer CGI-MP:** Kein zusaetzliches XSD noetig (SPS XSD wird verwendet)
+- **SPS pain.001:** XSD im Repo (`schemas/pain.001/pain.001.001.09.ch.03.xsd`, SIX Group)
+- **CBPR+ pacs.008:** XSD im Repo (`schemas/pacs.008/CBPRPlus_SR2026_..._iso15enriched.xsd`)
+- **CGI-MP pain.001:** Kein zusaetzliches XSD noetig (SPS XSD wird verwendet)
+- **CBPR+ pain.001 (optional):** SWIFT CBPR+ XSD von [MyStandards](https://www2.swift.com/mystandards/) (kostenloser Login, proprietaer, nicht im Repo)
+- **FINaplo (optional, fuer pacs.008 External Validation):** Account auf [finaplo.paymentcomponents.com](https://finaplo.paymentcomponents.com), 7-Tage Trial oder Paid-Tier
 
 ## Installation
 
@@ -170,7 +215,7 @@ cd iso20022tester
 poetry install
 ```
 
-### CBPR+ XSD einrichten (optional)
+### CBPR+ pain.001 XSD einrichten (optional)
 
 1. Auf [SWIFT MyStandards](https://www2.swift.com/mystandards/) einloggen (kostenlose Registration)
 2. CBPR+ Collection oeffnen, pain.001.001.09 Usage Guideline XSD herunterladen
@@ -180,38 +225,66 @@ poetry install
    cbpr_xsd_path: "docs/specs/cbpr+nonpublic/<dateiname>.xsd"
    ```
 
+### FINaplo API Key einrichten (optional, fuer pacs.008 `--finaplo`)
+
+1. API-Key auf FINaplo Dashboard generieren
+2. Im gitignored Ordner `finaplo/` ablegen:
+   ```
+   finaplo/api-key-<datum>.txt    # Bearer-Token, eine Zeile
+   finaplo/base-url-<datum>.txt   # https://finaplo-apis.paymentcomponents.com
+   ```
+3. Alternativ: Environment-Variablen `FINAPLO_API_KEY` und `FINAPLO_BASE_URL`
+
+Details: `docs/finaplo_integration.md`.
+
 ## Verwendung
 
 ```bash
-# XML generieren
+# XML generieren (Message-Type wird aus dem Header automatisch erkannt)
 poetry run python -m src.main --input <excel-datei> --config config.yaml [--seed 42] [--verbose]
 
-# Round-Trip-Validierung
+# Message-Type explizit setzen (bei ambigen Headers)
+poetry run python -m src.main --input <excel-datei> --config config.yaml --message pain.001
+poetry run python -m src.main --input <excel-datei> --config config.yaml --message pacs.008
+
+# pacs.008 mit externer FINaplo Validation
+poetry run python -m src.main --input <excel-datei> --config config.yaml --finaplo
+
+# Round-Trip-Validierung (pain.001)
 poetry run python -m src.main roundtrip <xml-dateien-oder-verzeichnis> --config config.yaml [--verbose]
 ```
 
 **Beispiele:**
 
 ```bash
-# 122 Testfaelle generieren (SPS + CGI-MP + CBPR+ gemischt)
-poetry run python -m src.main --input templates/testfaelle_comprehensive.xlsx --config config.yaml --verbose
+# 137 pain.001 Testfaelle (SPS + CGI-MP + CBPR+ gemischt)
+poetry run python -m src.main --input templates/testfaelle_comprehensive.xlsx --config config.yaml
+
+# 50 pacs.008 CBPR+ Testfaelle (auto-detected)
+poetry run python -m src.main --input templates/testfaelle_pacs008_comprehensive.xlsx --config config.yaml
+
+# Mit FINaplo (benoetigt API-Key in finaplo/api-key-*.txt)
+poetry run python -m src.main --input templates/testfaelle_pacs008_comprehensive.xlsx --config config.yaml --finaplo
 ```
 
 ### Konfiguration (`config.yaml`)
 
 ```yaml
 output_path: "./output"
-xsd_path: "schemas/pain.001.001.09.ch.03.xsd"       # SPS XSD (im Repo, auch fuer CGI-MP)
-cbpr_xsd_path: "docs/specs/cbpr+nonpublic/(...).xsd" # CBPR+ XSD (optional, proprietaer)
+xsd_path: "schemas/pain.001/pain.001.001.09.ch.03.xsd"  # SPS XSD (im Repo, auch fuer CGI-MP)
+cbpr_xsd_path: "docs/specs/cbpr+nonpublic/(...).xsd"    # CBPR+ pain.001 XSD (optional, proprietaer)
 seed: null
 report_format: "docx"
+# bic_directory_path: "data/swift_bic_directory.csv"     # Optionales BIC-Verzeichnis
 ```
+
+Das CBPR+ pacs.008 Schema (`schemas/pacs.008/...`) wird automatisch von der Pacs008TestPipeline geladen, ein expliziter Pfad in `config.yaml` ist nicht noetig.
 
 ---
 
-## Excel-Format (v2)
+## Excel-Format pain.001 (v2)
 
-Jede Zeile mit `TestcaseID` startet einen neuen Testfall. Folgezeilen ohne TestcaseID = zusaetzliche Transaktionen.
+Jede Zeile mit `TestcaseID` startet einen neuen Testfall. Folgezeilen ohne TestcaseID = zusaetzliche Transaktionen (Multi-Tx). Marker-Spalte fuer die Auto-Detection: `Zahlungstyp`.
 
 ### Spalten
 
@@ -223,18 +296,27 @@ Jede Zeile mit `TestcaseID` startet einen neuen Testfall. Folgezeilen ohne Testc
 | Erwartetes Ergebnis | Ja | `OK` oder `NOK` |
 | Zahlungstyp | Nein | `SEPA`, `Domestic-QR`, `Domestic-IBAN`, `CBPR+` (auto wenn leer) |
 | Betrag | Nein | Dezimalzahl (wird generiert wenn leer) |
-| Waehrung | Nein | ISO 4217 (wird abgeleitet wenn leer) |
+| Währung | Nein | ISO 4217 (wird abgeleitet wenn leer) -- Spaltenname mit Umlaut |
 | Debtor IBAN | Ja | IBAN des Auftraggebers |
-| Debtor Name | Nein | Name (wird generiert wenn leer) |
+| Debtor Name / Strasse / Hausnummer / PLZ / Ort / Land | Nein | Strukturierte Debtor-Adresse (wird generiert wenn leer) |
 | Debtor BIC | Nein | BIC des Auftraggebers |
-| Creditor Name | Nein | Name (wird generiert wenn leer) |
+| Creditor Name / Strasse / Hausnummer / PLZ / Ort / Land | Nein | Strukturierte Creditor-Adresse |
 | Creditor IBAN | Nein | IBAN (wird passend generiert) |
 | Creditor BIC | Nein | BIC des Beguenstigten |
 | Verwendungszweck | Nein | Freitext-Zahlungsreferenz |
+| Verwendungszweck-Code | Nein | Purpose Code (Purp/Cd) |
+| Instant | Nein | Bool, triggert SCT-Inst (SEPA) bzw. SIC5-Inst (Domestic-IBAN) |
+| Sammelauftrag | Nein | Bool, BatchBooking-Indikator |
 | ViolateRule | Nein | Rule-ID fuer Regelverstoss (z.B. `BR-SEPA-001`) |
-| Weitere Testdaten | Nein | Key=Value Overrides (z.B. `ChrgBr=DEBT; CtgyPurp.Cd=SALA`) |
+| Weitere Testdaten | Nein | Key=Value Overrides in Dot-Notation (z.B. `ChrgBr=DEBT; CtgyPurp.Cd=SALA; UltmtDbtr.Nm=...`) |
 | **Standard** | Nein | **`sps2025`** (Default), **`cgi-mp`** oder **`cbpr+2026`** |
 | Bemerkungen | Nein | Freitext |
+
+## Excel-Format pacs.008 (CBPR+ Flavor)
+
+Eigenes Schema, getrennt vom pain.001-Format. Marker-Spalten fuer die Auto-Detection: mindestens 2 von `InstgAgt BIC`, `InstdAgt BIC`, `IntrBkSttlmDt`, `IntrBkSttlmAmt`, `SttlmMtd`, `BAH From BIC`. Single-Tx pro Zeile (CBPR+ erlaubt nur 1 CdtTrfTxInf pro Message).
+
+Ueberblick der ~48 Spalten siehe Sektion ["pacs.008 Test Generator"](#pacs008-test-generator-fi-to-fi-interbank) weiter unten oder die ausfuehrliche Doku in `docs/pacs008_implementation.md`.
 
 ---
 
@@ -251,47 +333,73 @@ Jede Zeile mit `TestcaseID` startet einen neuen Testfall. Folgezeilen ohne Testc
 
 ## Business Rules
 
-**55+ Business Rules** in 12 Kategorien:
+**75+ Business Rules** in einem zentralen Katalog (`src/validation/rule_catalog.py`), aufgeteilt in folgende Kategorien:
 
-| Kategorie | Anzahl | Beschreibung |
-|-----------|--------|-------------|
-| **HDR** | 3 | Header: MsgId, NbOfTxs, CtrlSum |
-| **GEN** | 8 | Uebergreifend: Betrag, Zeichensatz, BIC, Country-Code |
-| **ADDR** | 3 | Adressen: Strukturiert Pflicht, TwnNm+Ctry |
-| **REM** | 1 | Remittance: USTRD max 140 Zeichen |
-| **CCY** | 1 | Waehrung: ISO 4217 Format |
-| **SEPA** | 5 | SEPA: EUR, SLEV, Name max. 70 |
-| **QR** | 7 | QR: QR-IBAN, QRR, keine SCOR |
-| **IBAN** | 6 | Domestic-IBAN: CH/LI, keine QRR |
-| **CBPR** | 5 | CBPR+: SLEV verboten, UETR Pflicht, Agent-Pflicht |
-| **CGI** | 13 | CGI-MP: Adress-Rules, Remittance exklusiv, Reg. Reporting, Tax, leere Tags |
-| **IBAN-V** | 2 | IBAN: Mod-97, Laengenvalidierung |
-| **REF-V** | 1 | Referenz: SCOR ISO 11649 |
+| Kategorie | Beschreibung |
+|-----------|-------------|
+| **HDR** | A-Level Header: MsgId-Format, NbOfTxs-Konsistenz, CtrlSum-Konsistenz, InitgPty/Nm Pflicht |
+| **GEN** | Uebergreifend: Betrag, SPS-Zeichensatz (BR-GEN-012), BIC, Country-Code, Bankarbeitstag |
+| **ADDR** | Adress-Rules: Strukturiert Pflicht/empfohlen, TwnNm+Ctry-Pflicht |
+| **REM** | Remittance: USTRD max 140 Zeichen, Structured/Unstructured exklusiv |
+| **CCY** | Waehrung: ISO 4217 Format |
+| **PURP / CTGP** | Purpose- und CategoryPurpose-Codes |
+| **SEPA** | EUR-Pflicht, SvcLvl=SEPA, ChrgBr=SLEV, Creditor Name max 70 |
+| **QR** | QR-IBAN-Range (30000-31999), QRR Pflicht, kein SCOR |
+| **IBAN** | Domestic-IBAN: CH/LI, kein QRR |
+| **DOM** | Domestic uebergreifend: kein ChrgBr |
+| **SIC5** | SIC5 Instant: CHF Pflicht, IBAN CH/LI, INST SvcLvl/LclInstrm |
+| **SCT-INST** | SEPA Instant: EUR, max 100k, INST SvcLvl/LclInstrm, SLEV |
+| **CBPR** | CBPR+ pain.001: SLEV verboten, UETR Pflicht, BAH-Korrelation, Creditor-Agent BIC |
+| **CGI** | CGI-MP pain.001: Adress-Rules, Remittance exklusiv, RgltryRptg, Tax, leere Tags, PmtMtd=TRF, OrgId Cd-only, PmtTpInf+SvcLvl, SEPA-SvcLvl=SEPA |
+| **CBPR-PACS** | CBPR+ pacs.008 SR2026: 15 Rules (UETR UUIDv4, InstgAgt/InstdAgt, SttlmMtd, BAH MsgDefIdr/BizSvc, ChrgsInf, NbOfTxs, CtrlSum, ...) |
+| **SPS / SPS-CH21** | SPS-CH21 spezifisch: RgltryRptg/Dtls/Cd nur mit Dtls/Ctry; OrgId LEI als Othr/SchmeNm |
+| **IBAN-V** | IBAN: Mod-97, Laengenvalidierung |
+| **REF-V** | Referenz: SCOR ISO 11649 |
+| **BIC** | BIC-Verzeichnis-Validierung (optional, wenn `bic_directory_path` gesetzt) |
+
+Vollstaendige Liste mit Beschreibungen: `src/validation/rule_catalog.py` (Konstanten `BR_*`).
 
 ---
 
 ## Output
 
-Pro Testlauf: `output/YYYY-MM-DD_HHMMSS/` mit XML-Dateien, Word-Report, JSON und JUnit-XML.
+Pro Testlauf entsteht ein neues Verzeichnis `output/YYYY-MM-DD_HHMMSS/` mit getrennten Subfolders pro Message-Typ:
 
-Vorab generierte Beispiele: `examples/` (122 XML-Dateien: 104 SPS + 10 CGI-MP + 8 CBPR+)
+```
+output/2026-04-08_140000/
+├── pain.001/
+│   ├── *.xml                          (137 generierte pain.001 Files)
+│   ├── testlauf_ergebnis.json
+│   ├── testlauf_ergebnis.xml          (JUnit)
+│   └── Testlauf_Zusammenfassung.docx
+└── pacs.008/
+    ├── *.xml                          (50 BusinessMessage-Envelopes mit BAH+Document)
+    └── testlauf_ergebnis.json
+```
+
+Beide Pipelines koennen unabhaengig laufen; ein einzelner Run produziert immer nur einen der beiden Subfolders.
 
 ---
 
 ## Tests & Validierung
 
 ```bash
-poetry run pytest                                    # 114 Unit Tests
-poetry run python scripts/validate_external.py examples/  # Second-Opinion
+poetry run pytest                                                # 800+ Unit Tests
+poetry run pytest tests/test_pacs008_builders.py                 # Subset (Datei)
+poetry run pytest tests/test_pacs008_pipeline.py::TestFinaploIntegration  # Subset (Klasse)
+poetry run python scripts/validate_external.py examples/        # Second-Opinion
 ```
 
 ### Externe Validierung
 
-| Dienst | Fuer | URL |
-|--------|------|-----|
-| **SIX Validation Portal** | SPS 2025 | [validation.iso-payments.ch](https://validation.iso-payments.ch/sps/account/logon) |
-| **SWIFT MyStandards** | CBPR+ SR2026 | [mystandards.swift.com](https://www2.swift.com/mystandards/) |
-| **TreasuryHost** | pain.001 allgemein | [treasuryhost.eu](https://www.treasuryhost.eu/solutions/painp/) |
+| Dienst | Fuer | URL | Integration |
+|--------|------|-----|-------------|
+| **SIX Validation Portal** | SPS 2025 pain.001 | [validation.iso-payments.ch](https://validation.iso-payments.ch/sps/account/logon) | Manuell, Web-UI |
+| **SWIFT MyStandards** | CBPR+ pain.001 + pacs.008 SR2026 | [mystandards.swift.com](https://www2.swift.com/mystandards/) | Manuell, Web-UI (Free Tier) |
+| **FINaplo API** | CBPR+ pacs.008 (TARGET2/SEPA vorbereitet) | [finaplo.paymentcomponents.com](https://finaplo.paymentcomponents.com) | **Automatisiert** via `--finaplo` Flag |
+| **TreasuryHost** | pain.001 allgemein (XSD) | [treasuryhost.eu](https://www.treasuryhost.eu/solutions/painp/) | Manuell |
+
+Details zu allen Validierungsdiensten und ihrer aktuellen Eignung: `docs/xml_validation_services.md`. FINaplo-Setup: `docs/finaplo_integration.md`.
 
 ---
 
@@ -299,49 +407,102 @@ poetry run python scripts/validate_external.py examples/  # Second-Opinion
 
 ```
 iso20022tester/
-├── config.yaml                          # Konfiguration (SPS + CBPR+ XSD Pfade)
+├── config.yaml                                # Konfiguration (Schema-Pfade, Output, BIC-Dir)
 ├── schemas/
-│   └── pain.001.001.09.ch.03.xsd       # SPS XSD (SIX Group, auch fuer CGI-MP)
+│   ├── pain.001/
+│   │   ├── pain.001.001.09.ch.03.xsd          # SPS XSD (SIX Group, auch fuer CGI-MP)
+│   │   └── head.001.001.02.xsd                # BAH fuer CBPR+ pain.001
+│   └── pacs.008/
+│       └── CBPRPlus_SR2026_..._pacs_008_001_08_..._iso15enriched.xsd
 ├── docs/
-│   ├── SDD_v2.md                        # Software Design Dokument
+│   ├── SDD_v2.md                              # Software Design Dokument (pain.001)
+│   ├── pacs008_implementation.md              # pacs.008 Architektur Deep-Dive
+│   ├── finaplo_integration.md                 # FINaplo Setup + Pipeline-Integration
+│   ├── xml_validation_services.md             # Landscape externer Validatoren
 │   ├── roadmap/
-│   │   └── REQ_tri_standard_sps_cbpr_cgimp.md  # Requirements Tri-Standard
-│   ├── archive/                         # Archivierte Dokumente
+│   │   ├── 2026-04-06_pacs008_implementation_plan.md
+│   │   ├── 2026-04-06_pacs008_finaplo_auto_repair_log.md
+│   │   ├── 2026-04-06_pain001_pacs008_chain_analysis.md   # V2 Idee
+│   │   └── 2026-04-06_correspondent_lookup_map.md         # V2 Idee
+│   ├── archive/                               # Archivierte Dokumente
 │   └── specs/
-│       ├── vergleich-sps-epc-sepa-2025.md
-│       ├── vergleich-sps-cbprplus-2025.md
-│       ├── cbpr+nonpublic/              # CBPR+ XSD (proprietaer, .gitignore)
-│       └── cgi_nonpublic/               # CGI-MP Handbook (proprietaer, .gitignore)
+│       ├── pain.001/
+│       │   ├── ig-credit-transfer-sps-2025-de.md
+│       │   ├── business-rules-sps-2025-de.md
+│       │   ├── vergleich-sps-cgi-2025.md      # NEU
+│       │   ├── vergleich-sps-cbprplus-2025.md
+│       │   └── vergleich-sps-epc-sepa-2025.md
+│       ├── pacs.008/                          # CBPR+ pacs.008 IGs (proprietaer, .gitignore)
+│       ├── cbpr+nonpublic/                    # proprietaer, .gitignore
+│       └── cgi_nonpublic/                     # proprietaer, .gitignore
 ├── templates/
-│   └── testfaelle_comprehensive.xlsx    # 122 Testfaelle (SPS + CGI-MP + CBPR+)
-├── examples/                            # 122 vorab generierte XML-Dateien
+│   ├── testfaelle_comprehensive.xlsx          # 137 pain.001 Testfaelle
+│   ├── testfaelle_vorlage.xlsx                # pain.001 Quick-Smoke (13 Cases)
+│   ├── testfaelle_pacs008_comprehensive.xlsx  # 50 pacs.008 Testfaelle
+│   └── testfaelle_pacs008_minimal.xlsx        # pacs.008 Quick-Smoke (3 Cases)
+├── examples/                                  # vorab generierte XML-Dateien
+├── finaplo/                                   # FINaplo API Credentials (.gitignore)
+├── scripts/
+│   ├── generate_pacs008_testcases.py          # 50-Case Generator
+│   └── validate_external.py                   # Second-Opinion-Validator
 ├── src/
-│   ├── main.py / pipeline.py            # CLI + Pipeline
-│   ├── models/testcase.py               # Standard Enum (sps2025/cgi-mp/cbpr+2026)
+│   ├── main.py                                # Unified CLI mit Auto-Detection
+│   ├── pipeline.py                            # PaymentTestPipeline (pain.001)
+│   ├── pacs008_pipeline.py                    # Pacs008TestPipeline (pacs.008)
+│   ├── input_handler/excel_parser.py          # Beide Excel-Formate + detect_message_type
+│   ├── models/
+│   │   ├── testcase.py                        # pain.001 Modelle + Standard Enum
+│   │   └── pacs008.py                         # pacs.008 Modelle + Pacs008Flavor Enum
 │   ├── xml_generator/
-│   │   ├── pain001_builder.py           # XML-Aufbau
-│   │   ├── builders.py                  # Wiederverwendbare Bausteine
-│   │   └── standard_strategy.py         # Strategy Pattern (SPS/CGI-MP/CBPR+)
-│   ├── payment_types/                   # SEPA, Domestic-QR/IBAN, CBPR+
+│   │   ├── pain001_builder.py                 # pain.001 XML-Aufbau
+│   │   ├── builders.py                        # pain.001 Element-Builder
+│   │   ├── bah_builder.py                     # BAH fuer pain.001 CBPR+
+│   │   ├── standard_strategy.py               # Strategy Pattern (SPS/CGI-MP/CBPR+)
+│   │   └── pacs008/
+│   │       ├── namespaces.py
+│   │       ├── builders.py                    # pacs.008 Element-Builder
+│   │       └── message_builder.py             # Document + BAH Envelope
+│   ├── payment_types/
+│   │   ├── sepa.py / domestic_qr.py / domestic_iban.py / cbpr_plus.py
+│   │   └── pacs008/defaults.py                # Defaults fuer pacs.008
 │   ├── validation/
-│   │   ├── xsd_validator.py             # Dual-XSD (SPS + CBPR+)
-│   │   ├── rule_catalog.py              # 55+ Rules in 12 Kategorien
-│   │   └── business_rules.py            # Validierungs- & Violation-Logik
-│   └── reporting/                       # Word, JSON, JUnit
-├── tests/                               # 114 Unit Tests
-└── scripts/validate_external.py         # Second-Opinion-Validator
+│   │   ├── xsd_validator.py                   # Generischer XSD-Validator
+│   │   ├── rule_catalog.py                    # 75+ Rules, alle Kategorien
+│   │   ├── business_rules.py                  # pain.001 Rule Executor + Violations
+│   │   ├── pacs008_rules.py                   # pacs.008 Rule Executor
+│   │   └── pacs008_violations.py              # pacs.008 Violations Registry
+│   ├── finaplo/client.py                      # FINaplo REST Client (Bearer + Per-Flavor)
+│   └── reporting/                             # Word, JSON, JUnit
+└── tests/                                     # 800+ Unit Tests
 ```
 
 ---
 
 ## Dokumentation
 
+### Architektur & Design
 | Dokument | Beschreibung |
 |----------|-------------|
-| `docs/SDD_v2.md` | Software Design Dokument -- Architektur, Datenmodelle |
-| `docs/roadmap/REQ_tri_standard_sps_cbpr_cgimp.md` | Requirements Tri-Standard (SPS + CGI-MP + CBPR+) |
-| `docs/specs/vergleich-sps-epc-sepa-2025.md` | SPS vs. EPC SEPA Vergleich |
-| `docs/specs/vergleich-sps-cbprplus-2025.md` | SPS vs. CBPR+ Vergleich |
+| `CLAUDE.md` | Top-Level Architektur-Guide (pain.001 + pacs.008), Domain-Regeln, Konventionen |
+| `docs/SDD_v2.md` | Software Design Dokument pain.001 — Architektur, Datenmodelle, Business Rules |
+| `docs/pacs008_implementation.md` | pacs.008 Architektur-Deep-Dive, XSD-Reihenfolge, Default-Module, Violations |
+| `docs/finaplo_integration.md` | FINaplo API Setup, Pipeline-Integration, Trial-Quota-Handling, Troubleshooting |
+| `docs/xml_validation_services.md` | Landscape externer Validierungs-Services (SIX, SWIFT, FINaplo, XMLdation, ...) |
+
+### Standards-Vergleiche
+| Dokument | Beschreibung |
+|----------|-------------|
+| `docs/specs/pain.001/vergleich-sps-cgi-2025.md` | **NEU** -- SPS 2025 vs. CGI-MP November 2025 Update |
+| `docs/specs/pain.001/vergleich-sps-cbprplus-2025.md` | SPS 2025 vs. SWIFT CBPR+ SR2025 |
+| `docs/specs/pain.001/vergleich-sps-epc-sepa-2025.md` | SPS 2025 vs. EPC SEPA |
+
+### Roadmap & Implementation Plans
+| Dokument | Beschreibung |
+|----------|-------------|
+| `docs/roadmap/2026-04-06_pacs008_implementation_plan.md` | pacs.008 V1 Plan -- 13 abgeschlossene Work Packages |
+| `docs/roadmap/2026-04-06_pacs008_finaplo_auto_repair_log.md` | WP-12 FINaplo Auto-Repair Session-Log mit JPY-Bug-Fund |
+| `docs/roadmap/2026-04-06_pain001_pacs008_chain_analysis.md` | V2 Idee: pain.001→pacs.008 Chain-Derivation |
+| `docs/roadmap/2026-04-06_correspondent_lookup_map.md` | V2 Idee: statische Correspondent-Bank-Map |
 
 ---
 
@@ -475,6 +636,16 @@ Bei erschoepfter Quota (HTTP 412 `subscription.expired`) wechselt die Pipeline i
 
 ---
 
-## Lizenz
+## Lizenz und Drittanbieter-Hinweise
 
-Proprietaer. SPS XSD: Copyright SIX Group. CBPR+ XSD: Copyright SWIFT (nicht im Repo). CGI-MP Handbook: Copyright SWIFT (nicht im Repo).
+Eigenes Code: proprietaer.
+
+Verwendete externe Spezifikationen / Schemata:
+- **SPS pain.001 XSD** -- Copyright SIX Group, im Repo unter `schemas/pain.001/` (oeffentlich von [iso-payments.ch](https://www.iso-payments.ch))
+- **CBPR+ pacs.008 XSD (SR2026)** -- Copyright SWIFT, im Repo unter `schemas/pacs.008/`
+- **CBPR+ pain.001 XSD** -- Copyright SWIFT, NICHT im Repo (proprietaer, ueber MyStandards)
+- **CBPR+ Usage Guidelines (Excel + Handbook)** -- Copyright SWIFT, NICHT im Repo (`.gitignore`)
+- **CGI-MP WG1 User Handbook** -- Copyright SWIFT, NICHT im Repo (`.gitignore`)
+- **FINaplo API** -- Payment Components SA, Trial- bzw. Paid-Subscription erforderlich
+
+Test-Daten in `templates/*.xlsx` und `examples/` enthalten **keine echten Kundendaten**. Verwendete BICs sind oeffentlich bekannte Identifikatoren bekannter Banken; sie werden ausschliesslich fuer die Generierung von synthetischen Test-Messages eingesetzt und sollten nicht in produktive Zahlungsverkehrs-Systeme uebernommen werden.
