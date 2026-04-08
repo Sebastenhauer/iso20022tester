@@ -6,11 +6,11 @@ Generiert von `scripts/generate_violation_demos.py` auf Basis von Excel-Testfael
 
 ## Dateien
 
-| Datei | SPS-XSD | CGI-MP-Best-Practice | Erklaerung |
+| Datei | SPS | CGI-MP | Erklaerung |
 |---|---|---|---|
 | `cgi_mp_argentina_baseline.xml` | ✅ PASS | ✅ PASS | Sauberer Baseline-Run: CGI-MP konformer EUR-Auftrag CH→AR mit vollstaendigem RgltryRptg + TaxRmt |
 | `cgi_mp_violates_sps_xsd.xml` | ❌ FAIL | ✅ PASS | Demo: das `★`-Zeichen in `Cdtr/Nm` ist UTF-8-konform (CGI-MP erlaubt) aber verletzt die SPS Latin-1+Extended-A Pattern-Restriction |
-| `sps_violates_cgi_empty_tags.xml` | ✅ PASS | ❌ FAIL | Demo: leere `<PmtTpInf/>` und `<RmtInf/>` Tags sind XSD-valide (alle Sub-Elemente optional) aber verletzen `BR-CGI-CHAR-01` ("empty tags must not be used") |
+| `sps_violates_cgi_unstructured_address.xml` | ✅ PASS | ❌ FAIL | Demo: `UltmtDbtr/PstlAdr` mit nur `AdrLine` (unstrukturiert) ist SPS-konform (Variante "unstrukturiert" laut IG Kapitel 3.11), verletzt aber `BR-CGI-ADDR-02` (CGI: keine unstrukturierten Adressen fuer UltmtDbtr/UltmtCdtr/InitgPty) |
 
 ## 1. cgi_mp_argentina_baseline.xml
 
@@ -59,44 +59,44 @@ for e in schema.error_log: print(' ', e.message[:200])
 "
 ```
 
-## 3. sps_violates_cgi_empty_tags.xml
+## 3. sps_violates_cgi_unstructured_address.xml
 
-Basiert auf der TC-S-001 SPS-Smoke-XML, mit einem leeren `<RmtInf></RmtInf>` injiziert in das `CdtTrfTxInf`-Element:
+Basiert auf der TC-S-001 SPS-Smoke-XML, mit einem `UltmtDbtr`-Element injiziert, dessen `PstlAdr` ausschliesslich `AdrLine`-Subelemente (unstrukturiert) plus die Pflicht-`Ctry` enthaelt:
 
 ```diff
-       <CdtrAcct>
+       <Amt>
+         <InstdAmt Ccy="EUR">1500</InstdAmt>
+       </Amt>
++      <UltmtDbtr>
++        <Nm>Mutterkonzern Holding AG</Nm>
++        <PstlAdr>
++          <Ctry>CH</Ctry>
++          <AdrLine>Bahnhofstrasse 100</AdrLine>
++          <AdrLine>8001 Zurich, Switzerland</AdrLine>
++        </PstlAdr>
++      </UltmtDbtr>
+       <Cdtr>
          ...
-       </CdtrAcct>
-+      <RmtInf></RmtInf>
-     </CdtTrfTxInf>
 ```
 
-**Wichtige Detail-Beobachtung zur Form:** Das offizielle SPS-Tooling (GEFEG.FX) unterscheidet zwischen den XML-Formen:
-
-| Form | SPS (GEFEG) | XSD-Schema | CGI-MP |
-|---|---|---|---|
-| `<RmtInf/>` (self-closing) | ❌ "Error: Empty element" | ✅ akzeptiert | ❌ verboten |
-| `<RmtInf></RmtInf>` (open-close) | ✅ akzeptiert | ✅ akzeptiert | ❌ verboten |
-
-Semantisch sind die zwei Formen XML-identisch, GEFEG behandelt sie aber unterschiedlich (custom Rule auf textueller Ebene, kein reiner XSD-Check). Wir nutzen daher die Open-Close-Form, die SPS akzeptiert, aber CGI-MP weiterhin als "Tag ohne Wert" verbietet.
-
-**Vorherige Iteration:** Ein zusaetzliches `<PmtTpInf/>` auf C-Level wurde versucht, fuehrte aber zu **CH07** (`PmtTpInf darf nicht gleichzeitig auf B- und C-Level verwendet werden`), weil das Original-SEPA-Template bereits ein B-Level `<PmtTpInf>` mit `SvcLvl/Cd=SEPA` hat. Diese Injection wurde entfernt — sie demonstrierte eine Strukturregel und nicht das eigentliche Empty-Tag-Konzept.
-
-**Warum SPS-konform?** `RemittanceInformation16` hat ausschliesslich optionale Sub-Elemente in der XSD-Definition, daher ist ein leerer Container schema-valide. Mit der Open-Close-Form akzeptiert auch das GEFEG-Tooling es. Verifizierbar via `lxml`:
+**Warum SPS-konform?** SPS IG Kapitel 3.11 ("Verwendung von Adressinformationen") erlaubt drei Adressformate: strukturiert, hybrid, und **unstrukturiert** (nur `AdrLine` plus `Ctry`). Die unstrukturierte Variante ist bis November 2026 explizit zugelassen. SPS hat keine Sonderregel, die das Adress-Format fuer `UltmtDbtr` einschraenkt. Verifizierbar gegen das Schema:
 
 ```bash
 poetry run python -c "
 from lxml import etree
 schema = etree.XMLSchema(etree.parse('schemas/pain.001/pain.001.001.09.ch.03.xsd'))
-doc = etree.parse('examples/violations/sps_violates_cgi_empty_tags.xml')
+doc = etree.parse('examples/violations/sps_violates_cgi_unstructured_address.xml')
 print('SPS-XSD valid:', schema.validate(doc))
 "
 ```
 → `True`
 
-**Warum CGI-MP-violating?** CGI-MP Handbook Slide 4: *"Empty tags (without a value) or tags containing only blanks must not be used per CGI-MP guidelines."* Der Rule-Catalog im Repo registriert das als `BR-CGI-CHAR-01` (`Leere XML-Tags (ohne Wert oder nur Blanks) verboten`).
+**Warum CGI-MP-violating?** CGI-MP Handbook Slide 8: *"Unstructured: CGI-MP note: Not allowed for Ultimate Debtor, Ultimate Creditor, Initiating Party"*. Im Repo abgebildet als `BR-CGI-ADDR-02` ("Unstructured Adresse verboten fuer UltmtDbtr, UltmtCdtr, InitgPty"). Ein CGI-MP-konformer Validator wuerde dieses XML zurueckweisen, weil das `UltmtDbtr/PstlAdr` kein einziges strukturiertes Adresselement (`StrtNm`, `BldgNb`, `PstCd`, `TwnNm`) enthaelt — nur `AdrLine` + `Ctry`. CGI verlangt fuer diese drei Party-Typen mindestens hybride Form.
 
-> **Hinweis:** Im aktuellen Code ist `BR-CGI-CHAR-01` im Rule-Catalog registriert, hat aber **keinen Runtime-Executor** in `src/validation/business_rules.py`. Unser lokaler Pipeline-Validator wuerde diese Datei daher nicht als Fail markieren. Ein externer CGI-MP-konformer Validator (z.B. XMLdation) wuerde sie ablehnen.
+**Frühere Iterationen dieses Demo-Files:**
+- Erst: leere `<PmtTpInf/>` und `<RmtInf/>` injiziert. Verstoss gegen **SPS CH07** (PmtTpInf B+C exklusiv) und SPS IG **Kapitel 3.4** ("Verwendung leerer Elemente nicht zulaessig").
+- Dann: nur `<RmtInf></RmtInf>` in Open-Close-Form. Auch verworfen — SPS Kapitel 3.4 verbietet leere Elemente in jeder Form, egal ob self-closing oder open-close. Es gibt **kein** SPS-vs-CGI-Delta auf der Empty-Tag-Achse, weil beide Standards leere Elemente verbieten.
+- Final: unstrukturierte `UltmtDbtr`-Adresse — saubere Demo, weil SPS bis Nov 2026 unstrukturierte Adressen generell zulaesst, CGI sie aber speziell fuer Ultimate Parties verbietet.
 
 ## Reproducibility
 

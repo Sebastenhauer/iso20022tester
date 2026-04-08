@@ -17,12 +17,22 @@ Outputs (in ``examples/violations/``):
    restricts text fields to Basic-Latin + Latin-1 Supplement +
    Latin-Extended-A (plus 5 special chars).
 
-3. ``sps_violates_cgi_empty_tags.xml``
-   A clean SPS pain.001 with empty ``<PmtTpInf/>`` and ``<RmtInf/>``
-   elements injected into one CdtTrfTxInf. SPS XSD allows these because
-   their sub-elements are all optional, so the empty containers pass
-   validation. CGI-MP best-practice (`empty tags must not be used`)
-   is violated.
+3. ``sps_violates_cgi_unstructured_address.xml``
+   A clean SPS pain.001 with an UltmtDbtr inserted whose PstlAdr uses
+   only ``AdrLine`` (unstructured) entries plus the mandatory Country.
+   SPS allows unstructured addresses for any party (IG Kapitel 3.11,
+   gueltig bis November 2026); CGI-MP explicitly forbids unstructured
+   addresses for UltmtDbtr / UltmtCdtr / InitgPty (BR-CGI-ADDR-02 /
+   CGI-MP Handbook Slide 8: "Not allowed for Ultimate Debtor, Ultimate
+   Creditor, Initiating Party"). The XML therefore passes both SPS
+   XSD and SPS IG, but violates CGI-MP best practice.
+
+   An earlier iteration of this demo file used empty ``<PmtTpInf/>``
+   and ``<RmtInf/>`` tags, which initially seemed valid against the
+   SPS XSD. External SPS validation showed that SPS Kapitel 3.4
+   explicitly forbids empty elements, so there is no SPS-allows-but-
+   CGI-doesn't delta on the empty-tag axis. The unstructured-address
+   path produces a clean delta instead.
 
 The script uses the post-generation lxml-mutation approach because
 the in-pipeline ``Cdtr.PstlAdr.*`` override propagation has a V1
@@ -136,42 +146,72 @@ def patch_inject_star_in_cdtr_name(tree: etree._ElementTree) -> None:
     return original, cdtr_nm.text
 
 
-def patch_inject_empty_tags(tree: etree._ElementTree) -> None:
-    """Inject empty <RmtInf></RmtInf> into the first CdtTrfTxInf.
+def patch_inject_unstructured_ultmtdbtr(tree: etree._ElementTree) -> None:
+    """Inject an UltmtDbtr with an unstructured AdrLine address into
+    the first CdtTrfTxInf.
 
-    Note on form:
-    - The self-closing form ``<RmtInf/>`` is rejected by the GEFEG.FX SPS
-      validator with ``Error: Empty element``, even though the SPS XSD
-      itself accepts it (RemittanceInformation16 has all-optional
-      sub-elements). The user-facing SPS validation tooling treats
-      ``<X/>`` as a custom rule violation.
-    - The open-close form ``<RmtInf></RmtInf>`` is accepted by SPS
-      tooling (still empty content but presented in long form).
-    - CGI-MP best practice ``BR-CGI-CHAR-01`` forbids both forms
-      because the rule is "tag without value".
+    Why this demonstrates a SPS-vs-CGI delta:
 
-    Earlier versions of this script also injected an empty C-level
-    ``<PmtTpInf/>``, which triggered SPS rule **CH07** ("PmtTpInf darf
-    nicht gleichzeitig auf B- und C-Level verwendet werden") because
-    the source TC-S-001 SEPA template already has a B-level PmtTpInf
-    with SvcLvl=SEPA. CH07 is a structural exclusivity rule unrelated
-    to the empty-tag demo, so the PmtTpInf injection has been removed.
-    Only the RmtInf injection remains, in the SPS-tolerated open-close
-    form.
+    - **SPS 2025** has no rule against unstructured addresses for
+      UltmtDbtr. The PstlAdr/AdrLine sub-element is XSD-valid in
+      pain.001.001.09 and the SPS IG explicitly permits unstructured
+      addresses (Variante "unstrukturiert" / "hybrid", IG Kapitel
+      3.11) until November 2026 for parties in general.
+    - **CGI-MP** explicitly forbids unstructured addresses for
+      UltmtDbtr, UltmtCdtr, and InitgPty (BR-CGI-ADDR-02 in our
+      catalog; CGI-MP Handbook Slide 8: "Not allowed for Ultimate
+      Debtor, Ultimate Creditor, Initiating Party"). Only structured
+      or hybrid forms are accepted, never AdrLine-only.
+
+    The injected UltmtDbtr therefore:
+    - passes the SPS XSD pattern facets (only Latin-1 chars used)
+    - passes the SPS IG (no rule violation)
+    - violates CGI-MP best practice (BR-CGI-ADDR-02)
+
+    XSD position: UltmtDbtr in CdtTrfTxInf must come AFTER ChqInstr
+    and BEFORE IntrmyAgt1/CdtrAgt/Cdtr (per pain.001.001.09 schema).
+
+    Earlier iterations of this script tried injecting empty <RmtInf/>
+    or <PmtTpInf/> tags, but those are forbidden by both standards:
+    SPS IG Kapitel 3.4 explicitly prohibits empty elements, so there
+    is no SPS-allows-but-CGI-doesn't delta on the empty-tag axis.
+    The unstructured-UltmtDbtr-address path produces a clean delta
+    instead.
     """
     cdt_tx = tree.find(".//p:CdtTrfTxInf", NS)
     if cdt_tx is None:
         return
 
-    # Remove any existing RmtInf (e.g. from the SEPA testcase) so we
-    # control the form precisely
-    for existing_rmt in cdt_tx.findall("p:RmtInf", NS):
-        cdt_tx.remove(existing_rmt)
+    # Build the UltmtDbtr element with name + AdrLine-only address
+    ultmt_dbtr = etree.Element(f"{{{PAIN001_NS}}}UltmtDbtr")
+    nm = etree.SubElement(ultmt_dbtr, f"{{{PAIN001_NS}}}Nm")
+    nm.text = "Mutterkonzern Holding AG"
+    pstl_adr = etree.SubElement(ultmt_dbtr, f"{{{PAIN001_NS}}}PstlAdr")
+    # Country first (required by both standards), then unstructured AdrLines
+    ctry = etree.SubElement(pstl_adr, f"{{{PAIN001_NS}}}Ctry")
+    ctry.text = "CH"
+    adr1 = etree.SubElement(pstl_adr, f"{{{PAIN001_NS}}}AdrLine")
+    adr1.text = "Bahnhofstrasse 100"
+    adr2 = etree.SubElement(pstl_adr, f"{{{PAIN001_NS}}}AdrLine")
+    adr2.text = "8001 Zurich, Switzerland"
 
-    # Append open-close empty RmtInf (text="" forces lxml to render
-    # <RmtInf></RmtInf> instead of the self-closing <RmtInf/>)
-    rmt = etree.SubElement(cdt_tx, f"{{{PAIN001_NS}}}RmtInf")
-    rmt.text = ""
+    # Insert at the correct XSD position: after ChqInstr (or whatever is
+    # the latest existing element from the pre-UltmtDbtr block), before
+    # IntrmyAgt1/CdtrAgt/Cdtr/etc. We look for the first occurrence of
+    # any "later" element and insert before it.
+    pre_ultmt_tags = {
+        "PmtId", "PmtTpInf", "Amt", "XchgRateInf", "ChrgBr", "ChqInstr",
+    }
+    insert_idx = None
+    for idx, child in enumerate(list(cdt_tx)):
+        local = child.tag.split("}")[-1]
+        if local not in pre_ultmt_tags:
+            insert_idx = idx
+            break
+    if insert_idx is None:
+        cdt_tx.append(ultmt_dbtr)
+    else:
+        cdt_tx.insert(insert_idx, ultmt_dbtr)
 
 
 # ---------------------------------------------------------------------------
@@ -210,17 +250,17 @@ def main():
     for e in errors[:3]:
         print(f"        {e}")
 
-    # === Demo 3: SPS XML with empty tags violating CGI-MP ===
+    # === Demo 3: SPS XML with unstructured UltmtDbtr address ===
     sps_src = find_xml(run_dir, "TC-S-001")
     print(f"\nSource SPS XML: {sps_src}")
 
-    tree_empty = parse_xml(sps_src)
-    patch_inject_empty_tags(tree_empty)
-    empty_path = OUT_DIR / "sps_violates_cgi_empty_tags.xml"
-    serialize(tree_empty, empty_path)
+    tree_unstr = parse_xml(sps_src)
+    patch_inject_unstructured_ultmtdbtr(tree_unstr)
+    unstr_path = OUT_DIR / "sps_violates_cgi_unstructured_address.xml"
+    serialize(tree_unstr, unstr_path)
 
-    valid, errors = validate_against_sps_xsd(empty_path)
-    print(f"\n[3] SPS-konform, CGI-MP empty-tag violation  {empty_path}")
+    valid, errors = validate_against_sps_xsd(unstr_path)
+    print(f"\n[3] SPS-konform, CGI-MP BR-CGI-ADDR-02 violation  {unstr_path}")
     print(f"     SPS-XSD: {'PASS (expected)' if valid else 'FAIL'}")
     for e in errors[:3]:
         print(f"        {e}")

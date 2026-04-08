@@ -53,7 +53,7 @@
         <Amt>
           <InstdAmt Ccy="EUR">1500</InstdAmt>
         </Amt>
-        <Cdtr>
+        <UltmtDbtr><Nm>Mutterkonzern Holding AG</Nm><PstlAdr><Ctry>CH</Ctry><AdrLine>Bahnhofstrasse 100</AdrLine><AdrLine>8001 Zurich, Switzerland</AdrLine></PstlAdr></UltmtDbtr><Cdtr>
           <Nm>Probst Winkler  Partner</Nm>
           <PstlAdr>
             <StrtNm>Dean Street</StrtNm>
@@ -68,7 +68,7 @@
             <IBAN>IE07QNXZ22609569508955</IBAN>
           </Id>
         </CdtrAcct>
-      <RmtInf></RmtInf></CdtTrfTxInf>
+      </CdtTrfTxInf>
     </PmtInf>
   </CstmrCdtTrfInitn>
 </Document>
