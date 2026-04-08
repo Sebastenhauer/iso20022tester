@@ -17,22 +17,32 @@ Outputs (in ``examples/violations/``):
    restricts text fields to Basic-Latin + Latin-1 Supplement +
    Latin-Extended-A (plus 5 special chars).
 
-3. ``sps_violates_cgi_unstructured_address.xml``
-   A clean SPS pain.001 with an UltmtDbtr inserted whose PstlAdr uses
-   only ``AdrLine`` (unstructured) entries plus the mandatory Country.
-   SPS allows unstructured addresses for any party (IG Kapitel 3.11,
-   gueltig bis November 2026); CGI-MP explicitly forbids unstructured
-   addresses for UltmtDbtr / UltmtCdtr / InitgPty (BR-CGI-ADDR-02 /
-   CGI-MP Handbook Slide 8: "Not allowed for Ultimate Debtor, Ultimate
-   Creditor, Initiating Party"). The XML therefore passes both SPS
-   XSD and SPS IG, but violates CGI-MP best practice.
+3. ``sps_violates_cgi_proprietary_orgid.xml``
+   A clean SPS pain.001 where the Debtor's identification uses
+   ``OrgId/Othr/SchmeNm/Prtry`` (free-form proprietary scheme name)
+   instead of the conditional ``OrgId/Othr/SchmeNm/Cd`` (ISO external
+   code list). SPS XSD permits both forms via an XSD ``<choice>``,
+   and the SPS IG has no rule restricting the choice. CGI-MP
+   ``BR-CGI-ORG-01`` explicitly forbids the ``Prtry`` form: "Cd is
+   to be used when SchmeNm is given, which at the same time means
+   SchmeNm/Prtry is not possible to be given". The XML therefore
+   passes SPS but violates CGI-MP best practice.
 
-   An earlier iteration of this demo file used empty ``<PmtTpInf/>``
-   and ``<RmtInf/>`` tags, which initially seemed valid against the
-   SPS XSD. External SPS validation showed that SPS Kapitel 3.4
-   explicitly forbids empty elements, so there is no SPS-allows-but-
-   CGI-doesn't delta on the empty-tag axis. The unstructured-address
-   path produces a clean delta instead.
+   Real-world example: the Swiss UID number ``CHE-xxx.xxx.xxx`` is
+   commonly identified with a proprietary scheme tag because no
+   official ``ExternalOrganisationIdentification1Code`` value
+   covers it.
+
+   Earlier iterations of this demo file used:
+   - Empty ``<PmtTpInf/>`` + ``<RmtInf/>`` tags -- forbidden by SPS
+     IG Kapitel 3.4 ("Verwendung leerer Elemente nicht zulaessig"),
+     so no SPS-vs-CGI delta on the empty-tag axis exists.
+   - An unstructured ``UltmtDbtr/PstlAdr`` (only ``AdrLine`` +
+     ``Ctry``) -- rejected by SPS CH21 ("TwnNm muss verwendet
+     werden"). SPS only permits structured or hybrid addresses,
+     both with ``TwnNm`` + ``Ctry`` as mandatory.
+   The proprietary-OrgId path produces a clean delta that survives
+   external SPS validation.
 
 The script uses the post-generation lxml-mutation approach because
 the in-pipeline ``Cdtr.PstlAdr.*`` override propagation has a V1
@@ -146,72 +156,61 @@ def patch_inject_star_in_cdtr_name(tree: etree._ElementTree) -> None:
     return original, cdtr_nm.text
 
 
-def patch_inject_unstructured_ultmtdbtr(tree: etree._ElementTree) -> None:
-    """Inject an UltmtDbtr with an unstructured AdrLine address into
-    the first CdtTrfTxInf.
+def patch_inject_proprietary_orgid(tree: etree._ElementTree) -> None:
+    """Inject a Debtor identification using the proprietary scheme form
+    ``OrgId/Othr/SchmeNm/Prtry`` (instead of the conditional ``Cd``).
 
     Why this demonstrates a SPS-vs-CGI delta:
 
-    - **SPS 2025** has no rule against unstructured addresses for
-      UltmtDbtr. The PstlAdr/AdrLine sub-element is XSD-valid in
-      pain.001.001.09 and the SPS IG explicitly permits unstructured
-      addresses (Variante "unstrukturiert" / "hybrid", IG Kapitel
-      3.11) until November 2026 for parties in general.
-    - **CGI-MP** explicitly forbids unstructured addresses for
-      UltmtDbtr, UltmtCdtr, and InitgPty (BR-CGI-ADDR-02 in our
-      catalog; CGI-MP Handbook Slide 8: "Not allowed for Ultimate
-      Debtor, Ultimate Creditor, Initiating Party"). Only structured
-      or hybrid forms are accepted, never AdrLine-only.
+    - **SPS 2025**: the SPS XSD inherits the standard ISO 20022
+      ``PartyIdentification135`` complex type, which uses an XSD
+      ``<choice>`` between ``Cd`` and ``Prtry`` inside ``SchmeNm``.
+      Both alternatives are schema-valid. The SPS IG does not
+      restrict the choice (no SPS-specific rule against ``Prtry``).
+      Real-world example: the Swiss UID number (``CHE-xxx.xxx.xxx``)
+      is commonly identified with a proprietary scheme tag because
+      no official ISO ``ExternalOrganisationIdentification1Code``
+      value covers it.
 
-    The injected UltmtDbtr therefore:
-    - passes the SPS XSD pattern facets (only Latin-1 chars used)
-    - passes the SPS IG (no rule violation)
-    - violates CGI-MP best practice (BR-CGI-ADDR-02)
+    - **CGI-MP**: the rule ``BR-CGI-ORG-01`` (CGI-MP Handbook
+      ``SchmeNm in OrgId``) explicitly states that ``Cd`` must be
+      used when ``SchmeNm`` is given, and that ``Prtry`` is not
+      allowed. The intent is to anchor identifications in the ISO
+      external code list rather than in free-form proprietary names.
 
-    XSD position: UltmtDbtr in CdtTrfTxInf must come AFTER ChqInstr
-    and BEFORE IntrmyAgt1/CdtrAgt/Cdtr (per pain.001.001.09 schema).
+    The injected XML therefore:
+    - passes the SPS XSD pattern facets (Latin-1 chars only)
+    - passes the SPS IG (no SPS-specific rule against Prtry)
+    - violates CGI-MP best practice (BR-CGI-ORG-01)
 
-    Earlier iterations of this script tried injecting empty <RmtInf/>
-    or <PmtTpInf/> tags, but those are forbidden by both standards:
-    SPS IG Kapitel 3.4 explicitly prohibits empty elements, so there
-    is no SPS-allows-but-CGI-doesn't delta on the empty-tag axis.
-    The unstructured-UltmtDbtr-address path produces a clean delta
-    instead.
+    The previous iteration of this demo used an unstructured
+    ``UltmtDbtr/PstlAdr/AdrLine``, but the SPS validator (GEFEG.FX)
+    rejected it via SPS rule **CH21** ("Das Element <TwnNm> muss
+    verwendet werden") -- SPS only permits structured or hybrid
+    addresses, where ``TwnNm`` + ``Ctry`` are mandatory in both
+    forms. There is no purely unstructured (AdrLine-only) variant
+    in SPS, contrary to my earlier reading of IG Kapitel 3.11.
     """
-    cdt_tx = tree.find(".//p:CdtTrfTxInf", NS)
-    if cdt_tx is None:
+    dbtr = tree.find(".//p:PmtInf/p:Dbtr", NS)
+    if dbtr is None:
         return
 
-    # Build the UltmtDbtr element with name + AdrLine-only address
-    ultmt_dbtr = etree.Element(f"{{{PAIN001_NS}}}UltmtDbtr")
-    nm = etree.SubElement(ultmt_dbtr, f"{{{PAIN001_NS}}}Nm")
-    nm.text = "Mutterkonzern Holding AG"
-    pstl_adr = etree.SubElement(ultmt_dbtr, f"{{{PAIN001_NS}}}PstlAdr")
-    # Country first (required by both standards), then unstructured AdrLines
-    ctry = etree.SubElement(pstl_adr, f"{{{PAIN001_NS}}}Ctry")
-    ctry.text = "CH"
-    adr1 = etree.SubElement(pstl_adr, f"{{{PAIN001_NS}}}AdrLine")
-    adr1.text = "Bahnhofstrasse 100"
-    adr2 = etree.SubElement(pstl_adr, f"{{{PAIN001_NS}}}AdrLine")
-    adr2.text = "8001 Zurich, Switzerland"
+    # If Dbtr already has an Id element, skip (we don't want to merge
+    # with an existing identification)
+    if dbtr.find("p:Id", NS) is not None:
+        return
 
-    # Insert at the correct XSD position: after ChqInstr (or whatever is
-    # the latest existing element from the pre-UltmtDbtr block), before
-    # IntrmyAgt1/CdtrAgt/Cdtr/etc. We look for the first occurrence of
-    # any "later" element and insert before it.
-    pre_ultmt_tags = {
-        "PmtId", "PmtTpInf", "Amt", "XchgRateInf", "ChrgBr", "ChqInstr",
-    }
-    insert_idx = None
-    for idx, child in enumerate(list(cdt_tx)):
-        local = child.tag.split("}")[-1]
-        if local not in pre_ultmt_tags:
-            insert_idx = idx
-            break
-    if insert_idx is None:
-        cdt_tx.append(ultmt_dbtr)
-    else:
-        cdt_tx.insert(insert_idx, ultmt_dbtr)
+    # Build the Id/OrgId/Othr/Id + SchmeNm/Prtry chain. This is the
+    # standard real-world pattern for the Swiss UID number when
+    # identified via a proprietary scheme name.
+    id_el = etree.SubElement(dbtr, f"{{{PAIN001_NS}}}Id")
+    org_id = etree.SubElement(id_el, f"{{{PAIN001_NS}}}OrgId")
+    othr = etree.SubElement(org_id, f"{{{PAIN001_NS}}}Othr")
+    id_value = etree.SubElement(othr, f"{{{PAIN001_NS}}}Id")
+    id_value.text = "CHE-112.334.566"
+    schme_nm = etree.SubElement(othr, f"{{{PAIN001_NS}}}SchmeNm")
+    prtry = etree.SubElement(schme_nm, f"{{{PAIN001_NS}}}Prtry")
+    prtry.text = "CH-UID-NUMMER"
 
 
 # ---------------------------------------------------------------------------
@@ -250,17 +249,17 @@ def main():
     for e in errors[:3]:
         print(f"        {e}")
 
-    # === Demo 3: SPS XML with unstructured UltmtDbtr address ===
+    # === Demo 3: SPS XML with proprietary OrgId scheme name ===
     sps_src = find_xml(run_dir, "TC-S-001")
     print(f"\nSource SPS XML: {sps_src}")
 
-    tree_unstr = parse_xml(sps_src)
-    patch_inject_unstructured_ultmtdbtr(tree_unstr)
-    unstr_path = OUT_DIR / "sps_violates_cgi_unstructured_address.xml"
-    serialize(tree_unstr, unstr_path)
+    tree_orgid = parse_xml(sps_src)
+    patch_inject_proprietary_orgid(tree_orgid)
+    orgid_path = OUT_DIR / "sps_violates_cgi_proprietary_orgid.xml"
+    serialize(tree_orgid, orgid_path)
 
-    valid, errors = validate_against_sps_xsd(unstr_path)
-    print(f"\n[3] SPS-konform, CGI-MP BR-CGI-ADDR-02 violation  {unstr_path}")
+    valid, errors = validate_against_sps_xsd(orgid_path)
+    print(f"\n[3] SPS-konform, CGI-MP BR-CGI-ORG-01 violation  {orgid_path}")
     print(f"     SPS-XSD: {'PASS (expected)' if valid else 'FAIL'}")
     for e in errors[:3]:
         print(f"        {e}")

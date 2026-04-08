@@ -2,8 +2,8 @@
 <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <MsgId>MSG-5db15ec34011</MsgId>
-      <CreDtTm>2026-04-08T14:01:28.655448</CreDtTm>
+      <MsgId>MSG-6380e4da3a4a</MsgId>
+      <CreDtTm>2026-04-08T14:29:14.321061</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
       <CtrlSum>85000.00</CtrlSum>
       <InitgPty>
@@ -11,7 +11,7 @@
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>PMT-24eb70a74033</PmtInfId>
+      <PmtInfId>PMT-9290c9c55800</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <NbOfTxs>1</NbOfTxs>
       <CtrlSum>85000.00</CtrlSum>
@@ -49,8 +49,8 @@
       <ChrgBr>DEBT</ChrgBr>
       <CdtTrfTxInf>
         <PmtId>
-          <EndToEndId>E2E-22fd5cb92582</EndToEndId>
-          <UETR>4bd48810-4028-4d60-a16f-e21b1c581f3a</UETR>
+          <EndToEndId>E2E-0a1284e37b80</EndToEndId>
+          <UETR>b59e4769-626d-43ef-92f5-b5f4241c42c6</UETR>
         </PmtId>
         <Amt>
           <InstdAmt Ccy="EUR">85000.00</InstdAmt>

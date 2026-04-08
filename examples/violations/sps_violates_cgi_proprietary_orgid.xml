@@ -2,16 +2,16 @@
 <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <MsgId>MSG-fd74a345ba6e</MsgId>
-      <CreDtTm>2026-04-08T14:01:28.097898</CreDtTm>
+      <MsgId>MSG-61f58126486c</MsgId>
+      <CreDtTm>2026-04-08T14:29:13.715427</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
       <CtrlSum>1500</CtrlSum>
       <InitgPty>
-        <Nm>Graf AG</Nm>
+        <Nm>Hauser Gerber AG</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>PMT-9307b959a36b</PmtInfId>
+      <PmtInfId>PMT-dee28fc6132c</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <NbOfTxs>1</NbOfTxs>
       <CtrlSum>1500</CtrlSum>
@@ -24,7 +24,7 @@
         <Dt>2026-04-09</Dt>
       </ReqdExctnDt>
       <Dbtr>
-        <Nm>Graf AG</Nm>
+        <Nm>Hauser Gerber AG</Nm>
         <PstlAdr>
           <StrtNm>Bahnhofstrasse</StrtNm>
           <BldgNb>42</BldgNb>
@@ -32,7 +32,7 @@
           <TwnNm>Zurich</TwnNm>
           <Ctry>CH</Ctry>
         </PstlAdr>
-      </Dbtr>
+      <Id><OrgId><Othr><Id>CHE-112.334.566</Id><SchmeNm><Prtry>CH-UID-NUMMER</Prtry></SchmeNm></Othr></OrgId></Id></Dbtr>
       <DbtrAcct>
         <Id>
           <IBAN>CH5604835012345678009</IBAN>
@@ -48,24 +48,24 @@
       <ChrgBr>SLEV</ChrgBr>
       <CdtTrfTxInf>
         <PmtId>
-          <EndToEndId>E2E-4e1617cdb99e</EndToEndId>
+          <EndToEndId>E2E-d28f208463c0</EndToEndId>
         </PmtId>
         <Amt>
           <InstdAmt Ccy="EUR">1500</InstdAmt>
         </Amt>
-        <UltmtDbtr><Nm>Mutterkonzern Holding AG</Nm><PstlAdr><Ctry>CH</Ctry><AdrLine>Bahnhofstrasse 100</AdrLine><AdrLine>8001 Zurich, Switzerland</AdrLine></PstlAdr></UltmtDbtr><Cdtr>
-          <Nm>Probst Winkler  Partner</Nm>
+        <Cdtr>
+          <Nm>Leu Hotz  Partner</Nm>
           <PstlAdr>
-            <StrtNm>Dean Street</StrtNm>
-            <BldgNb>43</BldgNb>
-            <PstCd>K63 DE8V</PstCd>
-            <TwnNm>Bronagh Ville</TwnNm>
-            <Ctry>IE</Ctry>
+            <StrtNm>Krausesvej</StrtNm>
+            <BldgNb>136</BldgNb>
+            <PstCd>9574</PstCd>
+            <TwnNm>Hemmet</TwnNm>
+            <Ctry>DK</Ctry>
           </PstlAdr>
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <IBAN>IE07QNXZ22609569508955</IBAN>
+            <IBAN>DK6581906829418672</IBAN>
           </Id>
         </CdtrAcct>
       </CdtTrfTxInf>

@@ -10,7 +10,7 @@ Generiert von `scripts/generate_violation_demos.py` auf Basis von Excel-Testfael
 |---|---|---|---|
 | `cgi_mp_argentina_baseline.xml` | ✅ PASS | ✅ PASS | Sauberer Baseline-Run: CGI-MP konformer EUR-Auftrag CH→AR mit vollstaendigem RgltryRptg + TaxRmt |
 | `cgi_mp_violates_sps_xsd.xml` | ❌ FAIL | ✅ PASS | Demo: das `★`-Zeichen in `Cdtr/Nm` ist UTF-8-konform (CGI-MP erlaubt) aber verletzt die SPS Latin-1+Extended-A Pattern-Restriction |
-| `sps_violates_cgi_unstructured_address.xml` | ✅ PASS | ❌ FAIL | Demo: `UltmtDbtr/PstlAdr` mit nur `AdrLine` (unstrukturiert) ist SPS-konform (Variante "unstrukturiert" laut IG Kapitel 3.11), verletzt aber `BR-CGI-ADDR-02` (CGI: keine unstrukturierten Adressen fuer UltmtDbtr/UltmtCdtr/InitgPty) |
+| `sps_violates_cgi_proprietary_orgid.xml` | ✅ PASS | ❌ FAIL | Demo: `Dbtr/Id/OrgId/Othr/SchmeNm/Prtry` (proprietary scheme name) ist SPS-XSD-valide ueber den XSD-Choice zwischen `Cd` und `Prtry`. CGI verbietet die Prtry-Form per `BR-CGI-ORG-01` (nur `Cd` aus `ExternalOrganisationIdentification1Code` zugelassen). Real-world Use-Case: Schweizer UID-Nummer `CHE-xxx.xxx.xxx`. |
 
 ## 1. cgi_mp_argentina_baseline.xml
 
@@ -59,44 +59,47 @@ for e in schema.error_log: print(' ', e.message[:200])
 "
 ```
 
-## 3. sps_violates_cgi_unstructured_address.xml
+## 3. sps_violates_cgi_proprietary_orgid.xml
 
-Basiert auf der TC-S-001 SPS-Smoke-XML, mit einem `UltmtDbtr`-Element injiziert, dessen `PstlAdr` ausschliesslich `AdrLine`-Subelemente (unstrukturiert) plus die Pflicht-`Ctry` enthaelt:
+Basiert auf der TC-S-001 SPS-Smoke-XML, mit einem `Id`-Element injiziert, das den **Debtor** ueber eine **proprietäre Schema-Bezeichnung** identifiziert (statt ueber einen ISO-Code):
 
 ```diff
-       <Amt>
-         <InstdAmt Ccy="EUR">1500</InstdAmt>
-       </Amt>
-+      <UltmtDbtr>
-+        <Nm>Mutterkonzern Holding AG</Nm>
-+        <PstlAdr>
-+          <Ctry>CH</Ctry>
-+          <AdrLine>Bahnhofstrasse 100</AdrLine>
-+          <AdrLine>8001 Zurich, Switzerland</AdrLine>
-+        </PstlAdr>
-+      </UltmtDbtr>
-       <Cdtr>
-         ...
+       <Dbtr>
+         <Nm>...</Nm>
+         <PstlAdr>...</PstlAdr>
++        <Id>
++          <OrgId>
++            <Othr>
++              <Id>CHE-112.334.566</Id>
++              <SchmeNm>
++                <Prtry>CH-UID-NUMMER</Prtry>
++              </SchmeNm>
++            </Othr>
++          </OrgId>
++        </Id>
+       </Dbtr>
 ```
 
-**Warum SPS-konform?** SPS IG Kapitel 3.11 ("Verwendung von Adressinformationen") erlaubt drei Adressformate: strukturiert, hybrid, und **unstrukturiert** (nur `AdrLine` plus `Ctry`). Die unstrukturierte Variante ist bis November 2026 explizit zugelassen. SPS hat keine Sonderregel, die das Adress-Format fuer `UltmtDbtr` einschraenkt. Verifizierbar gegen das Schema:
+Real-world Use-Case: die Schweizer **UID-Nummer** (Unternehmens-Identifikationsnummer, Format `CHE-xxx.xxx.xxx`) wird in der Praxis oft als proprietäres Identifikations-Schema gefuehrt, weil es keinen passenden Eintrag in der ISO `ExternalOrganisationIdentification1Code`-Liste gibt.
+
+**Warum SPS-konform?** Der `OrganisationIdentification29`-Typ in pain.001.001.09 hat in `Othr/SchmeNm` einen **XSD-`<choice>`** zwischen `Cd` und `Prtry`. Beide Alternativen sind schema-valide. Die SPS-IG hat keine eigene Regel, die `Prtry` ausschliesst. Verifizierbar gegen das Schema:
 
 ```bash
 poetry run python -c "
 from lxml import etree
 schema = etree.XMLSchema(etree.parse('schemas/pain.001/pain.001.001.09.ch.03.xsd'))
-doc = etree.parse('examples/violations/sps_violates_cgi_unstructured_address.xml')
+doc = etree.parse('examples/violations/sps_violates_cgi_proprietary_orgid.xml')
 print('SPS-XSD valid:', schema.validate(doc))
 "
 ```
 → `True`
 
-**Warum CGI-MP-violating?** CGI-MP Handbook Slide 8: *"Unstructured: CGI-MP note: Not allowed for Ultimate Debtor, Ultimate Creditor, Initiating Party"*. Im Repo abgebildet als `BR-CGI-ADDR-02` ("Unstructured Adresse verboten fuer UltmtDbtr, UltmtCdtr, InitgPty"). Ein CGI-MP-konformer Validator wuerde dieses XML zurueckweisen, weil das `UltmtDbtr/PstlAdr` kein einziges strukturiertes Adresselement (`StrtNm`, `BldgNb`, `PstCd`, `TwnNm`) enthaelt — nur `AdrLine` + `Ctry`. CGI verlangt fuer diese drei Party-Typen mindestens hybride Form.
+**Warum CGI-MP-violating?** CGI-MP Handbook (`SchmeNm in OrgId`): *"OrgId/Othr/SchmeNm/Cd is marked as a conditional element by CGI. Cd is to be used when SchmeNm is given, which at the same time means SchmeNm/Prtry is not possible to be given."* Im Repo abgebildet als `BR-CGI-ORG-01` ("OrgId/Othr/SchmeNm nur per Cd, kein Prtry"). Die Begruendung ist die Verankerung von Identifikationen in einer kontrollierten ISO-Codeliste statt in freitextlichen proprietaeren Bezeichnern. Ein CGI-MP-konformer Validator wuerde dieses XML zurueckweisen.
 
 **Frühere Iterationen dieses Demo-Files:**
-- Erst: leere `<PmtTpInf/>` und `<RmtInf/>` injiziert. Verstoss gegen **SPS CH07** (PmtTpInf B+C exklusiv) und SPS IG **Kapitel 3.4** ("Verwendung leerer Elemente nicht zulaessig").
-- Dann: nur `<RmtInf></RmtInf>` in Open-Close-Form. Auch verworfen — SPS Kapitel 3.4 verbietet leere Elemente in jeder Form, egal ob self-closing oder open-close. Es gibt **kein** SPS-vs-CGI-Delta auf der Empty-Tag-Achse, weil beide Standards leere Elemente verbieten.
-- Final: unstrukturierte `UltmtDbtr`-Adresse — saubere Demo, weil SPS bis Nov 2026 unstrukturierte Adressen generell zulaesst, CGI sie aber speziell fuer Ultimate Parties verbietet.
+- Erst: leere `<PmtTpInf/>` und `<RmtInf/>` injiziert. Verstoss gegen **SPS CH07** (PmtTpInf B+C exklusiv) und SPS IG **Kapitel 3.4** ("Verwendung leerer Elemente nicht zulaessig"). Empty-Tags sind in beiden Standards verboten — kein Delta.
+- Dann: unstrukturierte `UltmtDbtr/PstlAdr` mit nur `AdrLine` + `Ctry`. Verstoss gegen **SPS CH21** ("Das Element `<TwnNm>` muss verwendet werden"). SPS erlaubt nur **strukturiert** und **hybrid** als Adressformate (IG Kapitel 3.11), beide mit `TwnNm` + `Ctry` als Pflichtfelder. Eine rein-unstrukturierte AdrLine-only Form gibt es in SPS nicht — kein Delta.
+- Final: **proprietary OrgId scheme name** — funktioniert, weil SPS den XSD-Choice zwischen `Cd` und `Prtry` voll unterstuetzt und keine SPS-Sonderregel `Prtry` einschraenkt.
 
 ## Reproducibility
 
