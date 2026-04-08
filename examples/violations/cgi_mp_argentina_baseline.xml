@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-76c9993902df</MsgId>
+      <CreDtTm>2026-04-08T12:04:28.169487</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>85000.00</CtrlSum>
+      <InitgPty>
+        <Nm>Schweizer Tochter AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-c6e0fa842e43</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>85000.00</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>URGP</Cd>
+        </SvcLvl>
+        <CtgyPurp>
+          <Cd>SUPP</Cd>
+        </CtgyPurp>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-04-09</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Schweizer Tochter AG</Nm>
+        <PstlAdr>
+          <StrtNm>Bahnhofstrasse</StrtNm>
+          <BldgNb>42</BldgNb>
+          <PstCd>8001</PstCd>
+          <TwnNm>Zurich</TwnNm>
+          <Ctry>CH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BICFI>UBSWCHZH80A</BICFI>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>DEBT</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-380dbad08cd4</EndToEndId>
+          <UETR>1de5ddd5-a68c-45b9-b2fd-383fa284d7b7</UETR>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="EUR">85000.00</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BBVAARBAXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Compania Argentina de Comercio S.A.</Nm>
+          <PstlAdr>
+            <StrtNm>Avenida Corrientes</StrtNm>
+            <BldgNb>1234</BldgNb>
+            <PstCd>C1043AAZ</PstCd>
+            <TwnNm>Buenos Aires</TwnNm>
+            <Ctry>AR</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <Othr>
+              <Id>0070123456789012345678</Id>
+            </Othr>
+          </Id>
+        </CdtrAcct>
+        <RgltryRptg>
+          <DbtCdtRptgInd>DEBT</DbtCdtRptgInd>
+          <Authrty>
+            <Nm>SNB</Nm>
+            <Ctry>CH</Ctry>
+          </Authrty>
+          <Dtls>
+            <Tp>BOP</Tp>
+            <Ctry>CH</Ctry>
+            <Cd>BOP</Cd>
+            <Inf>Goods import South America</Inf>
+          </Dtls>
+        </RgltryRptg>
+        <RmtInf>
+          <Ustrd>Warenimport aus Argentinien Q2 2026</Ustrd>
+          <Strd>
+            <TaxRmt>
+              <Cdtr>
+                <TaxId>AR30712345678</TaxId>
+                <TaxTp>IVA</TaxTp>
+              </Cdtr>
+              <Dbtr>
+                <TaxId>CHE112334566</TaxId>
+                <TaxTp>VAT</TaxTp>
+              </Dbtr>
+              <AdmstnZone>AR</AdmstnZone>
+              <RefNb>IVA-AR-2026-Q2</RefNb>
+              <Mtd>VAT</Mtd>
+              <TtlTaxAmt Ccy="EUR">8500.00</TtlTaxAmt>
+            </TaxRmt>
+          </Strd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

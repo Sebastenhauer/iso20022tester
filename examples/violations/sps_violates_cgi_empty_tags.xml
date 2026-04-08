@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <MsgId>MSG-b690f0789ebc</MsgId>
+      <CreDtTm>2026-04-08T12:04:27.611216</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>1500</CtrlSum>
+      <InitgPty>
+        <Nm>Michel AG</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>PMT-4ff28e009025</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>1500</CtrlSum>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>
+        <Dt>2026-04-09</Dt>
+      </ReqdExctnDt>
+      <Dbtr>
+        <Nm>Michel AG</Nm>
+        <PstlAdr>
+          <StrtNm>Bahnhofstrasse</StrtNm>
+          <BldgNb>42</BldgNb>
+          <PstCd>8001</PstCd>
+          <TwnNm>Zurich</TwnNm>
+          <Ctry>CH</Ctry>
+        </PstlAdr>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>CH5604835012345678009</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <ClrSysMmbId>
+            <MmbId>04835</MmbId>
+          </ClrSysMmbId>
+        </FinInstnId>
+      </DbtrAgt>
+      <ChrgBr>SLEV</ChrgBr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <EndToEndId>E2E-f211f553cda9</EndToEndId>
+        </PmtId>
+        <PmtTpInf/><Amt>
+          <InstdAmt Ccy="EUR">1500</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Bianchi AG</Nm>
+          <PstlAdr>
+            <StrtNm>Szabadsag utca</StrtNm>
+            <BldgNb>77</BldgNb>
+            <PstCd>1011</PstCd>
+            <TwnNm>Borsodhidkoevesd</TwnNm>
+            <Ctry>HU</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>HU15222529382365882864374925</IBAN>
+          </Id>
+        </CdtrAcct>
+      <RmtInf/></CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>
