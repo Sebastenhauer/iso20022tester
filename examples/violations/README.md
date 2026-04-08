@@ -61,22 +61,28 @@ for e in schema.error_log: print(' ', e.message[:200])
 
 ## 3. sps_violates_cgi_empty_tags.xml
 
-Basiert auf der TC-S-001 SPS-Smoke-XML, mit zwei zusaetzlichen Empty Tags injiziert in das `CdtTrfTxInf`-Element:
+Basiert auf der TC-S-001 SPS-Smoke-XML, mit einem leeren `<RmtInf></RmtInf>` injiziert in das `CdtTrfTxInf`-Element:
 
 ```diff
-       <PmtId>
+       <CdtrAcct>
          ...
-       </PmtId>
-+      <PmtTpInf/>
-       <Amt>
-         <InstdAmt Ccy="EUR">1500</InstdAmt>
-       </Amt>
-       ...
-+      <RmtInf/>
+       </CdtrAcct>
++      <RmtInf></RmtInf>
      </CdtTrfTxInf>
 ```
 
-**Warum SPS-XSD-konform?** Beide Element-Typen (`PaymentTypeInformation26` fuer PmtTpInf und `RemittanceInformation16` fuer RmtInf) haben ausschliesslich optionale Sub-Elemente in der XSD-Definition. Ein leerer Container ist daher schema-valide. Verifizierbar via `lxml`:
+**Wichtige Detail-Beobachtung zur Form:** Das offizielle SPS-Tooling (GEFEG.FX) unterscheidet zwischen den XML-Formen:
+
+| Form | SPS (GEFEG) | XSD-Schema | CGI-MP |
+|---|---|---|---|
+| `<RmtInf/>` (self-closing) | ❌ "Error: Empty element" | ✅ akzeptiert | ❌ verboten |
+| `<RmtInf></RmtInf>` (open-close) | ✅ akzeptiert | ✅ akzeptiert | ❌ verboten |
+
+Semantisch sind die zwei Formen XML-identisch, GEFEG behandelt sie aber unterschiedlich (custom Rule auf textueller Ebene, kein reiner XSD-Check). Wir nutzen daher die Open-Close-Form, die SPS akzeptiert, aber CGI-MP weiterhin als "Tag ohne Wert" verbietet.
+
+**Vorherige Iteration:** Ein zusaetzliches `<PmtTpInf/>` auf C-Level wurde versucht, fuehrte aber zu **CH07** (`PmtTpInf darf nicht gleichzeitig auf B- und C-Level verwendet werden`), weil das Original-SEPA-Template bereits ein B-Level `<PmtTpInf>` mit `SvcLvl/Cd=SEPA` hat. Diese Injection wurde entfernt — sie demonstrierte eine Strukturregel und nicht das eigentliche Empty-Tag-Konzept.
+
+**Warum SPS-konform?** `RemittanceInformation16` hat ausschliesslich optionale Sub-Elemente in der XSD-Definition, daher ist ein leerer Container schema-valide. Mit der Open-Close-Form akzeptiert auch das GEFEG-Tooling es. Verifizierbar via `lxml`:
 
 ```bash
 poetry run python -c "

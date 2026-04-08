@@ -50,7 +50,7 @@
         <PmtId>
           <EndToEndId>E2E-4e1617cdb99e</EndToEndId>
         </PmtId>
-        <PmtTpInf/><Amt>
+        <Amt>
           <InstdAmt Ccy="EUR">1500</InstdAmt>
         </Amt>
         <Cdtr>
@@ -68,7 +68,7 @@
             <IBAN>IE07QNXZ22609569508955</IBAN>
           </Id>
         </CdtrAcct>
-      <RmtInf/></CdtTrfTxInf>
+      <RmtInf></RmtInf></CdtTrfTxInf>
     </PmtInf>
   </CstmrCdtTrfInitn>
 </Document>

@@ -137,35 +137,41 @@ def patch_inject_star_in_cdtr_name(tree: etree._ElementTree) -> None:
 
 
 def patch_inject_empty_tags(tree: etree._ElementTree) -> None:
-    """Inject empty <PmtTpInf/> and <RmtInf/> into the first CdtTrfTxInf.
-    Both element types have all-optional sub-elements, so the SPS XSD
-    accepts them empty. CGI-MP best-practice forbids empty tags entirely.
+    """Inject empty <RmtInf></RmtInf> into the first CdtTrfTxInf.
 
-    PmtTpInf must be inserted before InstdAmt; RmtInf is the last child
-    of CdtTrfTxInf, so it can be appended at the end.
+    Note on form:
+    - The self-closing form ``<RmtInf/>`` is rejected by the GEFEG.FX SPS
+      validator with ``Error: Empty element``, even though the SPS XSD
+      itself accepts it (RemittanceInformation16 has all-optional
+      sub-elements). The user-facing SPS validation tooling treats
+      ``<X/>`` as a custom rule violation.
+    - The open-close form ``<RmtInf></RmtInf>`` is accepted by SPS
+      tooling (still empty content but presented in long form).
+    - CGI-MP best practice ``BR-CGI-CHAR-01`` forbids both forms
+      because the rule is "tag without value".
+
+    Earlier versions of this script also injected an empty C-level
+    ``<PmtTpInf/>``, which triggered SPS rule **CH07** ("PmtTpInf darf
+    nicht gleichzeitig auf B- und C-Level verwendet werden") because
+    the source TC-S-001 SEPA template already has a B-level PmtTpInf
+    with SvcLvl=SEPA. CH07 is a structural exclusivity rule unrelated
+    to the empty-tag demo, so the PmtTpInf injection has been removed.
+    Only the RmtInf injection remains, in the SPS-tolerated open-close
+    form.
     """
     cdt_tx = tree.find(".//p:CdtTrfTxInf", NS)
     if cdt_tx is None:
         return
 
-    # Insert empty PmtTpInf before InstdAmt (Amt -> InstdAmt)
-    pmt_tp_inf = etree.SubElement(cdt_tx, f"{{{PAIN001_NS}}}PmtTpInf")
-    # We added it at the end; need to move it to the right XSD position
-    # (after PmtId, before Amt)
-    cdt_tx.remove(pmt_tp_inf)
-    pmt_id = cdt_tx.find("p:PmtId", NS)
-    pmt_id_idx = list(cdt_tx).index(pmt_id)
-    cdt_tx.insert(pmt_id_idx + 1, pmt_tp_inf)
+    # Remove any existing RmtInf (e.g. from the SEPA testcase) so we
+    # control the form precisely
+    for existing_rmt in cdt_tx.findall("p:RmtInf", NS):
+        cdt_tx.remove(existing_rmt)
 
-    # Append empty RmtInf at the end (it's the last child anyway)
-    existing_rmt = cdt_tx.find("p:RmtInf", NS)
-    if existing_rmt is not None:
-        # Replace existing RmtInf with empty one
-        # Remove all children of RmtInf
-        for child in list(existing_rmt):
-            existing_rmt.remove(child)
-    else:
-        etree.SubElement(cdt_tx, f"{{{PAIN001_NS}}}RmtInf")
+    # Append open-close empty RmtInf (text="" forces lxml to render
+    # <RmtInf></RmtInf> instead of the self-closing <RmtInf/>)
+    rmt = etree.SubElement(cdt_tx, f"{{{PAIN001_NS}}}RmtInf")
+    rmt.text = ""
 
 
 # ---------------------------------------------------------------------------
