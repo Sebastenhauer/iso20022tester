@@ -10,7 +10,10 @@ dist/
 # Alle PDFs werden lokal vorgehalten, nicht versioniert
 *.pdf
 
-# Proprietaere SWIFT Spezifikationen (nicht oeffentlich)
+# Proprietaere SWIFT Spezifikationen (nicht oeffentlich) -- werden
+# nirgendwo im Tree versioniert, egal in welchem Unterordner sie liegen
+**/cbpr+nonpublic/
+**/cgi_nonpublic/
 docs/specs/cbpr+nonpublic/
 docs/specs/cgi_nonpublic/
 
