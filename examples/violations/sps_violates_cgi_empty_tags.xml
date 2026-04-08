@@ -2,16 +2,16 @@
 <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <MsgId>MSG-b690f0789ebc</MsgId>
-      <CreDtTm>2026-04-08T12:04:27.611216</CreDtTm>
+      <MsgId>MSG-fd74a345ba6e</MsgId>
+      <CreDtTm>2026-04-08T14:01:28.097898</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
       <CtrlSum>1500</CtrlSum>
       <InitgPty>
-        <Nm>Michel AG</Nm>
+        <Nm>Graf AG</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>PMT-4ff28e009025</PmtInfId>
+      <PmtInfId>PMT-9307b959a36b</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <NbOfTxs>1</NbOfTxs>
       <CtrlSum>1500</CtrlSum>
@@ -24,7 +24,7 @@
         <Dt>2026-04-09</Dt>
       </ReqdExctnDt>
       <Dbtr>
-        <Nm>Michel AG</Nm>
+        <Nm>Graf AG</Nm>
         <PstlAdr>
           <StrtNm>Bahnhofstrasse</StrtNm>
           <BldgNb>42</BldgNb>
@@ -48,24 +48,24 @@
       <ChrgBr>SLEV</ChrgBr>
       <CdtTrfTxInf>
         <PmtId>
-          <EndToEndId>E2E-f211f553cda9</EndToEndId>
+          <EndToEndId>E2E-4e1617cdb99e</EndToEndId>
         </PmtId>
         <PmtTpInf/><Amt>
           <InstdAmt Ccy="EUR">1500</InstdAmt>
         </Amt>
         <Cdtr>
-          <Nm>Bianchi AG</Nm>
+          <Nm>Probst Winkler  Partner</Nm>
           <PstlAdr>
-            <StrtNm>Szabadsag utca</StrtNm>
-            <BldgNb>77</BldgNb>
-            <PstCd>1011</PstCd>
-            <TwnNm>Borsodhidkoevesd</TwnNm>
-            <Ctry>HU</Ctry>
+            <StrtNm>Dean Street</StrtNm>
+            <BldgNb>43</BldgNb>
+            <PstCd>K63 DE8V</PstCd>
+            <TwnNm>Bronagh Ville</TwnNm>
+            <Ctry>IE</Ctry>
           </PstlAdr>
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <IBAN>HU15222529382365882864374925</IBAN>
+            <IBAN>IE07QNXZ22609569508955</IBAN>
           </Id>
         </CdtrAcct>
       <RmtInf/></CdtTrfTxInf>

@@ -5,7 +5,7 @@ Neue Standards (z.B. EPC SEPA) können durch Hinzufügen einer
 StandardStrategy implementiert werden.
 """
 
-from typing import List
+from typing import List, Optional
 
 from lxml import etree
 
@@ -64,19 +64,42 @@ def _build_transaction(parent: etree._Element, tx: Transaction) -> None:
     if tx.regulatory_reporting:
         build_regulatory_reporting(cdt_trf, tx.regulatory_reporting)
 
-    # RmtInf (mit optionalem TaxRmt innerhalb Strd)
+    # RmtInf (SPS CH17: Ustrd und Strd sind gegenseitig exklusiv).
+    # Strukturierte Referenzen (SCOR, QRR) leben in Strd/CdtrRefInf und
+    # koennen problemlos mit TaxRmt im selben Strd koexistieren.
+    # Unstrukturierter Text (USTRD) und TaxRmt zusammen wuerden RmtInf/
+    # Ustrd + RmtInf/Strd erzeugen -> CH17-Verstoss. Workaround: der
+    # Ustrd-Text wird in Strd/AddtlRmtInf umgeleitet (max 140 Zeichen).
     if tx.remittance_info or tx.tax_remittance:
-        rmt_inf = None
+        rmt_inf: Optional[etree._Element] = None
+        ustrd_to_inline: Optional[str] = None
+
         if tx.remittance_info:
-            rmt_inf = build_remittance_info(cdt_trf, tx.remittance_info)
+            rtype = tx.remittance_info.get("type", "")
+            rval = tx.remittance_info.get("value", "")
+            is_ustrd = rval and (rtype == "USTRD" or not rtype)
+
+            if is_ustrd and tx.tax_remittance:
+                # CH17-Konflikt: Ustrd in AddtlRmtInf inlinen, separat
+                # kein top-level Ustrd erzeugen. RmtInf+Strd werden im
+                # naechsten Block fuer TaxRmt gebaut.
+                ustrd_to_inline = rval
+            else:
+                # SCOR/QRR oder reines Ustrd ohne TaxRmt: regulaerer Pfad.
+                rmt_inf = build_remittance_info(cdt_trf, tx.remittance_info)
+
         if tx.tax_remittance:
             if rmt_inf is None:
                 rmt_inf = el(cdt_trf, "RmtInf")
-            # TaxRmt lebt in Strd — finde oder erstelle Strd-Element
+            # TaxRmt lebt in Strd. Wenn build_remittance_info schon ein
+            # Strd-Element fuer SCOR/QRR erzeugt hat, wiederverwenden;
+            # sonst neu erstellen.
             strd = rmt_inf.find(f"{{{PAIN001_NS}}}Strd")
             if strd is None:
                 strd = el(rmt_inf, "Strd")
             build_tax_remittance(strd, tx.tax_remittance)
+            if ustrd_to_inline:
+                el(strd, "AddtlRmtInf", ustrd_to_inline[:140])
 
 
 def _build_pmt_inf(

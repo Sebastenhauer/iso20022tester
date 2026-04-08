@@ -2,8 +2,8 @@
 <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <MsgId>MSG-76c9993902df</MsgId>
-      <CreDtTm>2026-04-08T12:04:28.169487</CreDtTm>
+      <MsgId>MSG-5db15ec34011</MsgId>
+      <CreDtTm>2026-04-08T14:01:28.655448</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
       <CtrlSum>85000.00</CtrlSum>
       <InitgPty>
@@ -11,7 +11,7 @@
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>PMT-c6e0fa842e43</PmtInfId>
+      <PmtInfId>PMT-24eb70a74033</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <NbOfTxs>1</NbOfTxs>
       <CtrlSum>85000.00</CtrlSum>
@@ -49,8 +49,8 @@
       <ChrgBr>DEBT</ChrgBr>
       <CdtTrfTxInf>
         <PmtId>
-          <EndToEndId>E2E-380dbad08cd4</EndToEndId>
-          <UETR>1de5ddd5-a68c-45b9-b2fd-383fa284d7b7</UETR>
+          <EndToEndId>E2E-22fd5cb92582</EndToEndId>
+          <UETR>4bd48810-4028-4d60-a16f-e21b1c581f3a</UETR>
         </PmtId>
         <Amt>
           <InstdAmt Ccy="EUR">85000.00</InstdAmt>
@@ -91,7 +91,6 @@
           </Dtls>
         </RgltryRptg>
         <RmtInf>
-          <Ustrd>Warenimport aus Argentinien Q2 2026</Ustrd>
           <Strd>
             <TaxRmt>
               <Cdtr>
@@ -107,6 +106,7 @@
               <Mtd>VAT</Mtd>
               <TtlTaxAmt Ccy="EUR">8500.00</TtlTaxAmt>
             </TaxRmt>
+            <AddtlRmtInf>Warenimport aus Argentinien Q2 2026</AddtlRmtInf>
           </Strd>
         </RmtInf>
       </CdtTrfTxInf>
