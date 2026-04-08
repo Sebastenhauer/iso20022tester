@@ -87,7 +87,7 @@ Detaillierte Vergleiche:
 - **Second-Opinion + Round-Trip-Validierung** -- `xmlschema`-Gegenpruefung und XML-Roundtrip-Konsistenzcheck
 - **50+ Laender IBAN-Generierung** -- Europa, Naher Osten, Asien, Amerika, Afrika
 - **Reporting** -- Word (.docx), JSON und JUnit-XML Reports pro Testlauf
-- **187 Beispiel-Testfaelle** -- 137 pain.001 (`testfaelle_comprehensive.xlsx`) + 50 pacs.008 (`testfaelle_pacs008_comprehensive.xlsx`)
+- **188 Beispiel-Testfaelle** -- 138 pain.001 (`testfaelle_comprehensive.xlsx`, inkl. TC-DEMO-CGI-AR fuer Standards-Differenz-Demo) + 50 pacs.008 (`testfaelle_pacs008_comprehensive.xlsx`)
 - **800+ Unit Tests** -- alle pytest gruen, separate Coverage fuer Builders, Rules, Violations, Pipeline, Excel-Parser, external XML Validator service-Client
 
 ---
@@ -257,7 +257,7 @@ poetry run python -m src.main roundtrip <xml-dateien-oder-verzeichnis> --config 
 **Beispiele:**
 
 ```bash
-# 137 pain.001 Testfaelle (SPS + CGI-MP + CBPR+ gemischt)
+# 138 pain.001 Testfaelle (SPS + CGI-MP + CBPR+ gemischt)
 poetry run python -m src.main --input templates/testfaelle_comprehensive.xlsx --config config.yaml
 
 # 50 pacs.008 CBPR+ Testfaelle (auto-detected)
@@ -368,7 +368,7 @@ Pro Testlauf entsteht ein neues Verzeichnis `output/YYYY-MM-DD_HHMMSS/` mit getr
 ```
 output/2026-04-08_140000/
 ├── pain.001/
-│   ├── *.xml                          (137 generierte pain.001 Files)
+│   ├── *.xml                          (138 generierte pain.001 Files)
 │   ├── testlauf_ergebnis.json
 │   ├── testlauf_ergebnis.xml          (JUnit)
 │   └── Testlauf_Zusammenfassung.docx
@@ -378,6 +378,30 @@ output/2026-04-08_140000/
 ```
 
 Beide Pipelines koennen unabhaengig laufen; ein einzelner Run produziert immer nur einen der beiden Subfolders.
+
+---
+
+## Standards-Differenz-Demo-Files
+
+Im Ordner `examples/violations/` liegen drei kuratierte XML-Dateien, die konkrete Unterschiede zwischen den Implementation Guides **SPS 2025** und **CGI-MP November 2025** illustrieren. Sie ergaenzen das analytische Vergleichsdokument `docs/specs/pain.001/vergleich-sps-cgi-2025.md` mit lauffaehigen XML-Beispielen, die jeweils gegen die offiziellen Validatoren (lokal das SPS-XSD, extern z.B. SIX Validation Portal / GEFEG.FX und XMLdation) abgenommen wurden.
+
+| Datei | SPS | CGI-MP | Was es zeigt |
+|---|---|---|---|
+| `cgi_mp_argentina_baseline.xml` | ✅ PASS | ✅ PASS | Sauberer Baseline-Run: CGI-MP konformer EUR-Auftrag CH→AR mit vollstaendigem RgltryRptg + TaxRmt |
+| `cgi_mp_violates_sps_xsd.xml` | ❌ FAIL | ✅ PASS | Das `★`-Zeichen (U+2605) in `Cdtr/Nm` ist unter CGI-MP UTF-8-konform, verletzt aber das SPS Latin-1+Extended-A Pattern-Facet |
+| `sps_violates_cgi_proprietary_orgid.xml` | ✅ PASS | ❌ FAIL | `Dbtr/Id/OrgId/Othr/SchmeNm/Prtry` (proprietary scheme name fuer Schweizer UID) ist SPS-XSD-valide ueber den XSD-Choice; CGI verbietet die `Prtry`-Form per `BR-CGI-ORG-01` |
+
+Re-Generierung jederzeit moeglich:
+
+```bash
+# 1. Pipeline-Run fuer den Source-Testcase TC-DEMO-CGI-AR + frischen TC-S-001
+poetry run python -m src.main --input templates/testfaelle_comprehensive.xlsx --config config.yaml
+
+# 2. Mutator: nimmt die zuletzt generierten XMLs und schreibt die 3 Demo-Files
+poetry run python scripts/generate_violation_demos.py
+```
+
+Voller Hintergrund (warum die ersten zwei Iterationen mit Empty-Tags und unstrukturierten Adressen verworfen wurden) in `examples/violations/README.md` unter "Frühere Iterationen".
 
 ---
 
@@ -436,14 +460,16 @@ iso20022tester/
 │       ├── cbpr+nonpublic/                    # proprietaer, .gitignore
 │       └── cgi_nonpublic/                     # proprietaer, .gitignore
 ├── templates/
-│   ├── testfaelle_comprehensive.xlsx          # 137 pain.001 Testfaelle
+│   ├── testfaelle_comprehensive.xlsx          # 138 pain.001 Testfaelle
 │   ├── testfaelle_vorlage.xlsx                # pain.001 Quick-Smoke (13 Cases)
 │   ├── testfaelle_pacs008_comprehensive.xlsx  # 50 pacs.008 Testfaelle
 │   └── testfaelle_pacs008_minimal.xlsx        # pacs.008 Quick-Smoke (3 Cases)
 ├── examples/                                  # vorab generierte XML-Dateien
-├── xml_validator/                                   # XML Validator API Credentials (.gitignore)
+│   └── violations/                            # Standards-Differenz-Demos (SPS vs CGI-MP)
+├── xml_validator/                             # XML Validator API Credentials (.gitignore)
 ├── scripts/
 │   ├── generate_pacs008_testcases.py          # 50-Case Generator
+│   ├── generate_violation_demos.py            # SPS-vs-CGI-MP Demo-Generator
 │   └── validate_external.py                   # Second-Opinion-Validator
 ├── src/
 │   ├── main.py                                # Unified CLI mit Auto-Detection
