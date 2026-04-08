@@ -7,6 +7,9 @@ output/
 dist/
 *.egg-info/
 
+# Alle PDFs werden lokal vorgehalten, nicht versioniert
+*.pdf
+
 # Proprietaere SWIFT Spezifikationen (nicht oeffentlich)
 docs/specs/cbpr+nonpublic/
 docs/specs/cgi_nonpublic/
