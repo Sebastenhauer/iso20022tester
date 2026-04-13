@@ -590,7 +590,7 @@ Jedes generierte pacs.008-File enthaelt BAH + Document in einem einzigen XML-Wra
     <To>...</To>
     <BizMsgIdr>MSG...</BizMsgIdr>
     <MsgDefIdr>pacs.008.001.08</MsgDefIdr>
-    <BizSvc>swift.cbprplus.02</BizSvc>
+    <BizSvc>swift.cbprplus.04</BizSvc>
     <CreDt>2026-04-06T14:30:00+00:00</CreDt>
   </AppHdr>
   <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
@@ -615,7 +615,7 @@ Jedes generierte pacs.008-File enthaelt BAH + Document in einem einzigen XML-Wra
 | BR-CBPR-PACS-005 | Creditor-Adresse muss strukturiert sein |
 | BR-CBPR-PACS-006 | Debtor-Adresse muss strukturiert sein |
 | BR-CBPR-PACS-007 | BAH MsgDefIdr muss 'pacs.008.001.08' sein |
-| BR-CBPR-PACS-008 | BAH BizSvc muss 'swift.cbprplus.02' sein |
+| BR-CBPR-PACS-008 | BAH BizSvc muss 'swift.cbprplus.04' sein |
 | BR-CBPR-PACS-009 | IntrBkSttlmDt muss ein Banktag sein |
 | BR-CBPR-PACS-010 | ChrgBr muss DEBT/CRED/SHAR sein |
 | BR-CBPR-PACS-011 | Waehrung muss ISO 4217 sein |

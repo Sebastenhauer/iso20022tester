@@ -1,6 +1,6 @@
 {
   "testlauf": {
-    "datum": "2026-04-13T08:24:48.143131",
+    "datum": "2026-04-13T08:29:15.286989",
     "message_type": "pacs.008",
     "flavor": "CBPR+",
     "input_file": "templates/testfaelle_pacs008_comprehensive.xlsx",
@@ -28,7 +28,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -108,7 +108,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-001_3e325fa2.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-001_59341e11.xml",
       "bemerkungen": "Baseline Positive"
     },
     {
@@ -127,7 +127,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -207,7 +207,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-002_bd8ac0d9.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-002_51748a55.xml",
       "bemerkungen": "USD ohne IBAN (US verwendet Fedwire-Konten)"
     },
     {
@@ -226,7 +226,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -306,7 +306,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-003_56ffa043.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-003_fd262f70.xml",
       "bemerkungen": null
     },
     {
@@ -325,7 +325,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -405,7 +405,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-004_aff4a27a.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-004_34b45454.xml",
       "bemerkungen": null
     },
     {
@@ -424,7 +424,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -504,7 +504,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-005_dc397bad.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-005_469d6b71.xml",
       "bemerkungen": null
     },
     {
@@ -523,7 +523,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -603,7 +603,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-006_090bd881.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-006_e431da21.xml",
       "bemerkungen": null
     },
     {
@@ -622,7 +622,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -702,7 +702,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-007_c7bc1a6a.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-007_42de9a6f.xml",
       "bemerkungen": null
     },
     {
@@ -721,7 +721,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -801,7 +801,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-008_895752ce.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-008_aa27c0d7.xml",
       "bemerkungen": null
     },
     {
@@ -820,7 +820,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -900,7 +900,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-009_8e5811fb.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-009_45703c8d.xml",
       "bemerkungen": null
     },
     {
@@ -919,7 +919,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -999,7 +999,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-010_790d9914.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-010_3e9e41b3.xml",
       "bemerkungen": null
     },
     {
@@ -1018,7 +1018,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -1098,7 +1098,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-011_c41b83c0.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-011_68807572.xml",
       "bemerkungen": "USD via NY Korrespondent"
     },
     {
@@ -1117,7 +1117,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -1197,7 +1197,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-012_6b5e37db.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-012_cccec32e.xml",
       "bemerkungen": "3 Intermediaries USD->SA via NY+LDN"
     },
     {
@@ -1216,7 +1216,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -1296,7 +1296,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-013_ad169d64.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-013_952d2545.xml",
       "bemerkungen": null
     },
     {
@@ -1315,7 +1315,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -1395,7 +1395,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-014_d6c7e9ef.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-014_fc172bb9.xml",
       "bemerkungen": "Intermediary ueber Fedwire ABA-Nummer"
     },
     {
@@ -1414,7 +1414,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -1494,7 +1494,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-015_b09d95d6.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-015_6eb41572.xml",
       "bemerkungen": null
     },
     {
@@ -1513,7 +1513,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -1593,7 +1593,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-016_a0261337.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-016_70f74ade.xml",
       "bemerkungen": "Ultimate Debtor = Mutterkonzern"
     },
     {
@@ -1612,7 +1612,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -1692,7 +1692,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-017_af1ac7ac.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-017_b784f07d.xml",
       "bemerkungen": "Ultimate Creditor = Endbeguenstigter"
     },
     {
@@ -1711,7 +1711,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -1791,7 +1791,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-018_a999e4ef.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-018_ee52dec9.xml",
       "bemerkungen": null
     },
     {
@@ -1810,7 +1810,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -1890,7 +1890,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-019_f0f7d447.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-019_51e94350.xml",
       "bemerkungen": "Full Ultimate Chain mit CategoryPurpose"
     },
     {
@@ -1909,7 +1909,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -1989,7 +1989,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-020_798e86a4.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-020_4d53d435.xml",
       "bemerkungen": null
     },
     {
@@ -2008,7 +2008,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -2088,7 +2088,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-021_7e6d1f35.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-021_da92f294.xml",
       "bemerkungen": "Purp/Cd=SALA"
     },
     {
@@ -2107,7 +2107,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -2187,7 +2187,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-022_c217fe02.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-022_eeca39ef.xml",
       "bemerkungen": "PmtTpInf/CtgyPurp/Cd=SUPP"
     },
     {
@@ -2206,7 +2206,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -2286,7 +2286,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-023_debc7aa5.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-023_d2e33343.xml",
       "bemerkungen": null
     },
     {
@@ -2305,7 +2305,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -2385,7 +2385,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-024_221a2022.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-024_6625b492.xml",
       "bemerkungen": null
     },
     {
@@ -2404,7 +2404,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -2484,7 +2484,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-025_8e0f0fc3.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-025_36237024.xml",
       "bemerkungen": null
     },
     {
@@ -2503,7 +2503,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -2583,7 +2583,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-026_72023aee.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-026_39c84651.xml",
       "bemerkungen": "CdtrAgt nur per ClrSysMmbId (Wells Fargo Routing)"
     },
     {
@@ -2602,7 +2602,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -2682,7 +2682,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-027_f78b46d2.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-027_60dff1ae.xml",
       "bemerkungen": null
     },
     {
@@ -2701,7 +2701,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -2781,7 +2781,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-028_37c27d7a.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-028_cf0ec850.xml",
       "bemerkungen": "INDA+SttlmAcct-Szenario (CLRG nicht in CBPR+)"
     },
     {
@@ -2800,7 +2800,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -2880,7 +2880,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-029_04f32f57.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-029_ecaea472.xml",
       "bemerkungen": null
     },
     {
@@ -2899,7 +2899,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -2979,7 +2979,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-030_49747bb3.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-030_91880393.xml",
       "bemerkungen": "Max-Amount Test"
     },
     {
@@ -3000,7 +3000,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -3074,7 +3074,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N01_bba050d2.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N01_e08eecf2.xml",
       "bemerkungen": "Violation: UETR wird geleert"
     },
     {
@@ -3095,7 +3095,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -3175,7 +3175,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N02_6595e646.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N02_9f617c51.xml",
       "bemerkungen": "Violation: InstgAgt hat weder BIC noch ClrSysMmbId"
     },
     {
@@ -3196,7 +3196,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -3276,7 +3276,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N03_6c63f2eb.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N03_bb060738.xml",
       "bemerkungen": "Violation: InstdAgt hat weder BIC noch ClrSysMmbId"
     },
     {
@@ -3295,7 +3295,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -3375,7 +3375,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N04_afb8b616.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N04_16457557.xml",
       "bemerkungen": "Violation: SttlmMtd auf COVE (V1 lehnt ab)"
     },
     {
@@ -3394,7 +3394,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -3474,7 +3474,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N05_cd6671a6.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N05_3594b225.xml",
       "bemerkungen": "Violation: MsgDefIdr=pacs.008.001.09"
     },
     {
@@ -3493,9 +3493,9 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": false,
-          "details": "BizSvc ist 'swift.wrong.01' (muss 'swift.cbprplus.02' sein)"
+          "details": "BizSvc ist 'swift.wrong.01' (muss 'swift.cbprplus.04' sein)"
         },
         {
           "rule_id": "BR-CBPR-PACS-013",
@@ -3573,7 +3573,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N06_1431fd58.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N06_3e6e0267.xml",
       "bemerkungen": "Violation: BizSvc=swift.wrong.01"
     },
     {
@@ -3594,7 +3594,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -3674,7 +3674,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N07_3338371b.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N07_8851a466.xml",
       "bemerkungen": "Violation: ChrgBr auf XXXX (kein DEBT/CRED/SHAR)"
     },
     {
@@ -3696,7 +3696,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -3776,7 +3776,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N08_e7715497.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N08_bd9f7b8a.xml",
       "bemerkungen": "Violation: Waehrungscode ungueltig"
     },
     {
@@ -3797,7 +3797,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -3877,7 +3877,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N09_c3a5ffb1.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N09_dc4cce06.xml",
       "bemerkungen": "Violation: UETR ist keine UUIDv4"
     },
     {
@@ -3898,7 +3898,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -3972,7 +3972,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N10_9caa57c6.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N10_8e33ad05.xml",
       "bemerkungen": "BR-CBPR-PACS-001 in DE_USD"
     },
     {
@@ -3993,7 +3993,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -4073,7 +4073,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N11_6b3b1d2d.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N11_ba387127.xml",
       "bemerkungen": "BR-CBPR-PACS-002 in GB_GBP"
     },
     {
@@ -4094,7 +4094,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -4174,7 +4174,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N12_9f04be24.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N12_e58ea790.xml",
       "bemerkungen": "BR-CBPR-PACS-003 in JP_JPY"
     },
     {
@@ -4193,7 +4193,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -4273,7 +4273,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N13_22673d70.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N13_cf165f76.xml",
       "bemerkungen": "BR-CBPR-PACS-004 in GB_GBP"
     },
     {
@@ -4292,7 +4292,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -4372,7 +4372,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N14_633f10d2.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N14_68cdd58c.xml",
       "bemerkungen": "BR-CBPR-PACS-007 in US_USD"
     },
     {
@@ -4391,9 +4391,9 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": false,
-          "details": "BizSvc ist 'swift.wrong.01' (muss 'swift.cbprplus.02' sein)"
+          "details": "BizSvc ist 'swift.wrong.01' (muss 'swift.cbprplus.04' sein)"
         },
         {
           "rule_id": "BR-CBPR-PACS-013",
@@ -4471,7 +4471,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N15_396848af.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N15_a34e5f08.xml",
       "bemerkungen": "BR-CBPR-PACS-008 in CN_CNY"
     },
     {
@@ -4492,7 +4492,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -4572,7 +4572,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N16_45cd416f.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N16_14a42717.xml",
       "bemerkungen": "BR-CBPR-PACS-010 in SG_SGD"
     },
     {
@@ -4594,7 +4594,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -4674,7 +4674,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N17_8ed3090c.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N17_66dfd27f.xml",
       "bemerkungen": "BR-CBPR-PACS-011 in DE_EUR"
     },
     {
@@ -4695,7 +4695,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -4775,7 +4775,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N18_41e55f81.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N18_04817fbf.xml",
       "bemerkungen": "BR-CBPR-PACS-015 in CA_CAD"
     },
     {
@@ -4796,7 +4796,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -4870,7 +4870,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N19_df5acb42.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N19_a03ebdb6.xml",
       "bemerkungen": "BR-CBPR-PACS-001 in HK_HKD"
     },
     {
@@ -4891,7 +4891,7 @@
         },
         {
           "rule_id": "BR-CBPR-PACS-008",
-          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
           "bestanden": true,
           "details": null
         },
@@ -4971,7 +4971,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N20_e4e64679.xml",
+      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N20_546ea29e.xml",
       "bemerkungen": "BR-CBPR-PACS-010 in FR_EUR"
     }
   ]

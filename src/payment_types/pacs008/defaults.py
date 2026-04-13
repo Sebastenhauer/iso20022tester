@@ -25,7 +25,7 @@ Entscheidungen aus der Planungsphase:
   Die konkrete BIC ist bewusst ein Platzhalter ohne Live-Routing-
   Bedeutung und sollte fuer realistische Testcases ueberschrieben
   werden.
-- BAH Defaults: MsgDefIdr=pacs.008.001.08, BizSvc=swift.cbprplus.02
+- BAH Defaults: MsgDefIdr=pacs.008.001.08, BizSvc=swift.cbprplus.04
 """
 
 from datetime import date, timedelta
@@ -69,7 +69,7 @@ DEFAULT_INTERMEDIARY_1_BIC = "CHASUS33XXX"  # JPMorgan Chase, NY (USD-Korrespond
 # ---------------------------------------------------------------------------
 
 BAH_MSG_DEF_IDR = "pacs.008.001.08"
-BAH_BIZ_SVC = "swift.cbprplus.02"
+BAH_BIZ_SVC = "swift.cbprplus.04"
 
 
 # ---------------------------------------------------------------------------

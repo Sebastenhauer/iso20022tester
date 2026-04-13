@@ -131,7 +131,7 @@ Two parallel pipelines sharing common infrastructure:
 - **CBPR+ GroupHeader93** does NOT contain `CtrlSum` or `InstgAgt`/`InstdAgt` (those are C-level only). The builder injects instruction-level InstgAgt/InstdAgt into the transaction via transient attrs
 - **SttlmMtd in CBPR+** is enumerated `{INDA, INGA, COVE}` — **CLRG is NOT allowed in CBPR+**; V1 rejects COVE as out-of-scope (no pacs.009 generator yet)
 - **ClrSysId is mandatory inside ClrSysMmbId** (XSD min=1); builder defaults to code `USABA` if caller doesn't set a clearing system code
-- **BAH envelope** wraps `<Document>` inside `<BusinessMessage>` with `<AppHdr>` sibling: MsgDefIdr=`pacs.008.001.08`, BizSvc=`swift.cbprplus.02`
+- **BAH envelope** wraps `<Document>` inside `<BusinessMessage>` with `<AppHdr>` sibling: MsgDefIdr=`pacs.008.001.08`, BizSvc=`swift.cbprplus.04`
 - **Currency-aware amount formatting**: zero-decimal currencies (JPY, KRW, ISK, VND, BIF, CLP, DJF, GNF, KMF, PYG, RWF, UGX, UYI, VUV, XAF, XOF, XPF) emit amounts without decimal places; three-decimal currencies (BHD, IQD, JOD, KWD, LYD, OMR, TND) use 3 decimals; all others use 2
 - **Charges-Info**: no default values — `ChrgsInf` is only emitted if the caller explicitly provides entries
 - **Default values** (applied by `src/payment_types/pacs008/defaults.py` when user doesn't set):

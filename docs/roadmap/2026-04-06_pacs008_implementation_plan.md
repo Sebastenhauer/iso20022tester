@@ -193,7 +193,7 @@ Erwartete API-Antwort, Bemerkungen
   - `build_cdt_trf_tx_inf(parent, tx)` → kompletter C-Level Block mit allen Parties, Agenten, RmtInf, RgltryRptg, Purp, Charges
 - `src/xml_generator/pacs008/message_builder.py`:
   - `build_pacs008_document(instruction) -> etree.Element` (nur `<Document>` ohne BAH)
-  - `wrap_with_bah(doc, bah_from_bic, bah_to_bic, msg_id) -> etree.Element` (nutzt existierenden `src/xml_generator/bah_builder.py`, erweitert für pacs.008 — `MsgDefIdr=pacs.008.001.08`, `BizSvc=swift.cbprplus.02`)
+  - `wrap_with_bah(doc, bah_from_bic, bah_to_bic, msg_id) -> etree.Element` (nutzt existierenden `src/xml_generator/bah_builder.py`, erweitert für pacs.008 — `MsgDefIdr=pacs.008.001.08`, `BizSvc=swift.cbprplus.04`)
   - `serialize(root) -> bytes` (pretty-print, UTF-8)
 
 **Abnahme:**
@@ -219,7 +219,7 @@ Erwartete API-Antwort, Bemerkungen
   - `BR-CBPR-PACS-005` Creditor-Adresse strukturiert
   - `BR-CBPR-PACS-006` Debtor-Adresse strukturiert
   - `BR-CBPR-PACS-007` BAH MsgDefIdr muss `pacs.008.001.08` sein
-  - `BR-CBPR-PACS-008` BAH BizSvc muss `swift.cbprplus.02` sein
+  - `BR-CBPR-PACS-008` BAH BizSvc muss `swift.cbprplus.04` sein
   - `BR-CBPR-PACS-009` IntrBkSttlmDt muss Banktag sein
   - `BR-CBPR-PACS-010` ChrgBr gültig (`DEBT`, `CRED`, `SHAR`)
   - `BR-CBPR-PACS-011` Währung muss ISO 4217

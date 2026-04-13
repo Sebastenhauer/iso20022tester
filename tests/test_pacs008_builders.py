@@ -272,7 +272,7 @@ class TestBAHBuilder:
         assert to_bic == "DEUTDEFFXXX"
         assert biz_msg == "MSG-TEST-001"
         assert msg_def == "pacs.008.001.08"
-        assert biz_svc == "swift.cbprplus.02"
+        assert biz_svc == "swift.cbprplus.04"
 
 
 class TestBusinessMessageAssembly:

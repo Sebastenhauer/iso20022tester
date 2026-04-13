@@ -118,7 +118,7 @@ class TestApplyDefaultsToTestCase:
 class TestConstants:
     def test_bah_idr_default(self):
         assert D.BAH_MSG_DEF_IDR == "pacs.008.001.08"
-        assert D.BAH_BIZ_SVC == "swift.cbprplus.02"
+        assert D.BAH_BIZ_SVC == "swift.cbprplus.04"
 
     def test_settlement_method_default(self):
         assert D.DEFAULT_SETTLEMENT_METHOD == "INDA"

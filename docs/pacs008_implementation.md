@@ -56,7 +56,7 @@ Pacs008BusinessMessage              Envelope (BAH + Document)
     ├── bah_to_bic                    (To)
     ├── bah_biz_msg_idr               (BizMsgIdr)
     ├── bah_msg_def_idr               (MsgDefIdr = pacs.008.001.08)
-    ├── bah_biz_svc                   (BizSvc = swift.cbprplus.02)
+    ├── bah_biz_svc                   (BizSvc = swift.cbprplus.04)
     ├── bah_cre_dt                    (CreDt, mit TZ-Offset)
     └── instruction: Pacs008Instruction
         ├── msg_id                    (GrpHdr/MsgId)

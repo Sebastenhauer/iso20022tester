@@ -90,9 +90,9 @@ def validate_pacs008(
     ))
     results.append(_r(
         "BR-CBPR-PACS-008",
-        business_message.bah_biz_svc == "swift.cbprplus.02",
-        f"BizSvc ist '{business_message.bah_biz_svc}' (muss 'swift.cbprplus.02' sein)"
-        if business_message.bah_biz_svc != "swift.cbprplus.02" else None,
+        business_message.bah_biz_svc == "swift.cbprplus.04",
+        f"BizSvc ist '{business_message.bah_biz_svc}' (muss 'swift.cbprplus.04' sein)"
+        if business_message.bah_biz_svc != "swift.cbprplus.04" else None,
     ))
 
     # BR-CBPR-PACS-013: NbOfTxs consistency

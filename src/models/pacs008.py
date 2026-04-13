@@ -222,7 +222,7 @@ class Pacs008BusinessMessage(BaseModel):
     bah_to_bic: str
     bah_biz_msg_idr: str  # typischerweise msg_id der Instruction
     bah_msg_def_idr: str = "pacs.008.001.08"
-    bah_biz_svc: str = "swift.cbprplus.02"
+    bah_biz_svc: str = "swift.cbprplus.04"
     bah_cre_dt: str  # ISO 8601
 
     instruction: Pacs008Instruction

@@ -269,5 +269,5 @@ class TestPacs008BusinessMessage:
             instruction=instr,
         )
         assert bm.bah_msg_def_idr == "pacs.008.001.08"
-        assert bm.bah_biz_svc == "swift.cbprplus.02"
+        assert bm.bah_biz_svc == "swift.cbprplus.04"
         assert bm.instruction.msg_id == "MSG-BIZ-001"

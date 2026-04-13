@@ -735,7 +735,7 @@ BR_CBPR_PACS_007 = _r(
 
 BR_CBPR_PACS_008 = _r(
     "BR-CBPR-PACS-008", "CBPR-PACS",
-    "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+    "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
     None,
     "CBPR+ BAH Usage Guidelines",
     violatable=True,
