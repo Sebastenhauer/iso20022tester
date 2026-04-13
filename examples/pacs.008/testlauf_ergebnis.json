@@ -1,0 +1,4978 @@
+{
+  "testlauf": {
+    "datum": "2026-04-13T08:24:48.143131",
+    "message_type": "pacs.008",
+    "flavor": "CBPR+",
+    "input_file": "templates/testfaelle_pacs008_comprehensive.xlsx",
+    "total": 50,
+    "pass": 50,
+    "fail": 0,
+    "external_validation_enabled": false,
+    "external_validation_checked": 0,
+    "external_validation_passed": 0
+  },
+  "testfaelle": [
+    {
+      "testcase_id": "TC-PCS-001",
+      "titel": "CBPR+ EUR CH->DE minimal",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-001_3e325fa2.xml",
+      "bemerkungen": "Baseline Positive"
+    },
+    {
+      "testcase_id": "TC-PCS-002",
+      "titel": "CBPR+ USD CH->US",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-002_bd8ac0d9.xml",
+      "bemerkungen": "USD ohne IBAN (US verwendet Fedwire-Konten)"
+    },
+    {
+      "testcase_id": "TC-PCS-003",
+      "titel": "CBPR+ GBP CH->UK",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-003_56ffa043.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-004",
+      "titel": "CBPR+ JPY CH->JP",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-004_aff4a27a.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-005",
+      "titel": "CBPR+ CHF DE->CH",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-005_dc397bad.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-006",
+      "titel": "CBPR+ CNY CH->CN",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-006_090bd881.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-007",
+      "titel": "CBPR+ SGD CH->SG",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-007_c7bc1a6a.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-008",
+      "titel": "CBPR+ AUD CH->AU",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-008_895752ce.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-009",
+      "titel": "CBPR+ CAD CH->CA",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-009_8e5811fb.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-010",
+      "titel": "CBPR+ HKD CH->HK",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-010_790d9914.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-011",
+      "titel": "CBPR+ USD mit Korrespondent (2-Hop)",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-011_c41b83c0.xml",
+      "bemerkungen": "USD via NY Korrespondent"
+    },
+    {
+      "testcase_id": "TC-PCS-012",
+      "titel": "CBPR+ 3-Hop Chain",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-012_6b5e37db.xml",
+      "bemerkungen": "3 Intermediaries USD->SA via NY+LDN"
+    },
+    {
+      "testcase_id": "TC-PCS-013",
+      "titel": "CBPR+ EUR via Intermediary",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-013_ad169d64.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-014",
+      "titel": "CBPR+ mit Fedwire Intermediary",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-014_d6c7e9ef.xml",
+      "bemerkungen": "Intermediary ueber Fedwire ABA-Nummer"
+    },
+    {
+      "testcase_id": "TC-PCS-015",
+      "titel": "CBPR+ ohne Intermediary (direkt)",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-015_b09d95d6.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-016",
+      "titel": "CBPR+ UltmtDbtr",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-016_a0261337.xml",
+      "bemerkungen": "Ultimate Debtor = Mutterkonzern"
+    },
+    {
+      "testcase_id": "TC-PCS-017",
+      "titel": "CBPR+ UltmtCdtr",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-017_af1ac7ac.xml",
+      "bemerkungen": "Ultimate Creditor = Endbeguenstigter"
+    },
+    {
+      "testcase_id": "TC-PCS-018",
+      "titel": "CBPR+ LEI Debtor",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-018_a999e4ef.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-019",
+      "titel": "CBPR+ UltmtDbtr + UltmtCdtr",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-019_f0f7d447.xml",
+      "bemerkungen": "Full Ultimate Chain mit CategoryPurpose"
+    },
+    {
+      "testcase_id": "TC-PCS-020",
+      "titel": "CBPR+ Creditor LEI",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-020_798e86a4.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-021",
+      "titel": "CBPR+ PurposeCode SALA",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-021_7e6d1f35.xml",
+      "bemerkungen": "Purp/Cd=SALA"
+    },
+    {
+      "testcase_id": "TC-PCS-022",
+      "titel": "CBPR+ CategoryPurpose SUPP",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-022_c217fe02.xml",
+      "bemerkungen": "PmtTpInf/CtgyPurp/Cd=SUPP"
+    },
+    {
+      "testcase_id": "TC-PCS-023",
+      "titel": "CBPR+ TRAD Purpose",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-023_debc7aa5.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-024",
+      "titel": "CBPR+ ChrgBr=DEBT",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-024_221a2022.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-025",
+      "titel": "CBPR+ ChrgBr=CRED",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-025_8e0f0fc3.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-026",
+      "titel": "CBPR+ CdtrAgt via Fedwire ABA",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-026_72023aee.xml",
+      "bemerkungen": "CdtrAgt nur per ClrSysMmbId (Wells Fargo Routing)"
+    },
+    {
+      "testcase_id": "TC-PCS-027",
+      "titel": "CBPR+ SttlmMtd INGA",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-027_f78b46d2.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-028",
+      "titel": "CBPR+ SttlmMtd INDA mit SttlmAcct",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-028_37c27d7a.xml",
+      "bemerkungen": "INDA+SttlmAcct-Szenario (CLRG nicht in CBPR+)"
+    },
+    {
+      "testcase_id": "TC-PCS-029",
+      "titel": "CBPR+ T+2 Settlement",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-029_04f32f57.xml",
+      "bemerkungen": null
+    },
+    {
+      "testcase_id": "TC-PCS-030",
+      "titel": "CBPR+ grosser Betrag",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "OK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-030_49747bb3.xml",
+      "bemerkungen": "Max-Amount Test"
+    },
+    {
+      "testcase_id": "TC-PCS-N01",
+      "titel": "Negative: UETR fehlt",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_PATTERN_VALID: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}UETR': [facet 'pattern'] The value '' is not accepted by the pattern '[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}'."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": false,
+          "details": "UETR fehlt auf PmtId"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N01_bba050d2.xml",
+      "bemerkungen": "Violation: UETR wird geleert"
+    },
+    {
+      "testcase_id": "TC-PCS-N02",
+      "titel": "Negative: InstgAgt ohne Identifikation",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_ELEMENT_CONTENT: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}Nm': This element is not expected. Expected is ( {urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}BICFI )."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": false,
+          "details": "InstgAgt ohne BICFI oder ClrSysMmbId"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N02_6595e646.xml",
+      "bemerkungen": "Violation: InstgAgt hat weder BIC noch ClrSysMmbId"
+    },
+    {
+      "testcase_id": "TC-PCS-N03",
+      "titel": "Negative: InstdAgt ohne Identifikation",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_ELEMENT_CONTENT: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}Nm': This element is not expected. Expected is ( {urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}BICFI )."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": false,
+          "details": "InstdAgt ohne BICFI oder ClrSysMmbId"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N03_6c63f2eb.xml",
+      "bemerkungen": "Violation: InstdAgt hat weder BIC noch ClrSysMmbId"
+    },
+    {
+      "testcase_id": "TC-PCS-N04",
+      "titel": "Negative: SttlmMtd COVE out of scope",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": false,
+          "details": "SttlmMtd 'COVE' ist nicht erlaubt in V1 (INDA/INGA/CLRG)"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N04_afb8b616.xml",
+      "bemerkungen": "Violation: SttlmMtd auf COVE (V1 lehnt ab)"
+    },
+    {
+      "testcase_id": "TC-PCS-N05",
+      "titel": "Negative: BAH MsgDefIdr falsche Version",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": false,
+          "details": "MsgDefIdr ist 'pacs.008.001.09' (muss 'pacs.008.001.08' sein)"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N05_cd6671a6.xml",
+      "bemerkungen": "Violation: MsgDefIdr=pacs.008.001.09"
+    },
+    {
+      "testcase_id": "TC-PCS-N06",
+      "titel": "Negative: BAH BizSvc falsch",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": false,
+          "details": "BizSvc ist 'swift.wrong.01' (muss 'swift.cbprplus.02' sein)"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N06_1431fd58.xml",
+      "bemerkungen": "Violation: BizSvc=swift.wrong.01"
+    },
+    {
+      "testcase_id": "TC-PCS-N07",
+      "titel": "Negative: ChrgBr XXXX",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_ENUMERATION_VALID: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}ChrgBr': [facet 'enumeration'] The value 'XXXX' is not an element of the set {'DEBT', 'CRED', 'SHAR'}."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": false,
+          "details": "ChrgBr 'XXXX' ist nicht DEBT/CRED/SHAR"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N07_3338371b.xml",
+      "bemerkungen": "Violation: ChrgBr auf XXXX (kein DEBT/CRED/SHAR)"
+    },
+    {
+      "testcase_id": "TC-PCS-N08",
+      "titel": "Negative: Waehrung X9X",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_PATTERN_VALID: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}IntrBkSttlmAmt', attribute 'Ccy': [facet 'pattern'] The value 'X9X' is not accepted by the pattern '[A-Z]{3,3}'.",
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_PATTERN_VALID: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}InstdAmt', attribute 'Ccy': [facet 'pattern'] The value 'X9X' is not accepted by the pattern '[A-Z]{3,3}'."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": false,
+          "details": "Waehrung 'X9X' ist kein gueltiger ISO 4217 Code"
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N08_e7715497.xml",
+      "bemerkungen": "Violation: Waehrungscode ungueltig"
+    },
+    {
+      "testcase_id": "TC-PCS-N09",
+      "titel": "Negative: UETR Format invalid",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_PATTERN_VALID: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}UETR': [facet 'pattern'] The value 'not-a-valid-uuid-string-01' is not accepted by the pattern '[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}'."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": false,
+          "details": "UETR 'not-a-valid-uuid-string-01' ist kein gueltiges UUIDv4"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N09_c3a5ffb1.xml",
+      "bemerkungen": "Violation: UETR ist keine UUIDv4"
+    },
+    {
+      "testcase_id": "TC-PCS-N10",
+      "titel": "Negative: UETR fehlt USD-Zahlung",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_PATTERN_VALID: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}UETR': [facet 'pattern'] The value '' is not accepted by the pattern '[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}'."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": false,
+          "details": "UETR fehlt auf PmtId"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N10_9caa57c6.xml",
+      "bemerkungen": "BR-CBPR-PACS-001 in DE_USD"
+    },
+    {
+      "testcase_id": "TC-PCS-N11",
+      "titel": "Negative: InstgAgt fehlt GBP",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_ELEMENT_CONTENT: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}Nm': This element is not expected. Expected is ( {urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}BICFI )."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": false,
+          "details": "InstgAgt ohne BICFI oder ClrSysMmbId"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N11_6b3b1d2d.xml",
+      "bemerkungen": "BR-CBPR-PACS-002 in GB_GBP"
+    },
+    {
+      "testcase_id": "TC-PCS-N12",
+      "titel": "Negative: InstdAgt fehlt JPY",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_ELEMENT_CONTENT: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}Nm': This element is not expected. Expected is ( {urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}BICFI )."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": false,
+          "details": "InstdAgt ohne BICFI oder ClrSysMmbId"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N12_9f04be24.xml",
+      "bemerkungen": "BR-CBPR-PACS-003 in JP_JPY"
+    },
+    {
+      "testcase_id": "TC-PCS-N13",
+      "titel": "Negative: COVE fuer GBP",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": false,
+          "details": "SttlmMtd 'COVE' ist nicht erlaubt in V1 (INDA/INGA/CLRG)"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N13_22673d70.xml",
+      "bemerkungen": "BR-CBPR-PACS-004 in GB_GBP"
+    },
+    {
+      "testcase_id": "TC-PCS-N14",
+      "titel": "Negative: MsgDefIdr falsch USD",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": false,
+          "details": "MsgDefIdr ist 'pacs.008.001.09' (muss 'pacs.008.001.08' sein)"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N14_633f10d2.xml",
+      "bemerkungen": "BR-CBPR-PACS-007 in US_USD"
+    },
+    {
+      "testcase_id": "TC-PCS-N15",
+      "titel": "Negative: BizSvc falsch CNY",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": false,
+          "details": "BizSvc ist 'swift.wrong.01' (muss 'swift.cbprplus.02' sein)"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N15_396848af.xml",
+      "bemerkungen": "BR-CBPR-PACS-008 in CN_CNY"
+    },
+    {
+      "testcase_id": "TC-PCS-N16",
+      "titel": "Negative: ChrgBr invalid SGD",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_ENUMERATION_VALID: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}ChrgBr': [facet 'enumeration'] The value 'XXXX' is not an element of the set {'DEBT', 'CRED', 'SHAR'}."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": false,
+          "details": "ChrgBr 'XXXX' ist nicht DEBT/CRED/SHAR"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N16_45cd416f.xml",
+      "bemerkungen": "BR-CBPR-PACS-010 in SG_SGD"
+    },
+    {
+      "testcase_id": "TC-PCS-N17",
+      "titel": "Negative: Currency invalid",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_PATTERN_VALID: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}IntrBkSttlmAmt', attribute 'Ccy': [facet 'pattern'] The value 'X9X' is not accepted by the pattern '[A-Z]{3,3}'.",
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_PATTERN_VALID: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}InstdAmt', attribute 'Ccy': [facet 'pattern'] The value 'X9X' is not accepted by the pattern '[A-Z]{3,3}'."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": false,
+          "details": "Waehrung 'X9X' ist kein gueltiger ISO 4217 Code"
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N17_8ed3090c.xml",
+      "bemerkungen": "BR-CBPR-PACS-011 in DE_EUR"
+    },
+    {
+      "testcase_id": "TC-PCS-N18",
+      "titel": "Negative: UETR format ungueltig CAD",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_PATTERN_VALID: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}UETR': [facet 'pattern'] The value 'not-a-valid-uuid-string-01' is not accepted by the pattern '[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}'."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": false,
+          "details": "UETR 'not-a-valid-uuid-string-01' ist kein gueltiges UUIDv4"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N18_41e55f81.xml",
+      "bemerkungen": "BR-CBPR-PACS-015 in CA_CAD"
+    },
+    {
+      "testcase_id": "TC-PCS-N19",
+      "titel": "Negative: UETR fehlt HKD",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_PATTERN_VALID: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}UETR': [facet 'pattern'] The value '' is not accepted by the pattern '[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}'."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": false,
+          "details": "UETR fehlt auf PmtId"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N19_df5acb42.xml",
+      "bemerkungen": "BR-CBPR-PACS-001 in HK_HKD"
+    },
+    {
+      "testcase_id": "TC-PCS-N20",
+      "titel": "Negative: ChrgBr invalid DEBT+extra",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": false,
+      "xsd_fehler": [
+        "<string>:0:0:ERROR:SCHEMASV:SCHEMAV_CVC_ENUMERATION_VALID: Element '{urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08}ChrgBr': [facet 'enumeration'] The value 'XXXX' is not an element of the set {'DEBT', 'CRED', 'SHAR'}."
+      ],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.02' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": false,
+          "details": "ChrgBr 'XXXX' ist nicht DEBT/CRED/SHAR"
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_082448/pacs.008/20260413_082448_TC-PCS-N20_e4e64679.xml",
+      "bemerkungen": "BR-CBPR-PACS-010 in FR_EUR"
+    }
+  ]
+}

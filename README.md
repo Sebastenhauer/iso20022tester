@@ -464,7 +464,9 @@ iso20022tester/
 │   ├── testfaelle_vorlage.xlsx                # pain.001 Quick-Smoke (13 Cases)
 │   ├── testfaelle_pacs008_comprehensive.xlsx  # 50 pacs.008 Testfaelle
 │   └── testfaelle_pacs008_minimal.xlsx        # pacs.008 Quick-Smoke (3 Cases)
-├── examples/                                  # vorab generierte XML-Dateien
+├── examples/
+│   ├── *.xml                                  # vorab generierte pain.001 XML-Dateien
+│   ├── pacs.008/                              # vorab generierte pacs.008 BusinessMessage XMLs (50)
 │   └── violations/                            # Standards-Differenz-Demos (SPS vs CGI-MP)
 ├── xml_validator/                             # XML Validator API Credentials (.gitignore)
 ├── scripts/
