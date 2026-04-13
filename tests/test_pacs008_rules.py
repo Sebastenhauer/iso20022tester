@@ -258,10 +258,53 @@ class TestChargesInfo:
         assert len(r) == 0
 
 
+class TestCredChargesRequired:
+    """BR-CBPR-PACS-016: CRED verlangt ChrgsInf."""
+
+    def test_cred_without_charges_fails(self):
+        bm = _valid_message()
+        bm.instruction.transactions[0].charge_bearer = "CRED"
+        bm.instruction.transactions[0].charges_info = []
+        results = validate_pacs008(bm)
+        r = [r for r in results if r.rule_id == "BR-CBPR-PACS-016"]
+        assert len(r) == 1 and not r[0].passed
+
+    def test_cred_with_zero_charges_passes(self):
+        bm = _valid_message()
+        bm.instruction.transactions[0].charge_bearer = "CRED"
+        bm.instruction.transactions[0].charges_info = [
+            ChargesInfo(
+                amount=Decimal("0.00"), currency="EUR",
+                agent=AgentInfo(bic="UBSWCHZH80A"),
+            ),
+        ]
+        results = validate_pacs008(bm)
+        r = [r for r in results if r.rule_id == "BR-CBPR-PACS-016"]
+        assert len(r) == 1 and r[0].passed
+
+    def test_debt_without_charges_no_rule(self):
+        """DEBT: ChrgsInf optional — rule 016 does not fire."""
+        bm = _valid_message()
+        bm.instruction.transactions[0].charge_bearer = "DEBT"
+        bm.instruction.transactions[0].charges_info = []
+        results = validate_pacs008(bm)
+        r = [r for r in results if r.rule_id == "BR-CBPR-PACS-016"]
+        assert len(r) == 0
+
+    def test_shar_without_charges_no_rule(self):
+        """SHAR: ChrgsInf optional — rule 016 does not fire."""
+        bm = _valid_message()
+        # Default is SHAR, charges empty
+        bm.instruction.transactions[0].charges_info = []
+        results = validate_pacs008(bm)
+        r = [r for r in results if r.rule_id == "BR-CBPR-PACS-016"]
+        assert len(r) == 0
+
+
 class TestRuleCatalogPresence:
     def test_all_ids_in_catalog(self):
         from src.validation.rule_catalog import get_rule
-        for i in range(1, 16):
+        for i in range(1, 17):  # 001..016
             rid = f"BR-CBPR-PACS-{i:03d}"
             r = get_rule(rid)
             assert r is not None, f"{rid} not in catalog"

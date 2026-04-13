@@ -34,6 +34,7 @@ def _fail_ids(results):
     "BR-CBPR-PACS-010",
     "BR-CBPR-PACS-011",
     "BR-CBPR-PACS-015",
+    "BR-CBPR-PACS-016",
 ])
 def test_violation_triggers_target_rule(rule_id):
     bm = _valid_message()
@@ -68,6 +69,7 @@ class TestRegistryShape:
             "BR-CBPR-PACS-001", "BR-CBPR-PACS-002", "BR-CBPR-PACS-003",
             "BR-CBPR-PACS-004", "BR-CBPR-PACS-007", "BR-CBPR-PACS-008",
             "BR-CBPR-PACS-010", "BR-CBPR-PACS-011", "BR-CBPR-PACS-015",
+            "BR-CBPR-PACS-016",
         }
         assert set(reg.keys()) == expected
 

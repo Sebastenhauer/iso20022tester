@@ -793,6 +793,15 @@ BR_CBPR_PACS_015 = _r(
     violatable=True,
 )
 
+BR_CBPR_PACS_016 = _r(
+    "BR-CBPR-PACS-016", "CBPR-PACS",
+    "CBPR+ pacs.008: Bei ChrgBr=CRED muss mindestens eine ChrgsInf-Instanz vorhanden sein "
+    "(auch mit Betrag 0 wenn keine Gebuehren anfallen)",
+    None,
+    "CBPR+ Usage Guidelines SR2026 — Charge Bearer / Charges Information",
+    violatable=True,
+)
+
 # --- Batch Booking ---
 
 BR_BTCH_001 = _r(

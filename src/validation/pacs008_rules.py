@@ -237,3 +237,17 @@ def _validate_transaction(
             ok,
             f"ChrgsInf[{i}] Agt ohne BICFI oder ClrSysMmbId" if not ok else None,
         ))
+
+    # BR-CBPR-PACS-016: ChrgBr=CRED verlangt mindestens eine ChrgsInf
+    # (auch mit Betrag 0.00 wenn keine Gebuehren anfallen).
+    # DEBT: ChrgsInf optional (darf vorhanden sein fuer InstructedAgent-Charges).
+    # SHAR/SLEV: ChrgsInf optional.
+    if cb == "CRED":
+        has_charges = len(tx.charges_info) > 0
+        results.append(_r(
+            "BR-CBPR-PACS-016",
+            has_charges,
+            "ChrgBr=CRED aber keine ChrgsInf vorhanden. Mindestens eine "
+            "Instanz ist Pflicht (auch mit Betrag 0 wenn keine Gebuehren "
+            "anfallen)." if not has_charges else None,
+        ))

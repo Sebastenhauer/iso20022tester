@@ -92,6 +92,14 @@ def _violate_currency(bm: Pacs008BusinessMessage) -> Pacs008BusinessMessage:
     return bm
 
 
+def _violate_cred_no_charges(bm: Pacs008BusinessMessage) -> Pacs008BusinessMessage:
+    """BR-CBPR-PACS-016: ChrgBr=CRED setzen aber ChrgsInf leeren."""
+    for tx in bm.instruction.transactions:
+        object.__setattr__(tx, "charge_bearer", "CRED")
+        object.__setattr__(tx, "charges_info", [])
+    return bm
+
+
 # ---------------------------------------------------------------------------
 # Registry
 # ---------------------------------------------------------------------------
@@ -108,6 +116,7 @@ def get_pacs008_violations_registry() -> Dict[str, Callable[[Pacs008BusinessMess
         "BR-CBPR-PACS-010": _violate_charge_bearer,
         "BR-CBPR-PACS-011": _violate_currency,
         "BR-CBPR-PACS-015": _violate_uetr_invalid_format,
+        "BR-CBPR-PACS-016": _violate_cred_no_charges,
         # Not violatable (structural / cross-field / schema-enforced):
         # - 005, 006 Adressen (Modell-Constraint + XSD)
         # - 009 Banktag (Logik ok, aber schon via Excel uebersteuerbar)
@@ -127,6 +136,7 @@ _PACS008_VIOLATION_FIELD_MAP: Dict[str, str] = {
     "BR-CBPR-PACS-008": "bah_biz_svc",
     "BR-CBPR-PACS-010": "charge_bearer",
     "BR-CBPR-PACS-011": "currency",
+    "BR-CBPR-PACS-016": "charge_bearer_charges",
 }
 
 

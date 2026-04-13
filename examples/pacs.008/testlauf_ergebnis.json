@@ -1,11 +1,11 @@
 {
   "testlauf": {
-    "datum": "2026-04-13T08:29:15.286989",
+    "datum": "2026-04-13T08:39:40.012145",
     "message_type": "pacs.008",
     "flavor": "CBPR+",
     "input_file": "templates/testfaelle_pacs008_comprehensive.xlsx",
-    "total": 50,
-    "pass": 50,
+    "total": 51,
+    "pass": 51,
     "fail": 0,
     "external_validation_enabled": false,
     "external_validation_checked": 0,
@@ -108,7 +108,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-001_59341e11.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-001_503739cb.xml",
       "bemerkungen": "Baseline Positive"
     },
     {
@@ -207,7 +207,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-002_51748a55.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-002_65017476.xml",
       "bemerkungen": "USD ohne IBAN (US verwendet Fedwire-Konten)"
     },
     {
@@ -306,7 +306,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-003_fd262f70.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-003_1f28fcf4.xml",
       "bemerkungen": null
     },
     {
@@ -405,7 +405,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-004_34b45454.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-004_bc9ba4e9.xml",
       "bemerkungen": null
     },
     {
@@ -504,7 +504,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-005_469d6b71.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-005_f7575201.xml",
       "bemerkungen": null
     },
     {
@@ -603,7 +603,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-006_e431da21.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-006_7f23b183.xml",
       "bemerkungen": null
     },
     {
@@ -702,7 +702,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-007_42de9a6f.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-007_40251bbe.xml",
       "bemerkungen": null
     },
     {
@@ -801,7 +801,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-008_aa27c0d7.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-008_32ca53dd.xml",
       "bemerkungen": null
     },
     {
@@ -900,7 +900,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-009_45703c8d.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-009_64ce1ec5.xml",
       "bemerkungen": null
     },
     {
@@ -999,7 +999,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-010_3e9e41b3.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-010_20e3fde4.xml",
       "bemerkungen": null
     },
     {
@@ -1098,7 +1098,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-011_68807572.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-011_843c6e35.xml",
       "bemerkungen": "USD via NY Korrespondent"
     },
     {
@@ -1197,7 +1197,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-012_cccec32e.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-012_b78de892.xml",
       "bemerkungen": "3 Intermediaries USD->SA via NY+LDN"
     },
     {
@@ -1296,7 +1296,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-013_952d2545.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-013_d150d439.xml",
       "bemerkungen": null
     },
     {
@@ -1395,7 +1395,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-014_fc172bb9.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-014_a6ddbd52.xml",
       "bemerkungen": "Intermediary ueber Fedwire ABA-Nummer"
     },
     {
@@ -1494,7 +1494,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-015_6eb41572.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-015_297a14c1.xml",
       "bemerkungen": null
     },
     {
@@ -1593,7 +1593,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-016_70f74ade.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-016_9803838d.xml",
       "bemerkungen": "Ultimate Debtor = Mutterkonzern"
     },
     {
@@ -1692,7 +1692,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-017_b784f07d.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-017_a7a05407.xml",
       "bemerkungen": "Ultimate Creditor = Endbeguenstigter"
     },
     {
@@ -1791,7 +1791,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-018_ee52dec9.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-018_f46e60ce.xml",
       "bemerkungen": null
     },
     {
@@ -1890,7 +1890,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-019_51e94350.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-019_73c2219b.xml",
       "bemerkungen": "Full Ultimate Chain mit CategoryPurpose"
     },
     {
@@ -1989,7 +1989,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-020_4d53d435.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-020_98d4382f.xml",
       "bemerkungen": null
     },
     {
@@ -2088,7 +2088,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-021_da92f294.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-021_f13fb5c3.xml",
       "bemerkungen": "Purp/Cd=SALA"
     },
     {
@@ -2187,7 +2187,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-022_eeca39ef.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-022_09672993.xml",
       "bemerkungen": "PmtTpInf/CtgyPurp/Cd=SUPP"
     },
     {
@@ -2286,7 +2286,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-023_d2e33343.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-023_5e752cc6.xml",
       "bemerkungen": null
     },
     {
@@ -2385,7 +2385,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-024_6625b492.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-024_c093782d.xml",
       "bemerkungen": null
     },
     {
@@ -2479,12 +2479,24 @@
           "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
           "bestanden": true,
           "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-012",
+          "beschreibung": "CBPR+ pacs.008: Wenn ChrgsInf vorhanden, muss jede Instanz Amt+Agt enthalten",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-016",
+          "beschreibung": "CBPR+ pacs.008: Bei ChrgBr=CRED muss mindestens eine ChrgsInf-Instanz vorhanden sein (auch mit Betrag 0 wenn keine Gebuehren anfallen)",
+          "bestanden": true,
+          "details": null
         }
       ],
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-025_36237024.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-025_fc3dccd5.xml",
       "bemerkungen": null
     },
     {
@@ -2583,7 +2595,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-026_39c84651.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-026_b849224c.xml",
       "bemerkungen": "CdtrAgt nur per ClrSysMmbId (Wells Fargo Routing)"
     },
     {
@@ -2682,7 +2694,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-027_60dff1ae.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083939_TC-PCS-027_ce237b6f.xml",
       "bemerkungen": null
     },
     {
@@ -2781,7 +2793,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-028_cf0ec850.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-028_bdef54ff.xml",
       "bemerkungen": "INDA+SttlmAcct-Szenario (CLRG nicht in CBPR+)"
     },
     {
@@ -2880,7 +2892,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-029_ecaea472.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-029_982a847f.xml",
       "bemerkungen": null
     },
     {
@@ -2979,7 +2991,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-030_91880393.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-030_45f01e80.xml",
       "bemerkungen": "Max-Amount Test"
     },
     {
@@ -3074,7 +3086,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N01_e08eecf2.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N01_32048143.xml",
       "bemerkungen": "Violation: UETR wird geleert"
     },
     {
@@ -3175,7 +3187,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N02_9f617c51.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N02_9ceb0074.xml",
       "bemerkungen": "Violation: InstgAgt hat weder BIC noch ClrSysMmbId"
     },
     {
@@ -3276,7 +3288,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N03_bb060738.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N03_cf19420d.xml",
       "bemerkungen": "Violation: InstdAgt hat weder BIC noch ClrSysMmbId"
     },
     {
@@ -3375,7 +3387,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N04_16457557.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N04_f83708e9.xml",
       "bemerkungen": "Violation: SttlmMtd auf COVE (V1 lehnt ab)"
     },
     {
@@ -3474,7 +3486,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N05_3594b225.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N05_12dbe0df.xml",
       "bemerkungen": "Violation: MsgDefIdr=pacs.008.001.09"
     },
     {
@@ -3573,7 +3585,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N06_3e6e0267.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N06_4d71b3ad.xml",
       "bemerkungen": "Violation: BizSvc=swift.wrong.01"
     },
     {
@@ -3674,7 +3686,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N07_8851a466.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N07_6ab0c9bb.xml",
       "bemerkungen": "Violation: ChrgBr auf XXXX (kein DEBT/CRED/SHAR)"
     },
     {
@@ -3776,7 +3788,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N08_bd9f7b8a.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N08_10a8a3ff.xml",
       "bemerkungen": "Violation: Waehrungscode ungueltig"
     },
     {
@@ -3877,7 +3889,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N09_dc4cce06.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N09_fec3a624.xml",
       "bemerkungen": "Violation: UETR ist keine UUIDv4"
     },
     {
@@ -3972,7 +3984,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N10_8e33ad05.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N10_62500764.xml",
       "bemerkungen": "BR-CBPR-PACS-001 in DE_USD"
     },
     {
@@ -4073,7 +4085,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N11_ba387127.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N11_e6911051.xml",
       "bemerkungen": "BR-CBPR-PACS-002 in GB_GBP"
     },
     {
@@ -4174,7 +4186,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N12_e58ea790.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N12_0958aff1.xml",
       "bemerkungen": "BR-CBPR-PACS-003 in JP_JPY"
     },
     {
@@ -4273,7 +4285,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N13_cf165f76.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N13_aff5ed67.xml",
       "bemerkungen": "BR-CBPR-PACS-004 in GB_GBP"
     },
     {
@@ -4372,7 +4384,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N14_68cdd58c.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N14_d4e2e3fa.xml",
       "bemerkungen": "BR-CBPR-PACS-007 in US_USD"
     },
     {
@@ -4471,7 +4483,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N15_a34e5f08.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N15_1ce52a0e.xml",
       "bemerkungen": "BR-CBPR-PACS-008 in CN_CNY"
     },
     {
@@ -4572,7 +4584,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N16_14a42717.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N16_cdbebebd.xml",
       "bemerkungen": "BR-CBPR-PACS-010 in SG_SGD"
     },
     {
@@ -4674,7 +4686,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N17_66dfd27f.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N17_578ee359.xml",
       "bemerkungen": "BR-CBPR-PACS-011 in DE_EUR"
     },
     {
@@ -4775,7 +4787,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N18_04817fbf.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N18_36b3c2fa.xml",
       "bemerkungen": "BR-CBPR-PACS-015 in CA_CAD"
     },
     {
@@ -4870,7 +4882,7 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N19_a03ebdb6.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N19_eef2886e.xml",
       "bemerkungen": "BR-CBPR-PACS-001 in HK_HKD"
     },
     {
@@ -4971,8 +4983,113 @@
       "external_valide": null,
       "external_fehler": [],
       "ergebnis": "Pass",
-      "xml_datei": "./output/2026-04-13_082915/pacs.008/20260413_082915_TC-PCS-N20_546ea29e.xml",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N20_6ffd59b3.xml",
       "bemerkungen": "BR-CBPR-PACS-010 in FR_EUR"
+    },
+    {
+      "testcase_id": "TC-PCS-N21",
+      "titel": "Negative: CRED ohne ChrgsInf",
+      "flavor": "CBPR+",
+      "erwartetes_ergebnis": "NOK",
+      "xsd_valide": true,
+      "xsd_fehler": [],
+      "business_rules": [
+        {
+          "rule_id": "BR-CBPR-PACS-007",
+          "beschreibung": "CBPR+ BAH: MsgDefIdr muss 'pacs.008.001.08' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-008",
+          "beschreibung": "CBPR+ BAH: BizSvc muss 'swift.cbprplus.04' sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-013",
+          "beschreibung": "CBPR+ pacs.008: NbOfTxs im GrpHdr muss der Anzahl CdtTrfTxInf entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-014",
+          "beschreibung": "CBPR+ pacs.008: CtrlSum muss der Summe aller IntrBkSttlmAmt entsprechen",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-009",
+          "beschreibung": "CBPR+ pacs.008: IntrBkSttlmDt muss ein gueltiger Banktag sein (Format YYYY-MM-DD)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-001",
+          "beschreibung": "CBPR+ pacs.008: UETR (ISO 17442) ist Pflicht auf PmtId-Ebene",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-015",
+          "beschreibung": "CBPR+ pacs.008: UETR muss UUIDv4-Format haben",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-002",
+          "beschreibung": "CBPR+ pacs.008: InstgAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-003",
+          "beschreibung": "CBPR+ pacs.008: InstdAgt muss identifiziert sein (BICFI oder ClrSysMmbId)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-004",
+          "beschreibung": "CBPR+ pacs.008: SttlmMtd muss INDA oder INGA sein (XSD erlaubt auch COVE, in V1 out of scope; CLRG nicht in CBPR+ erlaubt)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-005",
+          "beschreibung": "CBPR+ pacs.008: Creditor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-006",
+          "beschreibung": "CBPR+ pacs.008: Debtor-Adresse muss strukturiert sein (Nm, Ctry mindestens)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-010",
+          "beschreibung": "CBPR+ pacs.008: ChrgBr muss DEBT, CRED oder SHAR sein",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-011",
+          "beschreibung": "CBPR+ pacs.008: Waehrungscode muss gueltig sein (ISO 4217, 3 Grossbuchstaben)",
+          "bestanden": true,
+          "details": null
+        },
+        {
+          "rule_id": "BR-CBPR-PACS-016",
+          "beschreibung": "CBPR+ pacs.008: Bei ChrgBr=CRED muss mindestens eine ChrgsInf-Instanz vorhanden sein (auch mit Betrag 0 wenn keine Gebuehren anfallen)",
+          "bestanden": false,
+          "details": "ChrgBr=CRED aber keine ChrgsInf vorhanden. Mindestens eine Instanz ist Pflicht (auch mit Betrag 0 wenn keine Gebuehren anfallen)."
+        }
+      ],
+      "external_valide": null,
+      "external_fehler": [],
+      "ergebnis": "Pass",
+      "xml_datei": "./output/2026-04-13_083939/pacs.008/20260413_083940_TC-PCS-N21_3c9c9346.xml",
+      "bemerkungen": "Violation: CRED ohne ChrgsInf (BR-CBPR-PACS-016)"
     }
   ]
 }

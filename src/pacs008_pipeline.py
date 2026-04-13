@@ -31,6 +31,7 @@ from src.models.pacs008 import (
     AccountInfo,
     AgentInfo,
     BusinessRuleResultLite,
+    ChargesInfo,
     Pacs008BusinessMessage,
     Pacs008Flavor,
     Pacs008Instruction,
@@ -330,6 +331,19 @@ class Pacs008TestPipeline:
         end_to_end = f"E2E{short}"[:35]
         instr_id = f"INSTR{short}"[:16]
 
+        # BR-CBPR-PACS-016: ChrgBr=CRED verlangt mindestens eine ChrgsInf.
+        # Wenn der User keine expliziten Charges liefert, erzeugen wir einen
+        # Default-Eintrag mit Betrag 0.00 und Agt=InstgAgt.
+        charges_info_list: List[ChargesInfo] = []
+        if tc.charge_bearer == "CRED":
+            charges_info_list = [
+                ChargesInfo(
+                    amount=Decimal("0.00"),
+                    currency=currency,
+                    agent=instg_agt,
+                ),
+            ]
+
         tx = Pacs008Transaction(
             instruction_id=instr_id,
             end_to_end_id=end_to_end,
@@ -337,6 +351,7 @@ class Pacs008TestPipeline:
             instructed_amount=amount,
             instructed_currency=currency,
             charge_bearer=tc.charge_bearer,
+            charges_info=charges_info_list,
             debtor=dbtr,
             debtor_account=dbtr_acct,
             debtor_agent=dbtr_agt,
