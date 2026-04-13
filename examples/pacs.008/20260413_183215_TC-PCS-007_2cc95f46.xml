@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<BusinessMessage>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>UBSWCHZH80A</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>DBSSSGSGXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>MSG1a7b148c</BizMsgIdr>
+    <MsgDefIdr>pacs.008.001.08</MsgDefIdr>
+    <BizSvc>swift.cbprplus.04</BizSvc>
+    <CreDt>2026-04-13T18:32:15.337868+02:00</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+    <FIToFICstmrCdtTrf>
+      <GrpHdr>
+        <MsgId>MSG1a7b148c</MsgId>
+        <CreDtTm>2026-04-13T18:32:15.337868+02:00</CreDtTm>
+        <NbOfTxs>1</NbOfTxs>
+        <SttlmInf>
+          <SttlmMtd>INDA</SttlmMtd>
+        </SttlmInf>
+      </GrpHdr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>INSTR1a7b148c</InstrId>
+          <EndToEndId>E2E1a7b148c</EndToEndId>
+          <UETR>be15a819-f8f8-415f-8c18-4403719a3075</UETR>
+        </PmtId>
+        <IntrBkSttlmAmt Ccy="SGD">8000.00</IntrBkSttlmAmt>
+        <IntrBkSttlmDt>2026-04-09</IntrBkSttlmDt>
+        <InstdAmt Ccy="SGD">8000.00</InstdAmt>
+        <ChrgBr>SHAR</ChrgBr>
+        <InstgAgt>
+          <FinInstnId>
+            <BICFI>UBSWCHZH80A</BICFI>
+          </FinInstnId>
+        </InstgAgt>
+        <InstdAgt>
+          <FinInstnId>
+            <BICFI>DBSSSGSGXXX</BICFI>
+          </FinInstnId>
+        </InstdAgt>
+        <IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>CHASUS33XXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+        <Dbtr>
+          <Nm>Muster AG</Nm>
+          <PstlAdr>
+            <StrtNm>Bahnhofstrasse</StrtNm>
+            <BldgNb>42</BldgNb>
+            <PstCd>8001</PstCd>
+            <TwnNm>Zurich</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Dbtr>
+        <DbtrAcct>
+          <Id>
+            <IBAN>CH9300762011623852957</IBAN>
+          </Id>
+        </DbtrAcct>
+        <DbtrAgt>
+          <FinInstnId>
+            <BICFI>UBSWCHZH80A</BICFI>
+          </FinInstnId>
+        </DbtrAgt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>DBSSSGSGXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>SG Holdings Pte</Nm>
+          <PstlAdr>
+            <StrtNm>Marina Boulevard</StrtNm>
+            <BldgNb>12</BldgNb>
+            <PstCd>018982</PstCd>
+            <TwnNm>Singapore</TwnNm>
+            <Ctry>SG</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <Othr>
+              <Id>1234567890</Id>
+              <SchmeNm>
+                <Cd>BBAN</Cd>
+              </SchmeNm>
+            </Othr>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Service Payment</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </FIToFICstmrCdtTrf>
+  </Document>
+</BusinessMessage>

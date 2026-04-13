@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<BusinessMessage>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>UBSWCHZH80A</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>NCBKSARIXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>MSG76c9615e</BizMsgIdr>
+    <MsgDefIdr>pacs.008.001.08</MsgDefIdr>
+    <BizSvc>swift.cbprplus.04</BizSvc>
+    <CreDt>2026-04-13T18:32:15.340291+02:00</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+    <FIToFICstmrCdtTrf>
+      <GrpHdr>
+        <MsgId>MSG76c9615e</MsgId>
+        <CreDtTm>2026-04-13T18:32:15.340291+02:00</CreDtTm>
+        <NbOfTxs>1</NbOfTxs>
+        <SttlmInf>
+          <SttlmMtd>INDA</SttlmMtd>
+        </SttlmInf>
+      </GrpHdr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>INSTR76c9615e</InstrId>
+          <EndToEndId>E2E76c9615e</EndToEndId>
+          <UETR>8257044b-fd8f-4247-9b02-ebfb34109ce5</UETR>
+        </PmtId>
+        <IntrBkSttlmAmt Ccy="USD">100000.00</IntrBkSttlmAmt>
+        <IntrBkSttlmDt>2026-04-09</IntrBkSttlmDt>
+        <InstdAmt Ccy="USD">100000.00</InstdAmt>
+        <ChrgBr>SHAR</ChrgBr>
+        <InstgAgt>
+          <FinInstnId>
+            <BICFI>UBSWCHZH80A</BICFI>
+          </FinInstnId>
+        </InstgAgt>
+        <InstdAgt>
+          <FinInstnId>
+            <BICFI>NCBKSARIXXX</BICFI>
+          </FinInstnId>
+        </InstdAgt>
+        <IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>CHASUS33XXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+        <IntrmyAgt2>
+          <FinInstnId>
+            <BICFI>HBUKGB4BXXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt2>
+        <Dbtr>
+          <Nm>Muster AG</Nm>
+          <PstlAdr>
+            <StrtNm>Bahnhofstrasse</StrtNm>
+            <BldgNb>42</BldgNb>
+            <PstCd>8001</PstCd>
+            <TwnNm>Zurich</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Dbtr>
+        <DbtrAcct>
+          <Id>
+            <IBAN>CH9300762011623852957</IBAN>
+          </Id>
+        </DbtrAcct>
+        <DbtrAgt>
+          <FinInstnId>
+            <BICFI>UBSWCHZH80A</BICFI>
+          </FinInstnId>
+        </DbtrAgt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>NCBKSARIXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Riyadh Investments LLC</Nm>
+          <PstlAdr>
+            <StrtNm>King Fahd Road</StrtNm>
+            <BldgNb>88</BldgNb>
+            <PstCd>12373</PstCd>
+            <TwnNm>Riyadh</TwnNm>
+            <Ctry>SA</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>SA0380000000608010167519</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Investment Transfer</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </FIToFICstmrCdtTrf>
+  </Document>
+</BusinessMessage>

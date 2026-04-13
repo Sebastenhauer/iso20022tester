@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<BusinessMessage>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>BLFLLI2XXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>HSBCHKHHXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>MSG849ca473</BizMsgIdr>
+    <MsgDefIdr>pacs.008.001.08</MsgDefIdr>
+    <BizSvc>swift.cbprplus.04</BizSvc>
+    <CreDt>2026-04-13T18:32:15.360108+02:00</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+    <FIToFICstmrCdtTrf>
+      <GrpHdr>
+        <MsgId>MSG849ca473</MsgId>
+        <CreDtTm>2026-04-13T18:32:15.360108+02:00</CreDtTm>
+        <NbOfTxs>1</NbOfTxs>
+        <SttlmInf>
+          <SttlmMtd>INDA</SttlmMtd>
+        </SttlmInf>
+      </GrpHdr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>INSTR849ca473</InstrId>
+          <EndToEndId>E2E849ca473</EndToEndId>
+          <UETR>4849e00a-871f-412c-b2d9-f81caec38a66</UETR>
+        </PmtId>
+        <IntrBkSttlmAmt Ccy="EUR">175000.00</IntrBkSttlmAmt>
+        <IntrBkSttlmDt>2026-04-16</IntrBkSttlmDt>
+        <InstdAmt Ccy="EUR">175000.00</InstdAmt>
+        <ChrgBr>SHAR</ChrgBr>
+        <InstgAgt>
+          <FinInstnId>
+            <BICFI>BLFLLI2XXXX</BICFI>
+          </FinInstnId>
+        </InstgAgt>
+        <InstdAgt>
+          <FinInstnId>
+            <BICFI>HSBCHKHHXXX</BICFI>
+          </FinInstnId>
+        </InstdAgt>
+        <IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>UBSWCHZH80A</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+        <IntrmyAgt2>
+          <FinInstnId>
+            <BICFI>DEUTDEFFXXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt2>
+        <IntrmyAgt3>
+          <FinInstnId>
+            <BICFI>SCBLSGSGXXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt3>
+        <Dbtr>
+          <Nm>Stiftung Liechtenstein</Nm>
+          <PstlAdr>
+            <StrtNm>Staedtle</StrtNm>
+            <BldgNb>38</BldgNb>
+            <PstCd>9490</PstCd>
+            <TwnNm>Vaduz</TwnNm>
+            <Ctry>LI</Ctry>
+          </PstlAdr>
+        </Dbtr>
+        <DbtrAcct>
+          <Id>
+            <IBAN>LI2108800000023456789</IBAN>
+          </Id>
+        </DbtrAcct>
+        <DbtrAgt>
+          <FinInstnId>
+            <BICFI>BLFLLI2XXXX</BICFI>
+          </FinInstnId>
+        </DbtrAgt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>HSBCHKHHXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>HK Commodities Corp</Nm>
+          <PstlAdr>
+            <StrtNm>Queens Road</StrtNm>
+            <BldgNb>88</BldgNb>
+            <PstCd>999077</PstCd>
+            <TwnNm>Central</TwnNm>
+            <Ctry>HK</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <Othr>
+              <Id>400987654321</Id>
+              <SchmeNm>
+                <Cd>BBAN</Cd>
+              </SchmeNm>
+            </Othr>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Commodity settlement HK Q2</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </FIToFICstmrCdtTrf>
+  </Document>
+</BusinessMessage>

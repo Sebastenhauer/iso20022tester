@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<BusinessMessage>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>UBSWCHZH80A</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>BOFAUS3NXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>MSG407ee3ec</BizMsgIdr>
+    <MsgDefIdr>pacs.008.001.08</MsgDefIdr>
+    <BizSvc>swift.cbprplus.04</BizSvc>
+    <CreDt>2026-04-13T18:32:15.349201+02:00</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+    <FIToFICstmrCdtTrf>
+      <GrpHdr>
+        <MsgId>MSG407ee3ec</MsgId>
+        <CreDtTm>2026-04-13T18:32:15.349201+02:00</CreDtTm>
+        <NbOfTxs>1</NbOfTxs>
+        <SttlmInf>
+          <SttlmMtd>INDA</SttlmMtd>
+        </SttlmInf>
+      </GrpHdr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>INSTR407ee3ec</InstrId>
+          <EndToEndId>E2E407ee3ec</EndToEndId>
+          <UETR>65b90ef0-335a-400a-a178-13b38e35096d</UETR>
+        </PmtId>
+        <IntrBkSttlmAmt Ccy="USD">9999999.99</IntrBkSttlmAmt>
+        <IntrBkSttlmDt>2026-04-09</IntrBkSttlmDt>
+        <InstdAmt Ccy="USD">9999999.99</InstdAmt>
+        <ChrgBr>SHAR</ChrgBr>
+        <InstgAgt>
+          <FinInstnId>
+            <BICFI>UBSWCHZH80A</BICFI>
+          </FinInstnId>
+        </InstgAgt>
+        <InstdAgt>
+          <FinInstnId>
+            <BICFI>BOFAUS3NXXX</BICFI>
+          </FinInstnId>
+        </InstdAgt>
+        <IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>CHASUS33XXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+        <Dbtr>
+          <Nm>Muster AG</Nm>
+          <PstlAdr>
+            <StrtNm>Bahnhofstrasse</StrtNm>
+            <BldgNb>42</BldgNb>
+            <PstCd>8001</PstCd>
+            <TwnNm>Zurich</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Dbtr>
+        <DbtrAcct>
+          <Id>
+            <IBAN>CH9300762011623852957</IBAN>
+          </Id>
+        </DbtrAcct>
+        <DbtrAgt>
+          <FinInstnId>
+            <BICFI>UBSWCHZH80A</BICFI>
+          </FinInstnId>
+        </DbtrAgt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>BOFAUS3NXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>LA Investments LLC</Nm>
+          <PstlAdr>
+            <StrtNm>Wall Street</StrtNm>
+            <BldgNb>40</BldgNb>
+            <PstCd>10005</PstCd>
+            <TwnNm>New York</TwnNm>
+            <Ctry>US</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <Othr>
+              <Id>987654321</Id>
+              <SchmeNm>
+                <Cd>BBAN</Cd>
+              </SchmeNm>
+            </Othr>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Large value transfer</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </FIToFICstmrCdtTrf>
+  </Document>
+</BusinessMessage>

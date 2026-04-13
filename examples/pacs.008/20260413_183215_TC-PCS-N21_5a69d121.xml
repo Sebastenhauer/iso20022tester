@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<BusinessMessage>
+  <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+    <Fr>
+      <FIId>
+        <FinInstnId>
+          <BICFI>UBSWCHZH80A</BICFI>
+        </FinInstnId>
+      </FIId>
+    </Fr>
+    <To>
+      <FIId>
+        <FinInstnId>
+          <BICFI>DEUTDEFFXXX</BICFI>
+        </FinInstnId>
+      </FIId>
+    </To>
+    <BizMsgIdr>MSG83cd775b</BizMsgIdr>
+    <MsgDefIdr>pacs.008.001.08</MsgDefIdr>
+    <BizSvc>swift.cbprplus.04</BizSvc>
+    <CreDt>2026-04-13T18:32:15.359157+02:00</CreDt>
+  </AppHdr>
+  <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08">
+    <FIToFICstmrCdtTrf>
+      <GrpHdr>
+        <MsgId>MSG83cd775b</MsgId>
+        <CreDtTm>2026-04-13T18:32:15.359157+02:00</CreDtTm>
+        <NbOfTxs>1</NbOfTxs>
+        <SttlmInf>
+          <SttlmMtd>INDA</SttlmMtd>
+        </SttlmInf>
+      </GrpHdr>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>INSTR83cd775b</InstrId>
+          <EndToEndId>E2E83cd775b</EndToEndId>
+          <UETR>3aed6fc4-91d5-488c-9567-a5c87313b6c0</UETR>
+        </PmtId>
+        <IntrBkSttlmAmt Ccy="EUR">5000.00</IntrBkSttlmAmt>
+        <IntrBkSttlmDt>2026-04-15</IntrBkSttlmDt>
+        <InstdAmt Ccy="EUR">5000.00</InstdAmt>
+        <ChrgBr>CRED</ChrgBr>
+        <InstgAgt>
+          <FinInstnId>
+            <BICFI>UBSWCHZH80A</BICFI>
+          </FinInstnId>
+        </InstgAgt>
+        <InstdAgt>
+          <FinInstnId>
+            <BICFI>DEUTDEFFXXX</BICFI>
+          </FinInstnId>
+        </InstdAgt>
+        <IntrmyAgt1>
+          <FinInstnId>
+            <BICFI>CHASUS33XXX</BICFI>
+          </FinInstnId>
+        </IntrmyAgt1>
+        <Dbtr>
+          <Nm>Muster AG</Nm>
+          <PstlAdr>
+            <StrtNm>Bahnhofstrasse</StrtNm>
+            <BldgNb>42</BldgNb>
+            <PstCd>8001</PstCd>
+            <TwnNm>Zurich</TwnNm>
+            <Ctry>CH</Ctry>
+          </PstlAdr>
+        </Dbtr>
+        <DbtrAcct>
+          <Id>
+            <IBAN>CH5604835012345678009</IBAN>
+          </Id>
+        </DbtrAcct>
+        <DbtrAgt>
+          <FinInstnId>
+            <BICFI>UBSWCHZH80A</BICFI>
+          </FinInstnId>
+        </DbtrAgt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BICFI>DEUTDEFFXXX</BICFI>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>DE Corp GmbH</Nm>
+          <PstlAdr>
+            <StrtNm>Kaiserstrasse</StrtNm>
+            <BldgNb>30</BldgNb>
+            <PstCd>60311</PstCd>
+            <TwnNm>Frankfurt</TwnNm>
+            <Ctry>DE</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <IBAN>DE89370400440532013000</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Ustrd>Negative test case</Ustrd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </FIToFICstmrCdtTrf>
+  </Document>
+</BusinessMessage>
