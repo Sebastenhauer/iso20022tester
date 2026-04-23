@@ -64,7 +64,12 @@ IBAN_FORMATS = {
     "BA": (20, "3n3n8n2n"),        # Bosnien
     "ME": (22, "3n13n2n"),         # Montenegro
     "MK": (19, "3n10c2n"),         # Nordmazedonien
-    "XK": (20, "4n10n2n"),         # Kosovo
+    # "XK" (Kosovo) bewusst entfernt: XK ist ein SWIFT-User-assigned
+    # Laendercode, aber nicht in ISO 3166-1 alpha-2 enthalten. Strikte
+    # Validatoren (z.B. Swiss SPS Validator, GEFEG.FX) lehnen es ab
+    # ("BE09: Kein gueltiger Laender-Code gemaess ISO 3166"). Wenn ein
+    # Anwender XK explizit braucht, muss er die IBAN manuell im Excel
+    # angeben.
     "MD": (24, "2c18c"),           # Moldawien
     "UA": (29, "6n19n"),           # Ukraine
     "BY": (28, "4c4n16c"),         # Belarus
