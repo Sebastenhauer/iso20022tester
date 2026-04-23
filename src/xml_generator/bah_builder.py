@@ -4,7 +4,10 @@ Generates a head.001.001.02 AppHdr element that wraps a pain.001 Document.
 Required by SWIFT MyStandards validator for CBPR+ messages.
 
 The output is a combined XML with both AppHdr and Document as siblings
-under a common wrapper element (RequestPayload).
+under a common wrapper element (``BusinessMessage``). Der Wrapper selbst
+traegt keinen Namespace; AppHdr und Document deklarieren jeweils ihr
+eigenes Default-Namespace. Das ist die Form, die SWIFTs CBPR+ Validator
+(und MyStandards) erwartet.
 
 Based on: IPPlus_head.001.001.02 Usage Guideline (pages 6-10)
 """
@@ -72,7 +75,23 @@ def wrap_with_bah(
     msg_id: str,
     cre_dt: Optional[str] = None,
 ) -> etree._Element:
-    """Wraps a pain.001 Document with a BAH in a RequestPayload envelope.
+    """Wraps a pain.001 Document with a BAH in a BusinessMessage envelope.
+
+    Ergebnis:
+    ```xml
+    <BusinessMessage>
+        <AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+            ...
+        </AppHdr>
+        <Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09">
+            ...
+        </Document>
+    </BusinessMessage>
+    ```
+
+    Der Wrapper selbst ist *nicht* in einem Namespace; AppHdr und Document
+    deklarieren jeweils ihr eigenes Default-Namespace. Diese Form ist es,
+    die SWIFTs CBPR+ Validator (und MyStandards) erwartet.
 
     Args:
         pain001_doc: The pain.001 Document element.
@@ -84,20 +103,13 @@ def wrap_with_bah(
     Returns:
         lxml Element containing AppHdr + Document.
     """
-    # Build the BAH
+    # Build the BAH (carries its own default namespace via nsmap={None: HEAD_NS})
     bah = build_bah(from_bic, to_bic, msg_id, cre_dt)
 
-    # Create wrapper with both namespaces
-    nsmap = {
-        "h": HEAD_NS,
-        None: PAIN_NS,
-    }
-    wrapper = etree.Element("RequestPayload", nsmap=nsmap)
-
-    # Add BAH as first child
+    # Namespace-loser Wrapper: so behalten AppHdr und Document ihre eigenen
+    # xmlns=-Deklarationen beim Serialisieren.
+    wrapper = etree.Element("BusinessMessage")
     wrapper.append(bah)
-
-    # Add pain.001 Document as second child
     wrapper.append(pain001_doc)
 
     return wrapper
