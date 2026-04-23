@@ -217,17 +217,6 @@ class TestDomesticIbanHandler:
         failed = [r for r in results if not r.passed]
         assert len(failed) == 0
 
-    def test_validate_wrong_currency(self):
-        handler = DomesticIbanHandler()
-        tc = _tc(PaymentType.DOMESTIC_IBAN, currency="EUR")
-        tx = Transaction(
-            end_to_end_id="E2E-1", amount=Decimal("100.00"), currency="EUR",
-            creditor_name="Test", creditor_iban="CH9300762011623852957",
-        )
-        results = handler.validate(tc, [tx])
-        failed_ids = [r.rule_id for r in results if not r.passed]
-        assert "BR-IBAN-004" in failed_ids
-
     def test_validate_qr_iban_rejected(self):
         handler = DomesticIbanHandler()
         tc = _tc(PaymentType.DOMESTIC_IBAN, currency="CHF")

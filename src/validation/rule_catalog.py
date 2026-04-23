@@ -360,14 +360,6 @@ BR_IBAN_003 = _r(
     "ISO 11649",
 )
 
-BR_IBAN_004 = _r(
-    "BR-IBAN-004", "IBAN",
-    "Währung muss CHF sein",
-    _IBAN,
-    "Business Rules SPS 2025 Tabelle 3, Typ D/IBAN",
-    violatable=True,
-)
-
 BR_IBAN_005 = _r(
     "BR-IBAN-005", "IBAN",
     "SvcLvl darf nicht 'SEPA' sein",

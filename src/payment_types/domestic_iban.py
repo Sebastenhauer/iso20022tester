@@ -24,11 +24,11 @@ class DomesticIbanHandler(PaymentTypeHandler):
     ) -> List[ValidationResult]:
         results = []
 
-        for tx in transactions:
-            results.append(_check(
-                "BR-IBAN-004", tx.currency == "CHF",
-                f"Währung ist '{tx.currency}'" if tx.currency != "CHF" else None,
-            ))
+        # BR-IBAN-004 (Waehrung muss CHF sein) entfernt: SPS 2025 erlaubt
+        # Zahlungen in Fremdwaehrung an CH/LI-IBAN (sie werden vom Validator
+        # empirisch als Zahlungsart 5 / Grenzueberschreitend klassifiziert,
+        # nicht als Zahlungsart 2/3 D-IBAN). Der User-deklarierte Zahlungstyp
+        # "Domestic-IBAN" beschraenkt die Waehrung nicht auf CHF.
 
         svc_lvl = testcase.overrides.get("SvcLvl.Cd", "")
         results.append(_check(

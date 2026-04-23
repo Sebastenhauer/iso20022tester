@@ -163,11 +163,6 @@ class TestNegativeE2E:
         results = run(excel, _config(str(tmp_path)), seed_override=42)
         assert results[0].overall_pass is True
 
-    def test_iban_nok_wrong_currency(self, tmp_path):
-        excel = _create_excel([_iban_row("TC-N3", "NOK", "BR-IBAN-004")], str(tmp_path))
-        results = run(excel, _config(str(tmp_path)), seed_override=42)
-        assert results[0].overall_pass is True
-
     def test_cbpr_nok_no_agent(self, tmp_path):
         excel = _create_excel(
             [_cbpr_row("TC-N4", "NOK", "BR-CBPR-005", bic="BNPAFRPP")],

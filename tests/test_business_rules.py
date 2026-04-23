@@ -81,25 +81,6 @@ def test_sepa_wrong_currency():
     assert "BR-SEPA-001" in failed_ids
 
 
-def test_domestic_iban_wrong_currency():
-    tc = _make_testcase(
-        currency="EUR",
-        payment_type=PaymentType.DOMESTIC_IBAN,
-    )
-    tx = Transaction(
-        end_to_end_id="E2E-test",
-        amount=Decimal("100.00"),
-        currency="EUR",
-        creditor_name="Creditor AG",
-        creditor_iban="CH9300762011623852957",
-    )
-    instr = _make_instruction(tc, [tx])
-    instr = instr.model_copy(update={"service_level": None})
-    results = validate_all_business_rules(instr, tc)
-    failed_ids = [r.rule_id for r in results if not r.passed]
-    assert "BR-IBAN-004" in failed_ids
-
-
 def test_domestic_iban_no_charge_bearer_ok():
     """BR-DOM-001: Domestic-IBAN ohne ChrgBr ist OK."""
     tc = _make_testcase(

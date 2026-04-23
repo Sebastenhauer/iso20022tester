@@ -163,13 +163,6 @@ class TestIbanViolations:
         violated = apply_rule_violation(tc, instr)
         assert violated.transactions[0].remittance_info["type"] == "QRR"
 
-    def test_br_iban_004_wrong_currency(self, xsd_validator):
-        tc = _make_tc(PaymentType.DOMESTIC_IBAN, "CHF", "BR-IBAN-004")
-        instr = _make_instr(tc)
-        violated = apply_rule_violation(tc, instr)
-        assert violated.transactions[0].currency != "CHF"
-
-
 # =========================================================================
 # Domestic Violations
 # =========================================================================

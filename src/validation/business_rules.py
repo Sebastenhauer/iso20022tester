@@ -657,7 +657,8 @@ def _get_violations_registry():
         "BR-QR-004": _violate_qr_currency,
         "BR-IBAN-001": _violate_iban_qr,
         "BR-IBAN-002": _violate_iban_qrr,
-        "BR-IBAN-004": _violate_iban_currency,
+        # BR-IBAN-004 entfernt: SPS 2025 erlaubt Fremdwaehrung an CH/LI-IBAN
+        # (Validator klassifiziert als Zahlungsart 5 / Grenzueberschreitend).
         "BR-DOM-001": _violate_dom_charge_bearer,
         "BR-CBPR-001": _violate_cbpr_currency,
         "BR-CBPR-003": _violate_cbpr_charge_bearer,
@@ -679,7 +680,7 @@ def _get_violations_registry():
 _VIOLATION_FIELD_MAP = {
     "BR-SEPA-001": "currency",
     "BR-QR-004": "currency",
-    "BR-IBAN-004": "currency",
+    # "BR-IBAN-004": "currency" -- entfernt (SPS erlaubt Fremdwaehrung an CH-IBAN)
     "BR-CBPR-001": "currency",
     "BR-SIC5-001": "currency",
     "BR-SCT-INST-001": "currency",
@@ -820,11 +821,6 @@ def _violate_iban_qrr(instr: PaymentInstruction) -> PaymentInstruction:
     return _update_all_transactions(
         instr, remittance_info={"type": "QRR", "value": qrr},
     )
-
-
-def _violate_iban_currency(instr: PaymentInstruction) -> PaymentInstruction:
-    """BR-IBAN-004: Setzt Währung auf EUR statt CHF."""
-    return _update_all_transactions(instr, currency="EUR")
 
 
 def _violate_dom_charge_bearer(instr: PaymentInstruction) -> PaymentInstruction:
