@@ -832,48 +832,6 @@ def test_sct_inst_wrong_currency():
     assert "BR-SCT-INST-001" in failed_ids
 
 
-def test_sct_inst_amount_over_limit():
-    """BR-SCT-INST-002: SCT Inst mit Betrag ueber 100'000 EUR schlaegt fehl."""
-    tc = _make_testcase(
-        currency="EUR",
-        payment_type=PaymentType.SEPA,
-        instant=True,
-    )
-    tx = Transaction(
-        end_to_end_id="E2E-test",
-        amount=Decimal("100000.01"),
-        currency="EUR",
-        creditor_name="Creditor GmbH",
-        creditor_iban="DE89370400440532013000",
-        creditor_address={"StrtNm": "Str.", "PstCd": "10115", "TwnNm": "Berlin", "Ctry": "DE"},
-    )
-    instr = _make_sct_inst_instruction(tc, [tx])
-    results = validate_all_business_rules(instr, tc)
-    failed_ids = [r.rule_id for r in results if not r.passed]
-    assert "BR-SCT-INST-002" in failed_ids
-
-
-def test_sct_inst_amount_at_limit():
-    """BR-SCT-INST-002: SCT Inst mit genau 100'000 EUR ist OK."""
-    tc = _make_testcase(
-        currency="EUR",
-        payment_type=PaymentType.SEPA,
-        instant=True,
-    )
-    tx = Transaction(
-        end_to_end_id="E2E-test",
-        amount=Decimal("100000.00"),
-        currency="EUR",
-        creditor_name="Creditor GmbH",
-        creditor_iban="DE89370400440532013000",
-        creditor_address={"StrtNm": "Str.", "PstCd": "10115", "TwnNm": "Berlin", "Ctry": "DE"},
-    )
-    instr = _make_sct_inst_instruction(tc, [tx])
-    results = validate_all_business_rules(instr, tc)
-    failed_ids = [r.rule_id for r in results if not r.passed]
-    assert "BR-SCT-INST-002" not in failed_ids
-
-
 def test_sct_inst_missing_service_level():
     """BR-SCT-INST-003: SCT Inst ohne SvcLvl=INST schlaegt fehl."""
     tc = _make_testcase(

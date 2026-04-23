@@ -441,15 +441,12 @@ def validate_all_business_rules(
                 f"SCT Inst: Währung ist '{tx.currency}' (muss EUR sein)" if tx.currency != "EUR" else None,
             ))
 
-        # BR-SCT-INST-002: Betrag max 100'000 EUR
-        from decimal import Decimal
-        sct_inst_max = Decimal("100000")
-        for tx in instruction.transactions:
-            results.append(_check(
-                "BR-SCT-INST-002", tx.amount <= sct_inst_max,
-                f"SCT Inst: Betrag {tx.amount} EUR übersteigt Limit von 100'000 EUR"
-                if tx.amount > sct_inst_max else None,
-            ))
+        # BR-SCT-INST-002 (Betrag max 100'000 EUR) entfernt: EPC Rulebook
+        # V2023 (26.11.2023) hat den Scheme-Cap aufgehoben; EU Instant Payments
+        # Regulation 2024/886 macht Instant Payments ohne Cap Pflicht
+        # (Empfang seit 09.01.2025, Versand seit 09.10.2025). Einzelne PSPs
+        # koennen weiterhin eigene Limits setzen -- das ist aber Bank-Policy,
+        # keine Scheme-Regel.
 
         # BR-SCT-INST-003: ServiceLevel muss INST sein
         svc = instruction.service_level or ""
@@ -670,7 +667,9 @@ def _get_violations_registry():
         "BR-SIC5-001": _violate_sic5_currency,
         "BR-SIC5-002": _violate_sic5_creditor_iban,
         "BR-SCT-INST-001": _violate_sct_inst_currency,
-        "BR-SCT-INST-002": _violate_sct_inst_amount,
+        # BR-SCT-INST-002 entfernt: EPC Rulebook V2023 (26.11.2023) hebt
+        # den 100'000-EUR-Cap auf; EU Instant Payments Regulation 2024/886
+        # macht Instant Payments ohne Scheme-Cap Pflicht.
         # BR-REM-002 ist XSD-geschuetzt (maxLength=140 auf Ustrd), keine Violation moeglich
         # BR-CCY-001 ist XSD-geschuetzt ([A-Z]{3}), keine Violation moeglich
     }
@@ -684,6 +683,7 @@ _VIOLATION_FIELD_MAP = {
     "BR-CBPR-001": "currency",
     "BR-SIC5-001": "currency",
     "BR-SCT-INST-001": "currency",
+    # "BR-SCT-INST-002": "amount" -- entfernt (EPC V2023: 100k-Cap weg)
     "BR-SEPA-003": "charge_bearer",
     "BR-DOM-001": "charge_bearer",
     "BR-CBPR-003": "charge_bearer",
@@ -696,7 +696,6 @@ _VIOLATION_FIELD_MAP = {
     "BR-CBPR-005": "creditor_bic",
     "BR-ADDR-002": "creditor_address",
     "BR-CGI-ADDR-03": "creditor_address",
-    "BR-SCT-INST-002": "amount",
 }
 
 
@@ -902,9 +901,3 @@ def _violate_sic5_creditor_iban(instr: PaymentInstruction) -> PaymentInstruction
 def _violate_sct_inst_currency(instr: PaymentInstruction) -> PaymentInstruction:
     """BR-SCT-INST-001: Setzt Währung auf CHF statt EUR bei SCT Inst."""
     return _update_all_transactions(instr, currency="CHF")
-
-
-def _violate_sct_inst_amount(instr: PaymentInstruction) -> PaymentInstruction:
-    """BR-SCT-INST-002: Setzt Betrag auf über 100'000 EUR."""
-    from decimal import Decimal
-    return _update_all_transactions(instr, amount=Decimal("100000.01"))

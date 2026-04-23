@@ -487,14 +487,6 @@ BR_SCT_INST_001 = _r(
     violatable=True,
 )
 
-BR_SCT_INST_002 = _r(
-    "BR-SCT-INST-002", "SCT-INST",
-    "SCT Inst: Betrag darf maximal 100'000 EUR betragen",
-    _SCT_INST,
-    "EPC SCT Inst Rulebook, RT1/TIPS Limit",
-    violatable=True,
-)
-
 BR_SCT_INST_003 = _r(
     "BR-SCT-INST-003", "SCT-INST",
     "SCT Inst: ServiceLevel muss 'INST' sein",

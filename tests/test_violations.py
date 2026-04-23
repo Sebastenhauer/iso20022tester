@@ -279,22 +279,6 @@ class TestSctInstViolations:
         valid, errors = xsd_validator.validate(xml)
         assert valid, f"XSD errors: {errors}"
 
-    def test_br_sct_inst_002_amount_over_limit(self, xsd_validator):
-        """BR-SCT-INST-002: Setzt Betrag auf ueber 100'000 EUR."""
-        tc = _make_tc(PaymentType.SEPA, "EUR", "BR-SCT-INST-002")
-        tc = tc.model_copy(update={"instant": True})
-        instr = _make_instr(tc)
-        instr = instr.model_copy(update={"service_level": "INST", "local_instrument": "INST"})
-        violated = apply_rule_violation(tc, instr)
-        assert violated.transactions[0].amount > Decimal("100000")
-        results = validate_all_business_rules(violated, tc)
-        failed_ids = {r.rule_id for r in results if not r.passed}
-        assert "BR-SCT-INST-002" in failed_ids
-        xml = build_pain001_xml(violated)
-        valid, errors = xsd_validator.validate(xml)
-        assert valid, f"XSD errors: {errors}"
-
-
 class TestUnknownViolation:
     def test_unknown_rule_returns_unchanged(self):
         tc = _make_tc(PaymentType.SEPA, "EUR", "BR-UNKNOWN-999")
