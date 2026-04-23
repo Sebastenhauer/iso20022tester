@@ -5,7 +5,7 @@ output_path: "./output"
 xsd_path: "schemas/pain.001/pain.001.001.09.ch.03.xsd"
 
 # Pfad zum CBPR+ XSD (optional, proprietaer, nicht im Repo)
-cbpr_xsd_path: "docs/specs/cbpr+nonpublic/CBPRPlus_SR2026_(Combined)_CBPRPlus-pain_001_001_09_FIToFICustomerCreditTransferInitiation_20260320_0758_iso15enriched.xsd"
+cbpr_xsd_path: "docs/specs/pain.001/cbpr+nonpublic/CBPRPlus_SR2026_(Combined)_CBPRPlus-pain_001_001_09_FIToFICustomerCreditTransferInitiation_20260320_0758_iso15enriched.xsd"
 
 # Seed für reproduzierbare Zufallsdaten (optional, null = zufällig)
 seed: null
