@@ -20,26 +20,62 @@ from lxml import etree
 HEAD_NS = "urn:iso:std:iso:20022:tech:xsd:head.001.001.02"
 PAIN_NS = "urn:iso:std:iso:20022:tech:xsd:pain.001.001.09"
 
+# CBPR+ SR2026 BizSvc Fixed-Value fuer pain.001.001.09 (Light_View Row 51:
+# "FixedValue: swift.cbprplus.04"). Gleicher Wert wie pacs.008.001.08.
+CBPR_BIZ_SVC = "swift.cbprplus.04"
+
+
+def _ensure_tz_offset(dt_str: str) -> str:
+    """Stellt sicher, dass ein ISO-Datetime-String einen UTC-Offset traegt.
+
+    CBPR+ ``CBPR_DateTime`` verlangt das Pattern
+    ``.*(\\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]`` — also ``+HH:MM`` oder
+    ``-HH:MM`` am Ende. Naive Datetimes (z.B. ``2026-04-23T10:52:56.403906``)
+    werden hier als lokale Zeit interpretiert und bekommen den Offset der
+    System-Zeitzone angehaengt.
+    """
+    if not dt_str:
+        return datetime.now(timezone.utc).astimezone().isoformat()
+    # Wenn bereits Offset vorhanden (+HH:MM / -HH:MM / Z), direkt zurueck.
+    if dt_str.endswith("Z") or ("+" in dt_str[10:]) or ("-" in dt_str[10:]):
+        # Z ist nicht im CBPR+-Pattern enthalten, also auf +00:00 umsetzen.
+        if dt_str.endswith("Z"):
+            return dt_str[:-1] + "+00:00"
+        return dt_str
+    # Naive Datetime -> als local time behandeln und Offset anhaengen.
+    try:
+        parsed = datetime.fromisoformat(dt_str)
+    except ValueError:
+        return datetime.now(timezone.utc).astimezone().isoformat()
+    # Lokalen tz-Offset vom aktuellen Zeitpunkt ableiten (gleiche TZ-Regel).
+    local_tz = datetime.now(timezone.utc).astimezone().tzinfo
+    return parsed.replace(tzinfo=local_tz).isoformat()
+
 
 def build_bah(
     from_bic: str,
     to_bic: str,
     msg_id: str,
     cre_dt: Optional[str] = None,
+    biz_svc: str = CBPR_BIZ_SVC,
 ) -> etree._Element:
     """Baut ein BusinessApplicationHeaderV02 (AppHdr) Element.
+
+    Element-Reihenfolge nach head.001.001.02 XSD:
+    ``Fr, To, BizMsgIdr, MsgDefIdr, BizSvc?, MktPrctc?, CreDt, ...``
 
     Args:
         from_bic: BIC des Senders (Debtor Agent oder Initiating Party)
         to_bic: BIC des Empfaengers (Debtor Agent bei Relay)
         msg_id: Business Message Identifier (= GrpHdr/MsgId, CBPR+ Rule R1)
         cre_dt: Creation DateTime mit UTC-Offset. Default: jetzt.
+        biz_svc: Business Service Identifier. Default: ``swift.cbprplus.04``
+            (CBPR+ SR2026 Fixed Value fuer pain.001.001.09).
 
     Returns:
         lxml Element <AppHdr> im head.001.001.02 Namespace.
     """
-    if cre_dt is None:
-        cre_dt = datetime.now(timezone.utc).astimezone().isoformat()
+    cre_dt = _ensure_tz_offset(cre_dt) if cre_dt else datetime.now(timezone.utc).astimezone().isoformat()
 
     nsmap = {None: HEAD_NS}
     app_hdr = etree.Element(f"{{{HEAD_NS}}}AppHdr", nsmap=nsmap)
@@ -62,7 +98,12 @@ def build_bah(
     # MsgDefIdr [1..1] — Message Definition Identifier
     _el(app_hdr, "MsgDefIdr", "pain.001.001.09")
 
-    # CreDt [1..1] — Creation DateTime with UTC offset
+    # BizSvc — laut CBPR+ SR2026 Usage Guideline [0..1] mit FixedValue
+    # 'swift.cbprplus.04'. SWIFT MyStandards-Validator behandelt es als
+    # Pflicht (ohne BizSvc schlaegt die Sequenz-Check fehl).
+    _el(app_hdr, "BizSvc", biz_svc)
+
+    # CreDt [1..1] — Creation DateTime with UTC offset (CBPR_DateTime-Pattern)
     _el(app_hdr, "CreDt", cre_dt)
 
     return app_hdr
@@ -74,6 +115,7 @@ def wrap_with_bah(
     to_bic: str,
     msg_id: str,
     cre_dt: Optional[str] = None,
+    biz_svc: str = CBPR_BIZ_SVC,
 ) -> etree._Element:
     """Wraps a pain.001 Document with a BAH in a BusinessMessage envelope.
 
@@ -99,12 +141,13 @@ def wrap_with_bah(
         to_bic: Receiver BIC (Debtor Agent).
         msg_id: Must match GrpHdr/MsgId.
         cre_dt: Creation DateTime with UTC offset.
+        biz_svc: Business Service Identifier (CBPR+ SR2026 FixedValue).
 
     Returns:
         lxml Element containing AppHdr + Document.
     """
     # Build the BAH (carries its own default namespace via nsmap={None: HEAD_NS})
-    bah = build_bah(from_bic, to_bic, msg_id, cre_dt)
+    bah = build_bah(from_bic, to_bic, msg_id, cre_dt, biz_svc=biz_svc)
 
     # Namespace-loser Wrapper: so behalten AppHdr und Document ihre eigenen
     # xmlns=-Deklarationen beim Serialisieren.
